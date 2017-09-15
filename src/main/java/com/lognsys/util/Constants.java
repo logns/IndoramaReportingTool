@@ -52,7 +52,8 @@ public class Constants {
 	public enum DAILYLOG_QUERIES {
 		insert_dailylog,
 		insert_dailylog_bu,
-		insert_dailylog_users
+		insert_dailylog_users,
+		select_dailylogs_all
 	}
 
 	/**
@@ -62,7 +63,7 @@ public class Constants {
 	 * Note: All the files should be specified in application.properties.
 	 */
 	public enum JSON_FILES {
-		user_filename, drama_filename, adverts_filename, booking_filename, notification_filename
+		user_filename, dailylogs_filename, adverts_filename, booking_filename, notification_filename
 	}
 
 	/**

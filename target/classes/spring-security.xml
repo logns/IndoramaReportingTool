@@ -30,7 +30,7 @@
 		<security:intercept-url access="permitAll"
 			pattern="/dailylog" />
 		<security:intercept-url access="permitAll"
-			pattern="dramalist" />
+			pattern="/dailylogslist" />
 			
 			
 		<security:intercept-url access="permitAll"

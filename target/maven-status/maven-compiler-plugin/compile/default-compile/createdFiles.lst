@@ -55,6 +55,7 @@ com\lognsys\util\CommonUtilities.class
 com\lognsys\dao\UserRespository.class
 com\lognsys\model\Departments.class
 com\lognsys\dao\jdbc\JdbcRolesRepository.class
+com\lognsys\util\Constants$DAILYLOG_QUERIES.class
 com\lognsys\service\StorageService.class
 com\lognsys\model\Roles.class
 com\lognsys\web\controller\BaseController.class

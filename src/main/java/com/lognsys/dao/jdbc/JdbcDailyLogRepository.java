@@ -60,8 +60,11 @@ public class JdbcDailyLogRepository implements DailyLogRespository {
 
 	@Override
 	public List<DailyLogDTO> getAllDailyLogDTO() {
-		// TODO Auto-generated method stub
-		return null;
+		List<DailyLogDTO> lists = namedParamJdbcTemplate.query(
+				sqlProperties.getProperty(Constants.DAILYLOG_QUERIES.select_dailylogs_all.name()),
+				new BeanPropertyRowMapper<DailyLogDTO>(DailyLogDTO.class));
+			System.out.println("list size "+lists.size());
+		return lists;
 	}
 
 	@Override
