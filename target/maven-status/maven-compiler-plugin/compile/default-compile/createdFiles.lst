@@ -1,6 +1,7 @@
 com\lognsys\dao\jdbc\JdbcDailyLogRepository.class
 com\lognsys\dao\dto\UsersBuDTO.class
 com\lognsys\dao\dto\DailyLogDTO.class
+com\lognsys\util\Constants$TYPES_ARRAY.class
 com\lognsys\dao\DepartmentRepository.class
 com\lognsys\dao\mongo\MongoUserRepository.class
 com\lognsys\dao\jdbc\resultset\UserBuResultSetExtractor.class

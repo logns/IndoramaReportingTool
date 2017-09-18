@@ -99,6 +99,8 @@ public class ObjectMapper {
 
 		dldto.setId(dailyLog.getId());
 		dldto.setDates(dailyLog.getDates());
+		System.out.println("\n\n\n\n\n ============DailyLogDTO=============== dailyLog.getDates()- " + dailyLog.getDates());
+		System.out.println("\n\n\n\n\n ============DailyLogDTO=============== dldto.getDates- " + dldto.getDates());
 		dldto.setShift(dailyLog.getShift());
 		dldto.setSubstation(dailyLog.getSubstation());
 		dldto.setLoadmax(dailyLog.getLoadmax());
@@ -117,6 +119,7 @@ public class ObjectMapper {
 		dldto.setTimeto(dailyLog.getTimeto());
 		dldto.setSpareparts(dailyLog.getSpareparts());
 		dldto.setAttendby(dailyLog.getAttendby());
+		dldto.setJobtype(dailyLog.getJobtype());
 		dldto.setRecordtype(dailyLog.getRecordtype());
 		dldto.setStatus(dailyLog.getStatus());
 

@@ -12,7 +12,6 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -28,7 +27,7 @@ import com.lognsys.util.CommonUtilities;
 @Component
 public class IngestXLSData implements Ingest {
 
-	private static Logger log = Logger.getLogger(IngestXLSData.class);
+//	private static Logger log = Logger.getLogger(IngestXLSData.class);
 
 	private Sheet sheet = null;
 
@@ -136,7 +135,7 @@ public class IngestXLSData implements Ingest {
 
 		// check if the resource injected exists.
 		if (!resource.exists()) {
-			log.error("File not found - " + resource.getDescription());
+//			log.error("File not found - " + resource.getDescription());
 			throw new IllegalArgumentException("ERROR: File not found - " + resource.getDescription());
 
 		}
@@ -164,7 +163,7 @@ public class IngestXLSData implements Ingest {
 
 			printReport();
 		} catch (InvalidFormatException | IOException e) {
-			log.error("Error occured while trying to read the file");
+//			log.error("Error occured while trying to read the file");
 			e.printStackTrace();
 		}
 

@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -54,10 +53,11 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.util.JRLoader;
 
+
 @Service("dailylogService")
 public class DailyLogService {
 
-	Logger LOG = Logger.getLogger(this.getClass());
+	//Logger LOG = Logger.getLogger(this.getClass());
 
 	@Autowired
 	private JdbcDailyLogRepository jdbcDailyLogRepository;
@@ -88,7 +88,7 @@ public class DailyLogService {
 		
 		// convert UserDTO -> User Object
 		DailyLogDTO dailyLogDTO = ObjectMapper.mapToDailyLogDTO(dailyLog);
-		System.out.println("service dailyLogDTO.toString() - " + dailyLogDTO.toString());
+		System.out.println("\n\n\n\n\n ============================ dailyLogDTO- " + dailyLogDTO.toString());
 
 				
 		// adding user into db
@@ -124,11 +124,11 @@ public class DailyLogService {
 
 
 	public JasperReport getCompiledFile(String reportFileName, HttpServletRequest request) throws JRException, IOException {
-		Resource banner = resourceLoader.getResource("classpath:jasper/Cherry_Landscape.jasper");
-		Resource bannerjrxml = resourceLoader1.getResource("classpath:jasper/Cherry_Landscape.jrxml");
+		Resource banner = resourceLoader.getResource("classpath:report/allReports.jasper");
+		Resource bannerjrxml = resourceLoader1.getResource("classpath:report/allReports.jrxml");
 		
-		System.out.println("===========resourceLoader " +banner.getFile().getAbsolutePath());
-		System.out.println("===========resourceLoader bannerjrxml " +bannerjrxml.getFile().getAbsolutePath());
+//		System.out.println("===========resourceLoader " +banner.getFile().getAbsolutePath());
+//		System.out.println("===========resourceLoader bannerjrxml " +bannerjrxml.getFile().getAbsolutePath());
 		File reportFile = new File(banner.getFile().getAbsolutePath());
 		
 		System.out.println("\n ===========resourceLoader reportFile " +reportFile);
@@ -154,7 +154,12 @@ public class DailyLogService {
 	public void generateReportPDF(HttpServletResponse response, HashMap<String, Object> parameters,
 			JasperReport jasperReport, Connection conn)throws JRException, NamingException, SQLException, IOException  {
 		byte[] bytes = null;
+    	System.out.println("\n ===========generateReportPDF parameters size " +parameters.size());
+    	System.out.println("\n ===========generateReportPDF parameters values " +parameters.values());
+
 		bytes = JasperRunManager.runReportToPdf(jasperReport,parameters, conn);
+		System.out.println("\n ===========generateReportPDF bytes " +bytes);
+
 		response.reset();
 		response.resetBuffer();
 		response.setContentType("application/pdf");

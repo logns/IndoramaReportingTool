@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -43,7 +42,7 @@ import com.lognsys.util.FormValidator;
 @Controller
 public class BaseController {
 
-	private Logger LOG = Logger.getLogger(getClass());
+//	private Logger LOG = Logger.getLogger(getClass());
 	
 	@Autowired
 	private UserService userService;

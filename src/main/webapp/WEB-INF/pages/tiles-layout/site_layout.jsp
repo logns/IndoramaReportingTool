@@ -17,8 +17,7 @@
 <link rel='apple-touch-icon' type='image/png' href='static/images/apple-icon-57x57.png'> <!-- iPhone -->
 <link rel='apple-touch-icon' type='image/png' sizes='72x72' href='static/images/apple-icon-57x57.png'> <!-- iPad -->
 <link rel='apple-touch-icon' type='image/png' sizes='114x114' href='static/images/apple-icon-114x114.png'> <!-- iPhone4 -->
- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
- 
+
 <!-- W3 School  -->
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 

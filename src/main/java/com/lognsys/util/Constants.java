@@ -120,6 +120,9 @@ public class Constants {
 		response_auditoriumempty,
 		response_ratingsuccess,response_bookingmempty	
 	}
+	public enum TYPES_ARRAY {
+		jobtype
+		}
 
 	/**
 	 * Exception Messages

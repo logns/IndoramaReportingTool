@@ -4,7 +4,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Properties;
 import javax.annotation.Resource;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -23,7 +22,7 @@ import com.lognsys.util.Constants;
 @Repository("userRepository")
 public class JdbcUserRepository implements UserRespository {
 
-	private static final Logger LOG = Logger.getLogger(JdbcUserRepository.class);
+//	private static final Logger LOG = Logger.getLogger(JdbcUserRepository.class);
 
 	@Autowired
 	private NamedParameterJdbcTemplate namedParamJdbcTemplate;

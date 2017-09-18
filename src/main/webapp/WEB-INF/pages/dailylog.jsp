@@ -18,6 +18,7 @@
 		<div class="panel panel-default">
 			<form:form method="POST" action="dailylog" modelAttribute="dailylogs">
 				<div class="panel-body" cssClass="error">
+					<form:errors path="dates" element="div" />
 					<form:errors path="loadmax" element="div" />
 					<form:errors path="loadmin" element="div" />
 					<form:errors path="voltmax" element="div" />
@@ -34,10 +35,10 @@
 					<form:errors path="timeto" element="div" />
 					<form:errors path="spareparts" element="div" />
 					<form:errors path="attendby" element="div" />
-					<form:errors path="dates" element="div" />
 					<form:errors path="shift" element="div" />
 					<form:errors path="realname" element="div" />
 					<form:errors path="bu" element="div" />
+					<form:errors path="jobtype" element="div" />
 					<form:errors path="substation" element="div" />
 
 				</div>
@@ -48,11 +49,10 @@
 							<div class="row">
 								<div class="col-sm-6 form-group">
 								<label>Date</label> <br />
-								
-										<div class="input-group date form_datetime"
-								id="dtp_input1"
+										<div class="input-group date form_datetime col-md-10"
+								id="dates"
 								data-date-format="yyyy-mm-dd  hh:MM a"
-								data-link-field="dtp_input1">
+								data-link-field="dates">
 								<form:input id="dates" type="text" path="dates"
 									placeholder="Select DateTime  Here...."
 									class="form-control" value=""  /> <span
@@ -61,9 +61,8 @@
 									 <span
 									class="input-group-addon"><span
 									class="glyphicon glyphicon-th"></span></span>
-									</div>
-							<form:input type="hidden" id="dtp_input1" value="" name="dates"
-								path="" />
+							</div>
+							
 								<br />
 							</div>
 							</div>
@@ -80,7 +79,7 @@
 								<div class="col-sm-3 form-group">
 								<label>Plant</label>
 								<form:input id="bu" type="label"
-										value="${bu1}"
+										value="${bu}"
 										class="form-control text ui-widget-content ui-corner-all"
 										path="bu" />
 								</div>
@@ -241,9 +240,10 @@
 										path="attendby" />
 							</div>
 							<div class="form-group">
-								<label>Job Type</label><form:select path="jobtype">
-									<option value="NONE">--- Select ---</option>
-									<form:options items="${jobtype}"></form:options>
+								<label>Job Type</label>
+								<form:select path="jobtype">
+									<option  id="jobtype"  value="NONE">--- Select ---</option>
+									<form:options id="jobtype"  items="${jobtype}"></form:options>
 								</form:select>
 								
 							</div>

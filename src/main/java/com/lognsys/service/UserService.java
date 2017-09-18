@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -37,7 +36,7 @@ import com.lognsys.util.WriteJSONToFile;
 @Service("userService")
 public class UserService {
 
-	Logger LOG = Logger.getLogger(this.getClass());
+//	Logger LOG = Logger.getLogger(this.getClass());
 
 	@Autowired
 	private JdbcUserRepository jdbcUserRepository;
@@ -46,6 +45,7 @@ public class UserService {
 
 	@Autowired
 	private JdbcBuRepository jdbcBuRepository;
+	
 	@Autowired
 	private JdbcDepartmentRepository jdbcDepartmentRepository;
 
@@ -95,7 +95,7 @@ public class UserService {
 		try {
 			refreshUserList();
 		} catch (IOException io) {
-			LOG.fatal("UserService#addUser refresUserList - " + io.getMessage());
+//			LOG.fatal("UserService#addUser refresUserList - " + io.getMessage());
 		}
 		return users_id;
 	}
@@ -131,7 +131,7 @@ public class UserService {
 	 *
 	 */
 	public boolean deleteUsers(Integer[] ids) {
-		LOG.info("#deleteUser - " + "Deleting total number of users from database - " + ids.length);
+//		LOG.info("#deleteUser - " + "Deleting total number of users from database - " + ids.length);
 
 		for (int id : ids) {
 			try {
@@ -145,7 +145,7 @@ public class UserService {
 				}
 			} catch (DataAccessException | IOException dae) {
 
-				LOG.error(dae.getMessage());
+//				LOG.error(dae.getMessage());
 				throw new IllegalStateException("Error : Failed to delete user!");
 			}
 			
@@ -163,20 +163,20 @@ public class UserService {
 	 * 
 	 */
 	public void deleteUsers(String[] emailIDs) throws IOException {
-		LOG.info("#deleteUser - " + "Deleting total number of users from database - " + emailIDs.length);
+//		LOG.info("#deleteUser - " + "Deleting total number of users from database - " + emailIDs.length);
 
 		for (String emailID : emailIDs) {
 			try {
 				boolean isDelete = jdbcUserRepository.deleteUserBy(emailID);
 
 				if (!isDelete) {
-					LOG.info("#deleteUser - " + "failed to delete user with ID - " + emailID);
+//					LOG.info("#deleteUser - " + "failed to delete user with ID - " + emailID);
 				} else {
 					refreshUserList();
 				}
 			} catch (DataAccessException dae) {
 
-				LOG.error(dae.getMessage());
+//				LOG.error(dae.getMessage());
 				throw new IllegalStateException("Error : Failed to delete user!");
 			}
 		}
@@ -204,7 +204,7 @@ public class UserService {
 			refreshUserList();
 
 		} catch (DataAccessException dae) {
-			LOG.error(dae.getMessage());
+//			LOG.error(dae.getMessage());
 			throw new IllegalStateException("Failed user update : status - " + isUpdated);
 		} catch (IOException e) {
 			throw new IllegalStateException(e);
@@ -228,13 +228,13 @@ public class UserService {
 			e.printStackTrace();
 		}
 
-		LOG.info("#getUsers - Get All Users from database");
+//		LOG.info("#getUsers - Get All Users from database");
 		List<UsersDTO> userList;
 
 		try {
 			userList = jdbcUserRepository.getAllUsers();
 		} catch (DataAccessException dae) {
-			LOG.error(dae.getMessage());
+//			LOG.error(dae.getMessage());
 			throw new IllegalStateException("Error : Failed to add user!");
 		}
 		return userList;
@@ -381,7 +381,7 @@ public class UserService {
 		try {
 			return jdbcDepartmentRepository.getAllDepartments();
 		} catch (DataAccessException dae) {
-			LOG.error(dae.getMessage());
+//			LOG.error(dae.getMessage());
 			throw new IllegalAccessError("Error: All departments cannot be retrieved");
 		}
 
@@ -395,7 +395,7 @@ public class UserService {
 		try {
 			return jdbcBuRepository.getAllBu();
 		} catch (DataAccessException dae) {
-			LOG.error(dae.getMessage());
+//			LOG.error(dae.getMessage());
 			throw new IllegalAccessError("Error: All groups cannot be retrieved");
 		}
 
@@ -410,7 +410,7 @@ public class UserService {
 		try {
 			return jdbcRolesRepository.getAllRoles();
 		} catch (DataAccessException dae) {
-			LOG.error(dae.getMessage());
+//			LOG.error(dae.getMessage());
 			throw new IllegalAccessError("Error: All roles cannot be retrieved");
 		}
 
