@@ -112,7 +112,7 @@ public class DailyLogController {
 	 * @throws NamingException 
 	 */
 	@RequestMapping(value = "/dailylog", method = RequestMethod.POST)
-	public String saveForm(@Valid @ModelAttribute("dailylogs") DailyLog dailylogs, BindingResult result, ModelMap model,
+	public String saveForm(@Valid @ModelAttribute("dailylogs") DailyLog dailylogs, 
 		 HttpServletRequest request,
 		HttpServletResponse response) throws JRException, IOException, SQLException, NamingException{
 		System.out.println("controller dailylogs to String - " + dailylogs.toString());
@@ -150,67 +150,67 @@ public class DailyLogController {
 //			return "dailylog";
 //
 ////		} else
-		{
-			try {
-			int id =dailyLogService.addDailyLog(dailylogs);
-			System.out.println(" ==================== dailylogs.getJobtype()  "+dailylogs.getJobtype());
-			System.out.println(" ==================== dailylogs.getDates()  "+dailylogs.getDates());
-			
-			String reportFileName = "allReports";
-			String reportExcel = "xls";
-			String reportPdf = "pdf";
-			Connection c = conn.getConnection();
-
-		
-			List<DailyLogDTO> lists=  dailyLogService.refresDailyListReport();
-			
-			HashMap<String, Object> hmParams = new HashMap<String, Object>();
-			
-			for(int i=0;i<lists.size();i++){
-			DailyLogDTO dailylogsdyto=lists.get(i);
-			
-			hmParams.put("dates", dailylogsdyto.getDates());
-			hmParams.put("shift", dailylogsdyto.getShift());
-			hmParams.put("bu", dailylogsdyto.getBu());
-			hmParams.put("substation", dailylogsdyto.getSubstation());
-			hmParams.put("machine",dailylogsdyto.getMachine());
-			hmParams.put("description",dailylogsdyto.getDescription());
-			hmParams.put("timefrom",dailylogsdyto.getTimefrom());
-			hmParams.put("timeto",dailylogsdyto.getTimeto());
-			hmParams.put("spareparts",dailylogsdyto.getSpareparts());
-			hmParams.put("attendby",dailylogsdyto.getAttendby());
-			hmParams.put("jobtype",dailylogsdyto.getJobtype());
-			hmParams.put("recordtype",dailylogsdyto.getRecordtype());
-			hmParams.put("status",dailylogsdyto.getStatus());
-			
-			System.out.println(" ==================== dailylogsdyto.getJobtype()  "+dailylogsdyto.getJobtype());
-			
-			}
-//			System.out.println("============== generateReport ================hmParams.values() " + hmParams.values());
-//			System.out.println("============== generateReport ================hmParams.size() " + hmParams.size());
-
-			JasperReport jasperReport = dailyLogService.getCompiledFile(reportFileName,
-					request);
-//			System.out.println("============== generateReport ================jasperReport toString " +jasperReport.toString());
-//			System.out.println("============== generateReport ================response toString " +response.toString());
-//			System.out.println("============== generateReport ================reportPdf.equalsIgnoreCase(pdf) " +(reportPdf.equalsIgnoreCase("pdf")));
-
-			 if (reportPdf.equalsIgnoreCase("pdf")) {
-
-				 dailyLogService.generateReportPDF(response, hmParams, jasperReport, c); // For
-				
-			}
-//			 if (reportExcel.equalsIgnoreCase("pdf")) {
+	//	{
+//			try {
+//			int id =dailyLogService.addDailyLog(dailylogs);
+//			System.out.println(" ==================== dailylogs.getJobtype()  "+dailylogs.getJobtype());
+//			System.out.println(" ==================== dailylogs.getDates()  "+dailylogs.getDates());
+//			
+//			String reportFileName = "allReports";
+//			String reportExcel = "xls";
+//			String reportPdf = "pdf";
+//			Connection c = conn.getConnection();
 //
-//				 dailyLogService.generateReportPDF(response, hmParams, jasperReport, conn); // For
-//																					// xls
-//																					// report
+//		
+//			List<DailyLogDTO> lists=  dailyLogService.refresDailyListReport();
+//			
+//			HashMap<String, Object> hmParams = new HashMap<String, Object>();
+//			
+//			for(int i=0;i<lists.size();i++){
+//			DailyLogDTO dailylogsdyto=lists.get(i);
+//			
+//			hmParams.put("dates", dailylogsdyto.getDates());
+//			hmParams.put("shift", dailylogsdyto.getShift());
+//			hmParams.put("bu", dailylogsdyto.getBu());
+//			hmParams.put("substation", dailylogsdyto.getSubstation());
+//			hmParams.put("machine",dailylogsdyto.getMachine());
+//			hmParams.put("description",dailylogsdyto.getDescription());
+//			hmParams.put("timefrom",dailylogsdyto.getTimefrom());
+//			hmParams.put("timeto",dailylogsdyto.getTimeto());
+//			hmParams.put("spareparts",dailylogsdyto.getSpareparts());
+//			hmParams.put("attendby",dailylogsdyto.getAttendby());
+//			hmParams.put("jobtype",dailylogsdyto.getJobtype());
+//			hmParams.put("recordtype",dailylogsdyto.getRecordtype());
+//			hmParams.put("status",dailylogsdyto.getStatus());
+//			
+//			System.out.println(" ==================== dailylogsdyto.getJobtype()  "+dailylogsdyto.getJobtype());
+//			
+//			}
+////			System.out.println("============== generateReport ================hmParams.values() " + hmParams.values());
+////			System.out.println("============== generateReport ================hmParams.size() " + hmParams.size());
 //
-//			 }
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+//			JasperReport jasperReport = dailyLogService.getCompiledFile(reportFileName,
+//					request);
+////			System.out.println("============== generateReport ================jasperReport toString " +jasperReport.toString());
+////			System.out.println("============== generateReport ================response toString " +response.toString());
+////			System.out.println("============== generateReport ================reportPdf.equalsIgnoreCase(pdf) " +(reportPdf.equalsIgnoreCase("pdf")));
+//
+//			 if (reportPdf.equalsIgnoreCase("pdf")) {
+//
+//				 dailyLogService.generateReportPDF(response, hmParams, jasperReport, c); // For
+//				
+//			}
+////			 if (reportExcel.equalsIgnoreCase("pdf")) {
+////
+////				 dailyLogService.generateReportPDF(response, hmParams, jasperReport, conn); // For
+////																					// xls
+////																					// report
+////
+////			 }
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
 		return "dailylog";
 	}
 	/**

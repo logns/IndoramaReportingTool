@@ -20,12 +20,11 @@
 	<!-- Dispatcher configuration for serving static resources -->
 	<!-- **************************************************************** -->
 
-	<mvc:resources mapping="/static/**" location="/resources/*" />
+	<mvc:resources mapping="/static/**" location="/resources/" />
 	<mvc:resources mapping="/webjars/**" location="/webjars/" />
 	<mvc:resources mapping="/images/**" location="/images/" /> 
 	
-<!-- 	<mvc:resources mapping="/resources/**" location="/resources/csshome" />
-	<mvc:resources mapping="/resources/**" location="/resources/js" /> -->
+
 
 	<!-- Default handler -->
 	<mvc:default-servlet-handler />
