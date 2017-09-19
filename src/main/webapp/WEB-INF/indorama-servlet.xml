@@ -14,7 +14,8 @@
 	<import resource="classpath:datasource-context.xml" />
 	<import resource="classpath:spring-security.xml"></import>
 	<import resource="classpath:mongo-context.xml" />
-
+    
+    
 	<!-- **************************************************************** -->
 	<!-- RESOURCE FOLDERS CONFIGURATION -->
 	<!-- Dispatcher configuration for serving static resources -->
@@ -24,7 +25,12 @@
 	<mvc:resources mapping="/webjars/**" location="/webjars/" />
 	<mvc:resources mapping="/images/**" location="/images/" /> 
 	
-
+ <context:component-scan base-package="com.lognsys.util" />
+ 
+   <bean id="viewResolver1" class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
+        <property name="order" value="1"/>
+        <property name="basename" value="views"/>
+    </bean>
 
 	<!-- Default handler -->
 	<mvc:default-servlet-handler />

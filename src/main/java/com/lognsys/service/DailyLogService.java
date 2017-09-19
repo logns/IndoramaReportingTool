@@ -178,17 +178,5 @@ public class DailyLogService {
 		ouputStream.flush();
 		ouputStream.close();
 	}
-	public void generateReportXLS(HttpServletResponse response, HashMap<String, Object> parameters,
-			JasperReport jasperReport, Connection conn)throws JRException, NamingException, SQLException, IOException  {
-		 /*JRMapArrayDataSource dataSource = new JRMapArrayDataSource(data);
-
-	        JasperReport jasperReport = JasperCompileManager.compileReport(reportJRXMLSource);
-	        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, dataSource);
-
-	        JRXlsxExporter exporter = new JRXlsxExporter();
-	        exporter.setParameter(JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
-	        exporter.setParameter(JRXlsExporterParameter.OUTPUT_FILE_NAME, outputFileName);
-
-	        exporter.exportReport();*/
-		}
+	
 }

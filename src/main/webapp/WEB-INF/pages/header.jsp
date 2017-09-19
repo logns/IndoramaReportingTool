@@ -16,9 +16,9 @@
 							class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-					<img
-						src="${pageContext.request.contextPath}/static/images/kalrav_logo.png"
-						width="50" height="50" /><a class="navbar-brand" href="#"><span>Kalrav</span>Admin</a>
+					<%-- <img
+						src="${pageContext.request.contextPath}/static/images/indorama_logo.png"
+						width="250" height="50" /> --%><a class="navbar-brand" href="#"><span>Indorama</span>Admin</a>
 					<ul class="user-menu">
 						<li class="dropdown pull-right"><a href="#"
 							class="dropdown-toggle" data-toggle="dropdown"><svg

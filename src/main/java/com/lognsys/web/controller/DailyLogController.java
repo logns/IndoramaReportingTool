@@ -23,6 +23,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.lognsys.dao.dto.DailyLogDTO;
 import com.lognsys.model.DailyLog;
@@ -174,81 +175,17 @@ public class DailyLogController {
 //			System.out.println("============== generateReport ================response toString " +response.toString());
 //			System.out.println("============== generateReport ================reportPdf.equalsIgnoreCase(pdf) " +(reportPdf.equalsIgnoreCase("pdf")));
 
-//			 if (reportPdf.equalsIgnoreCase("pdf")) {
-//
-//				 dailyLogService.generateReportPDF(response, hmParams, jasperReport, c); // For
-//				
-//			}
-			 if (reportExcel.equalsIgnoreCase("xls")) {
+			 if (reportPdf.equalsIgnoreCase("pdf")) {
 
-				 dailyLogService.generateReportXLS(response, hmParams, jasperReport, c); // For
-			 }
+				 dailyLogService.generateReportPDF(response, hmParams, jasperReport, c); // For
+				
+			}
+			 
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 
-	//	{
-//			try {
-//			int id =dailyLogService.addDailyLog(dailylogs);
-//			System.out.println(" ==================== dailylogs.getJobtype()  "+dailylogs.getJobtype());
-//			System.out.println(" ==================== dailylogs.getDates()  "+dailylogs.getDates());
-//			
-//			String reportFileName = "allReports";
-//			String reportExcel = "xls";
-//			String reportPdf = "pdf";
-//			Connection c = conn.getConnection();
-//
-//		
-//			List<DailyLogDTO> lists=  dailyLogService.refresDailyListReport();
-//			
-//			HashMap<String, Object> hmParams = new HashMap<String, Object>();
-//			
-//			for(int i=0;i<lists.size();i++){
-//			DailyLogDTO dailylogsdyto=lists.get(i);
-//			
-//			hmParams.put("dates", dailylogsdyto.getDates());
-//			hmParams.put("shift", dailylogsdyto.getShift());
-//			hmParams.put("bu", dailylogsdyto.getBu());
-//			hmParams.put("substation", dailylogsdyto.getSubstation());
-//			hmParams.put("machine",dailylogsdyto.getMachine());
-//			hmParams.put("description",dailylogsdyto.getDescription());
-//			hmParams.put("timefrom",dailylogsdyto.getTimefrom());
-//			hmParams.put("timeto",dailylogsdyto.getTimeto());
-//			hmParams.put("spareparts",dailylogsdyto.getSpareparts());
-//			hmParams.put("attendby",dailylogsdyto.getAttendby());
-//			hmParams.put("jobtype",dailylogsdyto.getJobtype());
-//			hmParams.put("recordtype",dailylogsdyto.getRecordtype());
-//			hmParams.put("status",dailylogsdyto.getStatus());
-//			
-//			System.out.println(" ==================== dailylogsdyto.getJobtype()  "+dailylogsdyto.getJobtype());
-//			
-//			}
-////			System.out.println("============== generateReport ================hmParams.values() " + hmParams.values());
-////			System.out.println("============== generateReport ================hmParams.size() " + hmParams.size());
-//
-//			JasperReport jasperReport = dailyLogService.getCompiledFile(reportFileName,
-//					request);
-////			System.out.println("============== generateReport ================jasperReport toString " +jasperReport.toString());
-////			System.out.println("============== generateReport ================response toString " +response.toString());
-////			System.out.println("============== generateReport ================reportPdf.equalsIgnoreCase(pdf) " +(reportPdf.equalsIgnoreCase("pdf")));
-//
-//			 if (reportPdf.equalsIgnoreCase("pdf")) {
-//
-//				 dailyLogService.generateReportPDF(response, hmParams, jasperReport, c); // For
-//				
-//			}
-////			 if (reportExcel.equalsIgnoreCase("pdf")) {
-////
-////				 dailyLogService.generateReportPDF(response, hmParams, jasperReport, conn); // For
-////																					// xls
-////																					// report
-////
-////			 }
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
 
 		return "dailylog";
 	}
@@ -262,7 +199,31 @@ public class DailyLogController {
 	@RequestMapping(value = "/dailylogslist", method = RequestMethod.GET)
 	public String dailylogslist(Model model, HttpServletRequest request) throws IOException {
 		System.out.println("dailylogslist - " );
-		dailyLogService.refresDailyListReport();
+//		dailyLogService.refresDailyListReport();
+	
 		return "dailylogslist";
 	}
+	 /**
+     * Handle request to download an Excel document
+     */
+    @RequestMapping(value = "/downloadExcel", method = RequestMethod.GET)
+    public ModelAndView downloadExcel() {
+    	List<DailyLogDTO> lists=  dailyLogService.refresDailyListReport();
+		
+ 
+        // return a view which will be resolved by an excel view resolver
+        return new ModelAndView("excelView", "lists", lists);
+    } /**
+     * Handle request to download an Excel document
+     */
+    @RequestMapping(value = "/downloadPdf", method = RequestMethod.GET)
+    public void downloadPdf() {
+    	List<DailyLogDTO> lists=  dailyLogService.refresDailyListReport();
+
+		String reportFileName = "allReports";
+		String reportExcel = "xls";
+		String reportPdf = "pdf";
+//		Connection c = conn.getConnection();
+		
+    }
 }
