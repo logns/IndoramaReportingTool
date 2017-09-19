@@ -56,29 +56,7 @@ public class DailyLogController {
 	 */
 	@RequestMapping(value = "/dailylog", method = RequestMethod.GET)
 	public String getDailyLogForm(ModelMap model, HttpServletRequest request) {
-/*
-		// CALL database to get roles & groups
-		List<RolesDTO> listOfRolesDTO = userService.getAllRoles();
-		List<DepartmentsDTO> listOfDepartmentsDTO = userService.getAllDepartments();
-		List<BuDTO> listOfBuDTO = userService.getAllBus();
 
-		// Adding data to list from RolesDTO
-		List<String> rolesList = new ArrayList<String>();
-		for (RolesDTO role : listOfRolesDTO) {
-			rolesList.add(role.getRole());
-		}
-
-		// Adding data to list from RolesDTO
-		List<String> busList = new ArrayList<String>();
-		for (BuDTO bu : listOfBuDTO) {
-			busList.add(bu.getBu_name());
-		}
-		// Adding data to list from RolesDTO
-		List<String> departmentsList = new ArrayList<String>();
-		for (DepartmentsDTO deDto : listOfDepartmentsDTO)
-		 {
-			departmentsList.add(deDto.getDepartment_name());
-		}*/
 		String realname = "monika sharma";
 		String bu = "bu1";
 		String substation = "MS1";
@@ -195,18 +173,15 @@ public class DailyLogController {
 //			System.out.println("============== generateReport ================response toString " +response.toString());
 //			System.out.println("============== generateReport ================reportPdf.equalsIgnoreCase(pdf) " +(reportPdf.equalsIgnoreCase("pdf")));
 
-			 if (reportPdf.equalsIgnoreCase("pdf")) {
+//			 if (reportPdf.equalsIgnoreCase("pdf")) {
+//
+//				 dailyLogService.generateReportPDF(response, hmParams, jasperReport, c); // For
+//				
+//			}
+			 if (reportExcel.equalsIgnoreCase("xls")) {
 
-				 dailyLogService.generateReportPDF(response, hmParams, jasperReport, c); // For
-				
-			}
-//			 if (reportExcel.equalsIgnoreCase("pdf")) {
-//
-//				 dailyLogService.generateReportPDF(response, hmParams, jasperReport, conn); // For
-//																					// xls
-//																					// report
-//
-//			 }
+				 dailyLogService.generateReportXLS(response, hmParams, jasperReport, c); // For
+			 }
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

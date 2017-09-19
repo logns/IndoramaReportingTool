@@ -312,6 +312,6 @@ public class BaseController {
 				e.printStackTrace();
 			}
 		}
-		return "userlist";
+		return "register";
 	}
 }

@@ -2,6 +2,7 @@ package com.lognsys.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -49,9 +50,17 @@ import com.lognsys.util.WriteJSONToFile;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.data.JRMapArrayDataSource;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
 
 
 @Service("dailylogService")
@@ -169,4 +178,17 @@ public class DailyLogService {
 		ouputStream.flush();
 		ouputStream.close();
 	}
+	public void generateReportXLS(HttpServletResponse response, HashMap<String, Object> parameters,
+			JasperReport jasperReport, Connection conn)throws JRException, NamingException, SQLException, IOException  {
+		 /*JRMapArrayDataSource dataSource = new JRMapArrayDataSource(data);
+
+	        JasperReport jasperReport = JasperCompileManager.compileReport(reportJRXMLSource);
+	        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, dataSource);
+
+	        JRXlsxExporter exporter = new JRXlsxExporter();
+	        exporter.setParameter(JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
+	        exporter.setParameter(JRXlsExporterParameter.OUTPUT_FILE_NAME, outputFileName);
+
+	        exporter.exportReport();*/
+		}
 }
