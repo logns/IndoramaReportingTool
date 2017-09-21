@@ -73,6 +73,12 @@ public class MongoUserRepository implements UserRespository {
 		return false;
 	}
 
+	@Override
+	public List<UsersDTO> getUserRealNames() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 

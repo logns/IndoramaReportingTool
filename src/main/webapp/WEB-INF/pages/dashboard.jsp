@@ -100,7 +100,7 @@ Dashdoard Admin
 					<div class="panel-body easypiechart-panel">
 						<h4>Active Users</h4>
 						<div class="easypiechart" id="easypiechart-blue" data-percent="92"><span class="percent">92%</span>
-						<canvas height="110" width="110"></canvas></div>
+						<canvas height="5" width="5"></canvas></div>
 					</div>
 				</div>
 			</div>
@@ -109,7 +109,7 @@ Dashdoard Admin
 					<div class="panel-body easypiechart-panel">
 						<h4>Adverts Posted</h4>
 						<div class="easypiechart" id="easypiechart-orange" data-percent="65"><span class="percent">65%</span>
-						<canvas height="110" width="110"></canvas></div>
+						<canvas height="5" width="5"></canvas></div>
 					</div>
 				</div>
 			</div>
@@ -118,7 +118,7 @@ Dashdoard Admin
 					<div class="panel-body easypiechart-panel">
 						<h4>Comments</h4>
 						<div class="easypiechart" id="easypiechart-teal" data-percent="56"><span class="percent">56%</span>
-						<canvas height="110" width="110"></canvas></div>
+						<canvas height="5" width="5"></canvas></div>
 					</div>
 				</div>
 			</div>
@@ -127,7 +127,7 @@ Dashdoard Admin
 					<div class="panel-body easypiechart-panel">
 						<h4>Total Revenue</h4>
 						<div class="easypiechart" id="easypiechart-red" data-percent="27"><span class="percent">27%</span>
-						<canvas height="110" width="110"></canvas></div>
+						<canvas height="5" width="5"></canvas></div>
 					</div>
 				</div>
 			</div>

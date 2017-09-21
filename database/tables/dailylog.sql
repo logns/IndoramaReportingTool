@@ -55,7 +55,7 @@ CREATE TABLE dailylog
 	machine varchar(64) not null default "",
 			        
 	#Optional birthdate 	
-	description datetime default null,
+	description VARCHAR(255) default null,
 	
     #Optional birthdate 	
 	timefrom datetime default null,
@@ -84,9 +84,6 @@ CREATE TABLE dailylog
 create index dailylog_jobtype on dailylog(jobtype);
 create index dailylog_status on dailylog(status);
 create index dailylog_attendby on dailylog(attendby);
-
-ALTER TABLE `indorama_poly`.`dailylog` 
-CHANGE COLUMN `description` `description` VARCHAR(255) NULL DEFAULT NULL ;
 
 ALTER TABLE `indorama_poly`.`dailylog` 
 CHANGE COLUMN `timefrom` `timefrom` TIME(6) NOT NULL ,

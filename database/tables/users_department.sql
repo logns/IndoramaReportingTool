@@ -28,4 +28,9 @@ alter table users_departments add index (departments_id);
 alter table users_departments add foreign key (departments_id) 
    references departments (id) on delete cascade
    			 on update cascade;
+ALTER TABLE `indorama_poly`.`users_departments` 
+DROP INDEX `uc_users_departments` ,
+ADD INDEX `uc_users_departments` (`users_id` ASC),
+DROP INDEX `constr_usersid` ,
+ADD INDEX `constr_usersid` (`users_id` ASC);
 

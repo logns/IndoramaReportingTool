@@ -24,4 +24,4 @@ last_edit timestamp not null default current_timestamp on update current_timesta
 insert into roles (role)
 values
 ('ADMIN'),
-('GROUP_USER');
+('USER');

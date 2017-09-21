@@ -64,6 +64,7 @@ com\lognsys\web\controller\BaseController.class
 com\lognsys\util\Constants$USER_QUERIES.class
 com\lognsys\util\Constants$BOOKEDSEATS_FIELD_NAMES.class
 com\lognsys\dao\BuRepository.class
+com\lognsys\exception\CustomGenericException.class
 com\lognsys\service\StorageProperties.class
 com\lognsys\model\Bu.class
 com\lognsys\util\Constants$DEFAULT_ROLE.class

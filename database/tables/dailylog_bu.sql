@@ -28,4 +28,10 @@ alter table dailylog_bu add index (bu_id);
 alter table dailylog_bu add foreign key (bu_id) 
    references bu (id) on delete cascade
    			 on update cascade;
+ALTER TABLE `indorama_poly`.`dailylog_bu` 
+DROP INDEX `uc_dailylog_bu` ,
+ADD INDEX `uc_dailylog_bu` (`dailylog_id` ASC),
+DROP INDEX `constr_dailylogid` ,
+ADD INDEX `constr_dailylogid` (`dailylog_id` ASC);
+
 

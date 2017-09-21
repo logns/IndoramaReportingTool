@@ -29,3 +29,8 @@ alter table dailylog_users add foreign key (users_id)
    references users (id) on delete cascade
    			 on update cascade;
 
+ALTER TABLE `indorama_poly`.`dailylog_users` 
+DROP INDEX `uc_dailylog_users` ,
+ADD INDEX `uc_dailylog_users` (`dailylog_id` ASC),
+DROP INDEX `constr_dailylogid` ,
+ADD INDEX `constr_dailylogid` (`dailylog_id` ASC);

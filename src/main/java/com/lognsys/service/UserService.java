@@ -75,29 +75,32 @@ public class UserService {
 		UsersDTO usersDTO = ObjectMapper.mapToUsersDTO(users);
 
 		// Check if User Exists
-		if (exists(users))
+		if (exists(users)){
 			throw new IllegalArgumentException("User already exists in database with username - " + username);
-
-		
-		// adding user into db
-		int users_id = jdbcUserRepository.addUser(usersDTO);
-		System.out.println("addUser users users_id "+users_id);
-
-		// adding user into department
-		jdbcUserRepository.addUserAndDepartment(users_id, users.getDepartments());
-		
-		// adding user into bu
-		jdbcUserRepository.addUserAndBu(users_id, users.getBu());
-	
-        //Adding user to corresponding role
-		jdbcUserRepository.addUserAndRole(users_id, users.getRole());
-
-		try {
-			refreshUserList();
-		} catch (IOException io) {
-//			LOG.fatal("UserService#addUser refresUserList - " + io.getMessage());
 		}
-		return users_id;
+		else{
+
+			// adding user into db
+			int users_id = jdbcUserRepository.addUser(usersDTO);
+			System.out.println("addUser users users_id "+users_id);
+
+			// adding user into department
+			jdbcUserRepository.addUserAndDepartment(users_id, users.getDepartments());
+			
+			// adding user into bu
+			jdbcUserRepository.addUserAndBu(users_id, users.getBu());
+		
+	        //Adding user to corresponding role
+			jdbcUserRepository.addUserAndRole(users_id, users.getRole());
+
+			try {
+				refreshUserList();
+			} catch (IOException io) {
+//				LOG.fatal("UserService#addUser refresUserList - " + io.getMessage());
+			}
+			return users_id;
+	
+		}
 	}
 
 	/**
@@ -108,8 +111,11 @@ public class UserService {
 	 * @throws IOException
 	 */
 	public void refreshUserList() throws IOException {
-		List<UsersTable> users = ObjectMapper.mapToUserTable(jdbcBuRepository.getAllUsersAndBu());
-
+		List<UsersTable> users =null;
+		if(jdbcBuRepository.getAllUsersAndBu()!=null && jdbcBuRepository.getAllUsersAndBu().size()>0)
+		{
+			users = ObjectMapper.mapToUserTable(jdbcBuRepository.getAllUsersAndBu());
+		}
 		ResourceLoader resourceLoader = new FileSystemResourceLoader();
 		Resource resource = resourceLoader
 				.getResource(applicationProperties.getProperty(Constants.JSON_FILES.user_filename.name()));
@@ -118,6 +124,7 @@ public class UserService {
 		try {
 			WriteJSONToFile.getInstance().write(resource, list);
 		} catch (IOException e) {
+		System.out.println("IOEXCEPTION --- e"+e);
 			e.printStackTrace();
 		}
 	}
@@ -191,16 +198,31 @@ public class UserService {
 	public boolean updateUser(Users users) {
 		boolean isUpdated = false;
 		try {
-
+			System.out.println("update user users == "+users.toString());
 			// Convert Users POJO to UsersDTO
 			UsersDTO u = ObjectMapper.mapToUsersDTO(users);
-
+			System.out.println("update user u == "+u.toString());
+			
 			// TODO add exception
 			isUpdated = jdbcUserRepository.updateUser(u);
+			System.out.println("update updateUser isUpdated == "+isUpdated);
+			
+			System.out.println("update updateUser users.getUsername() == "+users.getUsername()+" users.getDepartments() = "+users.getDepartments());
+			
 			isUpdated = jdbcDepartmentRepository.updateDepartmentOfUser(users.getUsername(), users.getDepartments());
+			
+			System.out.println("update updateDepartmentOfUser isUpdated == "+isUpdated);
+			
+			System.out.println("update updateUser users.getUsername() == "+users.getUsername()+" users.getBu() = "+users.getBu());
+			
 			isUpdated = jdbcBuRepository.updateBuOfUser(users.getUsername(), users.getBu());
+			System.out.println("update updateBuOfUser isUpdated == "+isUpdated);
+			
+			System.out.println("update updateUser users.getUsername() == "+users.getUsername()+" users.getRole() = "+users.getRole());
+			
 			isUpdated = jdbcRolesRepository.updateRoleOfUser(users.getUsername(), users.getRole());
-
+			System.out.println("update updateBuOfUser isUpdated == "+isUpdated);
+			
 			refreshUserList();
 
 		} catch (DataAccessException dae) {
@@ -239,7 +261,7 @@ public class UserService {
 		}
 		return userList;
 	}
-
+	
 	/**
 	 * 
 	 * TODO 2 : Need to catch exception at role and group level This is the

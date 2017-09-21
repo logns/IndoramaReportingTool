@@ -20,6 +20,11 @@
 			<use xmlns:xlink="http://www.w3.org/1999/xlink"
 						xlink:href="#stroked-video"></use></svg> Daily Log
 		</a></li>
+		<li><a href="${pageContext.request.contextPath}/dailylogslist"> <svg
+					class="glyph stroked video">
+			<use xmlns:xlink="http://www.w3.org/1999/xlink"
+						xlink:href="#stroked-video"></use></svg> View Report
+		</a></li>
 		
 		<li><a href="${pageContext.request.contextPath}/userlist"> <svg
 					class="glyph stroked gear">

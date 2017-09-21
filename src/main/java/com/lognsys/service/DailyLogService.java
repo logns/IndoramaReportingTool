@@ -73,6 +73,8 @@ public class DailyLogService {
 
 	@Autowired
 	private JdbcBuRepository jdbcBuRepository;
+	@Autowired
+	private JdbcUserRepository jdbcUserRepository;
 	
 	// Injecting resource application.properties.
 	@Autowired
@@ -131,6 +133,19 @@ public class DailyLogService {
 		return lists;
 	}
 
+public List<UsersDTO> getRealName() {
+
+		
+		List<UsersDTO> realnames;
+
+		try {
+			realnames = jdbcUserRepository.getUserRealNames();
+		} catch (DataAccessException dae) {
+//			LOG.error(dae.getMessage());
+			throw new IllegalStateException("Error : Failed to find username!");
+		}
+		return realnames;
+	}
 
 	public JasperReport getCompiledFile(String reportFileName, HttpServletRequest request) throws JRException, IOException {
 		Resource banner = resourceLoader.getResource("classpath:report/allReports.jasper");

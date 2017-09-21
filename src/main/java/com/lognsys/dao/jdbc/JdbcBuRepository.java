@@ -101,7 +101,7 @@ public class JdbcBuRepository implements BuRepository {
 
 		//th
 		if(listOfUsersBuDTO.isEmpty())
-			throw new EmptyResultDataAccessException(0);
+			return null;
 		
 		return listOfUsersBuDTO;
 	}

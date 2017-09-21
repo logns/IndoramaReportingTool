@@ -115,6 +115,18 @@ public class JdbcUserRepository implements UserRespository {
 	}
 
 	/**
+	 * Returns List<Users> from database
+	 */
+
+	@Override
+	public List<UsersDTO> getUserRealNames() throws DataAccessException {
+		List<UsersDTO> listOfRealname = namedParamJdbcTemplate.query(
+				sqlProperties.getProperty(Constants.USER_QUERIES.select_realname.name()),
+				new BeanPropertyRowMapper<UsersDTO>(UsersDTO.class));
+
+		return listOfRealname;
+	}
+	/**
 	 * delete user by user_id
 	 * 
 	 * @param id

@@ -26,8 +26,10 @@ public interface UserRespository {
 	 * @return
 	 */
 	public List<UsersDTO> getAllUsers();
+	
+	public List<UsersDTO> getUserRealNames();
 
-
+	
 	/**
 	 * Delete user by id
 	 * @param id

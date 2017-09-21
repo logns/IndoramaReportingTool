@@ -29,9 +29,6 @@
 			pattern="/login" />
 
 		<security:intercept-url access="permitAll"
-			pattern="/userlist" />
-
-		<security:intercept-url access="permitAll"
 			pattern="/dailylog" />
 		<security:intercept-url access="permitAll"
 			pattern="/dailylogslist" />
@@ -44,7 +41,7 @@
 			pattern="/useredit" />
 
 		<security:intercept-url access="permitAll"
-			pattern="/group" />
+			pattern="/userlist" />
 
 
 		<security:form-login login-page="/login"

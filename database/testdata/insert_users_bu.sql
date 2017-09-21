@@ -1,0 +1,11 @@
+insert into users_bu (bu_id,users_id) values(1,1);
+insert into users_bu (bu_id,users_id) values(2,2);
+insert into users_bu (bu_id,users_id) values(3,3);
+insert into users_bu (bu_id,users_id) values(4,4);
+insert into users_bu (bu_id,users_id) values(5,5);
+insert into users_bu (bu_id,users_id) values(6,6);
+insert into users_bu (bu_id,users_id) values(7,7);
+insert into users_bu (bu_id,users_id) values(8,8);
+insert into users_bu (bu_id,users_id) values(9,1);
+insert into users_bu (bu_id,users_id) values(10,2);
+insert into users_bu (bu_id,users_id) values(11,3);

@@ -53,14 +53,14 @@
 								<div class="row">
 								<div class="col-sm-6 form-group">
 									<label>Plants</label>
-								<form:select path="bu">
+								<form:select path="bu" class="form-control text ui-widget-content ui-corner-all">
 									<option value="NONE">--- Select ---</option>
 									<form:options items="${busList}"></form:options>
 								</form:select>
 								</div>
 								<div class="col-sm-6 form-group">
 								<label>Departments</label>
-								<form:select path="departments">
+								<form:select path="departments" class="form-control text ui-widget-content ui-corner-all">
 									<option value="NONE">--- Select ---</option>
 									<form:options items="${departmentsList}"></form:options>
 								</form:select>
@@ -69,7 +69,7 @@
 							<div class="row">
 								<div class="col-sm-6 form-group">
 								<label>Roles</label>
-								<form:select path="role">
+								<form:select path="role" class="form-control text ui-widget-content ui-corner-all">
 									<option value="NONE">--- Select ---</option>
 									<form:options items="${rolesList}"></form:options>
 								</form:select>

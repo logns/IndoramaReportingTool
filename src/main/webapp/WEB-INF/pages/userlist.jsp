@@ -48,7 +48,7 @@
 									<th data-field="id" data-sortable="true" data-visible="false">ID</th>
 									<th data-field="name" data-sortable="true">Name</th>
 									<th data-field="email" data-sortable="true">Email</th>
-									<th data-field="group" data-sortable="true">Group</th>
+									<th data-field="bu_name" data-sortable="true">Plants</th>
 									<th data-field="status" data-sortable="true">Status</th>
 								</tr>
 							</thead>

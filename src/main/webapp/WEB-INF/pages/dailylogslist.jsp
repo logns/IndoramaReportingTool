@@ -1,8 +1,10 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"
 	isELIgnored="false"%>
-<
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <div style="overflow: scroll;">
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+		
 			<div  align="center" >
 				<!-- <h1 class="page-header">View Reports</h1> -->
 				<img
@@ -18,7 +20,10 @@
 			</ol>
 		</div>
 		
-
+<div>
+				<c:if test="${not empty error}">
+					<div class="error">${error}</div>
+				</c:if>
 		<div class="panel panel-default">
 			<div class="row">
 				<div class="col-sm-6 form-group">
@@ -37,6 +42,6 @@
 				</div>
 			</div>
 		</div>
-
+</div>
 	</div>
 </div>

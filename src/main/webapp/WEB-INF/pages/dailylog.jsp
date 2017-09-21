@@ -39,6 +39,8 @@
 					<form:errors path="realname" element="div" />
 					<form:errors path="bu" element="div" />
 					<form:errors path="jobtype" element="div" />
+					<form:errors path="recordtype" element="div" />
+					<form:errors path="status" element="div" />
 					<form:errors path="substation" element="div" />
 
 				</div>
@@ -84,11 +86,12 @@
 										path="bu" />
 								</div>
 								<div class="col-sm-3 form-group">
-								<label>Name </label>
-								<form:input id="realname" type="label"
-										value="${realname}"
-										class="form-control text ui-widget-content ui-corner-all"
-										path="realname" />
+								
+								<label>Name </label><br />
+								<form:select path="realname" class="form-control text ui-widget-content ui-corner-all">
+									<option id="realname"  value="NONE">--- Select ---</option>
+									<form:options id="realname"  items="${realname}"></form:options>
+								</form:select>
 								</div>
 								<div class="col-sm-3 form-group">
 								<label>Sub Station</label>
@@ -241,7 +244,7 @@
 							</div>
 							<div class="form-group">
 								<label>Job Type</label>
-								<form:select path="jobtype">
+								<form:select path="jobtype" class="form-control text ui-widget-content ui-corner-all">
 									<option  id="jobtype"  value="NONE">--- Select ---</option>
 									<form:options id="jobtype"  items="${jobtype}"></form:options>
 								</form:select>
@@ -249,16 +252,16 @@
 							</div>
 							<div class="form-group">
 								<label>Record Type</label>
-								<form:select path="recordtype">
-									<option value="NONE">--- Select ---</option>
-									<form:options items="${recordtype}"></form:options>
+								<form:select path="recordtype" class="form-control text ui-widget-content ui-corner-all">
+									<option  id="recordtype"  value="NONE">--- Select ---</option>
+									<form:options  id="recordtype"  items="${recordtype}"></form:options>
 								</form:select>
 							</div>
 							<div class="form-group">
 								<label>Status</label>
-								<form:select path="status">
-									<option value="NONE">--- Select ---</option>
-									<form:options items="${status}"></form:options>
+								<form:select path="status" class="form-control text ui-widget-content ui-corner-all">
+									<option id="status"  value="NONE">--- Select ---</option>
+									<form:options id="status"  items="${status}"></form:options>
 								</form:select>
 									
 							</div>

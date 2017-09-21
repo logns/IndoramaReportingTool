@@ -9,14 +9,7 @@ public class UsersTable {
 	private int id;
 	private String name;
 	private String email;
-	private String department;
-	public String getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(String department) {
-		this.department = department;
-	}
+	private String bu_name;
 
 	private String status;
 
@@ -24,21 +17,32 @@ public class UsersTable {
 		super();
 	}
 
-	public UsersTable(int id, String name, String email, String department, String status) {
+	
+	public String getBu_name() {
+		return bu_name;
+	}
+
+
+	public void setBu_name(String bu_name) {
+		this.bu_name = bu_name;
+	}
+
+
+	public UsersTable(int id, String name, String email, String bu_name, String status) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
-		this.department = department;
+		this.bu_name = bu_name;
 		this.status = status;
 	}
 
-	public UsersTable(int id, String name, String email, String department, boolean enabled) {
+	public UsersTable(int id, String name, String email, String bu_name, boolean enabled) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
-		this.department = department;
+		this.bu_name = bu_name;
 		setStatus(enabled);
 		this.status = getStatus();
 	}

@@ -29,3 +29,8 @@ alter table users_bu add foreign key (bu_id)
    references bu (id) on delete cascade
    			 on update cascade;
 
+ALTER TABLE `indorama_poly`.`users_bu` 
+DROP INDEX `uc_users_bu` ,
+ADD INDEX `uc_users_bu` (`users_id` ASC),
+DROP INDEX `constr_usersid` ,
+ADD INDEX `constr_usersid` (`users_id` ASC);

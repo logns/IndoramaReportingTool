@@ -23,10 +23,14 @@ create index departments_name_idx on departments(department_name);
 
 insert into departments (department_name)
 values
-('A1');
+('PM-UT');
 insert into departments (department_name)
 values
-('A2');
+('POY');
 insert into departments (department_name)
 values
-('A3');
+('PSF');insert into departments (department_name)
+values
+('BICO');insert into departments (department_name)
+values
+('DTY');

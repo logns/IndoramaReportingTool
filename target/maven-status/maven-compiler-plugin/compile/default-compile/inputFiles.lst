@@ -37,6 +37,7 @@ C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\dao\BuReposit
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\loader\IngestXLSData.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\dao\dto\UserRolesDTO.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\exception\StorageFileNotFoundException.java
+C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\exception\CustomGenericException.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\dao\jdbc\resultset\UserBuResultSetExtractor.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\util\Constants.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\web\controller\BaseController.java

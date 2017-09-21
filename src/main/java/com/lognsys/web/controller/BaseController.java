@@ -268,9 +268,10 @@ public class BaseController {
 	 * @param result
 	 * @param model
 	 * @return
+	 * @throws IOException 
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String saveForm(@ModelAttribute("users") Users user, BindingResult result, ModelMap model) {
+	public String saveForm(@ModelAttribute("users") Users user, BindingResult result, ModelMap model) throws IOException {
 		
 
 		FormValidator formValidator = new FormValidator();
@@ -305,13 +306,11 @@ public class BaseController {
 			model.addAttribute("busList", busList);
 			return "register";
 
-		} else {
-			try {
-				userService.addUser(user);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		} 
+		else
+		{
+		userService.addUser(user);
+		return "userlist";
 		}
-		return "register";
 	}
 }
