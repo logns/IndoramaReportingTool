@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+import com.lognsys.dao.dto.BuDTO;
 import com.lognsys.dao.dto.DailyLogDTO;
 import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.model.DailyLog;
@@ -46,7 +47,10 @@ public class DailyLogController {
 	@Autowired
 	private DailyLogService dailyLogService;
 
-	
+
+	@Autowired
+	private UserService userService;
+
 	// Injecting resource application.properties.
 		@Autowired
 		@Qualifier("applicationProperties")
@@ -63,16 +67,11 @@ public class DailyLogController {
 	public String getDailyLogForm(ModelMap model, HttpServletRequest request) {
 
 //		String realname = "monika sharma";
-		String bu = "bu1";
-		String substation = "MS1";
-		String shift = "Morning";
+		//String substation = "MS1";
+		String str_shift = applicationProperties.getProperty(Constants.TYPES_ARRAY.shift.name());
 		String str_jobtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.jobtype.name());
 		String str_recordtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.recordtype.name());
 		String str_status = applicationProperties.getProperty(Constants.TYPES_ARRAY.status.name());
-
-		System.out.println("controller===== str_jobtype- " + str_jobtype.toString());
-		System.out.println("controller===== recordtype- " + str_recordtype.toString());
-		System.out.println("controller===== str_status- " + str_status.toString());
 
 		List<UsersDTO> userDtos=dailyLogService.getRealName();
 		List<String> realname = new ArrayList<String>();
@@ -82,20 +81,26 @@ public class DailyLogController {
 		}
 		System.out.println("controller===== realname- " + realname.size());
 		System.out.println("controller===== realname.get(0)- " + realname.get(0) );
-		
+		List<BuDTO> listOfBuDTO = userService.getAllBus();
+
+		// Adding data to list from RolesDTO
+		List<String> busList = new ArrayList<String>();
+		for (BuDTO bu : listOfBuDTO) {
+			busList.add(bu.getBu_name());
+		}
 		List<String> jobtype=Arrays.asList(str_jobtype.split(","));
 		List<String> recordtype=Arrays.asList(str_recordtype.split(","));
 		List<String> status=Arrays.asList(str_status.split(","));
+		List<String> shift=Arrays.asList(str_shift.split(","));
 		
 		//populate to JSP page
 		DailyLog dailylogs = new DailyLog();
 		model.addAttribute("dailylogs", dailylogs);
-		model.addAttribute("bu", bu);
+		model.addAttribute("busList", busList);
 		model.addAttribute("realname", realname);
 		model.addAttribute("jobtype", jobtype);
 		model.addAttribute("recordtype", recordtype);
 		model.addAttribute("status", status);
-		model.addAttribute("substation", substation);
 		model.addAttribute("shift", shift);
 		return "dailylog";
 	}
@@ -120,10 +125,8 @@ public class DailyLogController {
 
 		if (result.hasErrors())
 		{
-			String realname = "monika sharma";
-			String bu = "bu1";
-			String substation = "MS1";
-			String shift = "Morning";
+		
+			String str_shift = applicationProperties.getProperty(Constants.TYPES_ARRAY.shift.name());
 			String str_jobtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.jobtype.name());
 			String str_recordtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.recordtype.name());
 			String str_status = applicationProperties.getProperty(Constants.TYPES_ARRAY.status.name());
@@ -135,15 +138,29 @@ public class DailyLogController {
 			List<String> jobtype=Arrays.asList(str_jobtype.split(","));
 			List<String> recordtype=Arrays.asList(str_recordtype.split(","));
 			List<String> status=Arrays.asList(str_status.split(","));
-			
+			List<String> shift=Arrays.asList(str_shift.split(","));
+		
+			List<UsersDTO> userDtos=dailyLogService.getRealName();
+			List<String> realname = new ArrayList<String>();
+			for(int i=0;i<userDtos.size();i++){
+				UsersDTO dto=userDtos.get(i);
+				realname.add(dto.getRealname());
+			}
+			System.out.println("controller===== realname- " + realname.size());
+			System.out.println("controller===== realname.get(0)- " + realname.get(0) );
+			List<BuDTO> listOfBuDTO = userService.getAllBus();
+
+			// Adding data to list from RolesDTO
+			List<String> busList = new ArrayList<String>();
+			for (BuDTO bu : listOfBuDTO) {
+				busList.add(bu.getBu_name());
+			}
 			//populate to JSP page
 			model.addAttribute("dailylogs", dailylogs);
-			model.addAttribute("bu", bu);
 			model.addAttribute("realname", realname);
 			model.addAttribute("jobtype", jobtype);
 			model.addAttribute("recordtype", recordtype);
 			model.addAttribute("status", status);
-			model.addAttribute("substation", substation);
 			model.addAttribute("shift", shift);
 			return "dailylog";
 		} else
@@ -182,6 +199,9 @@ public class DailyLogController {
     public ModelAndView downloadExcel() {
     	List<DailyLogDTO> lists=  dailyLogService.refresDailyListReport();
 	    // return a view which will be resolved by an excel view resolver
+    	for(int i=0;i<lists.size();i++){
+    		System.out.println("Values  is "+lists.get(i).toString());
+    	}
         return new ModelAndView("excelView", "lists", lists);
     } /**
      * Handle request to download an Excel document
@@ -191,7 +211,7 @@ public class DailyLogController {
     		HttpServletRequest request,
     		HttpServletResponse response) throws JRException, IOException, SQLException, NamingException{
     
-		String reportFileName = "allReports";
+		String reportFileName = "reports_landscape";
 		String reportPdf = "pdf";
 		Connection c = conn.getConnection();
 		List<DailyLogDTO> lists=  dailyLogService.refresDailyListReport();
@@ -206,7 +226,7 @@ public class DailyLogController {
 		
 		hmParams.put("dates", dailylogsdyto.getDates());
 		hmParams.put("shift", dailylogsdyto.getShift());
-		hmParams.put("bu", dailylogsdyto.getBu());
+		hmParams.put("bu", dailylogsdyto.getbu_name());
 		hmParams.put("substation", dailylogsdyto.getSubstation());
 		hmParams.put("machine",dailylogsdyto.getMachine());
 		hmParams.put("description",dailylogsdyto.getDescription());
@@ -221,20 +241,13 @@ public class DailyLogController {
 		System.out.println(" ==================== dailylogsdyto.getJobtype()  "+dailylogsdyto.getJobtype());
 		
 		}
-//		System.out.println("============== generateReport ================hmParams.values() " + hmParams.values());
-//		System.out.println("============== generateReport ================hmParams.size() " + hmParams.size());
-
 		JasperReport jasperReport = dailyLogService.getCompiledFile(reportFileName,
 				request);
-//		System.out.println("============== generateReport ================jasperReport toString " +jasperReport.toString());
-//		System.out.println("============== generateReport ================response toString " +response.toString());
-//		System.out.println("============== generateReport ================reportPdf.equalsIgnoreCase(pdf) " +(reportPdf.equalsIgnoreCase("pdf")));
-
 		 if (reportPdf.equalsIgnoreCase("pdf")) {
 
 			 dailyLogService.generateReportPDF(response, hmParams, jasperReport, c); // For
 			
 		}
-		return "";
+		return null;
     }
 }

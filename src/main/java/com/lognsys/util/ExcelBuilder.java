@@ -93,7 +93,7 @@ public class ExcelBuilder extends AbstractExcelView {
             HSSFRow aRow = sheet.createRow(rowCount++);
             aRow.createCell(0).setCellValue(dailyLogDTO.getDates());
             aRow.createCell(1).setCellValue(dailyLogDTO.getShift());
-            aRow.createCell(2).setCellValue(dailyLogDTO.getBu());
+            aRow.createCell(2).setCellValue(dailyLogDTO.getbu_name());
             aRow.createCell(3).setCellValue(dailyLogDTO.getSubstation());
             aRow.createCell(4).setCellValue(dailyLogDTO.getMachine());
             aRow.createCell(5).setCellValue(dailyLogDTO.getDescription());

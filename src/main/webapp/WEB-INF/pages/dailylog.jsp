@@ -72,18 +72,19 @@
 							<div class="row">
 								<div class="col-sm-3 form-group  ">
 								<label>Shift   </label>
-								<form:input id="shift" type="label"
-										value="${shift}"
-										class="form-control text ui-widget-content ui-corner-all"
-										path="shift" />
+							
+										<form:select path="shift" class="form-control text ui-widget-content ui-corner-all">
+									<option id="shift" value="NONE">--- Select ---</option>
+									<form:options  id="shift" items="${shift}"></form:options>
+								</form:select>
 								</div>
 								
 								<div class="col-sm-3 form-group">
-								<label>Plant</label>
-								<form:input id="bu" type="label"
-										value="${bu}"
-										class="form-control text ui-widget-content ui-corner-all"
-										path="bu" />
+								<label>Plants</label>
+								<form:select  path="bu" class="form-control text ui-widget-content ui-corner-all">
+									<option   id="bu"  value="NONE">--- Select ---</option>
+									<form:options   id="bu"  items="${busList}"></form:options>
+								</form:select>
 								</div>
 								<div class="col-sm-3 form-group">
 								
@@ -96,7 +97,6 @@
 								<div class="col-sm-3 form-group">
 								<label>Sub Station</label>
 								<form:input id="substation" type="label"
-										value="${substation}"
 										class="form-control text ui-widget-content ui-corner-all"
 										path="substation" />
 							</div>

@@ -29,7 +29,7 @@ public class DailyLogDTO {
 	private String recordtype = "";
 	private String status = "";
 	private String shift = "";
-	private String bu = "";
+	private String bu_name = "";
 	
 	public DailyLogDTO() {
 		super();
@@ -39,7 +39,7 @@ public class DailyLogDTO {
 	public DailyLogDTO(int id, double loadmax, double loadmin, double voltmax, double voltmin, double frequencymax,
 			double frequencymin, double pfmax, double pfmin, double powerdip, String remark, String machine,
 			String description, String timefrom, String timeto, String spareparts, String attendby, String jobtype,
-			String dates, String recordtype, String status,String substation,String shift,String bu) {
+			String dates, String recordtype, String status,String substation,String shift,String bu_name) {
 		super();
 		this.id = id;
 		this.loadmax = loadmax;
@@ -64,15 +64,15 @@ public class DailyLogDTO {
 		this.status = status;
 		this.substation = substation;
 		this.shift = shift;
-		this.bu = bu;
+		this.bu_name = bu_name;
 	}
 
-	public String getBu() {
-		return bu;
+	public String getbu_name() {
+		return bu_name;
 	}
 
-	public void setBu(String bu) {
-		this.bu = bu;
+	public void setbu_name(String bu_name) {
+		this.bu_name = bu_name;
 	}
 
 	public String getShift() {
@@ -234,7 +234,7 @@ public class DailyLogDTO {
 				+ ", machine=" + machine + ", description=" + description + ", timefrom=" + timefrom + ", timeto="
 				+ timeto + ", spareparts=" + spareparts + ", attendby=" + attendby + ", jobtype=" + jobtype + ", dates="
 				+ dates + ", substation=" + substation + ", recordtype=" + recordtype + ", status=" + status
-				+ ", shift=" + shift + ", bu=" + bu + "]";
+				+ ", shift=" + shift + ", bu_name=" + bu_name + "]";
 	}
 
 	

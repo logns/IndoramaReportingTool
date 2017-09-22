@@ -43,7 +43,6 @@
 		<security:intercept-url access="permitAll"
 			pattern="/userlist" />
 
-
 		<security:form-login login-page="/login"
 			default-target-url="/login" always-use-default-target="true"
 			authentication-failure-url="/login?error" username-parameter="username"

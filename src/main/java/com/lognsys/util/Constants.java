@@ -123,7 +123,8 @@ public class Constants {
 	public enum TYPES_ARRAY {
 		jobtype,
 		recordtype,
-		status
+		status,
+		shift
 		}
 
 	/**

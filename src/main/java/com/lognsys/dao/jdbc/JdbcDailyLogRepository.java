@@ -62,7 +62,9 @@ public class JdbcDailyLogRepository implements DailyLogRespository {
 		List<DailyLogDTO> lists = namedParamJdbcTemplate.query(
 				sqlProperties.getProperty(Constants.DAILYLOG_QUERIES.select_dailylogs_all.name()),
 				new BeanPropertyRowMapper<DailyLogDTO>(DailyLogDTO.class));
-			System.out.println("list size "+lists.size());
+		for(int i=0;i<lists.size();i++){
+    		System.out.println("Values  refresDailyListReport is "+lists.get(i).toString());
+    	}
 		return lists;
 	}
 

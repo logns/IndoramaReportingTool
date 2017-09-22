@@ -118,7 +118,7 @@ public class DailyLogService {
 
 	public List<DailyLogDTO>  refresDailyListReport() {
 		List<DailyLogDTO> lists = (jdbcDailyLogRepository.getAllDailyLogDTO());
-
+		
 		ResourceLoader resourceLoader = new FileSystemResourceLoader();
 		Resource resource = resourceLoader
 				.getResource(applicationProperties.getProperty(Constants.JSON_FILES.dailylogs_filename.name()));
@@ -148,8 +148,8 @@ public List<UsersDTO> getRealName() {
 	}
 
 	public JasperReport getCompiledFile(String reportFileName, HttpServletRequest request) throws JRException, IOException {
-		Resource banner = resourceLoader.getResource("classpath:report/allReports.jasper");
-		Resource bannerjrxml = resourceLoader1.getResource("classpath:report/allReports.jrxml");
+		Resource banner = resourceLoader.getResource("classpath:report/reports_landscape.jasper");
+		Resource bannerjrxml = resourceLoader1.getResource("classpath:report/reports_landscape.jrxml");
 		
 //		System.out.println("===========resourceLoader " +banner.getFile().getAbsolutePath());
 //		System.out.println("===========resourceLoader bannerjrxml " +bannerjrxml.getFile().getAbsolutePath());
