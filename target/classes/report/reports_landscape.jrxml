@@ -67,7 +67,7 @@ FROM indorama_poly.dailylog_bu
 	<title>
 		<band height="95" splitType="Stretch">
 			<staticText>
-				<reportElement style="SubTitle" stretchType="RelativeToTallestObject" x="259" y="64" width="396" height="29" forecolor="#1A0D0D" uuid="0dae0af3-dd1d-4b42-b346-386af21f0689"/>
+				<reportElement style="SubTitle" stretchType="RelativeToTallestObject" x="279" y="64" width="396" height="29" forecolor="#1A0D0D" uuid="0dae0af3-dd1d-4b42-b346-386af21f0689"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="22" isBold="false"/>
 				</textElement>
