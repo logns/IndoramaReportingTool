@@ -25,7 +25,7 @@ Dashdoard Admin
 		</div><!--/.row-->
 		
 		<div class="row">
-		<div class="col-xs-12 col-md-6 col-lg-3">
+<!-- 		<div class="col-xs-12 col-md-6 col-lg-3">
 				<div class="panel panel-teal panel-widget">
 					<div class="row no-padding">
 						<div class="col-sm-3 col-lg-5 widget-left">
@@ -50,9 +50,9 @@ Dashdoard Admin
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			
-			<div class="col-xs-12 col-md-6 col-lg-3">
+	<!-- 		<div class="col-xs-12 col-md-6 col-lg-3">
 				<div class="panel panel-orange panel-widget">
 					<div class="row no-padding">
 						<div class="col-sm-3 col-lg-5 widget-left">
@@ -60,31 +60,71 @@ Dashdoard Admin
 						</div>
 						<div class="col-sm-9 col-lg-7 widget-right">
 							<div class="large">52</div>
-							<div class="text-muted">Comments</div>
+							<div class="text-muted">Daily Records</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> 
 			<div class="col-xs-12 col-md-6 col-lg-3">
-				<div class="panel panel-teal panel-widget">
+				<div class="panel panel-red panel-widget">
 					<div class="row no-padding">
 						<div class="col-sm-3 col-lg-5 widget-left">
-							<svg class="glyph stroked male-user"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-male-user"></use></svg>
+						<svg class="glyph stroked app-window-with-content"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-app-window-with-content"></use></svg>
 						</div>
 						<div class="col-sm-9 col-lg-7 widget-right">
 							<div class="large">24</div>
-							<div class="text-muted">Total Revenue</div>
+							<div class="text-muted">Daily Records</div>
 						</div>
 					</div>
 				</div>
+			</div>-->
+			
+				<div class="row">
+			<div class="col-xs-6 col-md-3">
+				<div class="panel panel-default">
+					<div class="panel-body easypiechart-panel">
+						<h4>Last Update</h4>
+						<div class="easypiechart" id="easypiechart-blue" data-percent="92"><span class="percent">14:20</span>
+						<canvas height="5" width="5"></canvas></div>
+					</div>
+				</div>
 			</div>
+			<div class="col-xs-6 col-md-3">
+				<div class="panel panel-default">
+					<div class="panel-body easypiechart-panel">
+						<h4>Records Posted</h4>
+						<div class="easypiechart" id="easypiechart-orange" data-percent="65"><span class="percent">20</span>
+						<canvas height="5" width="5"></canvas></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-6 col-md-3">
+				<div class="panel panel-default">
+					<div class="panel-body easypiechart-panel">
+						<h4>Follow Ups</h4>
+						<div class="easypiechart" id="easypiechart-teal" data-percent="56"><span class="percent">10</span>
+						<canvas height="5" width="5"></canvas></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-6 col-md-3">
+				<div class="panel panel-default">
+					<div class="panel-body easypiechart-panel">
+						<h4>Total Breakdown</h4>
+						<div class="easypiechart" id="easypiechart-red" data-percent="27"><span class="percent">27</span>
+						<canvas height="5" width="5"></canvas></div>
+					</div>
+				</div>
+			</div>
+		</div><!--/.row-->
+			
 			
 		</div>
-		<%-- 
+	
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
-					<div class="panel-heading">Site Traffic Overview</div>
+					<div class="panel-heading">Site Maintenance Overview</div>
 					<div class="panel-body">
 						<div class="canvas-wrapper">
 							<canvas class="main-chart" id="line-chart" height="354" width="1064" style="width: 1064px; height: 354px;"></canvas>
@@ -93,51 +133,14 @@ Dashdoard Admin
 				</div>
 			</div>
 		</div><!--/.row-->
-		 --%>
-		<div class="row">
-			<div class="col-xs-6 col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-body easypiechart-panel">
-						<h4>Active Users</h4>
-						<div class="easypiechart" id="easypiechart-blue" data-percent="92"><span class="percent">92%</span>
-						<canvas height="5" width="5"></canvas></div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-6 col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-body easypiechart-panel">
-						<h4>Adverts Posted</h4>
-						<div class="easypiechart" id="easypiechart-orange" data-percent="65"><span class="percent">65%</span>
-						<canvas height="5" width="5"></canvas></div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-6 col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-body easypiechart-panel">
-						<h4>Comments</h4>
-						<div class="easypiechart" id="easypiechart-teal" data-percent="56"><span class="percent">56%</span>
-						<canvas height="5" width="5"></canvas></div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-6 col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-body easypiechart-panel">
-						<h4>Total Revenue</h4>
-						<div class="easypiechart" id="easypiechart-red" data-percent="27"><span class="percent">27%</span>
-						<canvas height="5" width="5"></canvas></div>
-					</div>
-				</div>
-			</div>
-		</div><!--/.row-->
+		
+	
 								
 		<div class="row">
 			<div class="col-md-8">
 			
 				<div class="panel panel-default chat">
-					<div class="panel-heading" id="accordion"><svg class="glyph stroked two-messages"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-two-messages"></use></svg> Chat</div>
+					<div class="panel-heading" id="accordion"><svg class="glyph stroked two-messages"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-two-messages"></use></svg>Message Board</div>
 					<div class="panel-body">
 						<ul>
 							<li class="left clearfix">
@@ -146,10 +149,10 @@ Dashdoard Admin
 								</span>
 								<div class="chat-body clearfix">
 									<div class="header">
-										<strong class="primary-font">John Doe</strong> <small class="text-muted">32 mins ago</small>
+										<strong class="primary-font">Anupong</strong> <small class="text-muted">32 mins ago</small>
 									</div>
 									<p>
-										Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ante turpis, rutrum ut ullamcorper sed, dapibus ac nunc. Vivamus luctus convallis mauris, eu gravida tortor aliquam ultricies. 
+										We change SUN Led lamp 18 w 2 ea at burner area ( old not light : lamp damage )test work normal
 									</p>
 								</div>
 							</li>
@@ -159,10 +162,10 @@ Dashdoard Admin
 								</span>
 								<div class="chat-body clearfix">
 									<div class="header">
-										<strong class="pull-left primary-font">Jane Doe</strong> <small class="text-muted">6 mins ago</small>
+										<strong class="pull-left primary-font">Dumrongsak</strong> <small class="text-muted">6 mins ago</small>
 									</div>
 									<p>
-										Mauris dignissim porta enim, sed commodo sem blandit non. Ut scelerisque sapien eu mauris faucibus ultrices. Nulla ac odio nisl. Proin est metus, interdum scelerisque quam eu, eleifend pretium nunc. Suspendisse finibus auctor lectus, eu interdum sapien.
+										To PM FR/SR motor we check current ,voltage , frequency,and temp motor normal.
 									</p>
 								</div>
 							</li>
@@ -172,10 +175,11 @@ Dashdoard Admin
 								</span>
 								<div class="chat-body clearfix">
 									<div class="header">
-										<strong class="primary-font">John Doe</strong> <small class="text-muted">32 mins ago</small>
+										<strong class="primary-font">Jamom</strong> <small class="text-muted">32 mins ago</small>
 									</div>
 									<p>
-										Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ante turpis, rutrum ut ullamcorper sed, dapibus ac nunc. Vivamus luctus convallis mauris, eu gravida tortor aliquam ultricies. 
+									Daily check condition,voltage and  destilled water for forklift and claning battery BICO plant and record to data check sheet EI-QF17/03.  
+ 									-Fork lift  no.1,2can use working normal Spare battery no.2,3 can use working.
 									</p>
 								</div>
 							</li>
@@ -194,7 +198,7 @@ Dashdoard Admin
 				
 			</div><!--/.col-->
 			
-			<div class="col-md-4">
+	<!-- 		<div class="col-md-4">
 			
 				<div class="panel panel-blue">
 					<div class="panel-heading dark-overlay"><svg class="glyph stroked clipboard-with-paper"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-clipboard-with-paper"></use></svg>To-do List</div>
@@ -278,7 +282,7 @@ Dashdoard Admin
 					</div>
 				</div>
 								
-			</div><!--/.col-->
+			</div>/.col -->
 		</div><!--/.row-->
 	</div>
 </body>
