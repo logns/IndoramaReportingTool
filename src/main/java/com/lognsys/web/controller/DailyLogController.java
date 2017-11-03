@@ -227,7 +227,6 @@ public class DailyLogController {
 		hmParams.put("dates", dailylogsdyto.getDates());
 		hmParams.put("shift", dailylogsdyto.getShift());
 		hmParams.put("bu", dailylogsdyto.getbu_name());
-		hmParams.put("substation", dailylogsdyto.getSubstation());
 		hmParams.put("machine",dailylogsdyto.getMachine());
 		hmParams.put("description",dailylogsdyto.getDescription());
 		hmParams.put("timefrom",dailylogsdyto.getTimefrom());

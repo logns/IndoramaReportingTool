@@ -1,29 +1,41 @@
 package com.lognsys.dao.dto;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Table;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * Database object
- * 
- * @author pdoshi
+ * @author monika
  *
  */
-
 @Document(collection = "users")
 public class UsersDTO {
 	@Id
 	private int id;
+	
 	private String realname = "";
+	
 	private String username = "";
+	
 	private String phone = "";
+	
 	private String birthdate = null;
+	
 	private boolean enabled = false;
+	
 	private boolean notification = false;
 
 	private String address = "";
+	
 	private String city = "";
+	
 	private String state = "";
+	
 	private String zipcode = "";
 
 	public UsersDTO() {

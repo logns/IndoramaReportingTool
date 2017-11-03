@@ -15,6 +15,9 @@ CREATE TABLE dailylog
 (
 	# Surrogate Primary Key	
 	id integer auto_increment primary key,
+
+	# Optional notification to users 
+	dailylog_title varchar(150) not null default "",
     
     # date  
 	dates varchar(64) not null default '',
@@ -22,35 +25,6 @@ CREATE TABLE dailylog
 	# Optional shift
 	shift varchar(64) not null default '',
 
-    # optional state 
-    substation varchar(64) not null default '',
- 
-    #optional loadmax
-    loadmax double not null default '0.0',
-    #optional loadmax
-  	loadmin double not null default '0.0',
-		  
-    #optional loadmax
-    voltmax double not null default '0.0',
-    #optional loadmax
-  	voltmin double not null default '0.0',
-    
-    #optional loadmax
-    frequencymax double not null default '0.0',
-    #optional loadmax
-  	frequencymin double not null default '0.0',
-    
-    #optional loadmax
-    pfmax double not null default '0.0',
-    #optional loadmax
-  	pfmin double not null default '0.0',
-    
-    #optional loadmax
-  	powerdip double not null default '0.0',
-    
-	#required by spring security enabled =1 , disabled=0 
-	remark varchar(64)  not null default '',
-		        
 	# Optional notification to users 
 	machine varchar(64) not null default "",
 			        
@@ -58,10 +32,10 @@ CREATE TABLE dailylog
 	description VARCHAR(255) default null,
 	
     #Optional birthdate 	
-	timefrom datetime default null,
+	timefrom TIME(6) NOT NULL ,
 	
     #Optional birthdate 	
-	timeto datetime default null,
+	timeto TIME(6) NOT NULL ,
     
 	# Optional notification to users 
 	spareparts varchar(64) not null default "",
@@ -84,8 +58,3 @@ CREATE TABLE dailylog
 create index dailylog_jobtype on dailylog(jobtype);
 create index dailylog_status on dailylog(status);
 create index dailylog_attendby on dailylog(attendby);
-
-ALTER TABLE `indorama_poly`.`dailylog` 
-CHANGE COLUMN `timefrom` `timefrom` TIME(6) NOT NULL ,
-CHANGE COLUMN `timeto` `timeto` TIME(6) NOT NULL ;
-

@@ -20,16 +20,6 @@ public class DailyLog {
 	private String bu = "";
 	@Id
 	private int id;
-	private double loadmax;
-	private double loadmin;
-	private double voltmax;
-	private double voltmin;
-	private double frequencymax;
-	private double frequencymin;
-	private double pfmax;
-	private double pfmin;
-	private double powerdip;
-	private String remark = "";
 	private String machine = "";
 	private String description = "";
 	private String timefrom = "";
@@ -38,7 +28,6 @@ public class DailyLog {
 	private String attendby = "";
 	private String jobtype = "";
 	private String dates = "";
-	private String substation = "";
 	private String recordtype = "";
 	private String status = "";
 	private String shift = "";
@@ -49,24 +38,13 @@ public class DailyLog {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public DailyLog(String realname, String bu, int id, double loadmax, double loadmin, double voltmax, double voltmin,
-			double frequencymax, double frequencymin, double pfmax, double pfmin, double powerdip, String remark,
+	public DailyLog(String realname, String bu, int id,
 			String machine, String description, String timefrom, String timeto, String spareparts, String attendby,
-			String jobtype, String dates, String substation, String recordtype, String status,String shift) {
+			String jobtype, String dates, String recordtype, String status,String shift) {
 		super();
 		this.realname = realname;
 		this.bu = bu;
 		this.id = id;
-		this.loadmax = loadmax;
-		this.loadmin = loadmin;
-		this.voltmax = voltmax;
-		this.voltmin = voltmin;
-		this.frequencymax = frequencymax;
-		this.frequencymin = frequencymin;
-		this.pfmax = pfmax;
-		this.pfmin = pfmin;
-		this.powerdip = powerdip;
-		this.remark = remark;
 		this.machine = machine;
 		this.description = description;
 		this.timefrom = timefrom;
@@ -75,28 +53,16 @@ public class DailyLog {
 		this.attendby = attendby;
 		this.jobtype = jobtype;
 		this.dates = dates;
-		this.substation = substation;
 		this.recordtype = recordtype;
 		this.status = status;
 		this.shift = shift;
 	}
 
-	public DailyLog(int id, double loadmax, double loadmin, double voltmax, double voltmin, double frequencymax,
-			double frequencymin, double pfmax, double pfmin, double powerdip, String remark, String machine,
+	public DailyLog(int id, String machine,
 			String description, String timefrom, String timeto, String spareparts, String attendby, String jobtype,
-			String dates, String recordtype, String status,String substation,String shift) {
+			String dates, String recordtype, String status,String shift) {
 		super();
 		this.id = id;
-		this.loadmax = loadmax;
-		this.loadmin = loadmin;
-		this.voltmax = voltmax;
-		this.voltmin = voltmin;
-		this.frequencymax = frequencymax;
-		this.frequencymin = frequencymin;
-		this.pfmax = pfmax;
-		this.pfmin = pfmin;
-		this.powerdip = powerdip;
-		this.remark = remark;
 		this.machine = machine;
 		this.description = description;
 		this.timefrom = timefrom;
@@ -107,7 +73,6 @@ public class DailyLog {
 		this.dates = dates;
 		this.recordtype = recordtype;
 		this.status = status;
-		this.substation = substation;
 		this.shift = shift;
 		
 	}
@@ -118,14 +83,6 @@ public class DailyLog {
 
 	public void setShift(String shift) {
 		this.shift = shift;
-	}
-
-	public String getSubstation() {
-		return substation;
-	}
-
-	public void setSubstation(String substation) {
-		this.substation = substation;
 	}
 
 	public String getRecordtype() {
@@ -166,66 +123,7 @@ public class DailyLog {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public double getLoadmax() {
-		return loadmax;
-	}
-	public void setLoadmax(double loadmax) {
-		this.loadmax = loadmax;
-	}
-	public double getLoadmin() {
-		return loadmin;
-	}
-	public void setLoadmin(double loadmin) {
-		this.loadmin = loadmin;
-	}
-	public double getVoltmax() {
-		return voltmax;
-	}
-	public void setVoltmax(double voltmax) {
-		this.voltmax = voltmax;
-	}
-	public double getVoltmin() {
-		return voltmin;
-	}
-	public void setVoltmin(double voltmin) {
-		this.voltmin = voltmin;
-	}
-	public double getFrequencymax() {
-		return frequencymax;
-	}
-	public void setFrequencymax(double frequencymax) {
-		this.frequencymax = frequencymax;
-	}
-	public double getFrequencymin() {
-		return frequencymin;
-	}
-	public void setFrequencymin(double frequencymin) {
-		this.frequencymin = frequencymin;
-	}
-	public double getPfmax() {
-		return pfmax;
-	}
-	public void setPfmax(double pfmax) {
-		this.pfmax = pfmax;
-	}
-	public double getPfmin() {
-		return pfmin;
-	}
-	public void setPfmin(double pfmin) {
-		this.pfmin = pfmin;
-	}
-	public double getPowerdip() {
-		return powerdip;
-	}
-	public void setPowerdip(double powerdip) {
-		this.powerdip = powerdip;
-	}
-	public String getRemark() {
-		return remark;
-	}
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
+
 	public String getMachine() {
 		return machine;
 	}
@@ -289,12 +187,9 @@ public class DailyLog {
 
 	@Override
 	public String toString() {
-		return "DailyLog [realname=" + realname + ", bu=" + bu + ", id=" + id + ", loadmax=" + loadmax + ", loadmin="
-				+ loadmin + ", voltmax=" + voltmax + ", voltmin=" + voltmin + ", frequencymax=" + frequencymax
-				+ ", frequencymin=" + frequencymin + ", pfmax=" + pfmax + ", pfmin=" + pfmin + ", powerdip=" + powerdip
-				+ ", remark=" + remark + ", machine=" + machine + ", description=" + description + ", timefrom="
+		return "DailyLog [realname=" + realname + ", bu=" + bu + ", id=" + id + ", machine=" + machine + ", description=" + description + ", timefrom="
 				+ timefrom + ", timeto=" + timeto + ", spareparts=" + spareparts + ", attendby=" + attendby
-				+ ", jobtype=" + jobtype + ", dates=" + dates + ", substation=" + substation + ", recordtype="
+				+ ", jobtype=" + jobtype + ", dates=" + dates + ", recordtype="
 				+ recordtype + ", status=" + status + ", shift=" + shift + ", realname=" + realname + "]";
 	}
 	

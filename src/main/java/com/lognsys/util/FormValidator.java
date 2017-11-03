@@ -76,13 +76,10 @@ public class FormValidator implements Validator {
 			String currentTime = sdf.format(dt);
 
 			validateRealname(dailyLog, errors);
-			validateRemark(dailyLog, errors);
 			validateMachine(dailyLog, errors);
 			validateDescription(dailyLog, errors);
 			validateSpareParts(dailyLog, errors);
 			validateAttendby(dailyLog, errors);
-			
-			validateDoubleNmber(dailyLog, errors);
 		
 		}
 		
@@ -148,19 +145,6 @@ public class FormValidator implements Validator {
 		
 	}
 
-	private void validateRemark(DailyLog dailyLog, Errors errors) {
-				ValidationUtils.rejectIfEmpty(errors, "remark", "required.remark", "remark is required.");
-
-				// input string conatains characters only
-				if (!(dailyLog.getRemark() != null && dailyLog.getRemark().isEmpty())) {
-					pattern = Pattern.compile(STRING_PATTERN);
-					matcher = pattern.matcher((dailyLog.getRemark()));
-
-					if (!matcher.matches()) {
-						errors.rejectValue("remark", "remark.containNonChar", "Enter a valid remark");
-					}
-				}
-	}
 
 	private void validateRealname(DailyLog dailyLog, Errors errors) {
 		// TODO Auto-generated method stub
@@ -177,39 +161,6 @@ public class FormValidator implements Validator {
 		}
 	}
 
-	private void validateDoubleNmber(DailyLog dailyLog, Errors errors) {
-//		loadmax loadmin voltmax voltmin frequencymax frequencymin pfmax pfmin powerdip;
-		
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "loadmax", "required.loadmax", "loadmax is required.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "loadmin", "required.loadmin", "loadmin is required.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "voltmax", "required.voltmax", "voltmax is required.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "voltmin", "required.voltmin", "voltmin is required.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "frequencymax", "required.frequencymax", "frequencymax is required.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "frequencymin", "required.frequencymin", "frequencymin is required.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "pfmax", "required.pfmax", "pfmax is required.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "pfmin", "required.pfmin", "pfmin is required.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "powerdip", "required.powerdip", "powerdip is required.");
-
-			if (dailyLog.getLoadmax()<=0.0) {
-				errors.rejectValue("loadmax", "loadmax.incorrect", "Enter a correct loadmax");
-			}else if (dailyLog.getLoadmax()<=0.0) {
-				errors.rejectValue("loadmin", "loadmin.incorrect", "Enter a correct loadmin");
-			}else if (dailyLog.getLoadmax()<=0.0) {
-				errors.rejectValue("voltmax", "voltmax.incorrect", "Enter a correct voltmax");
-			}else if (dailyLog.getLoadmax()<=0.0) {
-				errors.rejectValue("voltmin", "voltmin.incorrect", "Enter a correct voltmin");
-			}else if (dailyLog.getLoadmax()<=0.0) {
-				errors.rejectValue("frequencymax", "frequencymax.incorrect", "Enter a correct frequencymax");
-			}else if (dailyLog.getLoadmax()<=0.0) {
-				errors.rejectValue("frequencymin", "frequencymin.incorrect", "Enter a correct frequencymin");
-			}else if (dailyLog.getLoadmax()<=0.0) {
-				errors.rejectValue("pfmax", "pfmax.incorrect", "Enter a correct pfmax");
-			}else if (dailyLog.getLoadmax()<=0.0) {
-				errors.rejectValue("pfmin", "pfmin.incorrect", "Enter a correct pfmin");
-			}else if (dailyLog.getLoadmax()<=0.0) {
-				errors.rejectValue("powerdip", "powerdip.incorrect", "Enter a correct powerdip");
-			}
-	}
 
 	/**
 	 * 

@@ -1,5 +1,8 @@
 package com.lognsys.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  * 
  * Description: User class is Value Object which populates client side object.
@@ -11,7 +14,6 @@ package com.lognsys.model;
  * 
  * @author pdoshi
  */
-
 public class Users {
 
 	private int id;

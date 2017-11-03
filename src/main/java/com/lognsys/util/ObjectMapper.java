@@ -102,17 +102,6 @@ public class ObjectMapper {
 		System.out.println("\n\n\n\n\n ============DailyLogDTO=============== dailyLog.getDates()- " + dailyLog.getDates());
 		System.out.println("\n\n\n\n\n ============DailyLogDTO=============== dldto.getDates- " + dldto.getDates());
 		dldto.setShift(dailyLog.getShift());
-		dldto.setSubstation(dailyLog.getSubstation());
-		dldto.setLoadmax(dailyLog.getLoadmax());
-		dldto.setLoadmin(dailyLog.getLoadmin());
-		dldto.setVoltmax(dailyLog.getVoltmax());
-		dldto.setVoltmin(dailyLog.getVoltmin());
-		dldto.setFrequencymax(dailyLog.getFrequencymax());
-		dldto.setFrequencymin(dailyLog.getFrequencymin());
-		dldto.setPfmax(dailyLog.getPfmax());
-		dldto.setPfmin(dailyLog.getPfmin());
-		dldto.setPowerdip(dailyLog.getPowerdip());
-		dldto.setRemark(dailyLog.getRemark());
 		dldto.setMachine(dailyLog.getMachine());
 		dldto.setDescription(dailyLog.getDescription());
 		dldto.setTimefrom(dailyLog.getTimefrom());
