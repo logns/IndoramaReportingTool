@@ -4,7 +4,6 @@ CREATE TABLE `indorama_poly`.`assign_tickets` (
         
     #foreign key bu.id	
 	dailylog_id integer not null,
-	dailylog_title VARCHAR(145) not null,
   `subject` VARCHAR(145) NOT NULL,
   `dates` VARCHAR(45) NOT NULL,
   `shift` VARCHAR(45) NOT NULL,

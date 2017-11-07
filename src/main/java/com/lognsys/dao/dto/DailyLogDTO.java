@@ -7,6 +7,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class DailyLogDTO {
 	@Id
 	private int id;
+	private String dailylog_title = "";
+	private String dates = "";
+	private String shift = "";
 	private String machine = "";
 	private String description = "";
 	private String timefrom = "";
@@ -14,10 +17,8 @@ public class DailyLogDTO {
 	private String spareparts = "";
 	private String attendby = "";
 	private String jobtype = "";
-	private String dates = "";
 	private String recordtype = "";
 	private String status = "";
-	private String shift = "";
 	private String bu_name = "";
 	
 	public DailyLogDTO() {
@@ -25,11 +26,15 @@ public class DailyLogDTO {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public DailyLogDTO(int id, String machine,
-			String description, String timefrom, String timeto, String spareparts, String attendby, String jobtype,
-			String dates, String recordtype, String status,String shift,String bu_name) {
+
+	public DailyLogDTO(int id, String dailylog_title, String dates, String shift, String machine, String description,
+			String timefrom, String timeto, String spareparts, String attendby, String jobtype, String recordtype,
+			String status, String bu_name) {
 		super();
 		this.id = id;
+		this.dailylog_title = dailylog_title;
+		this.dates = dates;
+		this.shift = shift;
 		this.machine = machine;
 		this.description = description;
 		this.timefrom = timefrom;
@@ -37,12 +42,31 @@ public class DailyLogDTO {
 		this.spareparts = spareparts;
 		this.attendby = attendby;
 		this.jobtype = jobtype;
-		this.dates = dates;
 		this.recordtype = recordtype;
 		this.status = status;
-		this.shift = shift;
 		this.bu_name = bu_name;
 	}
+
+
+	public String getDailylog_title() {
+		return dailylog_title;
+	}
+
+
+	public void setDailylog_title(String dailylog_title) {
+		this.dailylog_title = dailylog_title;
+	}
+
+
+	public String getBu_name() {
+		return bu_name;
+	}
+
+
+	public void setBu_name(String bu_name) {
+		this.bu_name = bu_name;
+	}
+
 
 	public String getbu_name() {
 		return bu_name;
@@ -135,15 +159,13 @@ public class DailyLogDTO {
 		this.attendby = attendby;
 	}
 
+
 	@Override
 	public String toString() {
-		return "DailyLogDTO [id=" + id  
+		return "DailyLogDTO [id=" + id + ", dailylog_title=" + dailylog_title + ", dates=" + dates + ", shift=" + shift
 				+ ", machine=" + machine + ", description=" + description + ", timefrom=" + timefrom + ", timeto="
-				+ timeto + ", spareparts=" + spareparts + ", attendby=" + attendby + ", jobtype=" + jobtype + ", dates="
-				+ dates  + ", recordtype=" + recordtype + ", status=" + status
-				+ ", shift=" + shift + ", bu_name=" + bu_name + "]";
+				+ timeto + ", spareparts=" + spareparts + ", attendby=" + attendby + ", jobtype=" + jobtype
+				+ ", recordtype=" + recordtype + ", status=" + status + ", bu_name=" + bu_name + "]";
 	}
 
-	
-	
 }

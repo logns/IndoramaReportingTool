@@ -42,7 +42,6 @@ import net.sf.jasperreports.engine.JasperReport;
 
 @Controller
 public class DailyLogController {
-//private Logger LOG = Logger.getLogger(getClass());
 	
 	@Autowired
 	private DailyLogService dailyLogService;
@@ -52,11 +51,13 @@ public class DailyLogController {
 	private UserService userService;
 
 	// Injecting resource application.properties.
-		@Autowired
-		@Qualifier("applicationProperties")
-		private Properties applicationProperties;
 	@Autowired
-	DataSource conn;	/**
+	@Qualifier("applicationProperties")
+	private Properties applicationProperties;
+	
+	@Autowired
+	DataSource conn;
+	/**
 	 * 
 	 * 
 	 * @param model
@@ -66,8 +67,6 @@ public class DailyLogController {
 	@RequestMapping(value = "/dailylog", method = RequestMethod.GET)
 	public String getDailyLogForm(ModelMap model, HttpServletRequest request) {
 
-//		String realname = "monika sharma";
-		//String substation = "MS1";
 		String str_shift = applicationProperties.getProperty(Constants.TYPES_ARRAY.shift.name());
 		String str_jobtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.jobtype.name());
 		String str_recordtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.recordtype.name());
@@ -119,7 +118,7 @@ public class DailyLogController {
 	public String saveForm(@Valid @ModelAttribute("dailylogs") DailyLog dailylogs, Model model,
 		 HttpServletRequest request, BindingResult result,
 		HttpServletResponse response) throws JRException, IOException, SQLException, NamingException{
-		System.out.println("controller dailylogs to String - " + dailylogs.toString());
+		
 		FormValidator formValidator = new FormValidator();
 		formValidator.validate(dailylogs, result);
 

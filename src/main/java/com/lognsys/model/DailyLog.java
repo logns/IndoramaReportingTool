@@ -32,17 +32,19 @@ public class DailyLog {
 	private String status = "";
 	private String shift = "";
 	private String realname = "";
+	private String dailylog_title = "";
 	
 	public DailyLog() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	public DailyLog(String realname, String bu, int id,
-			String machine, String description, String timefrom, String timeto, String spareparts, String attendby,
-			String jobtype, String dates, String recordtype, String status,String shift) {
+
+	public DailyLog(String users, String bu, int id, String machine, String description, String timefrom, String timeto,
+			String spareparts, String attendby, String jobtype, String dates, String recordtype, String status,
+			String shift, String realname, String dailylog_title) {
 		super();
-		this.realname = realname;
+		this.users = users;
 		this.bu = bu;
 		this.id = id;
 		this.machine = machine;
@@ -56,7 +58,10 @@ public class DailyLog {
 		this.recordtype = recordtype;
 		this.status = status;
 		this.shift = shift;
+		this.realname = realname;
+		this.dailylog_title = dailylog_title;
 	}
+
 
 	public DailyLog(int id, String machine,
 			String description, String timefrom, String timeto, String spareparts, String attendby, String jobtype,
@@ -74,8 +79,32 @@ public class DailyLog {
 		this.recordtype = recordtype;
 		this.status = status;
 		this.shift = shift;
-		
 	}
+
+	public String getUsers() {
+		return users;
+	}
+
+
+	public void setUsers(String users) {
+		this.users = users;
+	}
+
+
+	public String getDailylog_title() {
+		return dailylog_title;
+	}
+
+
+	public void setDailylog_title(String dailylog_title) {
+		this.dailylog_title = dailylog_title;
+	}
+
+
+	public void setDates(String dates) {
+		this.dates = dates;
+	}
+
 
 	public String getShift() {
 		return shift;
@@ -185,12 +214,14 @@ public class DailyLog {
 		this.realname = realname;
 	}
 
+
 	@Override
 	public String toString() {
-		return "DailyLog [realname=" + realname + ", bu=" + bu + ", id=" + id + ", machine=" + machine + ", description=" + description + ", timefrom="
-				+ timefrom + ", timeto=" + timeto + ", spareparts=" + spareparts + ", attendby=" + attendby
-				+ ", jobtype=" + jobtype + ", dates=" + dates + ", recordtype="
-				+ recordtype + ", status=" + status + ", shift=" + shift + ", realname=" + realname + "]";
+		return "DailyLog [users=" + users + ", bu=" + bu + ", id=" + id + ", machine=" + machine + ", description="
+				+ description + ", timefrom=" + timefrom + ", timeto=" + timeto + ", spareparts=" + spareparts
+				+ ", attendby=" + attendby + ", jobtype=" + jobtype + ", dates=" + dates + ", recordtype=" + recordtype
+				+ ", status=" + status + ", shift=" + shift + ", realname=" + realname + ", dailylog_title="
+				+ dailylog_title + "]";
 	}
 	
 }

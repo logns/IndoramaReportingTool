@@ -31,6 +31,7 @@
 					<form:errors path="jobtype" element="div" />
 					<form:errors path="recordtype" element="div" />
 					<form:errors path="status" element="div" />
+					<form:errors path="dailylog_title" element="div" />
 					
 				</div>
 				<div class="col-sm-12 panel panel-default">
@@ -89,6 +90,12 @@
 								<form:input id="machine" type="text"
 										class="form-control text ui-widget-content ui-corner-all"
 										path="machine" />
+								</div>
+							<div class="form-group">
+									<label>DailyLogs Title</label>
+								<form:input id="dailylog_title" type="text"
+										class="form-control text ui-widget-content ui-corner-all"
+										path="dailylog_title" />
 								</div>
 							<div class="form-group">
 								<label>Problem description & action taken</label>

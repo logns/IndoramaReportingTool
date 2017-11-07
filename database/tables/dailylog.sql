@@ -48,8 +48,10 @@ CREATE TABLE dailylog
 
 	# Optional notification to users 
 	recordtype varchar(64) not null default "",
- # Optional notification to users 
+	
+	# Optional notification to users 
 	status varchar(64) not null default "",
+	
 	last_edit timestamp not null default current_timestamp on update current_timestamp
 	
 
@@ -58,3 +60,5 @@ CREATE TABLE dailylog
 create index dailylog_jobtype on dailylog(jobtype);
 create index dailylog_status on dailylog(status);
 create index dailylog_attendby on dailylog(attendby);
+ALTER TABLE `indorama_poly`.`dailylog` 
+ADD COLUMN `assign_to` VARCHAR(105) NOT NULL AFTER `last_edit`;
