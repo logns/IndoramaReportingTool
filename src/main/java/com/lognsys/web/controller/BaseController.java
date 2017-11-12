@@ -33,7 +33,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.lognsys.dao.dto.BuDTO;
-import com.lognsys.dao.dto.DepartmentsDTO;
 import com.lognsys.dao.dto.RolesDTO;
 import com.lognsys.model.Users;
 import com.lognsys.service.UserService;
@@ -183,7 +182,7 @@ public class BaseController {
 
 				// CALL database to get roles & groups
 				List<RolesDTO> listOfRolesDTO = userService.getAllRoles();
-				List<DepartmentsDTO> listOfDepartmentsDTO = userService.getAllDepartments();
+//				List<DepartmentsDTO> listOfDepartmentsDTO = userService.getAllDepartments();
 				List<BuDTO> listOfBuDTO = userService.getAllBus();
 
 				// Adding data to list from RolesDTO
@@ -199,9 +198,9 @@ public class BaseController {
 				}
 				// Adding data to list from RolesDTO
 				List<String> departmentsList = new ArrayList<String>();
-				for (DepartmentsDTO deDto : listOfDepartmentsDTO) {
-					departmentsList.add(deDto.getDepartment_name());
-				}
+//				for (DepartmentsDTO deDto : listOfDepartmentsDTO) {
+//					departmentsList.add(deDto.getDepartment_name());
+//				}
 
 
 				model.addAttribute("users", users);
@@ -230,7 +229,7 @@ public class BaseController {
 
 		// CALL database to get roles & groups
 		List<RolesDTO> listOfRolesDTO = userService.getAllRoles();
-		List<DepartmentsDTO> listOfDepartmentsDTO = userService.getAllDepartments();
+//		List<DepartmentsDTO> listOfDepartmentsDTO = userService.getAllDepartments();
 		List<BuDTO> listOfBuDTO = userService.getAllBus();
 
 		// Adding data to list from RolesDTO
@@ -246,9 +245,9 @@ public class BaseController {
 		}
 		// Adding data to list from RolesDTO
 		List<String> departmentsList = new ArrayList<String>();
-		for (DepartmentsDTO deDto : listOfDepartmentsDTO) {
-			departmentsList.add(deDto.getDepartment_name());
-		}
+//		for (DepartmentsDTO deDto : listOfDepartmentsDTO) {
+//			departmentsList.add(deDto.getDepartment_name());
+//		}
 
 
 		//populate to JSP page
@@ -281,7 +280,7 @@ public class BaseController {
 			System.out.println("Adding Errors - " + user.toString());
 			// CALL database to get roles & groups
 			List<RolesDTO> listOfRolesDTO = userService.getAllRoles();
-			List<DepartmentsDTO> listOfDepartmentsDTO = userService.getAllDepartments();
+//			List<DepartmentsDTO> listOfDepartmentsDTO = userService.getAllDepartments();
 			List<BuDTO> listOfBuDTO = userService.getAllBus();
 
 			List<String> rolesList = new ArrayList<String>();
@@ -295,9 +294,9 @@ public class BaseController {
 			}
 			// Adding data to list from RolesDTO
 			List<String> departmentsList = new ArrayList<String>();
-			for (DepartmentsDTO deDto : listOfDepartmentsDTO) {
-				departmentsList.add(deDto.getDepartment_name());
-			}
+//			for (DepartmentsDTO deDto : listOfDepartmentsDTO) {
+//				departmentsList.add(deDto.getDepartment_name());
+//			}
 
 
 			//populate to JSP page

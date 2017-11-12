@@ -13,7 +13,6 @@
 	<import resource="classpath:application-context.xml" />
 	<import resource="classpath:datasource-context.xml" />
 	<import resource="classpath:spring-security.xml"></import>
-	<import resource="classpath:mongo-context.xml" />
     
     
 	<!-- **************************************************************** -->

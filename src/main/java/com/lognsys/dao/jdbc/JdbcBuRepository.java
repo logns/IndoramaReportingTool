@@ -25,7 +25,6 @@ import org.springframework.stereotype.Repository;
 
 import com.lognsys.dao.BuRepository;
 import com.lognsys.dao.dto.BuDTO;
-import com.lognsys.dao.dto.DepartmentsDTO;
 import com.lognsys.dao.dto.UsersBuDTO;
 import com.lognsys.dao.jdbc.resultset.UserBuResultSetExtractor;
 import com.lognsys.util.Constants;
@@ -61,11 +60,7 @@ public class JdbcBuRepository implements BuRepository {
 		return null;
 	}
 
-	@Override
-	public int addbu(BuDTO budto) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 
 	@Override
 	public boolean updateBuOfUser(String userName, String bu_name) {
@@ -104,6 +99,12 @@ public class JdbcBuRepository implements BuRepository {
 			return null;
 		
 		return listOfUsersBuDTO;
+	}
+
+	@Override
+	public int addBu(BuDTO budto) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

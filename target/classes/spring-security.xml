@@ -31,7 +31,14 @@
 		<security:intercept-url access="permitAll"
 			pattern="/dailylog" />
 		<security:intercept-url access="permitAll"
+			pattern="/dailyloglist" />
+
+		<security:intercept-url access="permitAll"
 			pattern="/dailylogslist" />
+
+		<security:intercept-url access="permitAll"
+			pattern="/dailylogslist" />
+
 		<security:intercept-url pattern="/user_listitems" />
 
 		<security:intercept-url access="permitAll"

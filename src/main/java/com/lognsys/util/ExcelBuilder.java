@@ -88,14 +88,14 @@ public class ExcelBuilder extends AbstractExcelView {
          
         for (DailyLogDTO dailyLogDTO : lists) {
             HSSFRow aRow = sheet.createRow(rowCount++);
-            aRow.createCell(0).setCellValue(dailyLogDTO.getDates());
+//            aRow.createCell(0).setCellValue(dailyLogDTO.getDates());
             aRow.createCell(1).setCellValue(dailyLogDTO.getShift());
-            aRow.createCell(2).setCellValue(dailyLogDTO.getbu_name());
+//            aRow.createCell(2).setCellValue(dailyLogDTO.getbu_name());
             aRow.createCell(4).setCellValue(dailyLogDTO.getMachine());
             aRow.createCell(5).setCellValue(dailyLogDTO.getDescription());
             aRow.createCell(6).setCellValue(dailyLogDTO.getTimefrom());
             aRow.createCell(7).setCellValue(dailyLogDTO.getTimeto());
-            aRow.createCell(8).setCellValue(dailyLogDTO.getSpareparts());
+//            aRow.createCell(8).setCellValue(dailyLogDTO.getSpareparts());
             aRow.createCell(9).setCellValue(dailyLogDTO.getAttendby());
             aRow.createCell(10).setCellValue(dailyLogDTO.getJobtype());
             aRow.createCell(11).setCellValue(dailyLogDTO.getRecordtype());

@@ -72,21 +72,21 @@ public class DailyLogController {
 		String str_recordtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.recordtype.name());
 		String str_status = applicationProperties.getProperty(Constants.TYPES_ARRAY.status.name());
 
-		List<UsersDTO> userDtos=dailyLogService.getRealName();
-		List<String> realname = new ArrayList<String>();
-		for(int i=0;i<userDtos.size();i++){
-			UsersDTO dto=userDtos.get(i);
-			realname.add(dto.getRealname());
-		}
-		System.out.println("controller===== realname- " + realname.size());
-		System.out.println("controller===== realname.get(0)- " + realname.get(0) );
-		List<BuDTO> listOfBuDTO = userService.getAllBus();
-
-		// Adding data to list from RolesDTO
-		List<String> busList = new ArrayList<String>();
-		for (BuDTO bu : listOfBuDTO) {
-			busList.add(bu.getBu_name());
-		}
+//		List<UsersDTO> userDtos=dailyLogService.getRealName();
+//		List<String> realname = new ArrayList<String>();
+//		for(int i=0;i<userDtos.size();i++){
+//			UsersDTO dto=userDtos.get(i);
+//			realname.add(dto.getRealname());
+//		}
+//		System.out.println("controller===== realname- " + realname.size());
+//		System.out.println("controller===== realname.get(0)- " + realname.get(0) );
+//		List<BuDTO> listOfBuDTO = userService.getAllBus();
+//
+//		// Adding data to list from RolesDTO
+//		List<String> busList = new ArrayList<String>();
+//		for (BuDTO bu : listOfBuDTO) {
+//			busList.add(bu.getBu_name());
+//		}
 		List<String> jobtype=Arrays.asList(str_jobtype.split(","));
 		List<String> recordtype=Arrays.asList(str_recordtype.split(","));
 		List<String> status=Arrays.asList(str_status.split(","));
@@ -95,8 +95,8 @@ public class DailyLogController {
 		//populate to JSP page
 		DailyLog dailylogs = new DailyLog();
 		model.addAttribute("dailylogs", dailylogs);
-		model.addAttribute("busList", busList);
-		model.addAttribute("realname", realname);
+//		model.addAttribute("busList", busList);
+//		model.addAttribute("realname", realname);
 		model.addAttribute("jobtype", jobtype);
 		model.addAttribute("recordtype", recordtype);
 		model.addAttribute("status", status);
@@ -139,12 +139,12 @@ public class DailyLogController {
 			List<String> status=Arrays.asList(str_status.split(","));
 			List<String> shift=Arrays.asList(str_shift.split(","));
 		
-			List<UsersDTO> userDtos=dailyLogService.getRealName();
+//			List<UsersDTO> userDtos=dailyLogService.getRealName();
 			List<String> realname = new ArrayList<String>();
-			for(int i=0;i<userDtos.size();i++){
-				UsersDTO dto=userDtos.get(i);
-				realname.add(dto.getRealname());
-			}
+//			for(int i=0;i<userDtos.size();i++){
+//				UsersDTO dto=userDtos.get(i);
+//				realname.add(dto.getRealname());
+//			}
 			System.out.println("controller===== realname- " + realname.size());
 			System.out.println("controller===== realname.get(0)- " + realname.get(0) );
 			List<BuDTO> listOfBuDTO = userService.getAllBus();
@@ -164,14 +164,9 @@ public class DailyLogController {
 			return "dailylog";
 		} else
 		{
-			try {
-			int id =dailyLogService.addDailyLog(dailylogs);
+			//			int id =dailyLogService.addDailyLog(dailylogs);
 			System.out.println(" ==================== dailylogs.getJobtype()  "+dailylogs.getJobtype());
-			System.out.println(" ==================== dailylogs.getDates()  "+dailylogs.getDates());
-			
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+//			System.out.println(" ==================== dailylogs.getDates()  "+dailylogs.getDates());
 		}
 
 
@@ -196,12 +191,12 @@ public class DailyLogController {
      */
     @RequestMapping(value = "/downloadExcel", method = RequestMethod.GET)
     public ModelAndView downloadExcel() {
-    	List<DailyLogDTO> lists=  dailyLogService.refresDailyListReport();
+    /*	List<DailyLogDTO> lists=  dailyLogService.refresDailyListReport();
 	    // return a view which will be resolved by an excel view resolver
     	for(int i=0;i<lists.size();i++){
     		System.out.println("Values  is "+lists.get(i).toString());
     	}
-        return new ModelAndView("excelView", "lists", lists);
+    */    return null;//new ModelAndView("excelView", "lists", lists);
     } /**
      * Handle request to download an Excel document
      */
@@ -213,7 +208,7 @@ public class DailyLogController {
 		String reportFileName = "reports_landscape";
 		String reportPdf = "pdf";
 		Connection c = conn.getConnection();
-		List<DailyLogDTO> lists=  dailyLogService.refresDailyListReport();
+		/*List<DailyLogDTO> lists=  dailyLogService.refresDailyListReport();
 		if(lists== null || lists.size()==0){
 			 model.addAttribute("error", "Reports are Not available ");
 			return "dailylogslist";
@@ -223,14 +218,14 @@ public class DailyLogController {
 		for(int i=0;i<lists.size();i++){
 		DailyLogDTO dailylogsdyto=lists.get(i);
 		
-		hmParams.put("dates", dailylogsdyto.getDates());
+//		hmParams.put("dates", dailylogsdyto.getDates());
 		hmParams.put("shift", dailylogsdyto.getShift());
-		hmParams.put("bu", dailylogsdyto.getbu_name());
+//		hmParams.put("bu", dailylogsdyto.getbu_name());
 		hmParams.put("machine",dailylogsdyto.getMachine());
 		hmParams.put("description",dailylogsdyto.getDescription());
 		hmParams.put("timefrom",dailylogsdyto.getTimefrom());
 		hmParams.put("timeto",dailylogsdyto.getTimeto());
-		hmParams.put("spareparts",dailylogsdyto.getSpareparts());
+//		hmParams.put("spareparts",dailylogsdyto.getSpareparts());
 		hmParams.put("attendby",dailylogsdyto.getAttendby());
 		hmParams.put("jobtype",dailylogsdyto.getJobtype());
 		hmParams.put("recordtype",dailylogsdyto.getRecordtype());
@@ -246,6 +241,14 @@ public class DailyLogController {
 			 dailyLogService.generateReportPDF(response, hmParams, jasperReport, c); // For
 			
 		}
-		return null;
+*/		return null;
     }
+    
+	@RequestMapping(value = "/dailyloglist", method = RequestMethod.GET)
+	public String showAssignTasks(Model model, HttpServletRequest request) throws IOException {
+		System.out.println("dailyloglist =======");
+		dailyLogService.fetchDailyLog("pump basket");
+		return "dailyloglist";
+	}
+
 }

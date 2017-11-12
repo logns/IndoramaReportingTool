@@ -104,9 +104,9 @@ public class FormValidator implements Validator {
 		ValidationUtils.rejectIfEmpty(errors, "spareparts", "required.spareparts", "sparepart is required.");
 
 		// input string conatains characters only
-		if (!(dailyLog.getSpareparts() != null && dailyLog.getSpareparts().isEmpty())) {
+		if (!(dailyLog.getSpare_parts() != null && dailyLog.getSpare_parts().isEmpty())) {
 			pattern = Pattern.compile(STRING_PATTERN);
-			matcher = pattern.matcher((dailyLog.getSpareparts()));
+			matcher = pattern.matcher((dailyLog.getSpare_parts()));
 
 			if (!matcher.matches()) {
 				errors.rejectValue("spareparts", "spareparts.containNonChar", "Enter a valid sparepartsS");
@@ -151,14 +151,14 @@ public class FormValidator implements Validator {
 		ValidationUtils.rejectIfEmpty(errors, "realname", "required.realname", "name is required.");
 
 		// input string conatains characters only
-		if (!(dailyLog.getRealname() != null && dailyLog.getRealname().isEmpty())) {
-			pattern = Pattern.compile(STRING_PATTERN);
-			matcher = pattern.matcher((dailyLog.getRealname()));
-
-			if (!matcher.matches()) {
-				errors.rejectValue("realname", "realname.containNonChar", "Enter a valid Name");
-			}
-		}
+//		if (!(dailyLog.getRealname() != null && dailyLog.getRealname().isEmpty())) {
+//			pattern = Pattern.compile(STRING_PATTERN);
+//			matcher = pattern.matcher((dailyLog.getRealname()));
+//
+//			if (!matcher.matches()) {
+//				errors.rejectValue("realname", "realname.containNonChar", "Enter a valid Name");
+//			}
+//		}
 	}
 
 

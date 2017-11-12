@@ -32,7 +32,7 @@ public class Users {
 	private String firstname = "";
 	private String lastname = "";
 	private String role = "";
-	private String departments = "";
+	private String dailylogs = "";
 	private String bu = "";
 	
 	public Users() {
@@ -60,7 +60,7 @@ public class Users {
 
 	public Users(int id, String username, String realname, String phone, String birthdate, boolean enabled,
 			boolean notification, String address, String city, String state, String zipcode, String firstname,
-			String lastname, String role, String departments, String bu) {
+			String lastname, String role, String dailylogs, String bu) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -76,7 +76,7 @@ public class Users {
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.role = role;
-		this.departments = departments;
+		this.dailylogs = dailylogs;
 		this.bu = bu;
 	}
 
@@ -192,12 +192,12 @@ public class Users {
 		this.role = role;
 	}
 
-	public String getDepartments() {
-		return departments;
+	public String getDailylogs() {
+		return dailylogs;
 	}
 
-	public void setDepartments(String departments) {
-		this.departments = departments;
+	public void setDailylogs(String dailylogs) {
+		this.dailylogs = dailylogs;
 	}
 
 	public String getBu() {
@@ -213,7 +213,7 @@ public class Users {
 		return "Users [id=" + id + ", username=" + username + ", realname=" + realname + ", phone=" + phone
 				+ ", birthdate=" + birthdate + ", enabled=" + enabled + ", notification=" + notification + ", address="
 				+ address + ", city=" + city + ", state=" + state + ", zipcode=" + zipcode + ", firstname=" + firstname
-				+ ", lastname=" + lastname + ", role=" + role + ", departments=" + departments + ", bu=" + bu + "]";
+				+ ", lastname=" + lastname + ", role=" + role + ", dailylogs=" + dailylogs + ", bu=" + bu + "]";
 	}
 
 }

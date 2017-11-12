@@ -21,30 +21,34 @@ import java.util.List;
 
 import org.json.simple.JSONArray;
 
+import com.lognsys.dao.dto.AssignTaskDTO;
 import com.lognsys.dao.dto.DailyLogDTO;
 import com.lognsys.dao.dto.UsersBuDTO;
 import com.lognsys.dao.dto.UsersDTO;
+import com.lognsys.model.AssignTask;
+import com.lognsys.model.AssignTaskTable;
 import com.lognsys.model.DailyLog;
 import com.lognsys.model.Users;
 import com.lognsys.model.UsersTable;
 
 public class ObjectMapper {
 
-	/**
-	 * Users Table Object requires fields to be mapped from Group and Users
-	 * Object
-	 * 
-	 * @param users
-	 *            - the Users Object and group object is added to Users Tabled
-	 * @return
-	 */
-//	public static UsersTable mapToUserTable(UsersDTO users, GroupsDTO groups) {
-//
-//		return new UsersTable(users.getId(), users.getRealname(), users.getUsername(), groups.getGroup_name(),
-//				users.isEnabled());
-//
-//	}
 
+	public static AssignTaskDTO mapToAssignTaskDTO(AssignTask assignTask) {
+
+		AssignTaskDTO atdto = new AssignTaskDTO();
+		atdto.setTitle(assignTask.getTitle());
+		atdto.setAssigned_to(assignTask.getAssigned_to());
+		atdto.setPriority(assignTask.getPriority());
+		atdto.setTarget_date(assignTask.getTarget_date());
+		atdto.setDone_percentage(assignTask.getDone_percentage());
+		return atdto;
+	}
+
+	
+	
+	
+	
 	/**
 	 * Based on the group map all the usersDTO object to Users Tables object
 	 * 
@@ -56,6 +60,14 @@ public class ObjectMapper {
 		for (UsersBuDTO ubu : userbudto) {
 			list.add(new UsersTable(ubu.getUser().getId(), ubu.getUser().getRealname(), ubu.getUser().getUsername(),
 					ubu.getBuDTO().getBu_name(), ubu.getUser().isEnabled()));
+		}
+		return list;
+	}
+	public static List<AssignTaskTable> mapToAssignTaskTable(List<AssignTaskDTO> assignTaskTables) {
+		List<AssignTaskTable> list = new ArrayList<>();
+		for (AssignTaskDTO ubu : assignTaskTables) {
+			list.add(new AssignTaskTable(ubu.getId(), ubu.getTitle(), ubu.getAssigned_to(),
+					ubu.getPriority(), ubu.getTarget_date(),ubu.getDone_percentage()));
 		}
 		return list;
 	}
@@ -96,22 +108,19 @@ public class ObjectMapper {
 	public static DailyLogDTO mapToDailyLogDTO(DailyLog dailyLog) {
 
 		DailyLogDTO dldto = new DailyLogDTO();
-
-		dldto.setId(dailyLog.getId());
-		dldto.setDates(dailyLog.getDates());
-		System.out.println("\n\n\n\n\n ============DailyLogDTO=============== dailyLog.getDates()- " + dailyLog.getDates());
-		System.out.println("\n\n\n\n\n ============DailyLogDTO=============== dldto.getDates- " + dldto.getDates());
+		dldto.setAssign_task_title(dailyLog.getAssign_task_title());
+		dldto.setTarget_date(dailyLog.getTarget_date());
 		dldto.setShift(dailyLog.getShift());
 		dldto.setMachine(dailyLog.getMachine());
 		dldto.setDescription(dailyLog.getDescription());
 		dldto.setTimefrom(dailyLog.getTimefrom());
 		dldto.setTimeto(dailyLog.getTimeto());
-		dldto.setSpareparts(dailyLog.getSpareparts());
+		dldto.setSpare_parts(dailyLog.getSpare_parts());
 		dldto.setAttendby(dailyLog.getAttendby());
 		dldto.setJobtype(dailyLog.getJobtype());
 		dldto.setRecordtype(dailyLog.getRecordtype());
 		dldto.setStatus(dailyLog.getStatus());
-
+		dldto.setDone_percentage(dailyLog.getDone_percentage());
 		return dldto;
 
 	}

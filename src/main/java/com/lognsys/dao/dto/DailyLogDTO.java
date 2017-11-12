@@ -7,73 +7,76 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class DailyLogDTO {
 	@Id
 	private int id;
-	private String dailylog_title = "";
-	private String dates = "";
+	private String assign_task_title = "";
+	private String target_date = "";
 	private String shift = "";
 	private String machine = "";
 	private String description = "";
 	private String timefrom = "";
 	private String timeto = "";
-	private String spareparts = "";
+	private String spare_parts = "";
 	private String attendby = "";
 	private String jobtype = "";
 	private String recordtype = "";
 	private String status = "";
-	private String bu_name = "";
+	private String done_percentage = "";
 	
 	public DailyLogDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
 
-	public DailyLogDTO(int id, String dailylog_title, String dates, String shift, String machine, String description,
-			String timefrom, String timeto, String spareparts, String attendby, String jobtype, String recordtype,
-			String status, String bu_name) {
+	public DailyLogDTO(int id, String assign_task_title, String target_date, String shift, String machine,
+			String description, String timefrom, String timeto, String spare_parts, String attendby, String jobtype,
+			String recordtype, String status, String done_percentage) {
 		super();
 		this.id = id;
-		this.dailylog_title = dailylog_title;
-		this.dates = dates;
+		this.assign_task_title = assign_task_title;
+		this.target_date = target_date;
 		this.shift = shift;
 		this.machine = machine;
 		this.description = description;
 		this.timefrom = timefrom;
 		this.timeto = timeto;
-		this.spareparts = spareparts;
+		this.spare_parts = spare_parts;
 		this.attendby = attendby;
 		this.jobtype = jobtype;
 		this.recordtype = recordtype;
 		this.status = status;
-		this.bu_name = bu_name;
+		this.done_percentage = done_percentage;
 	}
 
-
-	public String getDailylog_title() {
-		return dailylog_title;
+	@Override
+	public String toString() {
+		return "DailyLogDTO [id=" + id + ", assign_task_title=" + assign_task_title + ", target_date=" + target_date
+				+ ", shift=" + shift + ", machine=" + machine + ", description=" + description + ", timefrom="
+				+ timefrom + ", timeto=" + timeto + ", spare_parts=" + spare_parts + ", attendby=" + attendby
+				+ ", jobtype=" + jobtype + ", recordtype=" + recordtype + ", status=" + status + ", done_percentage="
+				+ done_percentage + "]";
 	}
 
-
-	public void setDailylog_title(String dailylog_title) {
-		this.dailylog_title = dailylog_title;
+	public int getId() {
+		return id;
 	}
 
-
-	public String getBu_name() {
-		return bu_name;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-
-	public void setBu_name(String bu_name) {
-		this.bu_name = bu_name;
+	public String getAssign_task_title() {
+		return assign_task_title;
 	}
 
-
-	public String getbu_name() {
-		return bu_name;
+	public void setAssign_task_title(String assign_task_title) {
+		this.assign_task_title = assign_task_title;
 	}
 
-	public void setbu_name(String bu_name) {
-		this.bu_name = bu_name;
+	public String getTarget_date() {
+		return target_date;
+	}
+
+	public void setTarget_date(String target_date) {
+		this.target_date = target_date;
 	}
 
 	public String getShift() {
@@ -82,6 +85,62 @@ public class DailyLogDTO {
 
 	public void setShift(String shift) {
 		this.shift = shift;
+	}
+
+	public String getMachine() {
+		return machine;
+	}
+
+	public void setMachine(String machine) {
+		this.machine = machine;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getTimefrom() {
+		return timefrom;
+	}
+
+	public void setTimefrom(String timefrom) {
+		this.timefrom = timefrom;
+	}
+
+	public String getTimeto() {
+		return timeto;
+	}
+
+	public void setTimeto(String timeto) {
+		this.timeto = timeto;
+	}
+
+	public String getSpare_parts() {
+		return spare_parts;
+	}
+
+	public void setSpare_parts(String spare_parts) {
+		this.spare_parts = spare_parts;
+	}
+
+	public String getAttendby() {
+		return attendby;
+	}
+
+	public void setAttendby(String attendby) {
+		this.attendby = attendby;
+	}
+
+	public String getJobtype() {
+		return jobtype;
+	}
+
+	public void setJobtype(String jobtype) {
+		this.jobtype = jobtype;
 	}
 
 	public String getRecordtype() {
@@ -100,72 +159,12 @@ public class DailyLogDTO {
 		this.status = status;
 	}
 
-	public String getJobtype() {
-		return jobtype;
+	public String getDone_percentage() {
+		return done_percentage;
 	}
 
-	public void setJobtype(String jobtype) {
-		this.jobtype = jobtype;
+	public void setDone_percentage(String done_percentage) {
+		this.done_percentage = done_percentage;
 	}
-
-	public String getDates() {
-		return dates;
-	}
-
-	public void setDates(String dates) {
-		this.dates = dates;
-	}
-
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getMachine() {
-		return machine;
-	}
-	public void setMachine(String machine) {
-		this.machine = machine;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public String getTimefrom() {
-		return timefrom;
-	}
-	public void setTimefrom(String timefrom) {
-		this.timefrom = timefrom;
-	}
-	public String getTimeto() {
-		return timeto;
-	}
-	public void setTimeto(String timeto) {
-		this.timeto = timeto;
-	}
-	public String getSpareparts() {
-		return spareparts;
-	}
-	public void setSpareparts(String spareparts) {
-		this.spareparts = spareparts;
-	}
-	public String getAttendby() {
-		return attendby;
-	}
-	public void setAttendby(String attendby) {
-		this.attendby = attendby;
-	}
-
-
-	@Override
-	public String toString() {
-		return "DailyLogDTO [id=" + id + ", dailylog_title=" + dailylog_title + ", dates=" + dates + ", shift=" + shift
-				+ ", machine=" + machine + ", description=" + description + ", timefrom=" + timefrom + ", timeto="
-				+ timeto + ", spareparts=" + spareparts + ", attendby=" + attendby + ", jobtype=" + jobtype
-				+ ", recordtype=" + recordtype + ", status=" + status + ", bu_name=" + bu_name + "]";
-	}
-
+	
 }

@@ -9,36 +9,28 @@ import com.lognsys.model.DailyLog;
 public interface DailyLogRespository {
 
 	/**
-	 * Add user into database
+	 * Add dailyLogDTO into database
 	 * 
-	 * @param users
+	 * @param dailyLogDTO
 	 */
 	public int addDailyLog(DailyLogDTO dailyLogDTO);
-	
-	
-	/**
-	 * Check if User exists by username
-	 * @param username
-	 * @return
-	 */
-	public boolean isExists(String username);
 
 	/**
-	 * Get All users
+	 * Get All dailyLogDTO
 	 * 
-	 * @return
+	 * @return List<DailyLogDTO>
 	 */
 	public List<DailyLogDTO> getAllDailyLogDTO();
 
-
 	/**
-	 * Delete user by id
-	 * @param id
+	 * Get All dailyLogDTO
+	 * 
+	 * @return List<DailyLogDTO>
 	 */
-	public boolean deleteDailyLogDTOBy(Integer id);
+	public List<DailyLogDTO> getDailyLogDTOByTitle(String assign_task_title);
 
 	/**
-	 * Get User by Id
+	 * Get DailyLogDTO by Id
 	 * 
 	 * @param id
 	 * @return
@@ -46,18 +38,25 @@ public interface DailyLogRespository {
 	public DailyLogDTO findDailyLogDTOId(Integer id);
 	
 	/**
-	 * Delete user by email|D
+	 * Delete DailyLogDTO by id
 	 * @param id
 	 */
-	public boolean deleteDailyLogDTOBy(String username);
+	public boolean deleteDailyLogDTOBy(Integer id);
 
 
 	/**
-	 * Update user information, enable/disable etc..
+	 * Update DailyLogDTO information, enable/disable etc..
 	 * 
-	 * @param users
+	 * @param boolean
 	 */
 	 public boolean updateDailyLogDTO(DailyLogDTO dailyLogDTO);
 	 
+	 /**
+		 *Get total count of dailylog 
+		 * 
+		 * @param total
+		 */
+	public int getDailyLogCount();
+	  
 	
 }

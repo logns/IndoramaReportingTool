@@ -1,36 +1,20 @@
-#users_bu.sql 
-
-drop table if exists dailylog_users;
-
-CREATE TABLE IF NOT EXISTS dailylog_users 
-(
-	#Surrogate primary key
-   	id integer auto_increment primary key,
-        
-    #foreign key users.id	
-	users_id integer not null,
-	         
-	#foreign key users.id	
-	dailylog_id integer not null default -1,
-
-	last_edit timestamp not null default current_timestamp on update current_timestamp,
-	
-	# adding unique constraint to users_id
-    CONSTRAINT uc_dailylog_users UNIQUE (dailylog_id)
-
-) ENGINE =InnoDB default CHARSET=utf8;
-alter table dailylog_users add index (dailylog_id);
-alter table dailylog_users add constraint constr_dailylogid UNIQUE (dailylog_id);
-alter table dailylog_users add foreign key (dailylog_id) 
-   references dailylog (id) on delete cascade
-   			 on update cascade;
-alter table dailylog_users add index (users_id);
-alter table dailylog_users add foreign key (users_id) 
-   references users (id) on delete cascade
-   			 on update cascade;
-
-ALTER TABLE `indorama_poly`.`dailylog_users` 
-DROP INDEX `uc_dailylog_users` ,
-ADD INDEX `uc_dailylog_users` (`dailylog_id` ASC),
-DROP INDEX `constr_dailylogid` ,
-ADD INDEX `constr_dailylogid` (`dailylog_id` ASC);
+CREATE TABLE IF NOT EXISTS `indorama_poly`.`dailylog_users` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `users_id` INT(11) NOT NULL,
+  `dailylog_id` INT(11) NOT NULL DEFAULT '-1',
+  `last_edit` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  INDEX `dailylog_id` (`dailylog_id` ASC),
+  INDEX `users_id` (`users_id` ASC),
+  CONSTRAINT `dailylog_users_ibfk_1`
+    FOREIGN KEY (`dailylog_id`)
+    REFERENCES `indorama_poly`.`dailylog` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `dailylog_users_ibfk_2`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `indorama_poly`.`users` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8

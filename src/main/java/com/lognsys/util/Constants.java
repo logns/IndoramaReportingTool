@@ -50,12 +50,26 @@ public class Constants {
 	}
 
 	public enum DAILYLOG_QUERIES {
-		insert_dailylog,
+		insert_dailylog,select_dailylog_by_title,
 		insert_dailylog_bu,
 		insert_dailylog_users,
 		select_dailylogs_all
+	
 	}
-
+	public enum ASSIGN_TASK_QUERIES {
+		insert_assign_task,
+		select_isexist_assigntask_title,
+		select_all_assigntask,
+		select_assigntask_by_id,
+		select_assigntask_by_title,
+		select_assigntask_getcount,
+		update_assign_task,
+		delete_assign_task_by_id
+	}
+	public enum ASSIGN_TASK_DAILYLOG_QUERIES {
+		insert_assign_task_dailylog
+	}
+	
 	/**
 	 * enum contains keys of json files and their directory path defined in
 	 * application.properties.
@@ -63,7 +77,7 @@ public class Constants {
 	 * Note: All the files should be specified in application.properties.
 	 */
 	public enum JSON_FILES {
-		user_filename, dailylogs_filename, adverts_filename, booking_filename, notification_filename
+		user_filename, dailylogs_filename, adverts_filename, booking_filename, notification_filename, assigntask_filename
 	}
 
 	/**

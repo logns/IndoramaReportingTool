@@ -18,11 +18,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lognsys.dao.dto.BuDTO;
-import com.lognsys.dao.dto.DepartmentsDTO;
 import com.lognsys.dao.dto.RolesDTO;
 import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.dao.jdbc.JdbcBuRepository;
-import com.lognsys.dao.jdbc.JdbcDepartmentRepository;
 import com.lognsys.dao.jdbc.JdbcRolesRepository;
 import com.lognsys.dao.jdbc.JdbcUserRepository;
 import com.lognsys.exception.UserDataAccessException;
@@ -46,9 +44,7 @@ public class UserService {
 	@Autowired
 	private JdbcBuRepository jdbcBuRepository;
 	
-	@Autowired
-	private JdbcDepartmentRepository jdbcDepartmentRepository;
-
+	
 	@Autowired
 	private JdbcRolesRepository jdbcRolesRepository;
 
@@ -85,8 +81,8 @@ public class UserService {
 			System.out.println("addUser users users_id "+users_id);
 
 			// adding user into department
-			jdbcUserRepository.addUserAndDepartment(users_id, users.getDepartments());
-			
+//			jdbcUserRepository.addUserAndDepartment(users_id, users.getDepartments());
+//			
 			// adding user into bu
 			jdbcUserRepository.addUserAndBu(users_id, users.getBu());
 		
@@ -207,9 +203,9 @@ public class UserService {
 			isUpdated = jdbcUserRepository.updateUser(u);
 			System.out.println("update updateUser isUpdated == "+isUpdated);
 			
-			System.out.println("update updateUser users.getUsername() == "+users.getUsername()+" users.getDepartments() = "+users.getDepartments());
+//			System.out.println("update updateUser users.getUsername() == "+users.getUsername()+" users.getDepartments() = "+users.getDepartments());
 			
-			isUpdated = jdbcDepartmentRepository.updateDepartmentOfUser(users.getUsername(), users.getDepartments());
+//			isUpdated = jdbcDepartmentRepository.updateDepartmentOfUser(users.getUsername(), users.getDepartments());
 			
 			System.out.println("update updateDepartmentOfUser isUpdated == "+isUpdated);
 			
@@ -398,16 +394,16 @@ public class UserService {
 	 * 
 	 * @return AllDepartments
 	 */
-	public List<DepartmentsDTO> getAllDepartments() {
-
-		try {
-			return jdbcDepartmentRepository.getAllDepartments();
-		} catch (DataAccessException dae) {
-//			LOG.error(dae.getMessage());
-			throw new IllegalAccessError("Error: All departments cannot be retrieved");
-		}
-
-	}
+//	public List<DepartmentsDTO> getAllDepartments() {
+//
+//		try {
+//			return jdbcDepartmentRepository.getAllDepartments();
+//		} catch (DataAccessException dae) {
+////			LOG.error(dae.getMessage());
+//			throw new IllegalAccessError("Error: All departments cannot be retrieved");
+//		}
+//
+//	}
 	/**
 	 * 
 	 * @return

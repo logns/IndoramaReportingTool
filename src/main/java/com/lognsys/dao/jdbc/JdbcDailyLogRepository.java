@@ -51,20 +51,14 @@ public class JdbcDailyLogRepository implements DailyLogRespository {
 		return dailylog_id;
 	}
 
-	@Override
-	public boolean isExists(String username) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
 
 	@Override
 	public List<DailyLogDTO> getAllDailyLogDTO() {
 		List<DailyLogDTO> lists = namedParamJdbcTemplate.query(
 				sqlProperties.getProperty(Constants.DAILYLOG_QUERIES.select_dailylogs_all.name()),
 				new BeanPropertyRowMapper<DailyLogDTO>(DailyLogDTO.class));
-		for(int i=0;i<lists.size();i++){
-    		System.out.println("Values  refresDailyListReport is "+lists.get(i).toString());
-    	}
+			
 		return lists;
 	}
 
@@ -80,11 +74,6 @@ public class JdbcDailyLogRepository implements DailyLogRespository {
 		return null;
 	}
 
-	@Override
-	public boolean deleteDailyLogDTOBy(String username) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public boolean updateDailyLogDTO(DailyLogDTO dailyLogDTO) {
@@ -112,6 +101,27 @@ public class JdbcDailyLogRepository implements DailyLogRespository {
 		namedParamJdbcTemplate.update(sqlProperties.getProperty(Constants.DAILYLOG_QUERIES.insert_dailylog_users.name()),
 				param);
 		
+	}
+
+	@Override
+	public int getDailyLogCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	
+	
+
+	@Override
+	public List<DailyLogDTO> getDailyLogDTOByTitle(String title) {
+		SqlParameterSource parameter = new MapSqlParameterSource("title", title);
+
+		List<DailyLogDTO>  dailyLogDTOs = namedParamJdbcTemplate.query(sqlProperties.getProperty(
+				Constants.DAILYLOG_QUERIES.select_dailylog_by_title.name()),
+				parameter,new BeanPropertyRowMapper<DailyLogDTO>(DailyLogDTO.class));
+		return dailyLogDTOs;
+
 	}
 
 	

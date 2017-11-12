@@ -16,26 +16,30 @@ public interface UserRespository {
 	/**
 	 * Check if User exists by username
 	 * @param username
-	 * @return
+	 * @return boolean
 	 */
 	public boolean isExists(String username);
 
 	/**
 	 * Get All users
 	 * 
-	 * @return
+	 * @return List<UsersDTO>
 	 */
 	public List<UsersDTO> getAllUsers();
 	
-	public List<UsersDTO> getUserRealNames();
-
 	
 	/**
 	 * Delete user by id
 	 * @param id
 	 */
 	public boolean deleteUserBy(Integer id);
-
+	
+	/**
+	 * Delete user by email|D
+	 * @param id
+	 */
+	public boolean deleteUserBy(String emailID);
+	
 	/**
 	 * Get User by Id
 	 * 
@@ -44,12 +48,6 @@ public interface UserRespository {
 	 */
 	public UsersDTO findUserById(Integer id);
 	
-	/**
-	 * Delete user by email|D
-	 * @param id
-	 */
-	public boolean deleteUserBy(String emailID);
-
 	/**
 	 * Get User by emailId
 	 * 
@@ -64,12 +62,12 @@ public interface UserRespository {
 	 * @param users
 	 */
 	 public boolean updateUser(UsersDTO user);
-	 
-		/**
-		 * Update user device.
+	
+	 /**
+		 *Get total count of user 
 		 * 
-		 * @param users
-		 */	 
-	 public boolean updateUserDevice(String device, String username);
-
+		 * @param total
+		 */
+		public int getUserCount();
+	  
 }

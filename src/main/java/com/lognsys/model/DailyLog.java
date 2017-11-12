@@ -20,66 +20,49 @@ public class DailyLog {
 	private String bu = "";
 	@Id
 	private int id;
+	private String assign_task_title = "";
+	private String target_date = "";
+	private String shift = "";
 	private String machine = "";
 	private String description = "";
 	private String timefrom = "";
 	private String timeto = "";
-	private String spareparts = "";
+	private String spare_parts = "";
 	private String attendby = "";
 	private String jobtype = "";
-	private String dates = "";
 	private String recordtype = "";
 	private String status = "";
-	private String shift = "";
-	private String realname = "";
-	private String dailylog_title = "";
+	private String done_percentage = "";
+	
 	
 	public DailyLog() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
 
-	public DailyLog(String users, String bu, int id, String machine, String description, String timefrom, String timeto,
-			String spareparts, String attendby, String jobtype, String dates, String recordtype, String status,
-			String shift, String realname, String dailylog_title) {
+
+	public DailyLog(String users, String bu, int id, String assign_task_title, String target_date, String shift,
+			String machine, String description, String timefrom, String timeto, String spare_parts, String attendby,
+			String jobtype, String recordtype, String status, String done_percentage) {
 		super();
 		this.users = users;
 		this.bu = bu;
 		this.id = id;
+		this.assign_task_title = assign_task_title;
+		this.target_date = target_date;
+		this.shift = shift;
 		this.machine = machine;
 		this.description = description;
 		this.timefrom = timefrom;
 		this.timeto = timeto;
-		this.spareparts = spareparts;
+		this.spare_parts = spare_parts;
 		this.attendby = attendby;
 		this.jobtype = jobtype;
-		this.dates = dates;
 		this.recordtype = recordtype;
 		this.status = status;
-		this.shift = shift;
-		this.realname = realname;
-		this.dailylog_title = dailylog_title;
+		this.done_percentage = done_percentage;
 	}
 
-
-	public DailyLog(int id, String machine,
-			String description, String timefrom, String timeto, String spareparts, String attendby, String jobtype,
-			String dates, String recordtype, String status,String shift) {
-		super();
-		this.id = id;
-		this.machine = machine;
-		this.description = description;
-		this.timefrom = timefrom;
-		this.timeto = timeto;
-		this.spareparts = spareparts;
-		this.attendby = attendby;
-		this.jobtype = jobtype;
-		this.dates = dates;
-		this.recordtype = recordtype;
-		this.status = status;
-		this.shift = shift;
-	}
 
 	public String getUsers() {
 		return users;
@@ -91,18 +74,43 @@ public class DailyLog {
 	}
 
 
-	public String getDailylog_title() {
-		return dailylog_title;
+	public String getBu() {
+		return bu;
 	}
 
 
-	public void setDailylog_title(String dailylog_title) {
-		this.dailylog_title = dailylog_title;
+	public void setBu(String bu) {
+		this.bu = bu;
 	}
 
 
-	public void setDates(String dates) {
-		this.dates = dates;
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	public String getAssign_task_title() {
+		return assign_task_title;
+	}
+
+
+	public void setAssign_task_title(String assign_task_title) {
+		this.assign_task_title = assign_task_title;
+	}
+
+
+	public String getTarget_date() {
+		return target_date;
+	}
+
+
+	public void setTarget_date(String target_date) {
+		this.target_date = target_date;
 	}
 
 
@@ -110,118 +118,120 @@ public class DailyLog {
 		return shift;
 	}
 
+
 	public void setShift(String shift) {
 		this.shift = shift;
 	}
 
-	public String getRecordtype() {
-		return recordtype;
+
+	public String getMachine() {
+		return machine;
 	}
 
-	public void setRecordtype(String recordtype) {
-		this.recordtype = recordtype;
+
+	public void setMachine(String machine) {
+		this.machine = machine;
 	}
 
-	public String getStatus() {
-		return status;
+
+	public String getDescription() {
+		return description;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
+
+
+	public String getTimefrom() {
+		return timefrom;
+	}
+
+
+	public void setTimefrom(String timefrom) {
+		this.timefrom = timefrom;
+	}
+
+
+	public String getTimeto() {
+		return timeto;
+	}
+
+
+	public void setTimeto(String timeto) {
+		this.timeto = timeto;
+	}
+
+
+	public String getSpare_parts() {
+		return spare_parts;
+	}
+
+
+	public void setSpare_parts(String spare_parts) {
+		this.spare_parts = spare_parts;
+	}
+
+
+	public String getAttendby() {
+		return attendby;
+	}
+
+
+	public void setAttendby(String attendby) {
+		this.attendby = attendby;
+	}
+
 
 	public String getJobtype() {
 		return jobtype;
 	}
 
+
 	public void setJobtype(String jobtype) {
 		this.jobtype = jobtype;
 	}
 
-	public String getDates() {
-		return dates;
+
+	public String getRecordtype() {
+		return recordtype;
 	}
 
-	public void setDate(String dates) {
-		this.dates = dates;
+
+	public void setRecordtype(String recordtype) {
+		this.recordtype = recordtype;
 	}
 
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
+
+	public String getStatus() {
+		return status;
 	}
 
-	public String getMachine() {
-		return machine;
-	}
-	public void setMachine(String machine) {
-		this.machine = machine;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public String getTimefrom() {
-		return timefrom;
-	}
-	public void setTimefrom(String timefrom) {
-		this.timefrom = timefrom;
-	}
-	public String getTimeto() {
-		return timeto;
-	}
-	public void setTimeto(String timeto) {
-		this.timeto = timeto;
-	}
-	public String getSpareparts() {
-		return spareparts;
-	}
-	public void setSpareparts(String spareparts) {
-		this.spareparts = spareparts;
-	}
-	public String getAttendby() {
-		return attendby;
-	}
-	public void setAttendby(String attendby) {
-		this.attendby = attendby;
-	}
-/*
-	public String getUsers() {
-		return users;
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
-	public void setUsers(String users) {
-		this.users = users;
-	}*/
 
-	public String getBu() {
-		return bu;
+	public String getDone_percentage() {
+		return done_percentage;
 	}
 
-	public void setBu(String bu) {
-		this.bu = bu;
-	}
 
-	public String getRealname() {
-		return realname;
-	}
-
-	public void setRealname(String realname) {
-		this.realname = realname;
+	public void setDone_percentage(String done_percentage) {
+		this.done_percentage = done_percentage;
 	}
 
 
 	@Override
 	public String toString() {
-		return "DailyLog [users=" + users + ", bu=" + bu + ", id=" + id + ", machine=" + machine + ", description="
-				+ description + ", timefrom=" + timefrom + ", timeto=" + timeto + ", spareparts=" + spareparts
-				+ ", attendby=" + attendby + ", jobtype=" + jobtype + ", dates=" + dates + ", recordtype=" + recordtype
-				+ ", status=" + status + ", shift=" + shift + ", realname=" + realname + ", dailylog_title="
-				+ dailylog_title + "]";
+		return "DailyLog [users=" + users + ", bu=" + bu + ", id=" + id + ", assign_task_title=" + assign_task_title
+				+ ", target_date=" + target_date + ", shift=" + shift + ", machine=" + machine + ", description="
+				+ description + ", timefrom=" + timefrom + ", timeto=" + timeto + ", spare_parts=" + spare_parts
+				+ ", attendby=" + attendby + ", jobtype=" + jobtype + ", recordtype=" + recordtype + ", status="
+				+ status + ", done_percentage=" + done_percentage + "]";
 	}
 	
+
 }

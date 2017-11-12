@@ -2,47 +2,34 @@ package com.lognsys.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import javax.naming.NamingException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.lognsys.dao.dto.BuDTO;
 import com.lognsys.dao.dto.DailyLogDTO;
-import com.lognsys.dao.dto.DepartmentsDTO;
-import com.lognsys.dao.dto.RolesDTO;
 import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.dao.jdbc.JdbcBuRepository;
 import com.lognsys.dao.jdbc.JdbcDailyLogRepository;
-import com.lognsys.dao.jdbc.JdbcDepartmentRepository;
-import com.lognsys.dao.jdbc.JdbcRolesRepository;
 import com.lognsys.dao.jdbc.JdbcUserRepository;
-import com.lognsys.exception.UserDataAccessException;
+import com.lognsys.model.AssignTaskTable;
 import com.lognsys.model.DailyLog;
-import com.lognsys.model.Users;
-import com.lognsys.model.UsersTable;
+import com.lognsys.service.DailyLogService;
 import com.lognsys.util.CommonUtilities;
 import com.lognsys.util.Constants;
 import com.lognsys.util.ObjectMapper;
@@ -50,23 +37,12 @@ import com.lognsys.util.WriteJSONToFile;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperRunManager;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.data.JRMapArrayDataSource;
-import net.sf.jasperreports.engine.export.JRXlsExporter;
-import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
-import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
-
 
 @Service("dailylogService")
-public class DailyLogService {
-
-	//Logger LOG = Logger.getLogger(this.getClass());
+public class DailyLogService{
 
 	@Autowired
 	private JdbcDailyLogRepository jdbcDailyLogRepository;
@@ -110,7 +86,7 @@ public class DailyLogService {
 		jdbcDailyLogRepository.addDailyLogAndBu(dailylog_id, dailyLog.getBu());
 		
 		// adding dailyLog into user
-		jdbcDailyLogRepository.addDailyLogAndUser(dailylog_id, dailyLog.getRealname());
+//		jdbcDailyLogRepository.addDailyLogAndUser(dailylog_id, dailyLog.getRealname());
 			
 		return dailylog_id;
 	}
@@ -193,5 +169,26 @@ public List<UsersDTO> getRealName() {
 		ouputStream.flush();
 		ouputStream.close();
 	}
+
+	
+	public List<DailyLogDTO> fetchDailyLog(String title) throws IOException {
+		List<DailyLogDTO> lists=jdbcDailyLogRepository.getDailyLogDTOByTitle(title);
+		System.out.println("Rest fetchDailyLog lists.size() "+lists.size());			
+		
+		ResourceLoader resourceLoader = new FileSystemResourceLoader();
+		Resource resource = resourceLoader.getResource(applicationProperties.getProperty(Constants.JSON_FILES.dailylogs_filename.name()));
+		String list = CommonUtilities.convertToJSON(lists);
+
+		try {
+			WriteJSONToFile.getInstance().write(resource, list);
+		} catch (IOException e) {
+		System.out.println("IOEXCEPTION --- e"+e);
+			e.printStackTrace();
+		}
+		return lists;
+	}
+
+
+	
 	
 }

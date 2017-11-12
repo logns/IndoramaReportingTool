@@ -1,5 +1,5 @@
 
-# roles.sql
+# bu.sql
 # 04/04/2017 ms
 #
 # Use: Indorama dashboard /app bu
