@@ -2,16 +2,17 @@ com\lognsys\dao\jdbc\JdbcDailyLogRepository.class
 com\lognsys\dao\dto\UsersBuDTO.class
 com\lognsys\dao\dto\DailyLogDTO.class
 com\lognsys\util\Constants$TYPES_ARRAY.class
-com\lognsys\service\impl\DailyLogServiceImpl.class
 com\lognsys\dao\jdbc\resultset\UserBuResultSetExtractor.class
 com\lognsys\loader\Ingest.class
 com\lognsys\model\UsersTable.class
+com\lognsys\service\AssignTaskServices.class
 com\lognsys\model\AssignTask.class
 com\lognsys\util\Constants$GROUP_QUERIES.class
 com\lognsys\util\Constants$DEVICE_FIELD_NAMES.class
 com\lognsys\dao\dto\UserRolesDTO.class
 com\lognsys\util\Constants$ROWSEAT_FIELD_NAMES.class
 com\lognsys\loader\IngestXLSData.class
+com\lognsys\model\AssignTaskTable.class
 com\lognsys\model\Users.class
 com\lognsys\util\Constants$EXCEPTIONS_MSG.class
 com\lognsys\util\Constants$USER_FIELD_NAMES.class
@@ -43,6 +44,7 @@ com\lognsys\dao\jdbc\rowmapper\UserByUserIDRowMapper.class
 com\lognsys\util\Constants$BOOKING_FIELD_NAMES.class
 com\lognsys\service\AssignTaskService.class
 com\lognsys\util\Constants$DRAMA_FIELD_NAMES.class
+com\lognsys\service\DailyLogServices.class
 com\lognsys\dao\dto\DailyLogBuDTO.class
 com\lognsys\util\Constants$DEPARTMENT_QUERIES.class
 com\lognsys\exception\UserDataAccessException.class
@@ -70,7 +72,6 @@ com\lognsys\web\controller\AssignTaskController.class
 com\lognsys\dao\AssignTaskRepository.class
 com\lognsys\dao\jdbc\JdbcAssignTaskRepository.class
 com\lognsys\exception\CustomGenericException.class
-com\lognsys\service\impl\AssignTaskServiceImpl.class
 com\lognsys\service\StorageProperties.class
 com\lognsys\dao\dto\AssignTaskDTO.class
 com\lognsys\model\Bu.class

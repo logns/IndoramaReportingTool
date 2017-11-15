@@ -11,15 +11,18 @@
 
 
 #users_
+mysql kalrav -e "drop table bu;"
+mysql kalrav -e "drop table users;"
 mysql kalrav -e "drop table users_bu;"
-mysql kalrav -e "drop table users_roles;"
-mysql kalrav -e "drop table users_departments;"
 
 #main tables
-mysql kalrav -e "drop table users;"
-mysql kalrav -e "drop table bu;"
-mysql kalrav -e "drop table departments;"
+mysql kalrav -e "drop table users_roles;"
 mysql kalrav -e "drop table roles;"
+mysql kalrav -e "drop table assign_task_dailylog;"
+mysql kalrav -e "drop table assign_task;"
+mysql kalrav -e "drop table dailylog;"
+mysql kalrav -e "drop table dailylog_bu;"
+mysql kalrav -e "drop table dailylog_users;"
 
 
 
