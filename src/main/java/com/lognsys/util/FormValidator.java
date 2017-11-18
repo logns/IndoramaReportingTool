@@ -7,6 +7,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+import com.lognsys.dao.dto.AssignTaskDTO;
+import com.lognsys.dao.dto.DailyLogDTO;
 import com.lognsys.model.DailyLog;
 import com.lognsys.model.Users;
 
@@ -66,26 +68,155 @@ public class FormValidator implements Validator {
 			validateZipcode(users, errors);
 			validatePhonenumber(users, errors);
 			validateEmail(users, errors);
-		}else if (target instanceof DailyLog) {
+		}else if (target instanceof DailyLogDTO) {
 //			System.out.println("Form Validation target Users "+target);
 			
-			DailyLog dailyLog = (DailyLog) target;
+			DailyLogDTO dailyLog = (DailyLogDTO) target;
 			
 			java.util.Date dt = new java.util.Date();
 			java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String currentTime = sdf.format(dt);
 
-			validateRealname(dailyLog, errors);
-			validateMachine(dailyLog, errors);
-			validateDescription(dailyLog, errors);
-			validateSpareParts(dailyLog, errors);
-			validateAttendby(dailyLog, errors);
+//			validateShift(dailyLog, errors);
+//			validateStatus(dailyLog, errors);
+//			validateJobType(dailyLog, errors);
+//			validateRecordType(dailyLog, errors);
+				
+//			validateTargetDate( errors);
+//			validateMachine(dailyLog, errors);
+//			validateDescription(dailyLog, errors);
+//			validateSpareParts(dailyLog, errors);
+//			validateAttendby(dailyLog, errors);
+		
+		}else if (target instanceof AssignTaskDTO) {
+//			System.out.println("Form Validation target Users "+target);
+			
+			AssignTaskDTO assignTaskDTO = (AssignTaskDTO) target;
+			
+			java.util.Date dt = new java.util.Date();
+			java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String currentTime = sdf.format(dt);
+
+			validateTitle(assignTaskDTO, errors);
+			validateAssignTo(assignTaskDTO, errors);
+			validatePriority(assignTaskDTO, errors);
+//			validateTargetDate(errors);
+			validateDonePercentage(assignTaskDTO, errors);
 		
 		}
 		
 	}
 
-	private void validateAttendby(DailyLog dailyLog, Errors errors) {
+	private void validateRecordType(DailyLogDTO dailyLog, Errors errors) {
+		ValidationUtils.rejectIfEmpty(errors, "recordtype", "required.recordtype", "recordtype is required.");
+
+		// input string conatains characters only
+		if (!(dailyLog.getRecordtype() != null && dailyLog.getRecordtype().isEmpty())) {
+			pattern = Pattern.compile(STRING_PATTERN);
+			matcher = pattern.matcher((dailyLog.getRecordtype()));
+
+			if (!matcher.matches()) {
+				errors.rejectValue("recordtype", "recordtype.containNonChar", "Enter a valid recordtype");
+			}
+		}	
+	}
+
+	private void validateJobType(DailyLogDTO dailyLog, Errors errors) {
+		ValidationUtils.rejectIfEmpty(errors, "jobtype", "required.jobtype", "jobtype is required.");
+
+		// input string conatains characters only
+		if (!(dailyLog.getJobtype() != null && dailyLog.getJobtype().isEmpty())) {
+			pattern = Pattern.compile(STRING_PATTERN);
+			matcher = pattern.matcher((dailyLog.getJobtype()));
+
+			if (!matcher.matches()) {
+				errors.rejectValue("jobtype", "jobtype.containNonChar", "Enter a valid jobtype");
+			}
+		}
+	}
+
+	private void validateStatus(DailyLogDTO dailyLog, Errors errors) {
+		ValidationUtils.rejectIfEmpty(errors, "status", "required.status", "status is required.");
+
+		// input string conatains characters only
+		if (!(dailyLog.getStatus() != null && dailyLog.getStatus().isEmpty())) {
+			pattern = Pattern.compile(STRING_PATTERN);
+			matcher = pattern.matcher((dailyLog.getStatus()));
+
+			if (!matcher.matches()) {
+				errors.rejectValue("status", "status.containNonChar", "Enter a valid status");
+			}
+		}
+	}
+
+	private void validateShift(DailyLogDTO dailyLog, Errors errors) {
+		ValidationUtils.rejectIfEmpty(errors, "shift", "required.shift", "shift is required.");
+
+		// input string conatains characters only
+		if (!(dailyLog.getShift() != null && dailyLog.getShift    ().isEmpty())) {
+			pattern = Pattern.compile(STRING_PATTERN);
+			matcher = pattern.matcher((dailyLog.getShift()));
+
+			if (!matcher.matches()) {
+				errors.rejectValue("shift", "shift.containNonChar", "Enter a valid shift");
+			}
+		}	
+	}
+
+	private void validateDonePercentage(AssignTaskDTO assignTaskDTO, Errors errors) {
+
+			ValidationUtils.rejectIfEmpty(errors, "done_percentage", "required.done_percentage", "done_percentage is required.");
+
+	}
+
+	private void validateTargetDate( Errors errors) {
+		ValidationUtils.rejectIfEmpty(errors, "target_date", "required.target_date", "target_date is required.");
+
+	}
+
+	private void validatePriority(AssignTaskDTO assignTaskDTO, Errors errors) {
+		ValidationUtils.rejectIfEmpty(errors, "priority", "required.priority", "priority is required.");
+
+		// input string conatains characters only
+		if (!(assignTaskDTO.getPriority() != null && assignTaskDTO.getPriority().isEmpty())) {
+			pattern = Pattern.compile(STRING_PATTERN);
+			matcher = pattern.matcher((assignTaskDTO.getPriority()));
+
+			if (!matcher.matches()) {
+				errors.rejectValue("priority", "priority.containNonChar", "Enter a valid priority");
+			}
+		}
+	}
+
+	private void validateAssignTo(AssignTaskDTO assignTaskDTO, Errors errors) {
+		ValidationUtils.rejectIfEmpty(errors, "assigned_to", "required.assigned_to", "assigned_to is required.");
+
+		// input string conatains characters only
+		if (!(assignTaskDTO.getAssigned_to() != null && assignTaskDTO.getAssigned_to().isEmpty())) {
+			pattern = Pattern.compile(STRING_PATTERN);
+			matcher = pattern.matcher((assignTaskDTO.getAssigned_to()));
+
+			if (!matcher.matches()) {
+				errors.rejectValue("assigned_to", "assigned_to.containNonChar", "Enter a valid assigned_to");
+			}
+		}
+	}
+
+	private void validateTitle(AssignTaskDTO assignTaskDTO, Errors errors) {
+		ValidationUtils.rejectIfEmpty(errors, "title", "required.title", "title is required.");
+
+		// input string conatains characters only
+		if (!(assignTaskDTO.getTitle() != null && assignTaskDTO.getTitle().isEmpty())) {
+			pattern = Pattern.compile(STRING_PATTERN);
+			matcher = pattern.matcher((assignTaskDTO.getTitle()));
+
+			if (!matcher.matches()) {
+				errors.rejectValue("title", "title.containNonChar", "Enter a valid title");
+			}
+		}
+	}
+
+	private void validateAttendby(DailyLogDTO dailyLog, Errors errors) {
 		ValidationUtils.rejectIfEmpty(errors, "attendby", "required.attendby", "attendby is required.");
 
 		// input string conatains characters only
@@ -100,7 +231,7 @@ public class FormValidator implements Validator {
 		
 	}
 
-	private void validateSpareParts(DailyLog dailyLog, Errors errors) {
+	private void validateSpareParts(DailyLogDTO dailyLog, Errors errors) {
 		ValidationUtils.rejectIfEmpty(errors, "spareparts", "required.spareparts", "sparepart is required.");
 
 		// input string conatains characters only
@@ -115,7 +246,7 @@ public class FormValidator implements Validator {
 
 	}
 
-	private void validateDescription(DailyLog dailyLog, Errors errors) {
+	private void validateDescription(DailyLogDTO dailyLog, Errors errors) {
 		ValidationUtils.rejectIfEmpty(errors, "description", "required.description", "description is required.");
 
 		// input string conatains characters only
@@ -130,7 +261,7 @@ public class FormValidator implements Validator {
 		
 	}
 
-	private void validateMachine(DailyLog dailyLog, Errors errors) {
+	private void validateMachine(DailyLogDTO dailyLog, Errors errors) {
 		ValidationUtils.rejectIfEmpty(errors, "machine", "required.machine", "machine is required.");
 
 		// input string conatains characters only
@@ -143,22 +274,6 @@ public class FormValidator implements Validator {
 			}
 		}
 		
-	}
-
-
-	private void validateRealname(DailyLog dailyLog, Errors errors) {
-		// TODO Auto-generated method stub
-		ValidationUtils.rejectIfEmpty(errors, "realname", "required.realname", "name is required.");
-
-		// input string conatains characters only
-//		if (!(dailyLog.getRealname() != null && dailyLog.getRealname().isEmpty())) {
-//			pattern = Pattern.compile(STRING_PATTERN);
-//			matcher = pattern.matcher((dailyLog.getRealname()));
-//
-//			if (!matcher.matches()) {
-//				errors.rejectValue("realname", "realname.containNonChar", "Enter a valid Name");
-//			}
-//		}
 	}
 
 

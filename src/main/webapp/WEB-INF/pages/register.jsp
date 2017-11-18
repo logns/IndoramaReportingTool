@@ -58,14 +58,6 @@
 									<form:options items="${busList}"></form:options>
 								</form:select>
 								</div>
-								<div class="col-sm-6 form-group">
-								<label>Departments</label>
-								<form:select path="departments" class="form-control text ui-widget-content ui-corner-all">
-									<option value="NONE">--- Select ---</option>
-									<form:options items="${departmentsList}"></form:options>
-								</form:select>
-								</div>
-							</div>
 							<div class="row">
 								<div class="col-sm-6 form-group">
 								<label>Roles</label>

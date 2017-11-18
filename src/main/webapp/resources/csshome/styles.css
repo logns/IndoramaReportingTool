@@ -921,7 +921,21 @@ h1.page-header {
 .icon-grid h4 {
 	display: none;
 }
-
+.the-legend {
+    border-style: none;
+    border-width: 1;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom:10px;
+    width: auto;
+    padding:10px 10px 10px 10px;
+    border: 1px solid #e0e0e0;
+    
+}
+.the-fieldset {
+    border:  solid #e0e0e0;
+    padding: 10px 10px 10px 10px;
+}
 .icon-grid pre {
 	margin: 10px 10px -10px 10px;
 	border-radius: 0;

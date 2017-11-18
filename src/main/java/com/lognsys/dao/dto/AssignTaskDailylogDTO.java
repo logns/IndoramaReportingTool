@@ -10,7 +10,7 @@ public class AssignTaskDailylogDTO {
 	private int id;
 
 	@DBRef
-	private DailyLog dailylogDTO;
+	private DailyLogDTO dailylogDTO;
 
 	@DBRef
 	private AssignTaskDTO assignTaskDTO;
@@ -20,7 +20,7 @@ public class AssignTaskDailylogDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public AssignTaskDailylogDTO(int id, DailyLog dailylogDTO, AssignTaskDTO assignTaskDTO) {
+	public AssignTaskDailylogDTO(int id, DailyLogDTO dailylogDTO, AssignTaskDTO assignTaskDTO) {
 		super();
 		this.id = id;
 		this.dailylogDTO = dailylogDTO;
@@ -35,11 +35,11 @@ public class AssignTaskDailylogDTO {
 		this.id = id;
 	}
 
-	public DailyLog getDailylogDTO() {
+	public DailyLogDTO getDailylogDTO() {
 		return dailylogDTO;
 	}
 
-	public void setDailylogDTO(DailyLog dailylogDTO) {
+	public void setDailylogDTO(DailyLogDTO dailylogDTO) {
 		this.dailylogDTO = dailylogDTO;
 	}
 

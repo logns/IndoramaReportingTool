@@ -55,24 +55,27 @@ public class AssignTaskService {
 	 * @throws IOException
 	 */
 	@Transactional(rollbackFor = IllegalArgumentException.class)
-	public void addAssignTask(AssignTask assignTask, DailyLog dailyLog) throws IOException {
+	public void addAssignTask(AssignTaskDTO assignTaskDTO, DailyLogDTO dailyLogDTO) throws IOException {
 
-		assignTaskDTO = ObjectMapper.mapToAssignTaskDTO(assignTask);
-		System.out.println("Rest addAssignTask assignTaskDTO tostring  " + assignTaskDTO.toString());
+		System.out.println("Rest addAssignTask assignTaskDTO getTitle  " + assignTaskDTO.getTitle());
+		System.out.println("Rest addAssignTask (jdbcAssignTaskRepository)  " + (jdbcAssignTaskRepository)+"\n");
 
-		if(!(jdbcAssignTaskRepository.isexist(assignTaskDTO.getTitle()))){
-			int assignTask_id = jdbcAssignTaskRepository.addAssignTask(assignTaskDTO);
-			System.out.println("Rest addAssignTask assignTask_id "+assignTask_id);
-
+		if(!(isexist(assignTaskDTO.getTitle()))){
+			int assign_task_id = jdbcAssignTaskRepository.addAssignTask(assignTaskDTO);
+			assignTaskDTO.setId(assign_task_id);
 			
-			dailyLogDTO = ObjectMapper.mapToDailyLogDTO(dailyLog);
+			System.out.println("Rest addAssignTask assign_task_id "+assign_task_id);			
 			System.out.println("Rest addAssignTask dailyLogDTO tostring  " + dailyLogDTO.toString());
 
+			
 			int dailylog_id= jdbcDailyLogRepository.addDailyLog(dailyLogDTO);
 			System.out.println("Rest addAssignTask dailylog_id "+dailylog_id);
 
-			int assignDailyLog_id=jdbcAssignTaskRepository.addAssignTask_DailyLog(assignTask_id, dailylog_id);
+			int assignDailyLog_id=jdbcAssignTaskRepository.addAssignTask_DailyLog(assign_task_id, dailylog_id);
 			System.out.println("Rest addAssignTask assignDailyLog_id "+assignDailyLog_id);			
+			
+			jdbcDailyLogRepository.addDailyLogAndBu(dailylog_id, dailyLogDTO.getBu());
+			System.out.println("Rest addAssignTask addDailyLogAndBu ");
 			
 		}	
 		else{
@@ -80,7 +83,9 @@ public class AssignTaskService {
 		}
 
 	}
-
+public boolean isexist(String title) {
+	return jdbcAssignTaskRepository.isexist(title);
+}
 	public void readAssignTask() throws IOException {
 		listOfAssigntask =jdbcAssignTaskRepository.getAllAssignTaskDTO();
 		

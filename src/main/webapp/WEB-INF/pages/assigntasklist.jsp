@@ -44,7 +44,7 @@
 							data-sort-order="desc">
 							<thead>
 								<tr>
-									<th data-field="checked" data-checkbox="true"></th>
+									<!-- <th data-field="checked" data-checkbox="true"></th> -->
 									<th data-field="id" data-sortable="true" data-visible="false">Id</th>
 									<th data-field="title" data-sortable="true">title</th>
 									<th data-field="assigned_to" data-sortable="true">assigned_to</th>

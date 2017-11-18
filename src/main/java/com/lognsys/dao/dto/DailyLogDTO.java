@@ -20,7 +20,8 @@ public class DailyLogDTO {
 	private String recordtype = "";
 	private String status = "";
 	private String done_percentage = "";
-	
+	private String bu = "";
+
 	public DailyLogDTO() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -46,13 +47,22 @@ public class DailyLogDTO {
 		this.done_percentage = done_percentage;
 	}
 
+	
 	@Override
 	public String toString() {
 		return "DailyLogDTO [id=" + id + ", assign_task_title=" + assign_task_title + ", target_date=" + target_date
 				+ ", shift=" + shift + ", machine=" + machine + ", description=" + description + ", timefrom="
 				+ timefrom + ", timeto=" + timeto + ", spare_parts=" + spare_parts + ", attendby=" + attendby
 				+ ", jobtype=" + jobtype + ", recordtype=" + recordtype + ", status=" + status + ", done_percentage="
-				+ done_percentage + "]";
+				+ done_percentage + ", bu=" + bu + "]";
+	}
+
+	public String getBu() {
+		return bu;
+	}
+
+	public void setBu(String bu) {
+		this.bu = bu;
 	}
 
 	public int getId() {

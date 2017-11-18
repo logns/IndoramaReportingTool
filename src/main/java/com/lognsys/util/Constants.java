@@ -77,7 +77,7 @@ public class Constants {
 	 * Note: All the files should be specified in application.properties.
 	 */
 	public enum JSON_FILES {
-		user_filename, dailylogs_filename, adverts_filename, booking_filename, notification_filename, assigntask_filename
+		user_filename, dailylogs_filename, adverts_filename, booking_filename, notification_filename, assigntask_filename,realname_filename
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class Constants {
 		jobtype,
 		recordtype,
 		status,
-		shift
+		shift,priority,done_percentage
 		}
 
 	/**

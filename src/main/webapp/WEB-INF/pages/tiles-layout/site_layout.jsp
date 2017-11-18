@@ -41,6 +41,11 @@
 <link rel="stylesheet" href="static/csshome/datepicker.css">
 <link rel="stylesheet" href="static/csshome/datepicker3.css">
 <link rel="stylesheet" href="static/csshome/styles.css">
+
+
+<link rel="stylesheet" href="static/csshome/timepicker.css">
+<link rel="stylesheet" href="static/csshome/bootstrap-timepicker.min.css" rel="stylesheet" media="screen">
+
 <link rel="stylesheet" href="static/csshome/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -66,16 +71,19 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript" src="static/js/bootstrap-datetimepicker.js" ></script>
 
+<script type="text/javascript" src="static/js/bootstrap-timepicker.js" ></script>
+
+
+
 <!-- adding mustache template engine  -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
 
-<!-- load kalrav.js after jquery -->
-<script type="text/javascript" src="static/js/kalrav.js"></script>
+
+<!-- load indorama.js after jquery -->
+<script type="text/javascript" src="static/js/indorama.js"></script>
 
  <!-- glyph icons from https://glyphs.co/docs/getting-started/installation  -->
 <script type="text/javascript" src="https://kit.glyphs.co/3ko27b.js"></script>
-
-
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 </head>

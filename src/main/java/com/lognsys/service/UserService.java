@@ -114,7 +114,7 @@ public class UserService {
 		}
 		ResourceLoader resourceLoader = new FileSystemResourceLoader();
 		Resource resource = resourceLoader
-				.getResource(applicationProperties.getProperty(Constants.JSON_FILES.user_filename.name()));
+				.getResource(applicationProperties.getProperty(Constants.JSON_FILES.realname_filename.name()));
 		String list = CommonUtilities.convertToJSON(users);
 
 		try {
@@ -427,6 +427,16 @@ public class UserService {
 
 		try {
 			return jdbcRolesRepository.getAllRoles();
+		} catch (DataAccessException dae) {
+//			LOG.error(dae.getMessage());
+			throw new IllegalAccessError("Error: All roles cannot be retrieved");
+		}
+
+	}
+	public List<UsersDTO> getUsersNameList() {
+
+		try {
+			return jdbcUserRepository.getUserRealNames();
 		} catch (DataAccessException dae) {
 //			LOG.error(dae.getMessage());
 			throw new IllegalAccessError("Error: All roles cannot be retrieved");

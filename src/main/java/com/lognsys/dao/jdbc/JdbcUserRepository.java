@@ -209,8 +209,11 @@ public class JdbcUserRepository implements UserRespository {
 	}
 
 	public List<UsersDTO> getUserRealNames() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		List<UsersDTO> listUsers = namedParamJdbcTemplate.query(
+				sqlProperties.getProperty(Constants.USER_QUERIES.select_realname.name()),
+				new BeanPropertyRowMapper<UsersDTO>(UsersDTO.class));
+
+		return listUsers;
+		}
 
 }

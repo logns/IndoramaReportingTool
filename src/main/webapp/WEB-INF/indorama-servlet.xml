@@ -12,8 +12,8 @@
 		tests and should be free of beans related to mvc and the web -->
 	<import resource="classpath:application-context.xml" />
 	<import resource="classpath:datasource-context.xml" />
-	<import resource="classpath:spring-security.xml"></import>
-	<import resource="classpath:mongo-context.xml" />
+	<import resource="classpath:spring-security.xml"></import><!-- 
+	<import resource="classpath:mongo-context.xml" /> -->
     
     
 	<!-- **************************************************************** -->

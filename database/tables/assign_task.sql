@@ -1,3 +1,4 @@
+
 DROP TABLE `indorama_poly`.`assign_task`;
 
 CREATE TABLE IF NOT EXISTS `indorama_poly`.`assign_task` (
@@ -11,3 +12,6 @@ CREATE TABLE IF NOT EXISTS `indorama_poly`.`assign_task` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
+
+ALTER TABLE `indorama_poly`.`assign_task` 
+ADD UNIQUE INDEX `assign_task_title_index` (`title` ASC);

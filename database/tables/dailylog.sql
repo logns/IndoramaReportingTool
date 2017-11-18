@@ -23,3 +23,13 @@ DEFAULT CHARACTER SET = utf8;
 
 ALTER TABLE `indorama_poly`.`dailylog` 
 CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT ;
+
+
+ALTER TABLE `indorama_poly`.`dailylog` 
+CHANGE COLUMN `timefrom` `timefrom` VARCHAR(20) NOT NULL ,
+CHANGE COLUMN `timeto` `timeto` VARCHAR(20) NOT NULL ;
+
+
+ALTER TABLE `indorama_poly`.`dailylog` 
+ADD UNIQUE INDEX `assign_task_title_UNIQUE` (`assign_task_title` ASC);
+

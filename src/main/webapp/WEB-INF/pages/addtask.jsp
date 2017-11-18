@@ -1,289 +1,192 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html>
-<head>
-<title>
-Dashdoard Admin
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-</title>
-<link href="<c:url value="/static/css/style.css" />" rel="stylesheet">
-<script src="<c:url value="/static/js/easypiechart-data.js" />"></script>
-</head>
-<body>
-<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
-	
+<div style="overflow: scroll;">
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
 			<ol class="breadcrumb">
-				<li><a href="#"><svg class="glyph stroked home"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-home"></use></svg></a></li>
-				<li class="active">Icons</li>
+				<li><a href="#"><svg class="glyph stroked home">
+							<use xlink:href="#stroked-home"></use></svg></a></li>
+				<li class="active">ADD TASK</li>
 			</ol>
-		</div><!--/.row-->
-		
-		<div class="row">
-			<div class="col-lg-12">
-				<h1 class="page-header">Dashboard</h1>
-			</div>
-		</div><!--/.row-->
-		
-		<div class="row">
-<!-- 		<div class="col-xs-12 col-md-6 col-lg-3">
-				<div class="panel panel-teal panel-widget">
-					<div class="row no-padding">
-						<div class="col-sm-3 col-lg-5 widget-left">
-							<svg class="glyph stroked male-user"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-male-user"></use></svg>
-						</div>
-						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">24</div>
-							<div class="text-muted">Active Users</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-12 col-md-6 col-lg-3">
-				<div class="panel panel-red panel-widget">
-					<div class="row no-padding">
-						<div class="col-sm-3 col-lg-5 widget-left">
-							<svg class="glyph stroked app-window-with-content"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-app-window-with-content"></use></svg>
-						</div>
-						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">25.2k</div>
-							<div class="text-muted">Adverts Posted</div>
-						</div>
-					</div>
-				</div>
-			</div> -->
-			
-	<!-- 		<div class="col-xs-12 col-md-6 col-lg-3">
-				<div class="panel panel-orange panel-widget">
-					<div class="row no-padding">
-						<div class="col-sm-3 col-lg-5 widget-left">
-							<svg class="glyph stroked empty-message"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-empty-message"></use></svg>
-						</div>
-						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">52</div>
-							<div class="text-muted">Daily Records</div>
-						</div>
-					</div>
-				</div>
-			</div> 
-			<div class="col-xs-12 col-md-6 col-lg-3">
-				<div class="panel panel-red panel-widget">
-					<div class="row no-padding">
-						<div class="col-sm-3 col-lg-5 widget-left">
-						<svg class="glyph stroked app-window-with-content"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-app-window-with-content"></use></svg>
-						</div>
-						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">24</div>
-							<div class="text-muted">Daily Records</div>
-						</div>
-					</div>
-				</div>
-			</div>-->
-			
-				<div class="row">
-			<div class="col-xs-6 col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-body easypiechart-panel">
-						<h4>Last Update</h4>
-						<div class="easypiechart" id="easypiechart-blue" data-percent="92"><span class="percent">14:20</span>
-						<canvas height="5" width="5"></canvas></div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-6 col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-body easypiechart-panel">
-						<h4>Records Posted</h4>
-						<div class="easypiechart" id="easypiechart-orange" data-percent="65"><span class="percent">20</span>
-						<canvas height="5" width="5"></canvas></div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-6 col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-body easypiechart-panel">
-						<h4>Follow Ups</h4>
-						<div class="easypiechart" id="easypiechart-teal" data-percent="56"><span class="percent">10</span>
-						<canvas height="5" width="5"></canvas></div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-6 col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-body easypiechart-panel">
-						<h4>Total Breakdown</h4>
-						<div class="easypiechart" id="easypiechart-red" data-percent="27"><span class="percent">27</span>
-						<canvas height="5" width="5"></canvas></div>
-					</div>
-				</div>
-			</div>
-		</div><!--/.row-->
-			
-			
 		</div>
-	
 		<div class="row">
 			<div class="col-lg-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">Site Maintenance Overview</div>
-					<div class="panel-body">
-						<div class="canvas-wrapper">
-							<canvas class="main-chart" id="line-chart" height="354" width="1064" style="width: 1064px; height: 354px;"></canvas>
-						</div>
-					</div>
-				</div>
+				<h1 class="page-header">Add Task Details</h1>
 			</div>
-		</div><!--/.row-->
-		
+		</div>
+		<div class="panel panel-default">
+			<form:form method="POST" action="addtask" modelAttribute="atdl">
+				<div class="panel-body" cssClass="error">
+					<form:errors path="assignTaskDTO.title" element="div" />
+					<form:errors path="assignTaskDTO.assigned_to" element="div" />
+					<form:errors path="assignTaskDTO.priority" element="div" />
+					<form:errors path="assignTaskDTO.done_percentage" element="div" />
+					<form:errors path="assignTaskDTO.target_date" element="div" />
+
+					<form:errors path="dailylogDTO.shift" element="div" />
+					<form:errors path="dailylogDTO.machine" element="div" />
+					<form:errors path="dailylogDTO.description" element="div" />
+					<form:errors path="dailylogDTO.attendby" element="div" />
+					<form:errors path="dailylogDTO.timefrom" element="div" />
+					<form:errors path="dailylogDTO.timeto" element="div" />
+					<form:errors path="dailylogDTO.spare_parts" element="div" />
+					<form:errors path="dailylogDTO.jobtype" element="div" />
+					<form:errors path="dailylogDTO.recordtype" element="div" />
+					<form:errors path="dailylogDTO.bu" element="div" />
+					<form:errors path="dailylogDTO.status" element="div" />
+				</div>
+				<div class="col-sm-12 panel panel-default">
+					<fieldset class="the-fieldset">
+						<legend class="the-legend">Assign Task Details</legend>
+
+						<div class="form-group">
+							<label>Task Title</label>
+							<form:textarea id="title" placeholder="Enter Task Title Here.."
+								rows="2"
+								class="form-control text ui-widget-content ui-corner-all"
+								path="assignTaskDTO.title" />
+						</div>
+						<div class="col-sm-6 form-group">
+							<label>Assigned to</label>
+							<form:select path="assignTaskDTO.assigned_to"
+								class="form-control text ui-widget-content ui-corner-all">
+								<option id="assigned_to" value="NONE">--- Select ---</option>
+								<form:options id="assigned_to" items="${usersList}"></form:options>
+							</form:select>
+						</div>
+						<div class="col-sm-6 form-group">
+							<label>Priority</label>
+							<form:select path="assignTaskDTO.priority"
+								class="form-control text ui-widget-content ui-corner-all">
+								<option id="priority" value="NONE">--- Select ---</option>
+								<form:options id="priority" items="${priority}"></form:options>
+							</form:select>
+						</div>
+						<div class="col-sm-6 form-group">
+							<label>Done Percentage (%)</label>
+							<form:select path="assignTaskDTO.done_percentage"
+								class="form-control text ui-widget-content ui-corner-all">
+								<option id="done_percentage" value="NONE">--- Select
+									---</option>
+								<form:options id="done_percentage" items="${done_percentage}"></form:options>
+							</form:select>
+						</div>
+
+						<div class="col-sm-6 form-group">
+							<label>Targeted Date</label> <br />
+							<div class="input-group date form_datetime col-md-10" id="dates"
+								data-date-format="yyyy-mm-dd  hh:MM a" data-link-field="dates">
+								<form:input id="dates" type="text"
+									path="assignTaskDTO.target_date" placeholer="Select DateTime  Here...." class="form-control" value="" />
+								<span class="input-group-addon"><span
+									class="glyphicon glyphicon-remove"></span></span> <span
+									class="input-group-addon"><span
+									class="glyphicon glyphicon-th"></span></span>
+							</div>
+						</div>
+
+
+					</fieldset>
+					<br />
+					<fieldset class="the-fieldset">
+						<legend class="the-legend">Daily Logs Details</legend>
+						<div class="col-sm-6 form-group">
+							<label>Shift</label>
+							<form:select path="dailylogDTO.shift"
+								class="form-control text ui-widget-content ui-corner-all">
+								<option id="shift" value="NONE">--- Select ---</option>
+								<form:options id="shift" items="${shift}"></form:options>
+							</form:select>
+						</div>
+						<br />
+						<div class="col-sm-12 form-group">
+							<label>Machine</label>
+							<form:textarea id="machine"
+								placeholder="Enter Machine details Here.." rows="2"
+								class="form-control text ui-widget-content ui-corner-all"
+								path="dailylogDTO.machine" />
+						</div>
+						<div class="col-sm-12 form-group">
+							<label>Problem Description</label>
+							<form:textarea id="description"
+								placeholder="Enter Description details Here.." rows="2"
+								class="form-control text ui-widget-content ui-corner-all"
+								path="dailylogDTO.description" />
+						</div>
+						<div class="col-sm-6 form-group">
+							<label>Time From</label>
+							 <div class="input-group bootstrap-timepicker timepicker">
+								<form:input id="timepicker1" type="text"
+									class="form-control input-small" path="dailylogDTO.timefrom" />
+								<span class="input-group-addon"><i
+									class="glyphicon glyphicon-time"></i></span>
+							</div> 
+						</div>
+						<div class="col-sm-6 form-group">
+							<label>Time To</label>
+							 <div class="input-group bootstrap-timepicker timepicker">
+								<form:input id="timepicker2" type="text"
+									class="form-control input-small" path="dailylogDTO.timeto" />
+								<span class="input-group-addon"><i
+									class="glyphicon glyphicon-time"></i></span>
+							</div> 
+						</div>
+						<div class="col-sm-12 form-group">
+							<label>Spare Parts</label>
+							<form:textarea id="spare_parts"
+								placeholder="Enter Spare parts details Here.." rows="1"
+								class="form-control text ui-widget-content ui-corner-all"
+								path="dailylogDTO.spare_parts" />
+						</div>
+						<div class="col-sm-6 form-group">
+						 <label>Attend By</label>
+	<%-- 						<form:input  path="dailylogDTO.attendby" id="attendby"	class="form-control text ui-widget-content ui-corner-all" />
+	 --%><form:input  path="dailylogDTO.attendby" id="attendby" class="form-control text ui-widget-content ui-corner-all"	/>
 	
-								
-		<div class="row">
-			<div class="col-md-8">
-			
-				<div class="panel panel-default chat">
-					<div class="panel-heading" id="accordion"><svg class="glyph stroked two-messages"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-two-messages"></use></svg>Message Board</div>
-					<div class="panel-body">
-						<ul>
-							<li class="left clearfix">
-								<span class="chat-img pull-left">
-									<img src="http://placehold.it/80/30a5ff/fff" alt="User Avatar" class="img-circle">
-								</span>
-								<div class="chat-body clearfix">
-									<div class="header">
-										<strong class="primary-font">Anupong</strong> <small class="text-muted">32 mins ago</small>
-									</div>
-									<p>
-										We change SUN Led lamp 18 w 2 ea at burner area ( old not light : lamp damage )test work normal
-									</p>
-								</div>
-							</li>
-							<li class="right clearfix">
-								<span class="chat-img pull-right">
-									<img src="http://placehold.it/80/dde0e6/5f6468" alt="User Avatar" class="img-circle">
-								</span>
-								<div class="chat-body clearfix">
-									<div class="header">
-										<strong class="pull-left primary-font">Dumrongsak</strong> <small class="text-muted">6 mins ago</small>
-									</div>
-									<p>
-										To PM FR/SR motor we check current ,voltage , frequency,and temp motor normal.
-									</p>
-								</div>
-							</li>
-							<li class="left clearfix">
-								<span class="chat-img pull-left">
-									<img src="http://placehold.it/80/30a5ff/fff" alt="User Avatar" class="img-circle">
-								</span>
-								<div class="chat-body clearfix">
-									<div class="header">
-										<strong class="primary-font">Jamom</strong> <small class="text-muted">32 mins ago</small>
-									</div>
-									<p>
-									Daily check condition,voltage and  destilled water for forklift and claning battery BICO plant and record to data check sheet EI-QF17/03.  
- 									-Fork lift  no.1,2can use working normal Spare battery no.2,3 can use working.
-									</p>
-								</div>
-							</li>
-						</ul>
-					</div>
+						</div>
+						<div class="col-sm-6 form-group">
+							<label>Job Type</label>
+							<form:select path="dailylogDTO.jobtype"
+								class="form-control text ui-widget-content ui-corner-all">
+								<option id="jobtype" value="NONE">--- Select ---</option>
+								<form:options id="jobtype" items="${jobtype}"></form:options>
+							</form:select>
+						</div>
+						<div class="col-sm-6 form-group">
+							<label>Business Unit</label>
+							<form:select path="dailylogDTO.bu"
+								class="form-control text ui-widget-content ui-corner-all">
+								<option id="bu" value="NONE">--- Select ---</option>
+								<form:options id="bu" items="${busList}"></form:options>
+							</form:select>
+						</div>
+						<div class="col-sm-6 form-group">
+							<label>Records Type</label>
+							<form:select path="dailylogDTO.recordtype"
+								class="form-control text ui-widget-content ui-corner-all">
+								<option id="recordtype" value="NONE">--- Select ---</option>
+								<form:options id="recordtype" items="${recordtype}"></form:options>
+							</form:select>
+						</div>
+						<div class="col-sm-6 form-group">
+							<label>Status</label>
+							<form:select path="dailylogDTO.status"
+								class="form-control text ui-widget-content ui-corner-all">
+								<option id="status" value="NONE">--- Select ---</option>
+								<form:options id="status" items="${status}"></form:options>
+							</form:select>
+						</div>
+						
+					</fieldset>
+												<form:button  type="submit"
+								class="btn btn-lg btn-info">Submit</form:button>
 					
-					<div class="panel-footer">
-						<div class="input-group">
-							<input id="btn-input" type="text" class="form-control input-md" placeholder="Type your message here...">
-							<span class="input-group-btn">
-								<button class="btn btn-success btn-md" id="btn-chat">Send</button>
-							</span>
-						</div>
-					</div>
 				</div>
+			</form:form>
 				
-			</div><!--/.col-->
-			
-	<!-- 		<div class="col-md-4">
-			
-				<div class="panel panel-blue">
-					<div class="panel-heading dark-overlay"><svg class="glyph stroked clipboard-with-paper"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-clipboard-with-paper"></use></svg>To-do List</div>
-					<div class="panel-body">
-						<ul class="todo-list">
-						<li class="todo-list-item">
-								<div class="checkbox">
-									<input type="checkbox" id="checkbox">
-									<label for="checkbox">Make a plan for today</label>
-								</div>
-								<div class="pull-right action-buttons">
-									<a href="#"><svg class="glyph stroked pencil"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-pencil"></use></svg></a>
-									<a href="#" class="flag"><svg class="glyph stroked flag"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-flag"></use></svg></a>
-									<a href="#" class="trash"><svg class="glyph stroked trash"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-trash"></use></svg></a>
-								</div>
-							</li>
-							<li class="todo-list-item">
-								<div class="checkbox">
-									<input type="checkbox" id="checkbox">
-									<label for="checkbox">Update Basecamp</label>
-								</div>
-								<div class="pull-right action-buttons">
-									<a href="#"><svg class="glyph stroked pencil"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-pencil"></use></svg></a>
-									<a href="#" class="flag"><svg class="glyph stroked flag"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-flag"></use></svg></a>
-									<a href="#" class="trash"><svg class="glyph stroked trash"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-trash"></use></svg></a>
-								</div>
-							</li>
-							<li class="todo-list-item">
-								<div class="checkbox">
-									<input type="checkbox" id="checkbox">
-									<label for="checkbox">Send email to Jane</label>
-								</div>
-								<div class="pull-right action-buttons">
-									<a href="#"><svg class="glyph stroked pencil"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-pencil"></use></svg></a>
-									<a href="#" class="flag"><svg class="glyph stroked flag"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-flag"></use></svg></a>
-									<a href="#" class="trash"><svg class="glyph stroked trash"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-trash"></use></svg></a>
-								</div>
-							</li>
-							<li class="todo-list-item">
-								<div class="checkbox">
-									<input type="checkbox" id="checkbox">
-									<label for="checkbox">Drink coffee</label>
-								</div>
-								<div class="pull-right action-buttons">
-									<a href="#"><svg class="glyph stroked pencil"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-pencil"></use></svg></a>
-									<a href="#" class="flag"><svg class="glyph stroked flag"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-flag"></use></svg></a>
-									<a href="#" class="trash"><svg class="glyph stroked trash"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-trash"></use></svg></a>
-								</div>
-							</li>
-							<li class="todo-list-item">
-								<div class="checkbox">
-									<input type="checkbox" id="checkbox">
-									<label for="checkbox">Do some work</label>
-								</div>
-								<div class="pull-right action-buttons">
-									<a href="#"><svg class="glyph stroked pencil"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-pencil"></use></svg></a>
-									<a href="#" class="flag"><svg class="glyph stroked flag"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-flag"></use></svg></a>
-									<a href="#" class="trash"><svg class="glyph stroked trash"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-trash"></use></svg></a>
-								</div>
-							</li>
-							<li class="todo-list-item">
-								<div class="checkbox">
-									<input type="checkbox" id="checkbox">
-									<label for="checkbox">Tidy up workspace</label>
-								</div>
-								<div class="pull-right action-buttons">
-									<a href="#"><svg class="glyph stroked pencil"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-pencil"></use></svg></a>
-									<a href="#" class="flag"><svg class="glyph stroked flag"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-flag"></use></svg></a>
-									<a href="#" class="trash"><svg class="glyph stroked trash"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-trash"></use></svg></a>
-								</div>
-							</li>
-						</ul>
-					</div>
-					<div class="panel-footer">
-						<div class="input-group">
-							<input id="btn-input" type="text" class="form-control input-md" placeholder="Add new task">
-							<span class="input-group-btn">
-								<button class="btn btn-primary btn-md" id="btn-todo">Add</button>
-							</span>
-						</div>
-					</div>
-				</div>
-								
-			</div>/.col -->
-		</div><!--/.row-->
+		</div>
 	</div>
-</body>
-</html>
+</div>

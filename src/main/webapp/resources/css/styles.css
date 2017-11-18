@@ -650,3 +650,17 @@ Responsive: Portrait tablets and up @media screen and (min-width: 768px) {
 .ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-close {
     display: none;
 }
+.the-legend {
+    border-style: none;
+    border-width:1;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 10px;
+    width: auto;
+    padding:10px 10px 10px 10px;
+    border: 1px solid #e0e0e0;
+}
+.the-fieldset {
+    border:  solid #e0e0e0;
+    padding:10px 10px 10px 10px;
+}

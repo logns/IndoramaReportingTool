@@ -44,6 +44,7 @@ import net.sf.jasperreports.engine.JasperReport;
 public class DailyLogController {
 	
 	@Autowired
+	
 	private DailyLogService dailyLogService;
 
 

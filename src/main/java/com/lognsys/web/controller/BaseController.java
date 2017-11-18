@@ -301,7 +301,6 @@ public class BaseController {
 
 			//populate to JSP page
 			model.addAttribute("rolesList", rolesList);
-			model.addAttribute("departmentsList", departmentsList);
 			model.addAttribute("busList", busList);
 			return "register";
 

@@ -55,10 +55,18 @@ public class JdbcAssignTaskRepository  implements AssignTaskRepository{
 
 	@Override
 	public boolean isexist(String title) {
+		System.out.println("isExists title - "+title);
 		SqlParameterSource param = new MapSqlParameterSource("title", title);
-		return namedParamJdbcTemplate.queryForObject(
-				sqlProperties.getProperty(Constants.ASSIGN_TASK_QUERIES.select_isexist_assigntask_title.name()), param, Integer.class) > 0;
-
+			Integer val;
+			val = namedParamJdbcTemplate.queryForObject(
+					sqlProperties.getProperty(Constants.ASSIGN_TASK_QUERIES.select_isexist_assigntask_title.name()),
+					param, Integer.class);
+			System.out.println("isExists val - " + val);
+			if (val != null && val > 0)
+				return true;
+			else
+				return false;
+		
 	}
 
 	@Override
@@ -123,8 +131,8 @@ public class JdbcAssignTaskRepository  implements AssignTaskRepository{
 	}
 
 	@Override
-	public int addAssignTask_DailyLog(int assignTask_id, int dailylog_id) {
-		SqlParameterSource param = new MapSqlParameterSource().addValue("assignTask_id",assignTask_id).addValue("dailylog_id", dailylog_id);
+	public int addAssignTask_DailyLog(int assign_task_id, int dailylog_id) {
+		SqlParameterSource param = new MapSqlParameterSource().addValue("assign_task_id",assign_task_id).addValue("dailylog_id", dailylog_id);
 		
 		final KeyHolder keyHolder = new GeneratedKeyHolder();
 		namedParamJdbcTemplate.update(sqlProperties.getProperty(Constants.ASSIGN_TASK_DAILYLOG_QUERIES.insert_assign_task_dailylog.name()), param,
