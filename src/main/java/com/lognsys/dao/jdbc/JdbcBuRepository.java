@@ -107,4 +107,12 @@ public class JdbcBuRepository implements BuRepository {
 		return 0;
 	}
 
+	@Override
+	public int findBuByName(String bu_name) {
+		SqlParameterSource param = new MapSqlParameterSource("bu_name", bu_name);
+		return namedParamJdbcTemplate.queryForObject(
+				sqlProperties.getProperty(Constants.BU_QUERIES.select_bu_by_bu_name.name()), param, Integer.class);
+	
+	}
+
 }

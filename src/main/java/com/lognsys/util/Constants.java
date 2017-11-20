@@ -44,7 +44,7 @@ public class Constants {
 		select_bu_all, select_bu_byuserid,
 		select_id_bybu, select_usersbybu,
 		select_usersbu_all, select_bu_exists,
-		select_count_bu, delete_bu,
+		select_count_bu, delete_bu,select_bu_by_bu_name,
 		update_bu_byuser
 
 	}

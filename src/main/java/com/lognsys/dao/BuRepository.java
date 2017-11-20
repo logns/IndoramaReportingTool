@@ -30,6 +30,9 @@ public interface BuRepository {
 	 * @return
 	 */
 	public String findBuBy(int user_id);
+	
+	public int findBuByName(String bu_name);
+
 
 	/**
 	 * Get All UsersBuDTO

@@ -84,9 +84,9 @@ public class TestAssignTaskRepository {
 	DailyLogBuDTO dbDTO= new DailyLogBuDTO();
 	dbDTO.setDailylogDTO(dldto);
 	
-	jdbcDailyLogRepository.addDailyLogAndBu(id_dailylog, buDTO.getBu_name());
-	Assert.notNull(buDTO.getBu_name(), "Check list of buDTO.getBu_name() NOT NULL");
-	Assert.notNull(id_dailylog, "Check list of id_dailylog NOT NULL");
+//	jdbcDailyLogRepository.addDailyLogAndBu(id_dailylog, buDTO.getBu_name());
+//	Assert.notNull(buDTO.getBu_name(), "Check list of buDTO.getBu_name() NOT NULL");
+//	Assert.notNull(id_dailylog, "Check list of id_dailylog NOT NULL");
 
 //	addAssignTask_DailyLog(id_assign, id_dailylog);
 	}

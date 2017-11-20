@@ -83,7 +83,7 @@ public class DailyLogService{
 		System.out.println("service  dailylog_id "+dailylog_id);
 
 		// adding dailyLog into bu
-		jdbcDailyLogRepository.addDailyLogAndBu(dailylog_id, dailyLog.getBu());
+//		jdbcDailyLogRepository.addDailyLogAndBu(dailylog_id, dailyLog.getBu());
 		
 		// adding dailyLog into user
 //		jdbcDailyLogRepository.addDailyLogAndUser(dailylog_id, dailyLog.getRealname());

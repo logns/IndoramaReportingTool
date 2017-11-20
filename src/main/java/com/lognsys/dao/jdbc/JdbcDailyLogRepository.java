@@ -85,8 +85,8 @@ public class JdbcDailyLogRepository implements DailyLogRespository {
 	 * @param dailylog_id
 	 * @param bu
 	 */
-	public void addDailyLogAndBu(int dailylog_id, String bu_name) {
-		SqlParameterSource param = new MapSqlParameterSource().addValue("dailylog_id", dailylog_id).addValue("bu_name", bu_name);
+	public void addDailyLogAndBu(int dailylog_id, int bu_id) {
+		SqlParameterSource param = new MapSqlParameterSource().addValue("dailylog_id", dailylog_id).addValue("bu_id", bu_id);
 		namedParamJdbcTemplate.update(sqlProperties.getProperty(Constants.DAILYLOG_QUERIES.insert_dailylog_bu.name()),
 				param);
 			

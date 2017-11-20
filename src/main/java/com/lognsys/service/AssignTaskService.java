@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lognsys.dao.dto.AssignTaskDTO;
 import com.lognsys.dao.dto.DailyLogDTO;
 import com.lognsys.dao.jdbc.JdbcAssignTaskRepository;
+import com.lognsys.dao.jdbc.JdbcBuRepository;
 import com.lognsys.dao.jdbc.JdbcDailyLogRepository;
 import com.lognsys.model.AssignTask;
 import com.lognsys.model.AssignTaskTable;
@@ -36,6 +37,10 @@ public class AssignTaskService {
 	@Autowired
 	private JdbcAssignTaskRepository jdbcAssignTaskRepository;
 
+
+	@Autowired
+	private JdbcBuRepository jdbcBuRepository;
+
 	// Injecting resource application.properties.
 	@Autowired
 	@Qualifier("applicationProperties")
@@ -55,12 +60,19 @@ public class AssignTaskService {
 	 * @throws IOException
 	 */
 	@Transactional(rollbackFor = IllegalArgumentException.class)
-	public void addAssignTask(AssignTaskDTO assignTaskDTO, DailyLogDTO dailyLogDTO) throws IOException {
-
+	public int addAssignTask(AssignTaskDTO assignTaskDTO, DailyLogDTO dailyLogDTO) throws IOException {
+		// Check if User Exists
+		/*		if (isexist(assignTaskDTO.getTitle())){
+					throw new IllegalArgumentException("AssignTask already exists title - " + (assignTaskDTO.getTitle()));
+	
+				}*/
+				
 		System.out.println("Rest addAssignTask assignTaskDTO getTitle  " + assignTaskDTO.getTitle());
 		System.out.println("Rest addAssignTask (jdbcAssignTaskRepository)  " + (jdbcAssignTaskRepository)+"\n");
 
-		if(!(isexist(assignTaskDTO.getTitle()))){
+/*		if(!(isexist(assignTaskDTO.getTitle()))
+				&& assignTaskDTO.getTitle()!=null && assignTaskDTO.getTitle().length()>0){
+			*/
 			int assign_task_id = jdbcAssignTaskRepository.addAssignTask(assignTaskDTO);
 			assignTaskDTO.setId(assign_task_id);
 			
@@ -74,31 +86,29 @@ public class AssignTaskService {
 			int assignDailyLog_id=jdbcAssignTaskRepository.addAssignTask_DailyLog(assign_task_id, dailylog_id);
 			System.out.println("Rest addAssignTask assignDailyLog_id "+assignDailyLog_id);			
 			
-			jdbcDailyLogRepository.addDailyLogAndBu(dailylog_id, dailyLogDTO.getBu());
-			System.out.println("Rest addAssignTask addDailyLogAndBu ");
+			System.out.println("Rest addAssignTask dailyLogDTO.getBu() "+dailyLogDTO.getBu());		
 			
-		}	
-		else{
-			throw new IllegalArgumentException("Assigned Task already exists with title - " + assignTaskDTO.getTitle());
-		}
-
+			if(dailylog_id>0 && dailyLogDTO.getBu()!=null &&  dailyLogDTO.getBu().length()>0){
+				int bu_id=jdbcBuRepository.findBuByName(dailyLogDTO.getBu());
+				if(bu_id>0 && bu_id!=0){
+					jdbcDailyLogRepository.addDailyLogAndBu(dailylog_id, bu_id);
+					System.out.println("Rest addAssignTask addDailyLogAndBu ");
+						
+				}
+			}
+			try {
+				readAssignTask();
+				} catch (IOException io) {
+					System.out.println("Rest addAssignTask  readAssignTask - " + io.getMessage());
+			}
+			return assign_task_id;
+		
 	}
 public boolean isexist(String title) {
 	return jdbcAssignTaskRepository.isexist(title);
 }
 	public void readAssignTask() throws IOException {
 		listOfAssigntask =jdbcAssignTaskRepository.getAllAssignTaskDTO();
-		
-		
-	/*	System.out.println("Rest readAssignTask listOfAssigntask.size() "+listOfAssigntask.size());			
-		
-		if(listOfAssigntask!=null && listOfAssigntask.size()>0){
-			return listOfAssigntask;
-		}
-		else
-		return  null;	
-//				throw new IllegalArgumentException("Assigned Task already exists with title - " + assignTaskDTO.getTitle());
-	*/
 		
 		List<AssignTaskTable> assignTaskTables =null;
 		System.out.println("Rest readAssignTask listOfAssigntask.size() "+listOfAssigntask.size());			

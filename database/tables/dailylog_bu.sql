@@ -18,3 +18,17 @@ CREATE TABLE IF NOT EXISTS `indorama_poly`.`dailylog_bu` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
+
+ALTER TABLE `indorama_poly`.`dailylog_bu` 
+ADD UNIQUE INDEX `dailylog_id_UNIQUE` (`dailylog_id` ASC);
+
+ALTER TABLE `indorama_poly`.`dailylog_bu` 
+DROP FOREIGN KEY `dailog_bu_bu_idfk_1`;
+ALTER TABLE `indorama_poly`.`dailylog_bu` 
+CHANGE COLUMN `bu_id` `bu_id` INT(11) NOT NULL DEFAULT '-1' ;
+ALTER TABLE `indorama_poly`.`dailylog_bu` 
+ADD CONSTRAINT `dailog_bu_bu_idfk_1`
+  FOREIGN KEY (`bu_id`)
+  REFERENCES `indorama_poly`.`bu` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;

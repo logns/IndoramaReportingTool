@@ -137,22 +137,17 @@ public class AssignTaskController {
 	 */
 	@RequestMapping(value = "/addtask", method = RequestMethod.POST)
 	public String saveForm(@ModelAttribute("atdl") AssignTaskDailylogDTO atdldto, BindingResult result, ModelMap model) throws IOException {
-		
-		AssignTaskDTO assignTaskDTO=atdldto.getAssignTaskDTO();
-		DailyLogDTO dailyLogDTO=atdldto.getDailylogDTO();
-
-		dailyLogDTO.setAssign_task_title(assignTaskDTO.getTitle());
-		dailyLogDTO.setTarget_date(assignTaskDTO.getTarget_date());
-		dailyLogDTO.setDone_percentage(assignTaskDTO.getDone_percentage());
-		System.out.println("\n Rest saveForm assignTaskDTO tostring  " + assignTaskDTO.toString());
-		System.out.println("\n Rest saveForm dailyLogDTO tostring  " + dailyLogDTO.toString());
-		if(assignTaskService.isexist(assignTaskDTO.getTitle())){
-			
+		/*
+		*/	
 			FormValidator formValidator = new FormValidator();
-			formValidator.validate(atdldto, result);
-			formValidator.validate(dailyLogDTO, result);
+//			formValidator.validate(atdldto, result);
+//			formValidator.validate(dailyLogDTO, result);
+			System.out.println("\n Rest saveForm validate\n \n ");
 
-			if (result.hasErrors()) {
+			formValidator.validate(atdldto, result);
+			System.out.println("\n Rest saveForm result.hasErrors()) \n \n " +result.hasErrors());
+			boolean isexist=assignTaskService.isexist(atdldto.getAssignTaskDTO().getTitle());
+			if (result.hasErrors() || isexist) {
 				String str_shift = applicationProperties.getProperty(Constants.TYPES_ARRAY.shift.name());
 				String str_jobtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.jobtype.name());
 				String str_recordtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.recordtype.name());
@@ -184,9 +179,6 @@ public class AssignTaskController {
 				List<String> priority=Arrays.asList(str_priority.split(","));
 				List<String> done_percentage=Arrays.asList(str_done_percentage.split(","));
 				
-				AssignTaskDailylogDTO atdl = new AssignTaskDailylogDTO();
-			
-				model.addAttribute("atdl", atdl);
 				model.addAttribute("jobtype", jobtype);
 				model.addAttribute("recordtype", recordtype);	
 				model.addAttribute("status", status);
@@ -195,18 +187,30 @@ public class AssignTaskController {
 				model.addAttribute("done_percentage", done_percentage);
 				model.addAttribute("busList", busList);
 				model.addAttribute("usersList", usersList);
-				
+				if(isexist==true){
+					model.addAttribute("assignTaskDTO.title",atdldto);
+				}
 				return "addtask";
 			} 
-		}
 		else{
+			try {
+				AssignTaskDTO assignTaskDTO=atdldto.getAssignTaskDTO();
+				DailyLogDTO dailyLogDTO=atdldto.getDailylogDTO();
 
-			if(assignTaskDTO!=null && dailyLogDTO!=null){
-					assignTaskService.addAssignTask(assignTaskDTO, dailyLogDTO);
-					return "assigntasklist";				
-			}					
+				dailyLogDTO.setAssign_task_title(assignTaskDTO.getTitle());
+				dailyLogDTO.setTarget_date(assignTaskDTO.getTarget_date());
+				dailyLogDTO.setDone_percentage(assignTaskDTO.getDone_percentage());
+				System.out.println("\n Rest saveForm assignTaskDTO tostring  " + assignTaskDTO.toString());
+				System.out.println("\n Rest saveForm dailyLogDTO tostring  " + dailyLogDTO.toString());
+				
+				assignTaskService.addAssignTask(assignTaskDTO, dailyLogDTO);
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+						
 		}
-		return "addtask";
+		return "assigntasklist";
 }
 	 private void populateUsersListInJson(List<String> usersList)throws IOException  {
 
