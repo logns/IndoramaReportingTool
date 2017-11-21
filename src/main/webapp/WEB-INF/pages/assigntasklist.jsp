@@ -33,10 +33,14 @@
 						<svg class="glyph stroked male user">
 							<use xlink:href="#stroked-male-user"></use></svg>
 					</div>
-
+<SCRIPT language="JavaScript"> function test() 
+{ var p=document.getElementById("id").value;
+    window.open("http://localhost:8080/dailyloglist?val="+p,'_self'); 
+} 
+</SCRIPT>
 
 					<div class="panel-body">
-						<table id="userTable" data-toggle="table"
+						<table id="taskTable" data-toggle="table"
 							data-url="static/tables/assigntasks.json" data-show-refresh="true"
 							data-show-toggle="true" data-show-columns="true"
 							data-search="true" data-select-item-name="assigned_to"
@@ -44,9 +48,9 @@
 							data-sort-order="desc">
 							<thead>
 								<tr>
-									<!-- <th data-field="checked" data-checkbox="true"></th> -->
+									<th data-field="checked" data-checkbox="true"></th>
 									<th data-field="id" data-sortable="true" data-visible="false">Id</th>
-									<th data-field="title" data-sortable="true">title</th>
+									<th data-field="title"  HREF="javascript:test()" data-sortable="true">title</th></a>
 									<th data-field="assigned_to" data-sortable="true">assigned_to</th>
 									<th data-field="target_date" data-sortable="true">target_date</th>
 									<th data-field="priority" data-sortable="true">priority</th>
@@ -58,14 +62,16 @@
 
 						<div class="action_buttons">
 							<hr>
-							<button id="useradd" type="submit"
+							<button id="taskadd" type="submit"
 								class="btn btn-primary pull-right rbtnMargin">Add</button>
-							<button id="userdelete" type="submit"
+							<button id="taskdelete" type="submit"
 								class="btn btn-danger pull-right rbtnMargin">Delete</button>
-							<button id="useredit" type="submit"
+							<button id="taskedit" type="submit"
 								class="btn btn-warning pull-right rbtnMargin">Edit</button>
-							<button id="usercancel" type="reset"
+							<button id="taskcancel" type="reset"
 								class="btn btn-default pull-right rbtnMargin">Cancel</button>
+							<button id="taskcancel" type="reset"
+								class="btn btn-default pull-right rbtnMargin">View</button>
 						</div>
 					</div>
 

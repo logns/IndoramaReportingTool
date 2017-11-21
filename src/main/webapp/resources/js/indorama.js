@@ -393,6 +393,273 @@ $(document)
                 });
             
    
-          
-          
+//******************************************Assigntask starts*************************************//
+              // userlist tables 
+              var checkedRows = [];
+
+              // check individual row
+              $('#taskTable').on('check.bs.table', function(e, row) {
+                  checkedRows.push({
+                      id: row.id,
+                      title: row.title
+                  });
+                  console.log(JSON.stringify(checkedRows));
+              });
+
+              // uncheck individual row
+              $('#taskTable').on('uncheck.bs.table', function(e, row) {
+
+                  $.each(checkedRows, function(index, value) {
+                      if (value.id === row.id) {
+                          checkedRows.splice(index, 1);
+                      }
+                  });
+                  console.log(JSON.stringify(checkedRows));
+              });
+
+              // remove all checked rows
+              $('#taskTable').on('uncheck-all.bs.table', function(e) {
+                  checkedRows.splice(0, checkedRows.length);
+                  console.log(JSON.stringify(checkedRows));
+              });
+
+              // check all rows
+              $('#taskTable').on('check-all.bs.table', function(e) {
+                  //Assumption if one or multiple row is checked
+                  checkedRows.splice(0, checkedRows.length);
+                  $("#taskTable tr:has(:checkbox:checked) td:nth-child(3)").each(function() {
+                      checkedRows.push({
+                          email: $(this).text()
+                      });
+                  });
+                  console.log(JSON.stringify(checkedRows));
+              });
+
+              // toggle button to disable add/edit button for multiple
+              // checkbox select
+              $('#taskTable tr').find('input:checkbox:first').change(
+                  function() {
+
+                      // this will contain a reference to the checkbox
+                      if (this.checked) {
+                          $('#taskadd').prop('disabled', true);
+                          $('#taskedit').prop('disabled', true);
+                       
+                      } else {
+                          $('#taskadd').prop('disabled', false);
+                          $('#taskedit').prop('disabled', false);
+                      }
+                  });
+
+              // check if more than one checkbox checked
+              if ($('#taskTable tr:has(:checkbox:checked)').length > 1) {
+                   $('#taskadd').prop('disabled', true);
+                   $('#taskedit').prop('disabled', true);
+              } else {
+                   $('#taskadd').prop('disabled', false);
+                   $('#taskedit').prop('disabled', false);
+              }
+
+              /*                                                      Deletion operation                                                   */
+              $('#taskdelete').click(
+                  function(event) {
+
+                      if ($('#taskTable tr:has(:checkbox:checked)').length == 0) {
+                      	  $('<li class="alert alert-danger alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>' + '<strong>Error</strong> Please select one or more user from the list...</a></li>').appendTo('#error_list');
+                      } else {
+
+                          var params = {
+                              "taskIds": JSON.stringify(checkedRows),
+                              "taskAction": "delete"
+                          }
+                          $.ajax({
+                              url: '/assigntasklist',
+                              type: "POST",
+                              data: params,
+                              success: function(data) {
+                                  window.location.href = "http://localhost:8080/assigntasklist"
+                              }
+                          });
+
+                          event.preventDefault();
+                      }
+                  });
+
+              // Userlist add function will call /register page
+              $('#taskadd').click(
+                  function(event) {
+                      window.location.href = "http://localhost:8080/addtask";
+                      event.preventDefault();
+                  });
+
+
+              // Userlist edit function
+              $('#taskedit').click(
+                  function(event) {
+
+                      if ($('#taskTable tr:has(:checkbox:checked)').length == 0) {
+                          $('<li class="alert alert-danger alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>'
+                        		  + '<strong>Error</strong> Please select a user from the list...</a></li>').appendTo('#error_list');
+                      } else {
+                          console.log(JSON.stringify(checkedRows));
+                          var params = {
+                              "taskIds": JSON.stringify(checkedRows),
+                              "taskAction": "edit"
+                          }
+                          var regUser = "";
+                          $.ajax({
+                              url: '/assigntasklist',
+                              type: "POST",
+                              data: params,
+
+                              success: function(data) {
+
+                                  //get subelements from div('#register_user') from register.jsp
+                                  regUserElements = $(data).find("#register_user").html();
+
+                                  //clear previous added html elements
+                                  $('#editform').empty();
+
+                                  //append html subelements
+                                  $(regUserElements).appendTo("#editform");
+                                  
+                                  //mark username field as read-only
+                                  $("#title").prop("readonly", true);
+
+                                  dialog = $("#dialog-form").dialog({
+                                      autoOpen: false,
+                                      resizable: false,
+                                      height: 525,
+                                      width: 600,
+                                      modal: true,
+
+                                      position: {
+                                          my: "center+50",
+                                          at: "center+50",
+                                          of: "body"
+                                          	
+                                          	
+                                      },
+                                      close: function() {
+                                          form[0].reset();
+                                          allFields.removeClass("ui-state-error");
+                                      }
+                                  });
+
+                                  //default open dialog on ajax success
+                                  dialog.dialog("open");
+
+                                  form = dialog.find("form").on("submit", function(event) {
+
+                                      var isValid = editUser();
+                                      if (isValid) {
+                                          console.log("VALID - " + isValid);
+                                          return;
+                                      }
+                                      event.preventDefault();
+
+                                  });
+
+                                  /*** edit user dialog form validation *****/
+                                  var dialog, form;
+
+                                  // From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
+                                  emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+                                  title = $("#assignTaskDTO.title"),
+                                  assigned_to = $("#assignTaskDTO.assigned_to"),
+                                  priority = $("#assignTaskDTO.priority"),
+                                  done_percentage = $("#assignTaskDTO.done_percentage"),
+                                  target_date = $("#assignTaskDTO.target_date"),
+                                  shift = $("#dailylogDTO.shift"),
+                                  machine = $("#dailylogDTO.machine"),
+                                  description = $("#dailylogDTO.description"),
+                                  attendby = $("#dailylogDTO.attendby"),
+                                  timefrom = $("#dailylogDTO.timefrom"),
+                                  timeto = $("#dailylogDTO.timeto"),
+                                  spare_parts = $("#dailylogDTO.spare_parts"),
+                                  jobtype = $("#dailylogDTO.jobtype"),
+                                  recordtype = $("#dailylogDTO.recordtype"),
+                                  bu = $("#dailylogDTO.bu"),
+                                  status = $("#dailylogDTO.status"),
+                                      allFields = $([]).add(title).add(assigned_to).add(priority).
+                                      add(done_percentage).add(target_date).add(shift).add(machine).add(description)
+                                      .add(attendby).add(timefrom).add(timeto).add(spare_parts).add(jobtype).add(recordtype).add(bu).add(status),
+                                      tips = $(".validateTips");
+
+                                  function updateTips(t) {
+                                      tips
+                                          .text(t)
+                                          .addClass("ui-state-highlight");
+                                      setTimeout(function() {
+                                          tips.removeClass("ui-state-highlight", 1500);
+                                      }, 500);
+                                  }
+
+                                  function checkLength(o, n, min, max) {
+                                      if (o.val().length > max || o.val().length < min) {
+                                          o.addClass("ui-state-error");
+                                          updateTips("Length of " + n + " must be between " +
+                                              min + " and " + max + ".");
+                                          return false;
+                                      } else {
+                                          return true;
+                                      }
+                                  }
+
+                                  function checkRegexp(o, regexp, n) {
+                                      if (!(regexp.test(o.val()))) {
+                                          o.addClass("ui-state-error");
+                                          updateTips(n);
+                                          return false;
+                                      } else {
+                                          return true;
+                                      }
+                                  }
+
+                                  function editUser() {
+                                      var valid = true;
+                                      allFields.removeClass("ui-state-error");
+
+                                      title = $("#assignTaskDTO.title"),
+                                      assigned_to = $("#assignTaskDTO.assigned_to"),
+                                      priority = $("#assignTaskDTO.priority"),
+                                      done_percentage = $("#assignTaskDTO.done_percentage"),
+                                      target_date = $("#assignTaskDTO.target_date"),
+                                      shift = $("#dailylogDTO.shift"),
+                                      machine = $("#dailylogDTO.machine"),
+                                      description = $("#dailylogDTO.description"),
+                                      attendby = $("#dailylogDTO.attendby"),
+                                      timefrom = $("#dailylogDTO.timefrom"),
+                                      timeto = $("#dailylogDTO.timeto"),
+                                      spare_parts = $("#dailylogDTO.spare_parts"),
+                                      jobtype = $("#dailylogDTO.jobtype"),
+                                      recordtype = $("#dailylogDTO.recordtype"),
+                                      bu = $("#dailylogDTO.bu"),
+                                      status = $("#dailylogDTO.status"),
+                                      
+                                      valid = valid && checkLength(title, "assignTaskDTO.title", 3, 80);
+                                      valid = valid && checkLength(assigned_to, "assignTaskDTO.assigned_to", 3, 80);
+                                      valid = valid && checkLength(priority, "assignTaskDTO.priority", 3, 80);
+                                      valid = valid && checkLength(done_percentage, "assignTaskDTO.done_percentage", 3, 80);
+                                      valid = valid && checkLength(target_date, "assignTaskDTO.target_date", 3, 80);
+                                      valid = valid && checkLength(shift, "dailylogDTO.shift", 3, 80);
+                                      valid = valid && checkLength(machine, "dailylogDTO.machine", 3, 80);
+                                      valid = valid && checkLength(description, "dailylogDTO.description", 3, 80);
+                                      valid = valid && checkLength(attendby, "dailylogDTO.attendby", 3, 80);
+                                      valid = valid && checkLength(timefrom, "dailylogDTO.timefrom", 3, 80);
+                                      valid = valid && checkLength(timeto, "dailylogDTO.timeto", 3, 80);
+                                      valid = valid && checkLength(spare_parts, "dailylogDTO.spare_parts", 3, 80);
+                                      valid = valid && checkLength(jobtype, "dailylogDTO.jobtype", 3, 80);
+                                      valid = valid && checkLength(recordtype, "dailylogDTO.recordtype", 3, 80);
+                                      valid = valid && checkLength(bu, "dailylogDTO.bu", 3, 80);
+                                      valid = valid && checkLength(status, "dailylogDTO.status", 3, 80);
+                                      return valid;
+                                  }
+                              }
+
+                          });
+                      }
+                      event.preventDefault();
+                  });
+              
  }); //end of document jQuery

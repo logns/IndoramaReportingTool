@@ -64,7 +64,8 @@ public class Constants {
 		select_assigntask_by_title,
 		select_assigntask_getcount,
 		update_assign_task,
-		delete_assign_task_by_id
+		delete_assign_task_by_id,
+		delete_assign_task_by_title
 	}
 	public enum ASSIGN_TASK_DAILYLOG_QUERIES {
 		insert_assign_task_dailylog

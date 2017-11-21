@@ -26,12 +26,12 @@ p {
 }
 .error {
     padding: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
     border: 1px solid transparent;
-    border-radius: 4px;
-    color: #a94442;
+    border-radius: 2px;
+    color:#eb1515;/* 
     background-color: #f2dede;
-    border-color: #ebccd1;
+    border-color: #ebccd1; */
 }
 a, a:hover, a:focus {
 	color: #30a5ff;

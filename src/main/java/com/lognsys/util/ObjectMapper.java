@@ -66,12 +66,16 @@ public class ObjectMapper {
 	public static List<AssignTaskTable> mapToAssignTaskTable(List<AssignTaskDTO> assignTaskTables) {
 		List<AssignTaskTable> list = new ArrayList<>();
 		for (AssignTaskDTO ubu : assignTaskTables) {
-			list.add(new AssignTaskTable(ubu.getId(), ubu.getTitle(), ubu.getAssigned_to(),
+			list.add(new AssignTaskTable(ubu.getId(),convertToAnchorTagString(ubu.getTitle()), ubu.getAssigned_to(),
 					ubu.getPriority(), ubu.getTarget_date(),ubu.getDone_percentage()));
 		}
 		return list;
 	}
-
+public static String convertToAnchorTagString(String title){
+	String titles="<a href="+"http://localhost:8080/dailyloglist?title="+title+" >"+title+"</a>";
+	return titles;
+}
+	
 	/**
 	 * 
 	 * Map POJO Users Object to Users DTO Object

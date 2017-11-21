@@ -24,6 +24,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
@@ -180,13 +181,13 @@ public class DailyLogController {
 	 * @return
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/dailylogslist", method = RequestMethod.GET)
+/*	@RequestMapping(value = "/dailyloglist", method = RequestMethod.GET)
 	public String dailylogslist(Model model, HttpServletRequest request) throws IOException {
 		System.out.println("dailylogslist - " );
-//		dailyLogService.refresDailyListReport();
+		dailyLogService.refresDailyListReport();
 	
-		return "dailylogslist";
-	}
+		return "dailyloglist";
+	}*/
 	 /**
      * Handle request to download an Excel document
      */
@@ -246,10 +247,11 @@ public class DailyLogController {
     }
     
 	@RequestMapping(value = "/dailyloglist", method = RequestMethod.GET)
-	public String showAssignTasks(Model model, HttpServletRequest request) throws IOException {
+	public String showList(@RequestParam("title") String title,Model model, HttpServletRequest request) throws IOException {
 		System.out.println("dailyloglist =======");
-		dailyLogService.fetchDailyLog("pump basket");
+		System.out.println("dailyloglist ======= title ==============="+title+"\n\n\n");
+		dailyLogService.fetchDailyLog(title);
 		return "dailyloglist";
 	}
-
+	
 }

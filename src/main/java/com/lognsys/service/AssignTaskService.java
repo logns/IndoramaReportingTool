@@ -61,24 +61,12 @@ public class AssignTaskService {
 	 */
 	@Transactional(rollbackFor = IllegalArgumentException.class)
 	public int addAssignTask(AssignTaskDTO assignTaskDTO, DailyLogDTO dailyLogDTO) throws IOException {
-		// Check if User Exists
-		/*		if (isexist(assignTaskDTO.getTitle())){
-					throw new IllegalArgumentException("AssignTask already exists title - " + (assignTaskDTO.getTitle()));
-	
-				}*/
-				
 		System.out.println("Rest addAssignTask assignTaskDTO getTitle  " + assignTaskDTO.getTitle());
 		System.out.println("Rest addAssignTask (jdbcAssignTaskRepository)  " + (jdbcAssignTaskRepository)+"\n");
-
-/*		if(!(isexist(assignTaskDTO.getTitle()))
-				&& assignTaskDTO.getTitle()!=null && assignTaskDTO.getTitle().length()>0){
-			*/
 			int assign_task_id = jdbcAssignTaskRepository.addAssignTask(assignTaskDTO);
 			assignTaskDTO.setId(assign_task_id);
 			
-			System.out.println("Rest addAssignTask assign_task_id "+assign_task_id);			
-			System.out.println("Rest addAssignTask dailyLogDTO tostring  " + dailyLogDTO.toString());
-
+			dailyLogDTO.setAssign_task_id(assign_task_id);
 			
 			int dailylog_id= jdbcDailyLogRepository.addDailyLog(dailyLogDTO);
 			System.out.println("Rest addAssignTask dailylog_id "+dailylog_id);
@@ -152,5 +140,70 @@ public boolean isexist(String title) {
 			
 		}return 1;	
 	}
+
+
+	/**
+	 * Delete users from database
+	 * 
+	 * @param
+	 * 
+	 * @return
+	 *
+	 */
+	public boolean deleteTaskId(Integer[] ids) {
+//		LOG.info("#deleteUser - " + "Deleting total number of tasks from database - " + ids.length);
+
+		for (int id : ids) {
+			try {
+
+				boolean isDelete = jdbcAssignTaskRepository.deleteAssignTaskDTOBy(id);
+
+				if (!isDelete) {
+					return false;
+				} else {
+					readAssignTask();
+				}
+			} catch (DataAccessException | IOException dae) {
+
+//				LOG.error(dae.getMessage());
+				throw new IllegalStateException("Error : Failed to delete task!");
+			}
+			
+		}return true;
+	}
+
+	/**
+	 * Delete users from database
+	 * 
+	 * @param String
+	 *            emailID
+	 * @return
+	 * @throws IOException
+	 * 
+	 * 
+	 */
+	public void deleteTaskTitle(String[] titles) throws IOException {
+//		LOG.info("#deleteUser - " + "Deleting total number of titles from database - " + titles.length);
+		System.out.println("\n \n deleteTaskTitle titles ===== "+titles.length );
+		for (String title : titles) {
+			try {
+				System.out.println("\n \n deleteTaskTitle title ===== "+title );
+				
+				boolean isDelete = jdbcAssignTaskRepository.deleteAssignTaskDTOByTitle(title);
+				System.out.println("\n \n deleteTaskTitle isDelete ===== "+isDelete );
+				
+				if (!isDelete) {
+//					LOG.info("#deleteUser - " + "failed to delete user with ID - " + task);
+				} else {
+					readAssignTask();
+				}
+			} catch (DataAccessException dae) {
+
+//				LOG.error(dae.getMessage());
+				throw new IllegalStateException("Error : Failed to delete task!");
+			}
+		}
+	}
+
 
 }

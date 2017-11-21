@@ -89,7 +89,7 @@ public class JdbcAssignTaskRepository  implements AssignTaskRepository{
 	@Override
 	public boolean deleteAssignTaskDTOBy(Integer id) {
 		SqlParameterSource parameter = new MapSqlParameterSource("id", Integer.valueOf(id));
-		return namedParamJdbcTemplate.update(sqlProperties.getProperty(Constants.USER_QUERIES.delete_users.name()),
+		return namedParamJdbcTemplate.update(sqlProperties.getProperty(Constants.ASSIGN_TASK_QUERIES.delete_assign_task_by_id.name()),
 				parameter) == 1;
 
 	}
@@ -141,5 +141,12 @@ public class JdbcAssignTaskRepository  implements AssignTaskRepository{
 		
 		return assign_task_dailylog_id;
 	}
+
+	@Override
+	public boolean deleteAssignTaskDTOByTitle(String title) {
+		SqlParameterSource parameter = new MapSqlParameterSource("title",title);
+		return namedParamJdbcTemplate.update(sqlProperties.getProperty(Constants.ASSIGN_TASK_QUERIES.delete_assign_task_by_title.name()),
+				parameter) == 1;
+		}
 
 }

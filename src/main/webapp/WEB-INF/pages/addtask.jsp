@@ -15,7 +15,13 @@
 		</div>
 		<div class="panel panel-default">
 			<form:form method="POST" action="addtask" modelAttribute="atdl">
-				<div class="panel-body" cssClass="error">
+				<div class="error">
+			 <table >
+                <tr>
+                    <td>${message}</td>
+                </tr>
+            </table>
+			
 					<form:errors path="assignTaskDTO.title" element="div" />
 					<form:errors path="assignTaskDTO.assigned_to" element="div" />
 					<form:errors path="assignTaskDTO.priority" element="div" />
@@ -43,7 +49,7 @@
 						<div class="form-group" >
 							<label>Task Title</label>
 							<form:textarea id="title" placeholder="Enter Task Title Here.."
-								rows="2" path="assignTaskDTO.title"
+								rows="1" path="assignTaskDTO.title"
 								class="form-control text ui-widget-content ui-corner-all"
 								 />
 						</div>

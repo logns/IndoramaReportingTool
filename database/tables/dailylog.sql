@@ -1,12 +1,14 @@
+drop table dailylog;
+
 CREATE TABLE IF NOT EXISTS `indorama_poly`.`dailylog` (
-  `id` INT(11) NOT NULL,
-  `assign_task_title` VARCHAR(150) NOT NULL DEFAULT '',
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+	`assign_task_id` INT(11) NOT NULL DEFAULT -1 ,
   `target_date` VARCHAR(64) NOT NULL DEFAULT '',
   `shift` VARCHAR(64) NOT NULL DEFAULT '',
   `machine` VARCHAR(64) NOT NULL DEFAULT '',
   `description` VARCHAR(255) NULL DEFAULT NULL,
-  `timefrom` TIME(6) NOT NULL,
-  `timeto` TIME(6) NOT NULL,
+  `timefrom` VARCHAR(20) NOT NULL,
+  `timeto` VARCHAR(20) NOT NULL,
   `spare_parts` VARCHAR(64) NOT NULL DEFAULT '',
   `attendby` VARCHAR(64) NOT NULL DEFAULT '',
   `jobtype` VARCHAR(64) NOT NULL DEFAULT '',
@@ -15,21 +17,16 @@ CREATE TABLE IF NOT EXISTS `indorama_poly`.`dailylog` (
   `last_edit` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `done_percentage` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
+  INDEX `assign_task_id_index` (`assign_task_id` ASC),
   INDEX `dailylog_jobtype` (`jobtype` ASC),
   INDEX `dailylog_status` (`status` ASC),
-  INDEX `dailylog_attendby` (`attendby` ASC))
+  INDEX `dailylog_attendby` (`attendby` ASC),
+  CONSTRAINT `fk_assigntask_id`
+  FOREIGN KEY (`assign_task_id`)
+  REFERENCES `indorama_poly`.`assign_task` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
-ALTER TABLE `indorama_poly`.`dailylog` 
-CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT ;
-
-
-ALTER TABLE `indorama_poly`.`dailylog` 
-CHANGE COLUMN `timefrom` `timefrom` VARCHAR(20) NOT NULL ,
-CHANGE COLUMN `timeto` `timeto` VARCHAR(20) NOT NULL ;
-
-
-ALTER TABLE `indorama_poly`.`dailylog` 
-ADD UNIQUE INDEX `assign_task_title_UNIQUE` (`assign_task_title` ASC);
 

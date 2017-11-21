@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class DailyLogDTO {
 	@Id
 	private int id;
+
+	private int assign_task_id;
 	private String assign_task_title = "";
 	private String target_date = "";
 	private String shift = "";
@@ -27,11 +29,12 @@ public class DailyLogDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public DailyLogDTO(int id, String assign_task_title, String target_date, String shift, String machine,
+	public DailyLogDTO(int id,int assign_task_id, String assign_task_title, String target_date, String shift, String machine,
 			String description, String timefrom, String timeto, String spare_parts, String attendby, String jobtype,
 			String recordtype, String status, String done_percentage) {
 		super();
 		this.id = id;
+		this.assign_task_id = assign_task_id;
 		this.assign_task_title = assign_task_title;
 		this.target_date = target_date;
 		this.shift = shift;
@@ -48,13 +51,22 @@ public class DailyLogDTO {
 	}
 
 	
+
+	public int getAssign_task_id() {
+		return assign_task_id;
+	}
+
+	public void setAssign_task_id(int assign_task_id) {
+		this.assign_task_id = assign_task_id;
+	}
+
 	@Override
 	public String toString() {
-		return "DailyLogDTO [id=" + id + ", assign_task_title=" + assign_task_title + ", target_date=" + target_date
-				+ ", shift=" + shift + ", machine=" + machine + ", description=" + description + ", timefrom="
-				+ timefrom + ", timeto=" + timeto + ", spare_parts=" + spare_parts + ", attendby=" + attendby
-				+ ", jobtype=" + jobtype + ", recordtype=" + recordtype + ", status=" + status + ", done_percentage="
-				+ done_percentage + ", bu=" + bu + "]";
+		return "DailyLogDTO [id=" + id + ", assign_task_id=" + assign_task_id + ", assign_task_title="
+				+ assign_task_title + ", target_date=" + target_date + ", shift=" + shift + ", machine=" + machine
+				+ ", description=" + description + ", timefrom=" + timefrom + ", timeto=" + timeto + ", spare_parts="
+				+ spare_parts + ", attendby=" + attendby + ", jobtype=" + jobtype + ", recordtype=" + recordtype
+				+ ", status=" + status + ", done_percentage=" + done_percentage + ", bu=" + bu + "]";
 	}
 
 	public String getBu() {

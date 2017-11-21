@@ -40,7 +40,7 @@
 							data-url="static/tables/dailylogs.json" data-show-refresh="true"
 							data-show-toggle="true" data-show-columns="true"
 							data-search="true" data-select-item-name="assigned_to"
-							data-pagination="true" data-sort-name="assign_task_title"
+							data-pagination="true" data-sort-name="done_percentage"
 							data-sort-order="desc">
 							<thead>
 								<tr>

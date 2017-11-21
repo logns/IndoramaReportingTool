@@ -172,6 +172,8 @@ public List<UsersDTO> getRealName() {
 
 	
 	public List<DailyLogDTO> fetchDailyLog(String title) throws IOException {
+		System.out.println("Rest fetchDailyLog title "+title);			
+		
 		List<DailyLogDTO> lists=jdbcDailyLogRepository.getDailyLogDTOByTitle(title);
 		System.out.println("Rest fetchDailyLog lists.size() "+lists.size());			
 		

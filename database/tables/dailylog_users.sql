@@ -1,3 +1,5 @@
+drop table dailylog_users;
+
 CREATE TABLE IF NOT EXISTS `indorama_poly`.`dailylog_users` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `users_id` INT(11) NOT NULL,

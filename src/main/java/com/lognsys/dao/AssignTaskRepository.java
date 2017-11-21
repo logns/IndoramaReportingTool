@@ -59,6 +59,12 @@ public interface AssignTaskRepository {
 	 */
 	public boolean deleteAssignTaskDTOBy(Integer id);
 
+	/**
+	 * Delete AssignTaskDTO by title
+	 * @param title
+	 */
+	public boolean deleteAssignTaskDTOByTitle(String title);
+
 
 	/**
 	 * Update AssignTaskDTO information, enable/disable etc..

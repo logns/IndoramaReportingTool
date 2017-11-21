@@ -54,7 +54,10 @@
     <property name="maxUploadSize" value="20848820" />
 </bean>
 
-
+  
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="messages" />
+    </bean>
 
 
 
