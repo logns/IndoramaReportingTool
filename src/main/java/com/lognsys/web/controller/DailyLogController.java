@@ -17,6 +17,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.FileSystemResourceLoader;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -28,14 +31,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+import com.lognsys.dao.dto.AssignTaskDTO;
 import com.lognsys.dao.dto.BuDTO;
 import com.lognsys.dao.dto.DailyLogDTO;
 import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.model.DailyLog;
 import com.lognsys.service.DailyLogService;
 import com.lognsys.service.UserService;
+import com.lognsys.util.CommonUtilities;
 import com.lognsys.util.Constants;
 import com.lognsys.util.FormValidator;
+import com.lognsys.util.ObjectMapper;
+import com.lognsys.util.WriteJSONToFile;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;
@@ -66,44 +73,81 @@ public class DailyLogController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/dailylog", method = RequestMethod.GET)
-	public String getDailyLogForm(ModelMap model, HttpServletRequest request) {
 
+	
+	@RequestMapping(value = "/adddailylog", method = RequestMethod.GET)
+	public String addDailyLogForm(@RequestParam("description")
+	String description,@RequestParam("id") int id,ModelMap model, HttpServletRequest request) {
+
+		System.out.println("addDailyLogForm =======");
+		System.out.println("addDailyLogForm ======= description before==============="+description+"\n\n\n");
+		
+		description =description.replace("%20", " ");
+		System.out.println("addDailyLogForm ======= description after==============="+description+"\n\n\n");
+		
+		DailyLogDTO dailyLogDTO=dailyLogService.getDailLogbyDescriptionAndId(description,id);
+		
+		DailyLog dailylogs=ObjectMapper.mapToDailyLog(dailyLogDTO);
+
+		
 		String str_shift = applicationProperties.getProperty(Constants.TYPES_ARRAY.shift.name());
 		String str_jobtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.jobtype.name());
 		String str_recordtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.recordtype.name());
 		String str_status = applicationProperties.getProperty(Constants.TYPES_ARRAY.status.name());
-
-//		List<UsersDTO> userDtos=dailyLogService.getRealName();
-//		List<String> realname = new ArrayList<String>();
-//		for(int i=0;i<userDtos.size();i++){
-//			UsersDTO dto=userDtos.get(i);
-//			realname.add(dto.getRealname());
-//		}
-//		System.out.println("controller===== realname- " + realname.size());
-//		System.out.println("controller===== realname.get(0)- " + realname.get(0) );
-//		List<BuDTO> listOfBuDTO = userService.getAllBus();
-//
-//		// Adding data to list from RolesDTO
-//		List<String> busList = new ArrayList<String>();
-//		for (BuDTO bu : listOfBuDTO) {
-//			busList.add(bu.getBu_name());
-//		}
+		String str_priority = applicationProperties.getProperty(Constants.TYPES_ARRAY.priority.name());
+		String str_done_percentage = applicationProperties.getProperty(Constants.TYPES_ARRAY.done_percentage.name());
+		
+		List<BuDTO> listOfBuDTO = userService.getAllBus();
+		
+		// Adding data to list from RolesDTO
+		List<String> busList = new ArrayList<String>();
+		for (BuDTO bu : listOfBuDTO) {
+			busList.add(bu.getBu_name());
+		}
+		
+		List<UsersDTO> listOfUsersDTO = userService.getUsers();
+		
+		// Adding data to list from RolesDTO
+		List<String> usersList = new ArrayList<String>();
+		for (UsersDTO user : listOfUsersDTO) {
+			usersList.add(user.getRealname());
+		}
+		populateUsersListInJson(usersList);
+		
 		List<String> jobtype=Arrays.asList(str_jobtype.split(","));
 		List<String> recordtype=Arrays.asList(str_recordtype.split(","));
 		List<String> status=Arrays.asList(str_status.split(","));
 		List<String> shift=Arrays.asList(str_shift.split(","));
-		
-		//populate to JSP page
-		DailyLog dailylogs = new DailyLog();
-		model.addAttribute("dailylogs", dailylogs);
-//		model.addAttribute("busList", busList);
-//		model.addAttribute("realname", realname);
+		List<String> priority=Arrays.asList(str_priority.split(","));
+		List<String> done_percentage=Arrays.asList(str_done_percentage.split(","));
+
+		model.addAttribute("dailylogs", dailylogs);	
 		model.addAttribute("jobtype", jobtype);
-		model.addAttribute("recordtype", recordtype);
+		model.addAttribute("recordtype", recordtype);	
 		model.addAttribute("status", status);
 		model.addAttribute("shift", shift);
-		return "dailylog";
+		model.addAttribute("priority", priority);
+		model.addAttribute("done_percentage", done_percentage);
+		model.addAttribute("busList", busList);
+		model.addAttribute("usersList", usersList);
+	
+		return "adddailylog";
+	}
+
+	private void populateUsersListInJson(List<String> usersList) {
+
+		
+		ResourceLoader resourceLoader = new FileSystemResourceLoader();
+		Resource resource = resourceLoader
+				.getResource(applicationProperties.getProperty(Constants.JSON_FILES.realname_filename.name()));
+		String list = CommonUtilities.convertToJSON(usersList);
+
+		try {
+			WriteJSONToFile.getInstance().write(resource, list);
+		} catch (IOException e) {
+		System.out.println("IOEXCEPTION --- e"+e);
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -116,7 +160,7 @@ public class DailyLogController {
 	 * @throws SQLException 
 	 * @throws NamingException 
 	 */
-	@RequestMapping(value = "/dailylog", method = RequestMethod.POST)
+	@RequestMapping(value = "/adddailylog", method = RequestMethod.POST)
 	public String saveForm(@Valid @ModelAttribute("dailylogs") DailyLog dailylogs, Model model,
 		 HttpServletRequest request, BindingResult result,
 		HttpServletResponse response) throws JRException, IOException, SQLException, NamingException{
@@ -249,7 +293,11 @@ public class DailyLogController {
 	@RequestMapping(value = "/dailyloglist", method = RequestMethod.GET)
 	public String showList(@RequestParam("title") String title,Model model, HttpServletRequest request) throws IOException {
 		System.out.println("dailyloglist =======");
-		System.out.println("dailyloglist ======= title ==============="+title+"\n\n\n");
+		System.out.println("dailyloglist ======= title before==============="+title+"\n\n\n");
+		
+		title =title.replace("%20", " ");
+		System.out.println("dailyloglist ======= title after==============="+title+"\n\n\n");
+		
 		dailyLogService.fetchDailyLog(title);
 		return "dailyloglist";
 	}

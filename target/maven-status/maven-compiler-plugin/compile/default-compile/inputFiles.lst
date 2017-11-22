@@ -1,4 +1,5 @@
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\exception\GroupDataAccessException.java
+C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\dao\jdbc\resultset\DailyLogResultSetExtractor.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\model\AssignTaskTable.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\dao\jdbc\JdbcUserRepository.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\dao\DailyLogRespository.java
@@ -15,6 +16,7 @@ C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\service\Assig
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\loader\EXCELSHEETS.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\loader\Ingest.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\dao\jdbc\rowmapper\UserByUserIDRowMapper.java
+C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\model\DailylogTable.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\model\Roles.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\util\FormValidator.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\model\Users.java

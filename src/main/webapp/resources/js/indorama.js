@@ -293,56 +293,16 @@ $(document)
                     event.preventDefault();
                 });
             
-              /*
-             * DRAMA DETAILS  STARTS 
-             */
             $('.form_datetime').datetimepicker({
-                /* //language:  'fr',
-                 weekStart: 1,
-                 todayBtn: 1,
-                 autoclose: 1,
-                 todayHighlight: 1,
-                 startView: 2,
-                 forceParse: 0,
-                 showMeridian: 1*/
-
+            
                 autoclose: 1,
                 todayBtn: 1,
                 format: "yyyy-mm-dd  hh:ii"
             });
             $('#timepicker1').timepicker();
             $('#timepicker2').timepicker();
-//            var arrOfName [];
-            
-         // Userlist delete function
-        
-           
-            
-/*            var availableTags = [
-                "ActionScript",
-                "AppleScript",
-                "Asp",
-                "BASIC",
-                "C",
-                "C++",
-                "Clojure",
-                "COBOL",
-                "ColdFusion",
-                "Erlang",
-                "Fortran",
-                "Groovy",
-                "Haskell",
-                "Java",
-                "JavaScript",
-                "Lisp",
-                "Perl",
-                "PHP",
-                "Python",
-                "Ruby",
-                "Scala",
-                "Scheme"
-              ];*/
-              function split( val ) {
+      
+            function split( val ) {
                 return val.split( /,\s*/ );
               }
               function extractLast( term ) {
@@ -551,7 +511,7 @@ $(document)
 
                                   form = dialog.find("form").on("submit", function(event) {
 
-                                      var isValid = editUser();
+                                      var isValid = editAssignDailyLog();
                                       if (isValid) {
                                           console.log("VALID - " + isValid);
                                           return;
@@ -563,6 +523,72 @@ $(document)
                                   /*** edit user dialog form validation *****/
                                   var dialog, form;
 
+                                  $('#timepicker1').timepicker();
+                                  $('#timepicker2').timepicker();
+                                  
+                                  $('.form_datetime').datetimepicker({
+                                      
+                                      autoclose: 1,
+                                      todayBtn: 1,
+                                      format: "yyyy-mm-dd  hh:ii"
+                                  });
+                                  $('#timepicker1').timepicker();
+                                  $('#timepicker2').timepicker();
+                            
+                                  function split( val ) {
+                                      return val.split( /,\s*/ );
+                                    }
+                                    function extractLast( term ) {
+                                      return split( term ).pop();
+                                    }
+                                    
+                                    var availableTags = $.parseJSON(
+                                  		    $.ajax(
+                                  		        {
+                                  		           url: "static/tables/realnames.json", 
+                                  		           async: false, 
+                                  		           dataType: 'json'
+                                  		        }
+                                  		    ).responseText
+                                  		);
+                                 
+                                    $( "#attendby" )
+                                      // don't navigate away from the field on tab when selecting an item
+                                      .on( "keydown", function( event ) {
+                                      
+                                        if ( event.keyCode === $.ui.keyCode.TAB &&
+                                            $( this ).autocomplete( "instance" ).menu.active ) {
+                                          event.preventDefault();
+                                        }
+                                      })
+                                      .autocomplete({
+                                        minLength: 0,
+                                        source: function( request, response ) {
+                                          // delegate back to autocomplete, but extract the last term
+                                          response( $.ui.autocomplete.filter(
+                                            availableTags, extractLast( request.term ) ) );
+                                        },
+                                        focus: function() {
+                                          // prevent value inserted on focus
+                                          return false;
+                                        },
+                                        select: function( event, ui ) {
+                                          var terms = split( this.value );
+                                          // remove the current input
+                                          terms.pop();
+                                          // add the selected item
+                                          terms.push( ui.item.value );
+                                          // add placeholder to get the comma-and-space at the end
+                                          terms.push( "" );
+                                          this.value = terms.join( ", " );
+                                          return false;
+                                        }
+                                      });
+                                  
+
+                                  
+                                  
+                                  
                                   // From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
                                   emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
                                   title = $("#assignTaskDTO.title"),
@@ -616,7 +642,7 @@ $(document)
                                       }
                                   }
 
-                                  function editUser() {
+                                  function editAssignDailyLog() {
                                       var valid = true;
                                       allFields.removeClass("ui-state-error");
 

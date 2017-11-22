@@ -64,7 +64,7 @@ public class TestAssignTaskRepository {
 	dldto.setDescription("Test Test Test");
 	dldto.setTimefrom("11:30:00");
 	dldto.setTimeto("23:40:00");
-	dldto.setSpare_parts("spare parts");
+	dldto.setSpareparts("spare parts");
 	dldto.setAttendby("attend by");
 	dldto.setJobtype("Job");
 	dldto.setRecordtype("Record");

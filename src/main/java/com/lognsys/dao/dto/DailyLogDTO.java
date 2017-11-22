@@ -21,12 +21,46 @@ public class DailyLogDTO {
 	private String jobtype = "";
 	private String recordtype = "";
 	private String status = "";
+	private String assigned_to = "";
 	private String done_percentage = "";
 	private String bu = "";
+	private String time = "";
+
 
 	public DailyLogDTO() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public String getAssigned_to() {
+		return assigned_to;
+	}
+
+	public DailyLogDTO(int id, int assign_task_id,String assign_task_title, String description,
+			String assigned_to, String done_percentage,String target_date,String status,String time 
+			) {
+		super();
+		this.id = id;
+		this.assign_task_id = assign_task_id;
+		this.assign_task_title = assign_task_title;
+		this.description = description;
+		this.assigned_to = assigned_to;
+		this.done_percentage = done_percentage;
+		this.target_date = target_date;
+		this.status = status;
+		this.time = time;
+	}
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
+	public void setAssigned_to(String assigned_to) {
+		this.assigned_to = assigned_to;
 	}
 
 	public DailyLogDTO(int id,int assign_task_id, String assign_task_title, String target_date, String shift, String machine,

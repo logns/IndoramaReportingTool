@@ -19,6 +19,8 @@ import com.lognsys.dao.DailyLogRespository;
 import com.lognsys.dao.UserRespository;
 import com.lognsys.dao.dto.DailyLogDTO;
 import com.lognsys.dao.dto.UsersDTO;
+import com.lognsys.dao.jdbc.resultset.DailyLogResultSetExtractor;
+import com.lognsys.dao.jdbc.rowmapper.DailyLogByDescriptionAndIDRowMapper;
 import com.lognsys.dao.jdbc.rowmapper.UserByUserIDRowMapper;
 import com.lognsys.util.Constants;
 
@@ -68,12 +70,6 @@ public class JdbcDailyLogRepository implements DailyLogRespository {
 		return false;
 	}
 
-	@Override
-	public DailyLogDTO findDailyLogDTOId(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 	@Override
 	public boolean updateDailyLogDTO(DailyLogDTO dailyLogDTO) {
@@ -117,10 +113,26 @@ public class JdbcDailyLogRepository implements DailyLogRespository {
 	public List<DailyLogDTO> getDailyLogDTOByTitle(String title) {
 		SqlParameterSource parameter = new MapSqlParameterSource("title", title);
 
-		List<DailyLogDTO>  dailyLogDTOs = namedParamJdbcTemplate.query(sqlProperties.getProperty(
+	/*	List<DailyLogDTO>  dailyLogDTOs = namedParamJdbcTemplate.query(sqlProperties.getProperty(
 				Constants.DAILYLOG_QUERIES.select_dailylog_by_title.name()),
 				parameter,new BeanPropertyRowMapper<DailyLogDTO>(DailyLogDTO.class));
-		return dailyLogDTOs;
+		return dailyLogDTOs;*/
+
+		return namedParamJdbcTemplate.query(
+				sqlProperties.getProperty(Constants.DAILYLOG_QUERIES.select_dailylog_by_title.name()), parameter,
+				new DailyLogResultSetExtractor());
+
+	}
+
+
+
+	@Override
+	public DailyLogDTO findDailyLogDTOByIdAndDescription(String description, Integer id) {
+		SqlParameterSource parameter = new MapSqlParameterSource().addValue("description", description).addValue("id", id);
+		
+		return namedParamJdbcTemplate.queryForObject(
+				sqlProperties.getProperty(Constants.DAILYLOG_QUERIES.select_description_and_id.name()), parameter,
+				new DailyLogByDescriptionAndIDRowMapper());
 
 	}
 

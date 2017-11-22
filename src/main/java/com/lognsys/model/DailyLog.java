@@ -27,7 +27,7 @@ public class DailyLog {
 	private String description = "";
 	private String timefrom = "";
 	private String timeto = "";
-	private String spare_parts = "";
+	private String spareparts = "";
 	private String attendby = "";
 	private String jobtype = "";
 	private String recordtype = "";
@@ -55,7 +55,7 @@ public class DailyLog {
 		this.description = description;
 		this.timefrom = timefrom;
 		this.timeto = timeto;
-		this.spare_parts = spare_parts;
+		this.spareparts = spareparts;
 		this.attendby = attendby;
 		this.jobtype = jobtype;
 		this.recordtype = recordtype;
@@ -164,13 +164,13 @@ public class DailyLog {
 	}
 
 
-	public String getSpare_parts() {
-		return spare_parts;
+	public String getSpareparts() {
+		return spareparts;
 	}
 
 
-	public void setSpare_parts(String spare_parts) {
-		this.spare_parts = spare_parts;
+	public void setSpareparts(String spareparts) {
+		this.spareparts = spareparts;
 	}
 
 
@@ -228,7 +228,7 @@ public class DailyLog {
 	public String toString() {
 		return "DailyLog [users=" + users + ", bu=" + bu + ", id=" + id + ", assign_task_title=" + assign_task_title
 				+ ", target_date=" + target_date + ", shift=" + shift + ", machine=" + machine + ", description="
-				+ description + ", timefrom=" + timefrom + ", timeto=" + timeto + ", spare_parts=" + spare_parts
+				+ description + ", timefrom=" + timefrom + ", timeto=" + timeto + ", spareparts=" + spareparts
 				+ ", attendby=" + attendby + ", jobtype=" + jobtype + ", recordtype=" + recordtype + ", status="
 				+ status + ", done_percentage=" + done_percentage + "]";
 	}

@@ -29,7 +29,7 @@
 			pattern="/login" />
 
 		<security:intercept-url access="permitAll"
-			pattern="/dailylog" />
+			pattern="/adddailylog" />
 		<security:intercept-url access="permitAll"
 			pattern="/dailyloglist" />
 

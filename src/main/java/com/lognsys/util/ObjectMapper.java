@@ -28,11 +28,11 @@ import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.model.AssignTask;
 import com.lognsys.model.AssignTaskTable;
 import com.lognsys.model.DailyLog;
+import com.lognsys.model.DailylogTable;
 import com.lognsys.model.Users;
 import com.lognsys.model.UsersTable;
 
 public class ObjectMapper {
-
 
 	public static AssignTaskDTO mapToAssignTaskDTO(AssignTask assignTask) {
 
@@ -45,10 +45,6 @@ public class ObjectMapper {
 		return atdto;
 	}
 
-	
-	
-	
-	
 	/**
 	 * Based on the group map all the usersDTO object to Users Tables object
 	 * 
@@ -63,19 +59,58 @@ public class ObjectMapper {
 		}
 		return list;
 	}
+
 	public static List<AssignTaskTable> mapToAssignTaskTable(List<AssignTaskDTO> assignTaskTables) {
 		List<AssignTaskTable> list = new ArrayList<>();
 		for (AssignTaskDTO ubu : assignTaskTables) {
-			list.add(new AssignTaskTable(ubu.getId(),convertToAnchorTagString(ubu.getTitle()), ubu.getAssigned_to(),
-					ubu.getPriority(), ubu.getTarget_date(),ubu.getDone_percentage()));
+			list.add(new AssignTaskTable(ubu.getId(), convertToAnchorTagString(ubu.getTitle()), ubu.getAssigned_to(),
+					ubu.getPriority(), ubu.getTarget_date(), ubu.getDone_percentage()));
 		}
 		return list;
 	}
-public static String convertToAnchorTagString(String title){
-	String titles="<a href="+"http://localhost:8080/dailyloglist?title="+title+" >"+title+"</a>";
-	return titles;
-}
+
+	public static List<DailylogTable> mapToDailyLogTable(List<DailyLogDTO> dailyLogDTOs) {
+		List<DailylogTable> list = new ArrayList<>();
+		for (DailyLogDTO ubu : dailyLogDTOs) {
+			System.out.println("mapToDailyLogTable ubu.getAssign_task_title() ===============" + ubu.getAssign_task_title() + "\n\n\n");
+			
+			list.add(new DailylogTable(ubu.getId(), ubu.getAssign_task_id(), ubu.getAssign_task_title(),
+					convertToAnchorTagDescription(ubu.getDescription(),ubu.getId()), ubu.getAssigned_to(), ubu.getTarget_date(),
+					ubu.getDone_percentage(), ubu.getStatus(),ubu.getTime()));
+		}
+		return list;
+	}
+
+	public static String convertToAnchorTagDescription(String description, int id) {
+
+		System.out.println("convertToAnchorTagDescription ======= description ===============" + description + "\n\n\n");
+		String descriptions;
+		if(description.contains(" ")){
+			 descriptions = "<a href=" + "http://localhost:8080/adddailylog?description=" + description.replace(" ", "%20") + "&id="+id+" >"
+						+ description + "</a>";
+		}
+		else{
+			 descriptions = "<a href=" + "http://localhost:8080/adddailylog?description=" +description+ "&id="+id+" >"
+
+						+ description + "</a>";
+
+		}
 	
+		System.out.println("convertToAnchorTagDescription ======= descriptions ===============" + descriptions + "\n\n\n");
+		return descriptions;
+	}
+
+
+	public static String convertToAnchorTagString(String title) {
+
+		System.out.println("convertToAnchorTagString ======= title ===============" + title + "\n\n\n");
+		String titles = "<a href=" + "http://localhost:8080/dailyloglist?title=" + title.replace(" ", "%20") + " >"
+				+ title + "</a>";
+
+		System.out.println("convertToAnchorTagString ======= titles ===============" + titles + "\n\n\n");
+		return titles;
+	}
+
 	/**
 	 * 
 	 * Map POJO Users Object to Users DTO Object
@@ -102,6 +137,7 @@ public static String convertToAnchorTagString(String title){
 		return uDTO;
 
 	}
+
 	/**
 	 * 
 	 * Map POJO Users Object to Users DTO Object
@@ -119,7 +155,7 @@ public static String convertToAnchorTagString(String title){
 		dldto.setDescription(dailyLog.getDescription());
 		dldto.setTimefrom(dailyLog.getTimefrom());
 		dldto.setTimeto(dailyLog.getTimeto());
-		dldto.setSpare_parts(dailyLog.getSpare_parts());
+		dldto.setSpare_parts(dailyLog.getSpareparts());
 		dldto.setAttendby(dailyLog.getAttendby());
 		dldto.setJobtype(dailyLog.getJobtype());
 		dldto.setRecordtype(dailyLog.getRecordtype());
@@ -128,7 +164,25 @@ public static String convertToAnchorTagString(String title){
 		return dldto;
 
 	}
+	public static DailyLog mapToDailyLog(DailyLogDTO dailyLogDTO) {
 
+		DailyLog dldto = new DailyLog();
+		dldto.setAssign_task_title(dailyLogDTO.getAssign_task_title());
+		dldto.setTarget_date(dailyLogDTO.getTarget_date());
+		dldto.setShift(dailyLogDTO.getShift());
+		dldto.setMachine(dailyLogDTO.getMachine());
+		dldto.setDescription(dailyLogDTO.getDescription());
+		dldto.setTimefrom(dailyLogDTO.getTimefrom());
+		dldto.setTimeto(dailyLogDTO.getTimeto());
+		dldto.setSpareparts(dailyLogDTO.getSpare_parts());
+		dldto.setAttendby(dailyLogDTO.getAttendby());
+		dldto.setJobtype(dailyLogDTO.getJobtype());
+		dldto.setRecordtype(dailyLogDTO.getRecordtype());
+		dldto.setStatus(dailyLogDTO.getStatus());
+		dldto.setDone_percentage(dailyLogDTO.getDone_percentage());
+		return dldto;
+
+	}
 	/**
 	 * Map UsersDTO with Users object in model directory
 	 * 
@@ -160,16 +214,15 @@ public static String convertToAnchorTagString(String title){
 			lastname = splited[1];
 		}
 
-		Users newusers = new Users(users.getId(),users.getUsername(), users.getRealname(),
-				users.getPhone(), users.getBirthdate(), users.isEnabled(),
-				users.isNotification(), users.getAddress(), users.getCity(), users.getState(),
-				users.getZipcode(),firstname,lastname);
+		Users newusers = new Users(users.getId(), users.getUsername(), users.getRealname(), users.getPhone(),
+				users.getBirthdate(), users.isEnabled(), users.isNotification(), users.getAddress(), users.getCity(),
+				users.getState(), users.getZipcode(), firstname, lastname);
 
 		return newusers;
 
 	}
 
-		/**
+	/**
 	 * 
 	 * @param jsonStr
 	 * @return
@@ -185,5 +238,5 @@ public static String convertToAnchorTagString(String title){
 		}
 		return users;
 	}
-	
+
 }

@@ -35,7 +35,7 @@ public interface DailyLogRespository {
 	 * @param id
 	 * @return
 	 */
-	public DailyLogDTO findDailyLogDTOId(Integer id);
+	public DailyLogDTO findDailyLogDTOByIdAndDescription(String description,Integer id);
 	
 	/**
 	 * Delete DailyLogDTO by id

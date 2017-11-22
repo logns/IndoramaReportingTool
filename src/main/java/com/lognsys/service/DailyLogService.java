@@ -29,6 +29,7 @@ import com.lognsys.dao.jdbc.JdbcDailyLogRepository;
 import com.lognsys.dao.jdbc.JdbcUserRepository;
 import com.lognsys.model.AssignTaskTable;
 import com.lognsys.model.DailyLog;
+import com.lognsys.model.DailylogTable;
 import com.lognsys.service.DailyLogService;
 import com.lognsys.util.CommonUtilities;
 import com.lognsys.util.Constants;
@@ -177,17 +178,35 @@ public List<UsersDTO> getRealName() {
 		List<DailyLogDTO> lists=jdbcDailyLogRepository.getDailyLogDTOByTitle(title);
 		System.out.println("Rest fetchDailyLog lists.size() "+lists.size());			
 		
+		List<DailylogTable> dailylogTables =null;
+		System.out.println("Rest readAssignTask lists.size() "+lists.size());			
+		
+		if(lists!=null && lists.size()>0)
+		{
+			dailylogTables = ObjectMapper.mapToDailyLogTable(lists);
+		}
+		System.out.println("Rest fetchDailyLog dailylogTables.size() "+dailylogTables.size());			
+		
+
 		ResourceLoader resourceLoader = new FileSystemResourceLoader();
-		Resource resource = resourceLoader.getResource(applicationProperties.getProperty(Constants.JSON_FILES.dailylogs_filename.name()));
-		String list = CommonUtilities.convertToJSON(lists);
+		Resource resource = resourceLoader
+				.getResource(applicationProperties.getProperty(Constants.JSON_FILES.dailylogs_filename.name()));
+		String list = CommonUtilities.convertToJSON(dailylogTables);
 
 		try {
 			WriteJSONToFile.getInstance().write(resource, list);
 		} catch (IOException e) {
-		System.out.println("IOEXCEPTION --- e"+e);
+			System.out.println("IOEXCEPTION --- e" + e);
 			e.printStackTrace();
 		}
+
 		return lists;
+	}
+
+
+	public DailyLogDTO getDailLogbyDescriptionAndId(String description, int id) {
+		DailyLogDTO dailyLogDTO = (jdbcDailyLogRepository.findDailyLogDTOByIdAndDescription(description, id));
+		return dailyLogDTO;
 	}
 
 

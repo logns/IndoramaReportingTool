@@ -53,7 +53,8 @@ public class Constants {
 		insert_dailylog,select_dailylog_by_title,
 		insert_dailylog_bu,
 		insert_dailylog_users,
-		select_dailylogs_all
+		select_dailylogs_all,
+		select_description_and_id
 	
 	}
 	public enum ASSIGN_TASK_QUERIES {
@@ -94,34 +95,15 @@ public class Constants {
 		usersId, realname, username, auth_id, phone, location, provenance, birthdate, enabled, notification, device, address, city, state, zipcode, company_name, title, role, group
 	}
 
-	public enum DRAMA_FIELD_NAMES {
-		dramasId, title, imageurl, drama_length, date, genre, star_cast, description, director, writer, music, avg_rating, group_name, auditorium_name, group_id, auditorium_id, dramas_language
+	public enum DAILYLOG_TABLE_FIELD_NAMES {
+		id, assigntask_id, assign_task_title, description, assigned_to, done_percentage,target_date,status,time
 	}
 
 	public enum BU_FIELDNAME {
 		buId, bu_name
 	}
 
-	public enum AUDITORIUMS_FIELDNAME {
-		auditoriumsId, auditorium_name, address, latitude, longitude
-	}
-
-	public enum BOOKING_FIELD_NAMES {
-		id, booking_date, confirmation_no, users_id, dramas_id, auditoriums_id, price, status
-	}
-
-	public enum BOOKEDSEATS_FIELD_NAMES {
-		id, booking_id, row_seats_id, seat_status
-	}
-
-	public enum DEVICE_FIELD_NAMES {
-		id, users_id, deviceToken
-	}
-
-	public enum ROWSEAT_FIELD_NAMES {
-		id, row_num, row_name, seat_num, auditoriums_id
-	}
-	// REST URL constants
+		// REST URL constants
 	public static final String DRAMA_LIST_URL = "/dramalist";
 
 	/**
