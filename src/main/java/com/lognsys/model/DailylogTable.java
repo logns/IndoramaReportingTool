@@ -11,8 +11,9 @@ public class DailylogTable {
 	private String done_percentage = "";
 	private String status = "";
 	private String time = "";
+	private String bu = "";
 	public DailylogTable(int id, int assign_id, String assign_task_title, String description, String assigned_to,
-			String target_date, String done_percentage, String status,String time) {
+			String target_date, String done_percentage, String status,String time,String bu) {
 		super();
 		this.id = id;
 		this.assign_id = assign_id;
@@ -23,16 +24,18 @@ public class DailylogTable {
 		this.done_percentage = done_percentage;
 		this.status = status;
 		this.time = time;
+		this.bu = bu;
 	}
 	public DailylogTable() {
 		super();
 	}
 	
-	@Override
-	public String toString() {
-		return "DailylogTable [id=" + id + ", assign_id=" + assign_id + ", assign_task_title=" + assign_task_title
-				+ ", description=" + description + ", assigned_to=" + assigned_to + ", target_date=" + target_date
-				+ ", done_percentage=" + done_percentage + ", status=" + status + ", time=" + time + "]";
+	
+	public String getBu() {
+		return bu;
+	}
+	public void setBu(String bu) {
+		this.bu = bu;
 	}
 	public String getTime() {
 		return time;

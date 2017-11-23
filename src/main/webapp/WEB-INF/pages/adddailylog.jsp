@@ -39,11 +39,18 @@
 					<fieldset class="the-fieldset">
 						<legend class="the-legend">Daily Logs Details</legend>
 						<div class="col-sm-6 form-group">
-							<label>Task title</label>
-							<form:input id="machine" type="label"
-								class="form-control text ui-widget-content ui-corner-all"
-								path="assign_task_title" />
+							<label>Targeted Date</label> <br />
+							<div class="input-group date form_datetime col-md-10" id="dates"
+								data-date-format="yyyy-mm-dd  hh:MM a" data-link-field="dates">
+								<form:input id="dates" type="text" 
+									path="target_date" placeholer="Select DateTime  Here...." class="form-control" value="" />
+								<span class="input-group-addon"><span
+									class="glyphicon glyphicon-remove"></span></span> <span
+									class="input-group-addon"><span
+									class="glyphicon glyphicon-th"></span></span>
+							</div>
 						</div>
+						
 						<div class="col-sm-6 form-group">
 							<label>Shift</label>
 							<form:select path="shift"
@@ -51,6 +58,12 @@
 								<option id="shift" value="NONE">--- Select ---</option>
 								<form:options id="shift" items="${shift}"></form:options>
 							</form:select>
+						</div>
+						<div class="col-sm-12 form-group">
+							<label>Task title</label>
+							<form:input id="assign_task_title" type="label" readonly="true"
+								class="form-control text ui-widget-content ui-corner-all"
+								path="assign_task_title" />
 						</div>
 						<br />
 						<div class="col-sm-12 form-group">
@@ -128,6 +141,16 @@
 								class="form-control text ui-widget-content ui-corner-all">
 								<option id="status" value="NONE">--- Select ---</option>
 								<form:options id="status" items="${status}"></form:options>
+							</form:select>
+						</div>
+						<div class="col-sm-6 form-group">
+							<label>Done Percentage (%)</label>
+							<form:select path="done_percentage"
+								class="form-control text ui-widget-content ui-corner-all">
+								<option id="done_percentage" value="NONE">--- Select
+									---</option>
+								<form:options id="done_percentage" items="${done_percentage}"></form:options>
+								
 							</form:select>
 						</div>
 					</fieldset>

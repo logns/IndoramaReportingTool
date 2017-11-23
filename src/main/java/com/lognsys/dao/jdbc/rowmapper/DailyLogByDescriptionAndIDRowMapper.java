@@ -26,8 +26,11 @@ public class DailyLogByDescriptionAndIDRowMapper implements RowMapper<DailyLogDT
 		item.setJobtype(rs.getString("jobtype"));
 		item.setRecordtype(rs.getString("recordtype"));
 		item.setStatus(rs.getString("status"));
-		item.setDone_percentage(rs.getString("done_percentage"));
 		item.setTime(rs.getString("last_edit"));
+		item.setDone_percentage(rs.getString("done_percentage"));
+		System.out.println("mapRow ======= rs.getString(bu_name)==============="+rs.getString("bu_name")+"\n\n\n");
+		
+		item.setBu(rs.getString("bu_name"));
 		return item;
 	}
 }

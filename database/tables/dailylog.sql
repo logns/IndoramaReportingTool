@@ -30,3 +30,5 @@ CREATE TABLE IF NOT EXISTS `indorama_poly`.`dailylog` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+ALTER TABLE `indorama_poly`.`dailylog` 
+CHANGE COLUMN `attendby` `attendby` VARCHAR(275) NOT NULL DEFAULT '' ;

@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lognsys.dao.dto.DailyLogDTO;
 import com.lognsys.dao.dto.UsersDTO;
+import com.lognsys.dao.jdbc.JdbcAssignTaskRepository;
 import com.lognsys.dao.jdbc.JdbcBuRepository;
 import com.lognsys.dao.jdbc.JdbcDailyLogRepository;
 import com.lognsys.dao.jdbc.JdbcUserRepository;
@@ -43,25 +44,26 @@ import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.util.JRLoader;
 
 @Service("dailylogService")
-public class DailyLogService{
+public class DailyLogService {
 
 	@Autowired
 	private JdbcDailyLogRepository jdbcDailyLogRepository;
 
 	@Autowired
+	private JdbcAssignTaskRepository jdbcAssignTaskRepository;
+
+	@Autowired
 	private JdbcBuRepository jdbcBuRepository;
 	@Autowired
 	private JdbcUserRepository jdbcUserRepository;
-	
+
 	// Injecting resource application.properties.
 	@Autowired
 	@Qualifier("applicationProperties")
 	private Properties applicationProperties;
 	@Autowired
-	 private ResourceLoader resourceLoader;
-	@Autowired
-	 private ResourceLoader resourceLoader1;
-	
+	private ResourceLoader resourceLoader;
+
 	/**
 	 * Add dailylog to database.. Check if user already exists in db
 	 * 
@@ -73,29 +75,36 @@ public class DailyLogService{
 	 */
 	@Transactional(rollbackFor = IllegalArgumentException.class)
 	public int addDailyLog(DailyLog dailyLog) throws IOException {
-		
+
 		// convert UserDTO -> User Object
 		DailyLogDTO dailyLogDTO = ObjectMapper.mapToDailyLogDTO(dailyLog);
-		System.out.println("\n\n\n\n\n ============================ dailyLogDTO- " + dailyLogDTO.toString());
+		System.out.println("\n========================= dailyLogDTO- " + dailyLogDTO.toString());
 
-				
-		// adding user into db
 		int dailylog_id = jdbcDailyLogRepository.addDailyLog(dailyLogDTO);
-		System.out.println("service  dailylog_id "+dailylog_id);
-
-		// adding dailyLog into bu
-//		jdbcDailyLogRepository.addDailyLogAndBu(dailylog_id, dailyLog.getBu());
 		
-		// adding dailyLog into user
-//		jdbcDailyLogRepository.addDailyLogAndUser(dailylog_id, dailyLog.getRealname());
-			
+		int assignDailyLog_id = jdbcAssignTaskRepository.addAssignTask_DailyLog(dailyLogDTO.getAssign_task_id(),
+				dailylog_id);
+		System.out.println("Rest addDailyLog  dailylog_id " + dailylog_id +" assignDailyLog_id " + assignDailyLog_id);
+
+		
+		if (dailylog_id > 0 && dailyLogDTO.getBu() != null && dailyLogDTO.getBu().length() > 0) {
+			int bu_id = jdbcBuRepository.findBuByName(dailyLogDTO.getBu());
+			if (bu_id > 0 && bu_id != 0) {
+				jdbcDailyLogRepository.addDailyLogAndBu(dailylog_id, bu_id);
+			}
+		}
+		try {
+			fetchDailyLog(dailyLog.getAssign_task_title());
+		} catch (IOException io) {
+			System.out.println("Rest addDailyLog  readAssignTask - " + io.getMessage());
+		}
+
 		return dailylog_id;
 	}
 
-
-	public List<DailyLogDTO>  refresDailyListReport() {
+	public List<DailyLogDTO> refresDailyListReport() {
 		List<DailyLogDTO> lists = (jdbcDailyLogRepository.getAllDailyLogDTO());
-		
+
 		ResourceLoader resourceLoader = new FileSystemResourceLoader();
 		Resource resource = resourceLoader
 				.getResource(applicationProperties.getProperty(Constants.JSON_FILES.dailylogs_filename.name()));
@@ -110,56 +119,58 @@ public class DailyLogService{
 		return lists;
 	}
 
-public List<UsersDTO> getRealName() {
+	public List<UsersDTO> getRealName() {
 
-		
 		List<UsersDTO> realnames;
 
 		try {
 			realnames = jdbcUserRepository.getUserRealNames();
 		} catch (DataAccessException dae) {
-//			LOG.error(dae.getMessage());
+			// LOG.error(dae.getMessage());
 			throw new IllegalStateException("Error : Failed to find username!");
 		}
 		return realnames;
 	}
 
-	public JasperReport getCompiledFile(String reportFileName, HttpServletRequest request) throws JRException, IOException {
+	public JasperReport getCompiledFile(String reportFileName, HttpServletRequest request)
+			throws JRException, IOException {
 		Resource banner = resourceLoader.getResource("classpath:report/reports_landscape.jasper");
-		Resource bannerjrxml = resourceLoader1.getResource("classpath:report/reports_landscape.jrxml");
-		
-//		System.out.println("===========resourceLoader " +banner.getFile().getAbsolutePath());
-//		System.out.println("===========resourceLoader bannerjrxml " +bannerjrxml.getFile().getAbsolutePath());
+		Resource bannerjrxml = resourceLoader.getResource("classpath:report/reports_landscape.jrxml");
+
+		// System.out.println("===========resourceLoader "
+		// +banner.getFile().getAbsolutePath());
+		// System.out.println("===========resourceLoader bannerjrxml "
+		// +bannerjrxml.getFile().getAbsolutePath());
 		File reportFile = new File(banner.getFile().getAbsolutePath());
-		
-		System.out.println("\n ===========resourceLoader reportFile " +reportFile);
-		System.out.println("\n ===========resourceLoader reportFile.exists() " +reportFile.exists());
-		
+
+		System.out.println("\n ===========resourceLoader reportFile " + reportFile);
+		System.out.println("\n ===========resourceLoader reportFile.exists() " + reportFile.exists());
+
 		// If compiled file is not found, then compile XML template
 		if (!reportFile.exists()) {
-		           try {
-					JasperCompileManager.compileReportToFile(bannerjrxml.getFile().getAbsolutePath(),banner.getFile().getAbsolutePath());
-				} catch (JRException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		    }
-		System.out.println("\n =========== reportFile JRLoader " +JRLoader.loadObjectFromFile(reportFile.getPath()));
-		
-	    	JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(reportFile.getPath());
-	    	System.out.println("\n ===========resourceLoader jasperReport " +jasperReport);
-	    	   return jasperReport;
+			try {
+				JasperCompileManager.compileReportToFile(bannerjrxml.getFile().getAbsolutePath(),
+						banner.getFile().getAbsolutePath());
+			} catch (JRException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		System.out.println("\n =========== reportFile JRLoader " + JRLoader.loadObjectFromFile(reportFile.getPath()));
+
+		JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(reportFile.getPath());
+		System.out.println("\n ===========resourceLoader jasperReport " + jasperReport);
+		return jasperReport;
 	}
 
-
 	public void generateReportPDF(HttpServletResponse response, HashMap<String, Object> parameters,
-			JasperReport jasperReport, Connection conn)throws JRException, NamingException, SQLException, IOException  {
+			JasperReport jasperReport, Connection conn) throws JRException, NamingException, SQLException, IOException {
 		byte[] bytes = null;
-    	System.out.println("\n ===========generateReportPDF parameters size " +parameters.size());
-    	System.out.println("\n ===========generateReportPDF parameters values " +parameters.values());
+		System.out.println("\n ===========generateReportPDF parameters size " + parameters.size());
+		System.out.println("\n ===========generateReportPDF parameters values " + parameters.values());
 
-		bytes = JasperRunManager.runReportToPdf(jasperReport,parameters, conn);
-		System.out.println("\n ===========generateReportPDF bytes " +bytes);
+		bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, conn);
+		System.out.println("\n ===========generateReportPDF bytes " + bytes);
 
 		response.reset();
 		response.resetBuffer();
@@ -171,22 +182,19 @@ public List<UsersDTO> getRealName() {
 		ouputStream.close();
 	}
 
-	
 	public List<DailyLogDTO> fetchDailyLog(String title) throws IOException {
-		System.out.println("Rest fetchDailyLog title "+title);			
-		
-		List<DailyLogDTO> lists=jdbcDailyLogRepository.getDailyLogDTOByTitle(title);
-		System.out.println("Rest fetchDailyLog lists.size() "+lists.size());			
-		
-		List<DailylogTable> dailylogTables =null;
-		System.out.println("Rest readAssignTask lists.size() "+lists.size());			
-		
-		if(lists!=null && lists.size()>0)
-		{
+		System.out.println("Rest fetchDailyLog title " + title);
+
+		List<DailyLogDTO> lists = jdbcDailyLogRepository.getDailyLogDTOByTitle(title);
+		System.out.println("Rest fetchDailyLog lists.size() " + lists.size());
+
+		List<DailylogTable> dailylogTables = null;
+		System.out.println("Rest readAssignTask lists.size() " + lists.size());
+
+		if (lists != null && lists.size() > 0) {
 			dailylogTables = ObjectMapper.mapToDailyLogTable(lists);
 		}
-		System.out.println("Rest fetchDailyLog dailylogTables.size() "+dailylogTables.size());			
-		
+		System.out.println("Rest fetchDailyLog dailylogTables.size() " + dailylogTables.size());
 
 		ResourceLoader resourceLoader = new FileSystemResourceLoader();
 		Resource resource = resourceLoader
@@ -203,13 +211,13 @@ public List<UsersDTO> getRealName() {
 		return lists;
 	}
 
-
 	public DailyLogDTO getDailLogbyDescriptionAndId(String description, int id) {
 		DailyLogDTO dailyLogDTO = (jdbcDailyLogRepository.findDailyLogDTOByIdAndDescription(description, id));
 		return dailyLogDTO;
 	}
 
+	public void deleteDailyLogs( int assign_task_id) {
+		jdbcDailyLogRepository.deleteDailyLog(assign_task_id);
+	}
 
-	
-	
 }

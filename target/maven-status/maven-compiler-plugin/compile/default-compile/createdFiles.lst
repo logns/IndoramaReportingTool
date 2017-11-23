@@ -40,6 +40,7 @@ com\lognsys\util\WriteJSONToFile.class
 com\lognsys\dao\jdbc\rowmapper\UserByUserIDRowMapper.class
 com\lognsys\util\Constants$DAILYLOG_TABLE_FIELD_NAMES.class
 com\lognsys\model\DailylogTable.class
+com\lognsys\dao\jdbc\rowmapper\DailyLogByDescriptionAndIDRowMapper.class
 com\lognsys\service\AssignTaskService.class
 com\lognsys\service\DailyLogServices.class
 com\lognsys\dao\dto\DailyLogBuDTO.class

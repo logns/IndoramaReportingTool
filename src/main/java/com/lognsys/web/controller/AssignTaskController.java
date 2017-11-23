@@ -12,6 +12,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.FileSystemResourceLoader;
@@ -66,7 +67,13 @@ public class AssignTaskController {
 	 */
 	@RequestMapping(value = "/assigntasklist", method = RequestMethod.GET)
 	public String showAssignTasks(Model model, HttpServletRequest request) throws IOException {
-		assignTaskService.readAssignTask();
+		try {
+			
+			assignTaskService.readAssignTask();
+		} catch (Exception e) {
+			System.out.println("\n Exception showAssignTasks \n \n " +e.toString());
+			
+		}
 		return "assigntasklist";
 	}
 	
@@ -260,11 +267,13 @@ public class AssignTaskController {
 						JSONObject jsonObject = (JSONObject) arr.get(i);
 						System.out.println("\n \n manageTask jsonObject===== "+jsonObject.toJSONString());
 						
-						titles[i] = jsonObject.get("title").toString();
+						titles[i] = Jsoup.parse(jsonObject.get("title").toString()).text();
+						
 						System.out.println("\n \n manageTask titles[i] ===== "+titles[i] );
 						
 					}
 					assignTaskService.deleteTaskTitle(titles);
+					assignTaskService.readAssignTask();
 				} catch (ParseException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
@@ -341,12 +350,12 @@ public class AssignTaskController {
 		}
 
 		@RequestMapping(value = { "/editassigndailylog" }, method = RequestMethod.POST)
-		public String editAssignDailyLog(@ModelAttribute("editAssignDailyLog") AssignTaskDailylogDTO assignTaskDailylogDTO) {
+		public String editAssignDailyLog(@ModelAttribute("editassigndailylog") AssignTaskDailylogDTO assignTaskDailylogDTO,BindingResult result,Model model) throws IOException {
 			System.out.println("\n \n editassigndailylog assignTaskDailylogDTO == "+assignTaskDailylogDTO.toString()+"\n \n");
-			
-							
-			assignTaskService.updateAssigntask(assignTaskDailylogDTO);
-			return "assigntasklist";
+
+				assignTaskService.updateAssigntask(assignTaskDailylogDTO);
+				return "assigntasklist";
+						
 		}
 		
 }

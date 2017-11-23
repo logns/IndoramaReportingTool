@@ -43,6 +43,7 @@ public interface DailyLogRespository {
 	 */
 	public boolean deleteDailyLogDTOBy(Integer id);
 
+	public boolean deleteDailyLog(Integer assign_task_id);
 
 	/**
 	 * Update DailyLogDTO information, enable/disable etc..

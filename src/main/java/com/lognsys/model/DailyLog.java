@@ -20,6 +20,7 @@ public class DailyLog {
 	private String bu = "";
 	@Id
 	private int id;
+	private int assign_task_id ;
 	private String assign_task_title = "";
 	private String target_date = "";
 	private String shift = "";
@@ -42,8 +43,8 @@ public class DailyLog {
 
 
 	public DailyLog(String users, String bu, int id, String assign_task_title, String target_date, String shift,
-			String machine, String description, String timefrom, String timeto, String spare_parts, String attendby,
-			String jobtype, String recordtype, String status, String done_percentage) {
+			String machine, String description, String timefrom, String timeto, String spareparts, String attendby,
+			String jobtype, String recordtype, String status, String done_percentage,int assign_task_id) {
 		super();
 		this.users = users;
 		this.bu = bu;
@@ -61,6 +62,18 @@ public class DailyLog {
 		this.recordtype = recordtype;
 		this.status = status;
 		this.done_percentage = done_percentage;
+		this.assign_task_id = assign_task_id;
+		
+	}
+
+
+	public int getAssign_task_id() {
+		return assign_task_id;
+	}
+
+
+	public void setAssign_task_id(int assign_task_id) {
+		this.assign_task_id = assign_task_id;
 	}
 
 
@@ -226,12 +239,14 @@ public class DailyLog {
 
 	@Override
 	public String toString() {
-		return "DailyLog [users=" + users + ", bu=" + bu + ", id=" + id + ", assign_task_title=" + assign_task_title
-				+ ", target_date=" + target_date + ", shift=" + shift + ", machine=" + machine + ", description="
-				+ description + ", timefrom=" + timefrom + ", timeto=" + timeto + ", spareparts=" + spareparts
-				+ ", attendby=" + attendby + ", jobtype=" + jobtype + ", recordtype=" + recordtype + ", status="
-				+ status + ", done_percentage=" + done_percentage + "]";
+		return "DailyLog [users=" + users + ", bu=" + bu + ", id=" + id + ", assign_task_id=" + assign_task_id
+				+ ", assign_task_title=" + assign_task_title + ", target_date=" + target_date + ", shift=" + shift
+				+ ", machine=" + machine + ", description=" + description + ", timefrom=" + timefrom + ", timeto="
+				+ timeto + ", spareparts=" + spareparts + ", attendby=" + attendby + ", jobtype=" + jobtype
+				+ ", recordtype=" + recordtype + ", status=" + status + ", done_percentage=" + done_percentage + "]";
 	}
+
+
 	
 
 }

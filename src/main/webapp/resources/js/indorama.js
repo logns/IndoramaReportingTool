@@ -387,9 +387,9 @@ $(document)
               $('#taskTable').on('check-all.bs.table', function(e) {
                   //Assumption if one or multiple row is checked
                   checkedRows.splice(0, checkedRows.length);
-                  $("#taskTable tr:has(:checkbox:checked) td:nth-child(3)").each(function() {
+                  $("#taskTable tr:has(:checkbox:checked) td:nth-child(2)").each(function() {
                       checkedRows.push({
-                          email: $(this).text()
+                          title: $(this).text()
                       });
                   });
                   console.log(JSON.stringify(checkedRows));
@@ -459,7 +459,7 @@ $(document)
 
                       if ($('#taskTable tr:has(:checkbox:checked)').length == 0) {
                           $('<li class="alert alert-danger alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>'
-                        		  + '<strong>Error</strong> Please select a user from the list...</a></li>').appendTo('#error_list');
+                        		  + '<strong>Error</strong> Please select a task from the list...</a></li>').appendTo('#error_list');
                       } else {
                           console.log(JSON.stringify(checkedRows));
                           var params = {
@@ -511,7 +511,7 @@ $(document)
 
                                   form = dialog.find("form").on("submit", function(event) {
 
-                                      var isValid = editAssignDailyLog();
+                                      var isValid = editassigndailylog();
                                       if (isValid) {
                                           console.log("VALID - " + isValid);
                                           return;
@@ -590,8 +590,7 @@ $(document)
                                   
                                   
                                   // From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
-                                  emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
-                                  title = $("#assignTaskDTO.title"),
+                                 title = $("#assignTaskDTO.title"),
                                   assigned_to = $("#assignTaskDTO.assigned_to"),
                                   priority = $("#assignTaskDTO.priority"),
                                   done_percentage = $("#assignTaskDTO.done_percentage"),
@@ -642,7 +641,7 @@ $(document)
                                       }
                                   }
 
-                                  function editAssignDailyLog() {
+                                  function editassigndailylog() {
                                       var valid = true;
                                       allFields.removeClass("ui-state-error");
 
@@ -670,8 +669,8 @@ $(document)
                                       valid = valid && checkLength(target_date, "assignTaskDTO.target_date", 3, 80);
                                       valid = valid && checkLength(shift, "dailylogDTO.shift", 3, 80);
                                       valid = valid && checkLength(machine, "dailylogDTO.machine", 3, 80);
-                                      valid = valid && checkLength(description, "dailylogDTO.description", 3, 80);
-                                      valid = valid && checkLength(attendby, "dailylogDTO.attendby", 3, 80);
+                                      valid = valid && checkLength(description, "dailylogDTO.description", 3, 280);
+                                      valid = valid && checkLength(attendby, "dailylogDTO.attendby", 3, 280);
                                       valid = valid && checkLength(timefrom, "dailylogDTO.timefrom", 3, 80);
                                       valid = valid && checkLength(timeto, "dailylogDTO.timeto", 3, 80);
                                       valid = valid && checkLength(spare_parts, "dailylogDTO.spare_parts", 3, 80);

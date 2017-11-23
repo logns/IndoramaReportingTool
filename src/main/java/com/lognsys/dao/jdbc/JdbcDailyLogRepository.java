@@ -136,5 +136,14 @@ public class JdbcDailyLogRepository implements DailyLogRespository {
 
 	}
 
+
+
+	@Override
+	public boolean deleteDailyLog( Integer assign_task_id) {
+		SqlParameterSource parameter = new MapSqlParameterSource().addValue("assign_task_id", assign_task_id);
+		return namedParamJdbcTemplate.update(sqlProperties.getProperty(Constants.DAILYLOG_QUERIES.delete_by_assign_task_id.name()),
+				parameter) == 1;
+	}
+
 	
 }

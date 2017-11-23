@@ -45,6 +45,7 @@ C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\exception\Cus
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\dao\jdbc\resultset\UserBuResultSetExtractor.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\util\Constants.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\dao\dto\AssignTaskDailylogDTO.java
+C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\dao\jdbc\rowmapper\DailyLogByDescriptionAndIDRowMapper.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\web\controller\BaseController.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\dao\dto\UsersDTO.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\dao\AssignTaskRepository.java

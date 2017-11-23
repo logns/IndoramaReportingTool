@@ -61,15 +61,8 @@
 
 						<div class="action_buttons">
 							<hr>
-							<button id="useradd" type="submit"
-								class="btn btn-primary pull-right rbtnMargin">Add</button>
-				<!--			<button id="userdelete" type="submit"
-								class="btn btn-danger pull-right rbtnMargin">Delete</button>
-				 			<button id="useredit" type="submit"
-								class="btn btn-warning pull-right rbtnMargin">Edit</button>
-				 -->
 				 			<button id="usercancel" type="reset"
-								class="btn btn-default pull-right rbtnMargin">Cancel</button>
+								class="btn btn-default pull-right rbtnMargin">Back</button>
 						</div>
 					</div>
 

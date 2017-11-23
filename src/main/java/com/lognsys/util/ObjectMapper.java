@@ -72,30 +72,34 @@ public class ObjectMapper {
 	public static List<DailylogTable> mapToDailyLogTable(List<DailyLogDTO> dailyLogDTOs) {
 		List<DailylogTable> list = new ArrayList<>();
 		for (DailyLogDTO ubu : dailyLogDTOs) {
-			System.out.println("mapToDailyLogTable ubu.getAssign_task_title() ===============" + ubu.getAssign_task_title() + "\n\n\n");
 			
 			list.add(new DailylogTable(ubu.getId(), ubu.getAssign_task_id(), ubu.getAssign_task_title(),
-					convertToAnchorTagDescription(ubu.getDescription(),ubu.getId()), ubu.getAssigned_to(), ubu.getTarget_date(),
-					ubu.getDone_percentage(), ubu.getStatus(),ubu.getTime()));
+					convertToAnchorTagDescription(ubu.getDescription(),ubu.getId(),ubu.getAssign_task_title()), ubu.getAssigned_to(), ubu.getTarget_date(),
+					ubu.getDone_percentage(), ubu.getStatus(),ubu.getTime(),ubu.getBu()));
 		}
 		return list;
 	}
 
-	public static String convertToAnchorTagDescription(String description, int id) {
+	public static String convertToAnchorTagDescription(String description, int id,String assign_task_title) {
 
 		System.out.println("convertToAnchorTagDescription ======= description ===============" + description + "\n\n\n");
-		String descriptions;
-		if(description.contains(" ")){
-			 descriptions = "<a href=" + "http://localhost:8080/adddailylog?description=" + description.replace(" ", "%20") + "&id="+id+" >"
-						+ description + "</a>";
-		}
-		else{
-			 descriptions = "<a href=" + "http://localhost:8080/adddailylog?description=" +description+ "&id="+id+" >"
+		System.out.println("convertToAnchorTagDescription ======= assign_task_title ===============" + assign_task_title + "\n\n\n");
+		String descriptions=null;
+		if(assign_task_title!=null && description!=null){
+			if(description.contains(" ") || assign_task_title.contains(" ")) {
+				 descriptions = "<a href=" + "http://localhost:8080/adddailylog?description=" + description.replace(" ", "%20") + "&id="+id+ "&assign_task_title="+assign_task_title.replace(" ", "%20") +" >"
+							+ description + "</a>";
+			}
+			else{
+				 descriptions = "<a href=" + "http://localhost:8080/adddailylog?description=" +description+ "&id="+id + "&assign_task_title="+assign_task_title+" >"
 
-						+ description + "</a>";
+							+ description + "</a>";
 
+			}
+			return descriptions;
+			
 		}
-	
+		else
 		System.out.println("convertToAnchorTagDescription ======= descriptions ===============" + descriptions + "\n\n\n");
 		return descriptions;
 	}
@@ -148,6 +152,7 @@ public class ObjectMapper {
 	public static DailyLogDTO mapToDailyLogDTO(DailyLog dailyLog) {
 
 		DailyLogDTO dldto = new DailyLogDTO();
+		dldto.setAssign_task_id(dailyLog.getAssign_task_id());
 		dldto.setAssign_task_title(dailyLog.getAssign_task_title());
 		dldto.setTarget_date(dailyLog.getTarget_date());
 		dldto.setShift(dailyLog.getShift());
@@ -161,12 +166,14 @@ public class ObjectMapper {
 		dldto.setRecordtype(dailyLog.getRecordtype());
 		dldto.setStatus(dailyLog.getStatus());
 		dldto.setDone_percentage(dailyLog.getDone_percentage());
+		dldto.setBu(dailyLog.getBu());
 		return dldto;
 
 	}
 	public static DailyLog mapToDailyLog(DailyLogDTO dailyLogDTO) {
 
 		DailyLog dldto = new DailyLog();
+		dldto.setAssign_task_id(dailyLogDTO.getAssign_task_id());
 		dldto.setAssign_task_title(dailyLogDTO.getAssign_task_title());
 		dldto.setTarget_date(dailyLogDTO.getTarget_date());
 		dldto.setShift(dailyLogDTO.getShift());
@@ -180,6 +187,7 @@ public class ObjectMapper {
 		dldto.setRecordtype(dailyLogDTO.getRecordtype());
 		dldto.setStatus(dailyLogDTO.getStatus());
 		dldto.setDone_percentage(dailyLogDTO.getDone_percentage());
+		dldto.setBu(dailyLogDTO.getBu());
 		return dldto;
 
 	}

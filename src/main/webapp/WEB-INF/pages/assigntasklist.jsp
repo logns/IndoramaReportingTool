@@ -87,7 +87,7 @@
 <div id="dialog-form" title="Edit Assign Task">
 	<p class="validateTips"></p>
 
-	<form id="editAssignDailyLog" action="/editassigndailylog" method="post">
+	<form id="editassigndailylog" action="/editassigndailylog" method="post">
 		<div id="editform" class="col-sm-12 panel panel-default"></div>
 	</form>
 </div>

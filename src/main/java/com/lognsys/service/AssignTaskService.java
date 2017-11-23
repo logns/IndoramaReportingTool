@@ -104,12 +104,10 @@ public class AssignTaskService {
 		listOfAssigntask = jdbcAssignTaskRepository.getAllAssignTaskDTO();
 
 		List<AssignTaskTable> assignTaskTables = null;
-		System.out.println("Rest readAssignTask listOfAssigntask.size() " + listOfAssigntask.size());
-
+		
 		if (listOfAssigntask != null && listOfAssigntask.size() > 0) {
 			assignTaskTables = ObjectMapper.mapToAssignTaskTable(listOfAssigntask);
 		}
-		System.out.println("Rest readAssignTask assignTaskTables.size() " + assignTaskTables.size());
 
 		ResourceLoader resourceLoader = new FileSystemResourceLoader();
 		Resource resource = resourceLoader
@@ -229,6 +227,8 @@ public class AssignTaskService {
 	public boolean updateAssigntask(AssignTaskDailylogDTO assignTaskDailylogDTO) {
 		boolean isUpdated = false;
 		try {
+			System.out.println("\n \n updateAssigntask assignTaskDailylogDTO == "+assignTaskDailylogDTO.toString()+"\n \n");
+
 			AssignTaskDTO assignTaskDTO=assignTaskDailylogDTO.getAssignTaskDTO();
 			dailyLogDTO=assignTaskDailylogDTO.getDailylogDTO();
 			System.out.println("\n \n updateAssigntask assignTaskDTO == "+assignTaskDTO.toString()+"\n \n");
@@ -267,9 +267,12 @@ public class AssignTaskService {
 			readAssignTask();
 
 		} catch (DataAccessException dae) {
-//			LOG.error(dae.getMessage());
+		System.out.println("\n \n updateAssigntask DataAccessException == "+dae.toString()+"\n \n");
+
 			throw new IllegalStateException("Failed  update Task status - " + isUpdated);
 		} catch (IOException e) {
+			System.out.println("\n \n updateAssigntask IOException == "+e.toString()+"\n \n");
+
 			throw new IllegalStateException(e);
 		}
 		return isUpdated;

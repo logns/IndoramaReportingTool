@@ -84,6 +84,7 @@ public class FormValidator implements Validator {
 			validateShift(assignTaskdailylogDTODTO.getDailylogDTO(), errors);
 			validateStatus(assignTaskdailylogDTODTO.getDailylogDTO(), errors);
 			validateJobType(assignTaskdailylogDTODTO.getDailylogDTO(), errors);
+//			validateBu(assignTaskdailylogDTODTO.getDailylogDTO(), errors);
 			validateRecordType(assignTaskdailylogDTODTO.getDailylogDTO(), errors);
 				
 			validateMachine(assignTaskdailylogDTODTO.getDailylogDTO(), errors);
@@ -93,6 +94,20 @@ public class FormValidator implements Validator {
 		
 		}
 		
+	}
+
+	private void validateBu(DailyLogDTO dailylogDTO, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dailylogDTO.bu", "required.dailylogDTO.bu", "bu is required.");
+
+		// input string conatains characters only
+		if (!(dailylogDTO.getBu() != null && dailylogDTO.getBu().isEmpty() && dailylogDTO.getBu().equalsIgnoreCase("Select") && dailylogDTO.getBu().equalsIgnoreCase("None") )) {
+			pattern = Pattern.compile(STRING_PATTERN);
+			matcher = pattern.matcher((dailylogDTO.getBu()));
+
+			if (!matcher.matches()) {
+				errors.rejectValue("dailylogDTO.bu", "dailylogDTO.bu.containNonChar", "Enter a valid bu");
+			}
+		}
 	}
 
 	private void validateRecordType(DailyLogDTO dailylogDTO, Errors errors) {
@@ -228,7 +243,7 @@ public class FormValidator implements Validator {
 
 		// input string conatains characters only
 		if (!(dailylogDTO.getSpare_parts() != null && dailylogDTO.getSpare_parts().isEmpty())) {
-			pattern = Pattern.compile(STRING_PATTERN);
+			pattern = Pattern.compile(MULTIPLE_STRING_PATTERN);
 			matcher = pattern.matcher((dailylogDTO.getSpare_parts()));
 
 			if (!matcher.matches()) {
@@ -258,7 +273,7 @@ public class FormValidator implements Validator {
 
 		// input string conatains characters only
 		if (!(dailylogDTO.getMachine() != null && dailylogDTO.getMachine().isEmpty())) {
-			pattern = Pattern.compile(STRING_PATTERN);
+			pattern = Pattern.compile(MULTIPLE_STRING_PATTERN);
 			matcher = pattern.matcher((dailylogDTO.getMachine()));
 
 			if (!matcher.matches()) {

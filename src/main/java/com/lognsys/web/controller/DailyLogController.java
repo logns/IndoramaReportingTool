@@ -35,6 +35,7 @@ import com.lognsys.dao.dto.AssignTaskDTO;
 import com.lognsys.dao.dto.BuDTO;
 import com.lognsys.dao.dto.DailyLogDTO;
 import com.lognsys.dao.dto.UsersDTO;
+import com.lognsys.dao.jdbc.JdbcAssignTaskRepository;
 import com.lognsys.model.DailyLog;
 import com.lognsys.service.DailyLogService;
 import com.lognsys.service.UserService;
@@ -64,6 +65,10 @@ public class DailyLogController {
 	@Qualifier("applicationProperties")
 	private Properties applicationProperties;
 	
+
+	@Autowired
+	private JdbcAssignTaskRepository jdbcAssignTaskRepository;
+	
 	@Autowired
 	DataSource conn;
 	/**
@@ -77,18 +82,20 @@ public class DailyLogController {
 	
 	@RequestMapping(value = "/adddailylog", method = RequestMethod.GET)
 	public String addDailyLogForm(@RequestParam("description")
-	String description,@RequestParam("id") int id,ModelMap model, HttpServletRequest request) {
+	String description,@RequestParam("id") int id,@RequestParam("assign_task_title")String assign_task_title,ModelMap model, HttpServletRequest request) {
 
-		System.out.println("addDailyLogForm =======");
-		System.out.println("addDailyLogForm ======= description before==============="+description+"\n\n\n");
-		
 		description =description.replace("%20", " ");
-		System.out.println("addDailyLogForm ======= description after==============="+description+"\n\n\n");
+		assign_task_title =assign_task_title.replace("%20", " ");
+		
 		
 		DailyLogDTO dailyLogDTO=dailyLogService.getDailLogbyDescriptionAndId(description,id);
+		dailyLogDTO.setAssign_task_title(assign_task_title);
+		System.out.println("addDailyLogForm ======= dailyLogDTO after==============="+dailyLogDTO.toString()+"\n\n\n");
+		
 		
 		DailyLog dailylogs=ObjectMapper.mapToDailyLog(dailyLogDTO);
-
+		System.out.println("addDailyLogForm ======= dailylogs after==============="+dailylogs.toString()+"\n\n\n");
+		
 		
 		String str_shift = applicationProperties.getProperty(Constants.TYPES_ARRAY.shift.name());
 		String str_jobtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.jobtype.name());
@@ -164,59 +171,79 @@ public class DailyLogController {
 	public String saveForm(@Valid @ModelAttribute("dailylogs") DailyLog dailylogs, Model model,
 		 HttpServletRequest request, BindingResult result,
 		HttpServletResponse response) throws JRException, IOException, SQLException, NamingException{
+		System.out.println("\n \n saveForm dailylogs == "+dailylogs.toString()+"\n \n");
 		
-		FormValidator formValidator = new FormValidator();
-		formValidator.validate(dailylogs, result);
+		try {
+			FormValidator formValidator = new FormValidator();
+			formValidator.validate(dailylogs, result);
+			if(dailylogs.getBu().equalsIgnoreCase("None")){
+				
+				if (result.hasErrors() ||(dailylogs.getBu().equalsIgnoreCase("None")) || (dailylogs.getBu().equalsIgnoreCase("select")))
+				{
+				
+					String str_shift = applicationProperties.getProperty(Constants.TYPES_ARRAY.shift.name());
+					String str_jobtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.jobtype.name());
+					String str_recordtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.recordtype.name());
+					String str_status = applicationProperties.getProperty(Constants.TYPES_ARRAY.status.name());
 
-		if (result.hasErrors())
-		{
-		
-			String str_shift = applicationProperties.getProperty(Constants.TYPES_ARRAY.shift.name());
-			String str_jobtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.jobtype.name());
-			String str_recordtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.recordtype.name());
-			String str_status = applicationProperties.getProperty(Constants.TYPES_ARRAY.status.name());
+					System.out.println("controller===== str_jobtype- " + str_jobtype.toString());
+					System.out.println("controller===== recordtype- " + str_recordtype.toString());
+					System.out.println("controller===== str_status- " + str_status.toString());
 
-			System.out.println("controller===== str_jobtype- " + str_jobtype.toString());
-			System.out.println("controller===== recordtype- " + str_recordtype.toString());
-			System.out.println("controller===== str_status- " + str_status.toString());
+					List<String> jobtype=Arrays.asList(str_jobtype.split(","));
+					List<String> recordtype=Arrays.asList(str_recordtype.split(","));
+					List<String> status=Arrays.asList(str_status.split(","));
+					List<String> shift=Arrays.asList(str_shift.split(","));
+				
+//				List<UsersDTO> userDtos=dailyLogService.getRealName();
+					List<String> realname = new ArrayList<String>();
+//				for(int i=0;i<userDtos.size();i++){
+//					UsersDTO dto=userDtos.get(i);
+//					realname.add(dto.getRealname());
+//				}
+					System.out.println("controller===== realname- " + realname.size());
+					System.out.println("controller===== realname.get(0)- " + realname.get(0) );
+					List<BuDTO> listOfBuDTO = userService.getAllBus();
 
-			List<String> jobtype=Arrays.asList(str_jobtype.split(","));
-			List<String> recordtype=Arrays.asList(str_recordtype.split(","));
-			List<String> status=Arrays.asList(str_status.split(","));
-			List<String> shift=Arrays.asList(str_shift.split(","));
-		
-//			List<UsersDTO> userDtos=dailyLogService.getRealName();
-			List<String> realname = new ArrayList<String>();
-//			for(int i=0;i<userDtos.size();i++){
-//				UsersDTO dto=userDtos.get(i);
-//				realname.add(dto.getRealname());
-//			}
-			System.out.println("controller===== realname- " + realname.size());
-			System.out.println("controller===== realname.get(0)- " + realname.get(0) );
-			List<BuDTO> listOfBuDTO = userService.getAllBus();
-
-			// Adding data to list from RolesDTO
-			List<String> busList = new ArrayList<String>();
-			for (BuDTO bu : listOfBuDTO) {
-				busList.add(bu.getBu_name());
+					// Adding data to list from RolesDTO
+					List<String> busList = new ArrayList<String>();
+					for (BuDTO bu : listOfBuDTO) {
+						busList.add(bu.getBu_name());
+					}
+					//populate to JSP page
+					model.addAttribute("dailylogs", dailylogs);
+					model.addAttribute("realname", realname);
+					model.addAttribute("jobtype", jobtype);
+					model.addAttribute("recordtype", recordtype);
+					model.addAttribute("status", status);
+					model.addAttribute("shift", shift);;
+					model.addAttribute("busList", busList);
+					return "adddailylog";
+				}
 			}
-			//populate to JSP page
-			model.addAttribute("dailylogs", dailylogs);
-			model.addAttribute("realname", realname);
-			model.addAttribute("jobtype", jobtype);
-			model.addAttribute("recordtype", recordtype);
-			model.addAttribute("status", status);
-			model.addAttribute("shift", shift);
-			return "dailylog";
-		} else
-		{
-			//			int id =dailyLogService.addDailyLog(dailylogs);
-			System.out.println(" ==================== dailylogs.getJobtype()  "+dailylogs.getJobtype());
-//			System.out.println(" ==================== dailylogs.getDates()  "+dailylogs.getDates());
+			else
+			{
+
+				AssignTaskDTO dto=jdbcAssignTaskRepository.findAssignTaskDTOTitlte(dailylogs.getAssign_task_title());
+				System.out.println("\n \n updateAssigntask dto == "+dto.toString()+"\n \n");
+				dailylogs.setAssign_task_id(dto.getId());
+			
+				System.out.println(" ==================== dailylogs.toString()  "+dailylogs.toString()+"\n \n \n");
+				
+				int id =dailyLogService.addDailyLog(dailylogs);
+				dailylogs.setId(id);
+				
+				if(dailylogs.getStatus().equalsIgnoreCase("closed") && dailylogs.getDone_percentage().equalsIgnoreCase("100%")){
+				dailyLogService.deleteDailyLogs(dailylogs.getAssign_task_id());	
+				}
+			}
+
+			return "dailyloglist";
+		} catch (IndexOutOfBoundsException e) {
+		
+			e.printStackTrace();
+			return "adddailylog";
 		}
-
-
-		return "dailylog";
 	}
 	/**
 	 * 
