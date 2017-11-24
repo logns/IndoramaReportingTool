@@ -12,6 +12,7 @@ import com.lognsys.dao.dto.BuDTO;
 import com.lognsys.dao.dto.DailyLogBuDTO;
 import com.lognsys.dao.dto.DailyLogDTO;
 import com.lognsys.dao.jdbc.JdbcAssignTaskRepository;
+import com.lognsys.dao.jdbc.JdbcBuRepository;
 import com.lognsys.dao.jdbc.JdbcDailyLogRepository;
 import com.lognsys.model.AssignTask;
 import com.lognsys.model.DailyLog;
@@ -36,6 +37,9 @@ public class TestAssignTaskRepository {
 	private JdbcAssignTaskRepository jdbcAssignTaskRepository;
 
 
+	@Autowired
+	private JdbcBuRepository jdbcBuRepository;
+
 	/**
 	 * Add dailyLogDTO into database
 	 * 
@@ -57,7 +61,8 @@ public class TestAssignTaskRepository {
 	
 
 	DailyLog dldto = new DailyLog();
-	dldto.setAssign_task_title(at.getTitle());
+//	dldto.setAssign_task_title(at.getTitle());
+	dldto.setAssign_task_id(id_assign);
 	dldto.setTarget_date(at.getTarget_date());
 	dldto.setShift("Morning");
 	dldto.setMachine("M1");
@@ -69,26 +74,30 @@ public class TestAssignTaskRepository {
 	dldto.setJobtype("Job");
 	dldto.setRecordtype("Record");
 	dldto.setStatus("Open");
-	dldto.setDone_percentage("0%");
+	dldto.setDone_percentage("10%");
 
-	DailyLogDTO dailyLogDTO = ObjectMapper.mapToDailyLogDTO(dldto);
-
-	int id_dailylog=jdbcDailyLogRepository.addDailyLog(dailyLogDTO);
-	Assert.notNull(dailyLogDTO, "Check list of dailyLogDTO NOT NULL");
-
-	dailyLogDTO.setId(id_dailylog);
+//	DailyLogDTO dailyLogDTO = ObjectMapper.mapToDailyLogDTO(dldto);
+//
+//	int id_dailylog=jdbcDailyLogRepository.addDailyLog(dailyLogDTO);
+//	Assert.notNull(dailyLogDTO, "Check list of dailyLogDTO NOT NULL");
+//
+//	dailyLogDTO.setId(id_dailylog);
 	
-	BuDTO buDTO=new BuDTO();
-	buDTO.setBu_name("UT");
+//	BuDTO buDTO=new BuDTO();
+//	buDTO.setBu_name("UT");
+//	dailyLogDTO.setBu(buDTO.getBu_name());
+//	DailyLogBuDTO dbDTO= new DailyLogBuDTO();
+//	dbDTO.setDailylogDTO(dldto);
+//	if (id_dailylog > 0 && dailyLogDTO.getBu() != null && dailyLogDTO.getBu().length() > 0) {
+//		int bu_id = jdbcBuRepository.findBuByName(dailyLogDTO.getBu());
+//		if (bu_id > 0 && bu_id != 0) {
+//			jdbcDailyLogRepository.addDailyLogAndBu(id_dailylog, bu_id);
+//			System.out.println("Rest addAssignTask addDailyLogAndBu ");
+//			Assert.notNull(dailyLogDTO, "Check list of addDailyLogAndBu NOT NULL");
+//
+//		}
+//	}
 	
-	DailyLogBuDTO dbDTO= new DailyLogBuDTO();
-	dbDTO.setDailylogDTO(dldto);
-	
-//	jdbcDailyLogRepository.addDailyLogAndBu(id_dailylog, buDTO.getBu_name());
-//	Assert.notNull(buDTO.getBu_name(), "Check list of buDTO.getBu_name() NOT NULL");
-//	Assert.notNull(id_dailylog, "Check list of id_dailylog NOT NULL");
-
-//	addAssignTask_DailyLog(id_assign, id_dailylog);
 	}
 	
 	/**
@@ -101,8 +110,8 @@ public class TestAssignTaskRepository {
 		int assignTask_id;
 		int dailylog_id;
 		
-		assignTask_id =25;
-		dailylog_id=25;
+		assignTask_id =40;
+		dailylog_id=40;
 		int assignDailyLog_id=jdbcAssignTaskRepository.addAssignTask_DailyLog(assignTask_id, dailylog_id);
 		Assert.notNull(assignTask_id, "Check list of assignTask_id NOT NULL");
 		Assert.notNull(dailylog_id, "Check list of dailylog_id NOT NULL");
@@ -134,7 +143,7 @@ public class TestAssignTaskRepository {
 	public void findAssignTaskDTOId(){
 		
 
-		AssignTaskDTO assignTaskDTO= jdbcAssignTaskRepository.findAssignTaskDTOId(6);
+		AssignTaskDTO assignTaskDTO= jdbcAssignTaskRepository.findAssignTaskDTOId(40);
 		Assert.notNull(assignTaskDTO, "Check list of assignTaskDTO NOT NULL");
 	}
 
@@ -148,7 +157,7 @@ public class TestAssignTaskRepository {
 	public void findAssignTaskDTOTitlte(){
 		
 
-		AssignTaskDTO assignTaskDTO= jdbcAssignTaskRepository.findAssignTaskDTOTitlte("Pump basket");
+		AssignTaskDTO assignTaskDTO= jdbcAssignTaskRepository.findAssignTaskDTOTitlte("AssignTask one");
 		Assert.notNull(assignTaskDTO, "Check list of assignTaskDTO NOT NULL");
 	}
 	
@@ -158,7 +167,7 @@ public class TestAssignTaskRepository {
 	 */
 	@Test
 	public void deleteAssignTaskDTOBy(){
-		boolean isDelete = jdbcAssignTaskRepository.deleteAssignTaskDTOBy(3);
+		boolean isDelete = jdbcAssignTaskRepository.deleteAssignTaskDTOBy(40);
 		Assert.isTrue(isDelete, "Check list of deleteAssignTaskDTOBy ");
 
 		

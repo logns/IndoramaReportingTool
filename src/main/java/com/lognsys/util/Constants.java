@@ -129,7 +129,12 @@ public class Constants {
 	 * Exception Messages
 	 */
 	public enum EXCEPTIONS_MSG {
-		exception_userinvalid, exception_userempty, exception_allgroups, exception_database, exception_groupduplicate
+		exception_userinvalid, exception_userempty, exception_allgroups, exception_database, exception_groupduplicate,
+		
+		data_access_exception,data_access_exception_delete,data_access_exception_edit,
+		
+		something_went_wrong
+		
 	}
 
 	public enum DEFAULT_GROUP {

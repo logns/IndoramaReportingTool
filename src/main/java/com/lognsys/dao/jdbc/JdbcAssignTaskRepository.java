@@ -46,7 +46,6 @@ public class JdbcAssignTaskRepository  implements AssignTaskRepository{
 		final KeyHolder keyHolder = new GeneratedKeyHolder();
 		namedParamJdbcTemplate.update(sqlProperties.getProperty(Constants.ASSIGN_TASK_QUERIES.insert_assign_task.name()), params,
 				keyHolder);
-
 		assign_task_id = keyHolder.getKey().intValue();
 
 		return assign_task_id;

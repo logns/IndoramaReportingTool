@@ -27,5 +27,8 @@ public class CustomGenericException  extends RuntimeException {
 		this.errCode = errCode;
 		this.errMsg = errMsg;
 	}
+	public CustomGenericException(String errMsg) {
+		this.errMsg = errMsg;
+	}
 
 }

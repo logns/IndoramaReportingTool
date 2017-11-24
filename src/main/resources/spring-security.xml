@@ -29,6 +29,9 @@
 			pattern="/login" />
 
 		<security:intercept-url access="permitAll"
+			pattern="/generic_error" />
+
+		<security:intercept-url access="permitAll"
 			pattern="/adddailylog" />
 		<security:intercept-url access="permitAll"
 			pattern="/dailyloglist" />

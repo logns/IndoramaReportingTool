@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -36,6 +37,7 @@ import com.lognsys.dao.dto.BuDTO;
 import com.lognsys.dao.dto.DailyLogDTO;
 import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.dao.jdbc.JdbcAssignTaskRepository;
+import com.lognsys.exception.CustomGenericException;
 import com.lognsys.model.DailyLog;
 import com.lognsys.service.DailyLogService;
 import com.lognsys.service.UserService;
@@ -152,8 +154,10 @@ public class DailyLogController {
 		try {
 			WriteJSONToFile.getInstance().write(resource, list);
 		} catch (IOException e) {
-		System.out.println("IOEXCEPTION --- e"+e);
 			e.printStackTrace();
+			System.out.println("\n Exception populateUsersListInJson \n \n " +e.toString());
+			throw new CustomGenericException(applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.something_went_wrong.name()));	
+		
 		}
 	}
 
@@ -194,15 +198,15 @@ public class DailyLogController {
 					List<String> recordtype=Arrays.asList(str_recordtype.split(","));
 					List<String> status=Arrays.asList(str_status.split(","));
 					List<String> shift=Arrays.asList(str_shift.split(","));
-				
-//				List<UsersDTO> userDtos=dailyLogService.getRealName();
-					List<String> realname = new ArrayList<String>();
-//				for(int i=0;i<userDtos.size();i++){
-//					UsersDTO dto=userDtos.get(i);
-//					realname.add(dto.getRealname());
-//				}
-					System.out.println("controller===== realname- " + realname.size());
-					System.out.println("controller===== realname.get(0)- " + realname.get(0) );
+					List<UsersDTO> listOfUsersDTO = userService.getUsers();
+					
+					List<String> usersList = new ArrayList<String>();
+					for (UsersDTO user : listOfUsersDTO) {
+						usersList.add(user.getRealname());
+					}
+					populateUsersListInJson(usersList);
+					
+					
 					List<BuDTO> listOfBuDTO = userService.getAllBus();
 
 					// Adding data to list from RolesDTO
@@ -212,7 +216,7 @@ public class DailyLogController {
 					}
 					//populate to JSP page
 					model.addAttribute("dailylogs", dailylogs);
-					model.addAttribute("realname", realname);
+					model.addAttribute("usersList", usersList);
 					model.addAttribute("jobtype", jobtype);
 					model.addAttribute("recordtype", recordtype);
 					model.addAttribute("status", status);
@@ -227,9 +231,6 @@ public class DailyLogController {
 				AssignTaskDTO dto=jdbcAssignTaskRepository.findAssignTaskDTOTitlte(dailylogs.getAssign_task_title());
 				System.out.println("\n \n updateAssigntask dto == "+dto.toString()+"\n \n");
 				dailylogs.setAssign_task_id(dto.getId());
-			
-				System.out.println(" ==================== dailylogs.toString()  "+dailylogs.toString()+"\n \n \n");
-				
 				int id =dailyLogService.addDailyLog(dailylogs);
 				dailylogs.setId(id);
 				
@@ -241,8 +242,18 @@ public class DailyLogController {
 			return "dailyloglist";
 		} catch (IndexOutOfBoundsException e) {
 		
-			e.printStackTrace();
+			System.out.println("\n IndexOutOfBoundsException saveForm \n \n " +e.toString());
+				e.printStackTrace();
 			return "adddailylog";
+		}
+		catch (DataAccessException e) {
+			e.printStackTrace();
+			System.out.println("\n DataAccessException saveForm \n \n " +e.toString());
+			throw new CustomGenericException(applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.data_access_exception.name()));	
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("\n IOException saveForm \n \n " +e.toString());
+			throw new CustomGenericException(applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.something_went_wrong.name()));	
 		}
 	}
 	/**
@@ -319,12 +330,8 @@ public class DailyLogController {
     
 	@RequestMapping(value = "/dailyloglist", method = RequestMethod.GET)
 	public String showList(@RequestParam("title") String title,Model model, HttpServletRequest request) throws IOException {
-		System.out.println("dailyloglist =======");
-		System.out.println("dailyloglist ======= title before==============="+title+"\n\n\n");
 		
 		title =title.replace("%20", " ");
-		System.out.println("dailyloglist ======= title after==============="+title+"\n\n\n");
-		
 		dailyLogService.fetchDailyLog(title);
 		return "dailyloglist";
 	}
