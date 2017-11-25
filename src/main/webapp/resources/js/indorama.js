@@ -1,10 +1,12 @@
 /*
- * kalrav.js
+
+ * INDORAMA.js
  * @author : 01/04/17 - PJD
+ * @author : 19/11/17 - MS
  * 
  * Description : 
  * This contains all the jquery code used for CRUD of Users module , 
- * Group module , Drama module.
+ * Assigntask module , Error module.
  * 
  * 
  * CHANGELOG : PJD - 25/07/17 Created Group Module
@@ -12,6 +14,13 @@
  * Notes: 
  * 1. JQuery delegate function is used for dynamically generated html
  * 2. Bootstrap 
+ * 
+ * ASSIGNTASK MODULE 
+ * 1. CRUD ASSIGNTASK
+ * 2. TO POPULATE DATA IN AUTOCOMPLETEVIEW USED jquery for ATTENT_BY FIELD
+ * 3. TIMEPICKER (timepicker1 & timepicker2) for TIMETO AND TIMEFROM
+ * 4. TO DISPLAY STAIC IMAGE FOR ERROR PAGE
+ *  
  */
 $(document)
     .ready(
@@ -80,21 +89,10 @@ $(document)
                     if (this.checked) {
                         $('#useradd').prop('disabled', true);
                         $('#useredit').prop('disabled', true);
-
-                        // monika 4/5/2017 add   drama add & edit buttons disable 
-                        $('#dramaadd').prop('disabled', true);
-                        $('#dramaedit').prop('disabled', true);
-
                     } else {
                         $('#useradd').prop('disabled', false);
                         $('#useredit').prop('disabled', false);
-
-                        //monika 4/5/2017 add   drama add & edit buttons disable 
-                        $('#dramaadd').prop('disabled', false);
-                        $('#dramaedit').prop('disabled', false);
                     }
-
-
                 });
 
             // check if more than one checkbox checked
@@ -105,9 +103,6 @@ $(document)
                  $('#useradd').prop('disabled', false);
                  $('#useredit').prop('disabled', false);
             }
-            
-
-
             // Userlist delete function
             $('#userdelete').click(
                 function(event) {
@@ -135,10 +130,10 @@ $(document)
 
             // Userlist add function will call /register page
             $('#useradd').click(
-                function(event) {
-                    window.location.href = "http://localhost:8080/";
+            				function(event){
+                    window.location.href = "http://localhost:8080/register";
                     event.preventDefault();
-                });
+            				});
 
 
             // Userlist edit function
@@ -189,7 +184,7 @@ $(document)
                                     },
                                     close: function() {
                                         form[0].reset();
-                                        allFields.removeClass("ui-state-error");
+//                                        allFields.removeClass("ui-state-error");
                                     }
                                 });
 
@@ -282,14 +277,10 @@ $(document)
                     }
                     event.preventDefault();
                 });
-
-
-
-
             // Userlist delete function
             $('#usercancel').click(
                 function(event) {
-                    window.location.href = "http://13.126.167.5:8080/dashboard";
+                    window.location.href = "http://localhost:8080/dashboard";
                     event.preventDefault();
                 });
             
@@ -353,8 +344,8 @@ $(document)
                 });
             
    
-//******************************************Assigntask starts*************************************//
-              // userlist tables 
+//******************************************Assigntask modules starts*************************************//
+//              assigntask list
               var checkedRows = [];
 
               // check individual row
@@ -420,7 +411,7 @@ $(document)
                    $('#taskedit').prop('disabled', false);
               }
 
-              /*                                                      Deletion operation                                                   */
+//     			Deletion operation      
               $('#taskdelete').click(
                   function(event) {
 
@@ -445,7 +436,7 @@ $(document)
                       }
                   });
 
-              // Userlist add function will call /register page
+              // ASSIGNTASK_ADD add function will call /register page
               $('#taskadd').click(
                   function(event) {
                       window.location.href = "http://localhost:8080/addtask";
@@ -453,7 +444,7 @@ $(document)
                   });
 
 
-              // Userlist edit function
+              // ASSIGNTASK_ADD edit function
               $('#taskedit').click(
                   function(event) {
 
@@ -474,7 +465,7 @@ $(document)
 
                               success: function(data) {
 
-                                  //get subelements from div('#register_user') from register.jsp
+                                  //get subelements from div('#register_user') from addtask.jsp
                                   regUserElements = $(data).find("#register_user").html();
 
                                   //clear previous added html elements
@@ -502,7 +493,7 @@ $(document)
                                       },
                                       close: function() {
                                           form[0].reset();
-                                          allFields.removeClass("ui-state-error");
+//                                          allFields.removeClass("ui-state-error");
                                       }
                                   });
 
@@ -520,7 +511,7 @@ $(document)
 
                                   });
 
-                                  /*** edit user dialog form validation *****/
+                                  /*** edit ASSIGNTASK dialog form validation *****/
                                   var dialog, form;
 
                                   $('#timepicker1').timepicker();
@@ -541,7 +532,7 @@ $(document)
                                     function extractLast( term ) {
                                       return split( term ).pop();
                                     }
-                                    
+//                                    FOR AUTOCOMPLETE READING REALNAME
                                     var availableTags = $.parseJSON(
                                   		    $.ajax(
                                   		        {
@@ -551,7 +542,7 @@ $(document)
                                   		        }
                                   		    ).responseText
                                   		);
-                                 
+//                                    attendby FOR AUTOCOMPLETE READING REALNAME
                                     $( "#attendby" )
                                       // don't navigate away from the field on tab when selecting an item
                                       .on( "keydown", function( event ) {
@@ -584,11 +575,6 @@ $(document)
                                           return false;
                                         }
                                       });
-                                  
-
-                                  
-                                  
-                                  
                                   // From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
                                  title = $("#assignTaskDTO.title"),
                                   assigned_to = $("#assignTaskDTO.assigned_to"),
@@ -634,13 +620,13 @@ $(document)
                                   function checkRegexp(o, regexp, n) {
                                       if (!(regexp.test(o.val()))) {
                                           o.addClass("ui-state-error");
-                                          updateTips(n);
+                                         updateTips(n);
                                           return false;
                                       } else {
                                           return true;
                                       }
                                   }
-
+//									EDIT ASSIGN_TASK
                                   function editassigndailylog() {
                                       var valid = true;
                                       allFields.removeClass("ui-state-error");
@@ -686,7 +672,13 @@ $(document)
                       }
                       event.preventDefault();
                   });
-              //Image align js
+//              GOING BACK  TO DASHBOARD
+              $('#taskcancel').click(
+                      function(event) {
+                          window.location.href = "http://localhost:8080/dashboard";
+                          event.preventDefault();
+                      });
+              // ERROR PAGE Image align js
               $('.imgInner > img').each(function (i) {
             	    var imgWidth = ((0 - parseInt($(this).css('width'))) / 2);
             	    var imgHeight = ((0 - parseInt($(this).css('height'))) / 2);

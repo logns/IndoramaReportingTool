@@ -33,7 +33,7 @@
 						<svg class="glyph stroked male user">
 							<use xlink:href="#stroked-male-user"></use></svg>
 					</div>
-<!-- <SCRIPT language="JavaScript"> function test() 
+					<!-- <SCRIPT language="JavaScript"> function test() 
 { var p=document.getElementById("id").value;
     window.open("http://localhost:8080/dailyloglist?val="+p,'_self'); 
 } 
@@ -41,16 +41,17 @@
  -->
 					<div class="panel-body">
 						<table id="taskTable" data-toggle="table"
-							data-url="static/tables/assigntasks.json" data-show-refresh="true"
-							data-show-toggle="true" data-show-columns="true"
-							data-search="true" data-select-item-name="assigned_to"
-							data-pagination="true" data-sort-name="title"
-							data-sort-order="desc">
+							data-url="static/tables/assigntasks.json"
+							data-show-refresh="true" data-show-toggle="true"
+							data-show-columns="true" data-search="true"
+							data-select-item-name="assigned_to" data-pagination="true"
+							data-sort-name="title" data-sort-order="desc">
 							<thead>
 								<tr>
 									<th data-field="checked" data-checkbox="true"></th>
 									<th data-field="id" data-sortable="true" data-visible="false">Id</th>
-									<th data-field="title"  data-sortable="true">title</th></a>
+									<th data-field="title" data-sortable="true">title</th>
+									</a>
 									<th data-field="assigned_to" data-sortable="true">assigned_to</th>
 									<th data-field="target_date" data-sortable="true">target_date</th>
 									<th data-field="priority" data-sortable="true">priority</th>
@@ -87,7 +88,8 @@
 <div id="dialog-form" title="Edit Assign Task">
 	<p class="validateTips"></p>
 
-	<form id="editassigndailylog" action="/editassigndailylog" method="post">
+	<form id="editassigndailylog" action="/editassigndailylog"
+		method="post">
 		<div id="editform" class="col-sm-12 panel panel-default"></div>
 	</form>
 </div>

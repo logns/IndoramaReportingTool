@@ -9,29 +9,29 @@ import com.lognsys.dao.dto.DailyLogDTO;
 public interface AssignTaskRepository {
 
 	/**
-	 * Add dailyLogDTO into database
+	 * Add assignTaskDTO into database
 	 * 
-	 * @param dailyLogDTO
+	 * @param assignTaskDTO
 	 */
 	public int addAssignTask(AssignTaskDTO assignTaskDTO);
 	
 	/**
-	 * Add dailyLogDTO into database
+	 * Add AssignTask_DailyLog into database
 	 * 
-	 * @param dailyLogDTO
+	 * @param assignTask_id, dailylog_id
 	 */
 	public int addAssignTask_DailyLog(int assignTask_id,int dailylog_id);
 	
 	
 	/**
-	 *check bu isExits 
+	 *check title isExits 
 	 * 
-	 * @param boolean
+	 * @param title
 	 */
  	public boolean isexist(String title);
 	
 	/**
-	 * Get All dailyLogDTO
+	 * Get All AssignTaskDTO
 	 * 
 	 * @return List<AssignTaskDTO>
 	 */
@@ -46,10 +46,10 @@ public interface AssignTaskRepository {
 	public AssignTaskDTO findAssignTaskDTOId(Integer id);
 
 	/**
-	 * Get AssignTaskDTO by Id
+	 * Get AssignTaskDTO by title
 	 * 
-	 * @param id
-	 * @return
+	 * @param title
+	 * @return AssignTaskDTO
 	 */
 	public AssignTaskDTO findAssignTaskDTOTitlte(String title);
 	

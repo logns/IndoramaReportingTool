@@ -673,9 +673,9 @@ Responsive: Portrait tablets and up @media screen and (min-width: 768px) {
 
 .ui-dialog > .ui-widget-header {background: #3399ff;}
 
-.ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-close {
+/*.ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-close {
     display: none;
-}
+}*/
 .the-legend {
     border-style: none;
     border-width:1;

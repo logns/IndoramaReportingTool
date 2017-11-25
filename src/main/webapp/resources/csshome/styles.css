@@ -9,55 +9,60 @@ body {
 	padding-top: 50px;
 	color: #5f6468;
 }
+
 div.imgOuter {
-    float: left;
-    position: relative;
-    width: 33.3333%;
-    padding-bottom: 25%;
-    overflow:hidden;
-    clear:none;
+	float: left;
+	position: relative;
+	width: 33.3333%;
+	padding-bottom: 25%;
+	overflow: hidden;
+	clear: none;
 }
 
 div.imgInner {
-    position:absolute;
-    top:0;
-    bottom:0;
-    left:0;
-    right: 0;
-    overflow:hidden;
-    text-align:center;
-    border:2px solid #444;
-    cursor:pointer;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	overflow: hidden;
+	text-align: center;
+	border: 2px solid #444;
+	cursor: pointer;
 }
+
 div.imgInner>img {
-    display:block;
-    position:absolute;
-    top:50%;
-    left:50%;
+	display: block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
 }
+
 p {
 	color: #777;
 }
 
 /**for errors**/
-
 #errors ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
 }
+
 .ui-dialog .ui-state-error {
-    padding: .3em;
+	padding: .3em;
 }
+
 .error {
-    padding: 15px;
-    margin-bottom: 0px;
-    border: 1px solid transparent;
-    border-radius: 2px;
-    color:#eb1515;/* 
+	padding: 15px;
+	margin-bottom: 0px;
+	border: 1px solid transparent;
+	border-radius: 2px;
+	color: #eb1515; /* 
     background-color: #f2dede;
     border-color: #ebccd1; */
 }
+
 a, a:hover, a:focus {
 	color: #30a5ff;
 }
@@ -94,8 +99,8 @@ h3, h4 {
 	border: none;
 	display: block;
 	width: 20px;
-	margin-top:5px;
-	text-align:center;
+	margin-top: 5px;
+	text-align: center;
 	height: 20px;
 }
 
@@ -105,8 +110,8 @@ h3, h4 {
 	border: none;
 	display: block;
 	width: 20px;
-	margin-left:5px;
-	text-align:center;
+	margin-left: 5px;
+	text-align: center;
 	height: 20px;
 }
 
@@ -612,6 +617,12 @@ a.plus {
 	}
 }
 
+error_page {
+	overflow-y: auto;
+	width: 120px;
+	height: 120px;
+}
+
 .sidebar ul.nav a:hover, .sidebar ul.nav li.parent ul li a:hover {
 	text-decoration: none;
 	background-color: #e9ecf2;
@@ -965,21 +976,23 @@ h1.page-header {
 .icon-grid h4 {
 	display: none;
 }
+
 .the-legend {
-    border-style: none;
-    border-width: 1;
-    font-size: 14px;
-    line-height: 20px;
-    margin-bottom:10px;
-    width: auto;
-    padding:10px 10px 10px 10px;
-    border: 1px solid #e0e0e0;
-    
+	border-style: none;
+	border-width: 1;
+	font-size: 14px;
+	line-height: 20px;
+	margin-bottom: 10px;
+	width: auto;
+	padding: 10px 10px 10px 10px;
+	border: 1px solid #e0e0e0;
 }
+
 .the-fieldset {
-    border:  solid #e0e0e0;
-    padding: 10px 10px 10px 10px;
+	border: solid #e0e0e0;
+	padding: 10px 10px 10px 10px;
 }
+
 .icon-grid pre {
 	margin: 10px 10px -10px 10px;
 	border-radius: 0;

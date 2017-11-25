@@ -71,27 +71,28 @@ public class AssignTaskController {
 	@RequestMapping(value = "/assigntasklist", method = RequestMethod.GET)
 	public String showAssignTasks(Model model, HttpServletRequest request) {
 		try {
-			
+//			showing assingtasklist by reading the data
 			assignTaskService.readAssignTask();
 		} catch (IOException e) {
-			System.out.println("\n Exception showAssignTasks \n \n " +e.toString());
+			System.out.println("\n IOException showAssignTasks \n \n " +e.toString());
 			throw new CustomGenericException(applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.something_went_wrong.name()));	
 		}
 		catch (Exception e) {
 			System.out.println("\n Exception showAssignTasks \n \n " +e.toString());
+//			customgenericException class for the exception  to  be viewed in web  page
 			throw new CustomGenericException(applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.something_went_wrong.name()));	
 		}
 		return "assigntasklist";
 	}
 	
-
+//	@ExceptionHandler to decide which “view” should be returned back if certain exception is raised
 	@ExceptionHandler(CustomGenericException.class)
 	public ModelAndView handleCustomException(CustomGenericException ex) {
-		System.out.println("\n CustomGenericException handleCustomException  ex \n \n " +ex.toString());
 		
 		ModelAndView model = new ModelAndView("generic_error");
 		model.addObject("errMsg", ex.getErrMsg());
 
+		System.out.println("\n CustomGenericException handleCustomException  ex \n \n " +ex.toString());
 		System.out.println("\n CustomGenericException handleCustomException  model \n \n " +model);
 		return model;
 
@@ -128,7 +129,7 @@ public class AssignTaskController {
 		
 		List<BuDTO> listOfBuDTO = userService.getAllBus();
 		
-		// Adding data to list from RolesDTO
+		// Adding data to list from BuDTO
 		List<String> busList = new ArrayList<String>();
 		for (BuDTO bu : listOfBuDTO) {
 			busList.add(bu.getBu_name());
@@ -136,11 +137,12 @@ public class AssignTaskController {
 		
 		List<UsersDTO> listOfUsersDTO = userService.getUsers();
 		
-		// Adding data to list from RolesDTO
+		// Adding data to list from UsersDTO
 		List<String> usersList = new ArrayList<String>();
 		for (UsersDTO user : listOfUsersDTO) {
 			usersList.add(user.getRealname());
 		}
+//		populate userlist in realname.json for autocompleteview  
 		populateUsersListInJson(usersList);
 		
 		List<String> jobtype=Arrays.asList(str_jobtype.split(","));
@@ -166,7 +168,7 @@ public class AssignTaskController {
 	
 	/**
 	 * 
-	 * 
+	 * Saving data to database
 	 * @param user
 	 * @param result
 	 * @param model
@@ -176,8 +178,12 @@ public class AssignTaskController {
 	@RequestMapping(value = "/addtask", method = RequestMethod.POST)
 	public String saveForm(@ModelAttribute("atdl") AssignTaskDailylogDTO atdldto, BindingResult result, ModelMap model) throws IOException {
 		boolean error=false;
+		
+//		validating
 		FormValidator formValidator = new FormValidator();
 		formValidator.validate(atdldto, result);
+		
+//		checking isExist
 		boolean isexist=assignTaskService.isexist(atdldto.getAssignTaskDTO().getTitle());
 
 		if(result.hasErrors() || isexist) {
@@ -195,14 +201,15 @@ public class AssignTaskController {
 			for (BuDTO bu : listOfBuDTO) {
 				busList.add(bu.getBu_name());
 			}
-				
+
+			// Adding data to list from UsersDTO
 			List<UsersDTO> listOfUsersDTO = userService.getUsers();
 				
-			// Adding data to list from RolesDTO
 			List<String> usersList = new ArrayList<String>();
 			for (UsersDTO user : listOfUsersDTO) {
 				usersList.add(user.getRealname());
 			}
+//			populating list in json file for realname
 			populateUsersListInJson(usersList);
 				
 			List<String> jobtype=Arrays.asList(str_jobtype.split(","));
@@ -270,8 +277,8 @@ public class AssignTaskController {
 	 /**
 		 * 
 		 * @param model
-		 * @param userIds
-		 * @param userAction
+		 * @param taskIds
+		 * @param taskAction
 		 * @return
 	 * @throws IOException 
 		 */

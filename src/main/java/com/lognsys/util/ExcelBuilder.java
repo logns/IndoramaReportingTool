@@ -13,12 +13,9 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 
 import com.lognsys.dao.dto.DailyLogDTO;
-import com.lognsys.service.DailyLogService;
-
 /**
  * This class builds an Excel spreadsheet document using Apache POI library.
  * @author www.codejava.net

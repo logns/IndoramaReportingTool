@@ -53,58 +53,58 @@ public class AssignTaskService {
 	List<AssignTaskDTO> listOfAssigntask;
 
 	/**
-	 * Add dailylog to database.. Check if user already exists in db
-	 * 
-	 * TODO : Add rollbackFor is users exists TODO : Add exception for users and
-	 * roles and groups which has unique constraints
+	 * Add assignTaskDTO,dailyLogDTO to database..
+	 *
+	 * DAILYLOGS CAN HAVE ONLY ONE ASSIGNTASK 
 	 * 
 	 * @return
 	 * @throws IOException
 	 */
 	@Transactional(rollbackFor = IllegalArgumentException.class)
 	public int addAssignTask(AssignTaskDTO assignTaskDTO, DailyLogDTO dailyLogDTO) throws IOException {
-		System.out.println("Rest addAssignTask assignTaskDTO getTitle  " + assignTaskDTO.getTitle());
-		System.out.println("Rest addAssignTask (jdbcAssignTaskRepository)  " + (jdbcAssignTaskRepository) + "\n");
 	
+//		Adding assigntask in db
 		int assign_task_id = jdbcAssignTaskRepository.addAssignTask(assignTaskDTO);
 		assignTaskDTO.setId(assign_task_id);
 
+//		before adding dailylog set the assigntask id
 		dailyLogDTO.setAssign_task_id(assign_task_id);
 
+//		adding dailylog
 		int dailylog_id = jdbcDailyLogRepository.addDailyLog(dailyLogDTO);
-		System.out.println("Rest addAssignTask dailylog_id " + dailylog_id);
-
+	
+//		adding both the tables id in assign_dailylog tables 
 		int assignDailyLog_id = jdbcAssignTaskRepository.addAssignTask_DailyLog(assign_task_id, dailylog_id);
-		System.out.println("Rest addAssignTask assignDailyLog_id " + assignDailyLog_id);
-
-		System.out.println("Rest addAssignTask dailyLogDTO.getBu() " + dailyLogDTO.getBu());
-
+		
+//		adding data to dailylog_bu
 		if (dailylog_id > 0 && dailyLogDTO.getBu() != null && dailyLogDTO.getBu().length() > 0) {
 			int bu_id = jdbcBuRepository.findBuByName(dailyLogDTO.getBu());
+			
 			if (bu_id > 0 && bu_id != 0) {
 				jdbcDailyLogRepository.addDailyLogAndBu(dailylog_id, bu_id);
-				System.out.println("Rest addAssignTask addDailyLogAndBu ");
-
 			}
 		}
 		try {
+//			reading assigntask
 			readAssignTask();
 		} catch (IOException io) {
 			System.out.println("Rest addAssignTask  readAssignTask - " + io.getMessage());
 		}
 		return assign_task_id;
-
 	}
-
+	
+//	checking isexist
 	public boolean isexist(String title) {
 		return jdbcAssignTaskRepository.isexist(title);
 	}
 
 	public void readAssignTask() throws IOException {
+//		getting list of assigntask 
 		listOfAssigntask = jdbcAssignTaskRepository.getAllAssignTaskDTO();
 
 		List<AssignTaskTable> assignTaskTables = null;
 		
+		// adding the list of assigntask into  assigntasktable to  show in UI
 		if (listOfAssigntask != null && listOfAssigntask.size() > 0) {
 			assignTaskTables = ObjectMapper.mapToAssignTaskTable(listOfAssigntask);
 		}
@@ -121,11 +121,10 @@ public class AssignTaskService {
 			e.printStackTrace();
 		}
 	}
-
+	
+//		REMOVING ASSIGNTASK DATA FROM DATABASE	
 	public int removeAssignTask(int[] ids) throws IOException {
-		// LOG.info("#deleteUser - " + "Deleting total number of users from
-		// database - " + ids.length);
-
+		
 		for (int id : ids) {
 			try {
 
@@ -147,114 +146,71 @@ public class AssignTaskService {
 	}
 
 	/**
-	 * Delete users from database
-	 * 
-	 * @param
-	 * 
-	 * @return
-	 *
-	 */
-	public boolean deleteTaskId(Integer[] ids) {
-		// LOG.info("#deleteUser - " + "Deleting total number of tasks from
-		// database - " + ids.length);
-
-		for (int id : ids) {
-			try {
-
-				boolean isDelete = jdbcAssignTaskRepository.deleteAssignTaskDTOBy(id);
-
-				if (!isDelete) {
-					return false;
-				} else {
-					readAssignTask();
-				}
-			} catch (DataAccessException | IOException dae) {
-
-				// LOG.error(dae.getMessage());
-				throw new IllegalStateException("Error : Failed to delete task!");
-			}
-
-		}
-		return true;
-	}
-
-	/**
-	 * Delete users from database
+	 * Delete ASSIGNTASK from database
 	 * 
 	 * @param String
-	 *            emailID
+	 *            titles[]
 	 * @return
 	 * @throws IOException
 	 * 
 	 * 
 	 */
-	public void deleteTaskTitle(String[] titles) throws IOException {
-		// LOG.info("#deleteUser - " + "Deleting total number of titles from
-		// database - " + titles.length);
-		System.out.println("\n \n deleteTaskTitle titles ===== " + titles.length);
+	public int deleteTaskTitle(String[] titles) throws IOException {
 		for (String title : titles) {
 			try {
-				System.out.println("\n \n deleteTaskTitle title ===== " + title);
-
 				boolean isDelete = jdbcAssignTaskRepository.deleteAssignTaskDTOByTitle(title);
-				System.out.println("\n \n deleteTaskTitle isDelete ===== " + isDelete);
 
 				if (!isDelete) {
-					// LOG.info("#deleteUser - " + "failed to delete user with
-					// ID - " + task);
+					return 0;
 				} else {
 					readAssignTask();
 				}
 			} catch (DataAccessException dae) {
-
-				// LOG.error(dae.getMessage());
 				throw new IllegalStateException("Error : Failed to delete task!");
 			}
 		}
+		return 1;
 	}
 
+//	get ASSIGNTASKDTO BY ID
 	public AssignTaskDTO getAssigntaskDTOById(int id) {
 		AssignTaskDTO assignTaskDTO = jdbcAssignTaskRepository.findAssignTaskDTOId(id);
 		return assignTaskDTO;
 	}
 
 	/**
+	 * UPDATE ASSIGNTASK
 	 * 
-	 * 
-	 * @param user
+	 * @param assignTaskDailylogDTO
 	 */
 	@Transactional
 	public boolean updateAssigntask(AssignTaskDailylogDTO assignTaskDailylogDTO) {
 		boolean isUpdated = false;
 		try {
-			System.out.println("\n \n updateAssigntask assignTaskDailylogDTO == "+assignTaskDailylogDTO.toString()+"\n \n");
-
+			
 			AssignTaskDTO assignTaskDTO=assignTaskDailylogDTO.getAssignTaskDTO();
 			dailyLogDTO=assignTaskDailylogDTO.getDailylogDTO();
-			System.out.println("\n \n updateAssigntask assignTaskDTO == "+assignTaskDTO.toString()+"\n \n");
-
-			System.out.println("updateAssigntask assignTaskDTO == "+assignTaskDTO.toString());
+			
 			AssignTaskDTO dto=jdbcAssignTaskRepository.findAssignTaskDTOTitlte(assignTaskDTO.getTitle());
-			System.out.println("\n \n updateAssigntask dto == "+dto.toString()+"\n \n");
 			assignTaskDTO.setId(dto.getId());
-		
+			
+//			UPDATING ASSIGNTASK
 			isUpdated = jdbcAssignTaskRepository.updateAssignTaskDTO(assignTaskDTO);
 			System.out.println("updateAssigntask isUpdated == "+isUpdated);
+			
 			
 			dailyLogDTO.setAssign_task_id(assignTaskDTO.getId());
 			dailyLogDTO.setDone_percentage(assignTaskDTO.getDone_percentage());
 			dailyLogDTO.setTarget_date(assignTaskDTO.getTarget_date());
 			
-			System.out.println("\n \n updateAssigntask dailyLogDTO == "+dailyLogDTO.toString()+"\n \n");
-			
+//			ADDINGNEW ASSIGNTASK
 			int dailylog_id = jdbcDailyLogRepository.addDailyLog(dailyLogDTO);
 			System.out.println("updateAssigntask addDailylog dailylog_id " + dailylog_id);
 
 			int assignDailyLog_id = jdbcAssignTaskRepository.addAssignTask_DailyLog(assignTaskDTO.getId(), dailylog_id);
 			System.out.println("updateAssigntask addDailylog assignDailyLog_id " + assignDailyLog_id);
 
-			System.out.println("updateAssigntask addDailylog dailyLogDTO.getBu() " + dailyLogDTO.getBu());
-
+//			adding data to dailylog_bu
 			if (dailylog_id > 0 && dailyLogDTO.getBu() != null && dailyLogDTO.getBu().length() > 0) {
 				int bu_id = jdbcBuRepository.findBuByName(dailyLogDTO.getBu());
 				if (bu_id > 0 && bu_id != 0) {
@@ -272,11 +228,9 @@ public class AssignTaskService {
 			throw new IllegalStateException("Failed  update Task status - " + isUpdated);
 		} catch (IOException e) {
 			System.out.println("\n \n updateAssigntask IOException == "+e.toString()+"\n \n");
-
 			throw new IllegalStateException(e);
 		}
 		return isUpdated;
-
 	}
 
 }

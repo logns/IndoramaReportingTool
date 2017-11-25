@@ -34,7 +34,9 @@ public class TestDailyLogRespository {
 	 */
 	@Test
 	public void addDailyLog(){
+
 		DailyLog dldto = new DailyLog();
+		dldto.setAssign_task_id(40);
 		dldto.setAssign_task_title("Testing");
 		dldto.setTarget_date("2018-01-01");
 		dldto.setShift("Morning");

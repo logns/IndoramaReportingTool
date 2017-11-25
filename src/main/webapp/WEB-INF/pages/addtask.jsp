@@ -16,12 +16,12 @@
 		<div class="panel panel-default">
 			<form:form method="POST" action="addtask" modelAttribute="atdl">
 				<div class="error">
-			 <table >
-                <tr>
-                    <td>${message}</td>
-                </tr>
-            </table>
-			
+					<table>
+						<tr>
+							<td>${message}</td>
+						</tr>
+					</table>
+
 					<form:errors path="assignTaskDTO.title" element="div" />
 					<form:errors path="assignTaskDTO.assigned_to" element="div" />
 					<form:errors path="assignTaskDTO.priority" element="div" />
@@ -41,17 +41,16 @@
 					<form:errors path="dailylogDTO.status" element="div" />
 				</div>
 				<div id="register_user" class="col-sm-12 panel panel-default">
-		
+
 					<fieldset class="the-fieldset">
-			
+
 						<legend class="the-legend">Assign Task Details</legend>
 
-						<div class="form-group" >
+						<div class="form-group">
 							<label>Task Title</label>
 							<form:textarea id="title" placeholder="Enter Task Title Here.."
 								rows="1" path="assignTaskDTO.title"
-								class="form-control text ui-widget-content ui-corner-all"
-								 />
+								class="form-control text ui-widget-content ui-corner-all" />
 						</div>
 						<div class="col-sm-6 form-group">
 							<label>Assigned to</label>
@@ -84,15 +83,15 @@
 							<div class="input-group date form_datetime col-md-10" id="dates"
 								data-date-format="yyyy-mm-dd  hh:MM a" data-link-field="dates">
 								<form:input id="dates" type="text"
-									path="assignTaskDTO.target_date" placeholer="Select DateTime  Here...." class="form-control" value="" />
+									path="assignTaskDTO.target_date"
+									placeholer="Select DateTime  Here...." class="form-control"
+									value="" />
 								<span class="input-group-addon"><span
 									class="glyphicon glyphicon-remove"></span></span> <span
 									class="input-group-addon"><span
 									class="glyphicon glyphicon-th"></span></span>
 							</div>
 						</div>
-
-
 					</fieldset>
 					<br />
 					<fieldset class="the-fieldset">
@@ -122,21 +121,21 @@
 						</div>
 						<div class="col-sm-6 form-group">
 							<label>Time From</label>
-							 <div class="input-group bootstrap-timepicker timepicker">
+							<div class="input-group bootstrap-timepicker timepicker">
 								<form:input id="timepicker1" type="text"
 									class="form-control input-small" path="dailylogDTO.timefrom" />
 								<span class="input-group-addon"><i
 									class="glyphicon glyphicon-time"></i></span>
-							</div> 
+							</div>
 						</div>
 						<div class="col-sm-6 form-group">
 							<label>Time To</label>
-							 <div class="input-group bootstrap-timepicker timepicker">
+							<div class="input-group bootstrap-timepicker timepicker">
 								<form:input id="timepicker2" type="text"
 									class="form-control input-small" path="dailylogDTO.timeto" />
 								<span class="input-group-addon"><i
 									class="glyphicon glyphicon-time"></i></span>
-							</div> 
+							</div>
 						</div>
 						<div class="col-sm-12 form-group">
 							<label>Spare Parts</label>
@@ -146,10 +145,12 @@
 								path="dailylogDTO.spare_parts" />
 						</div>
 						<div class="col-sm-6 form-group">
-						 <label>Attend By</label>
-	<%-- 						<form:input  path="dailylogDTO.attendby" id="attendby"	class="form-control text ui-widget-content ui-corner-all" />
-	 --%><form:input  path="dailylogDTO.attendby" id="attendby" class="form-control text ui-widget-content ui-corner-all"	/>
-	
+							<label>Attend By</label>
+							<%-- 						<form:input  path="dailylogDTO.attendby" id="attendby"	class="form-control text ui-widget-content ui-corner-all" />
+	 --%>
+							<form:input path="dailylogDTO.attendby" id="attendby"
+								class="form-control text ui-widget-content ui-corner-all" />
+
 						</div>
 						<div class="col-sm-6 form-group">
 							<label>Job Type</label>
@@ -184,9 +185,7 @@
 							</form:select>
 						</div>
 					</fieldset>
-												<form:button  type="submit"
-								class="btn btn-lg btn-info">Submit</form:button>
-					
+					<form:button type="submit" class="btn btn-lg btn-info">Submit</form:button>
 				</div>
 			</form:form>
 		</div>

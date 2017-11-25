@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import com.lognsys.dao.dto.AssignTaskDTO;
 import com.lognsys.dao.dto.DailyLogDTO;
@@ -66,18 +67,25 @@ public class TestAssignTaskService {
 	 * @throws IOException
 	 */
 	@Test
-	public void addAssignTask(AssignTask assignTask, DailyLog dailyLog) throws IOException {
+	public void addAssignTask() throws IOException {
 		AssignTask at = new AssignTask();
-		at.setTitle("Testing_two");
+		at.setTitle("AlphaBeta");
 		at.setAssigned_to("Punish");
 		at.setPriority("Low");
 		at.setTarget_date("2018-09-04");
 		at.setDone_percentage("0%");
+		assignTaskDTO=ObjectMapper.mapToAssignTaskDTO(at);
 		
+		jdbcAssignTaskRepository.addAssignTask(assignTaskDTO);
+		Assert.notNull(assignTaskDTO, "Check assignTaskDTO NOT NULL");
+		
+	}
+	@Test
+	public void addDailyLog(){
 
 		DailyLog dldto = new DailyLog();
-		dldto.setAssign_task_title(at.getTitle());
-		dldto.setTarget_date(at.getTarget_date());
+		dldto.setAssign_task_id(40);
+		dldto.setTarget_date("2018-09-09");
 		dldto.setShift("Morning");
 		dldto.setMachine("M1");
 		dldto.setDescription("Test Test Test");
@@ -90,21 +98,25 @@ public class TestAssignTaskService {
 		dldto.setStatus("Open");
 		dldto.setDone_percentage("0%");
 
-		DailyLogDTO dailyLogDTO=ObjectMapper.mapToDailyLogDTO(dldto);
-		AssignTaskDTO assignTaskDTO=ObjectMapper.mapToAssignTaskDTO(at);
-		
-		assignTaskService.addAssignTask(assignTaskDTO,dailyLogDTO);
-	
+		DailyLogDTO dailyLogDTO = ObjectMapper.mapToDailyLogDTO(dldto);
+
+		int id_dailylog=jdbcDailyLogRepository.addDailyLog(dailyLogDTO);
+		Assert.notNull(dailyLogDTO, "Check list of dailyLogDTO NOT NULL");
 	}
+	
+//	reading assigntask
 	@Test
 	public void readAssignTask() throws IOException {
 	assignTaskService.readAssignTask();
 	}
+	
+//	removing assigntask by id
 	@Test
 	public void removeAssignTask() throws IOException {
 	
 		int[] ids={1,2};
 		assignTaskService.removeAssignTask(ids);
+	
 	}
 
 }

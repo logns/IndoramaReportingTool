@@ -147,6 +147,4 @@ public class JdbcAssignTaskRepository  implements AssignTaskRepository{
 		return namedParamJdbcTemplate.update(sqlProperties.getProperty(Constants.ASSIGN_TASK_QUERIES.delete_assign_task_by_title.name()),
 				parameter) == 1;
 		}
-
-
 }
