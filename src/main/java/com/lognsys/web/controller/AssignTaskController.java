@@ -3,6 +3,8 @@ package com.lognsys.web.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Properties;
 
@@ -36,11 +38,15 @@ import com.lognsys.dao.dto.BuDTO;
 import com.lognsys.dao.dto.DailyLogDTO;
 import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.exception.CustomGenericException;
+import com.lognsys.model.DailyLog;
+import com.lognsys.model.UpdateAssignedCount;
 import com.lognsys.service.AssignTaskService;
+import com.lognsys.service.DailyLogService;
 import com.lognsys.service.UserService;
 import com.lognsys.util.CommonUtilities;
 import com.lognsys.util.Constants;
 import com.lognsys.util.FormValidator;
+import com.lognsys.util.ObjectMapper;
 import com.lognsys.util.WriteJSONToFile;
 
 
@@ -50,6 +56,9 @@ public class AssignTaskController {
 	@Autowired
 	AssignTaskService assignTaskService;
 
+	@Autowired
+	DailyLogService dailyLogService;
+	
 	@Autowired
 	UserService userService;
 	
@@ -73,11 +82,11 @@ public class AssignTaskController {
 //			showing assingtasklist by reading the data
 			assignTaskService.readAssignTask();
 		} catch (IOException e) {
-			System.out.println("\n IOException showAssignTasks \n \n " +e.toString());
+			System.out.println("\n IOException showAssignTasks assigntasklist \n \n " +e.toString());
 			throw new CustomGenericException(applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.something_went_wrong.name()));	
 		}
 		catch (Exception e) {
-			System.out.println("\n Exception showAssignTasks \n \n " +e.toString());
+			System.out.println("\n Exception showAssignTasks assigntasklist \n \n " +e.toString());
 //			customgenericException class for the exception  to  be viewed in web  page
 			throw new CustomGenericException(applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.something_went_wrong.name()));	
 		}
@@ -91,8 +100,8 @@ public class AssignTaskController {
 		ModelAndView model = new ModelAndView("generic_error");
 		model.addObject("errMsg", ex.getErrMsg());
 
-		System.out.println("\n CustomGenericException handleCustomException  ex \n \n " +ex.toString());
-		System.out.println("\n CustomGenericException handleCustomException  model \n \n " +model);
+		System.out.println("\n CustomGenericException handleCustomException assigntasklist  ex \n \n " +ex.toString());
+		System.out.println("\n CustomGenericException handleCustomException assigntasklist  model \n \n " +model);
 		return model;
 
 	}
@@ -100,12 +109,13 @@ public class AssignTaskController {
 //	all kind of exception  is shown via this method
 	@ExceptionHandler(Exception.class)
 	public ModelAndView handleAllException(Exception ex) {
-		System.out.println("\n CustomGenericException handleAllException  ex \n \n " +ex.toString());
+		System.out.println("\n CustomGenericException handleAllException  assigntasklist ex \n \n " +ex.toString());
 		
 		ModelAndView model = new ModelAndView("generic_error");
 		model.addObject("errMsg", "this is Exception.class");
 		
-		System.out.println("\n CustomGenericException handleAllException  model \n \n " +model);
+		System.out.println("\n CustomGenericException handleAllException assigntasklist model \n \n " +model);
+		
 		
 		return model;
 
@@ -409,4 +419,174 @@ public class AssignTaskController {
 				throw new CustomGenericException(applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.something_went_wrong.name()));	
 			}
 		}
+		
+		 @RequestMapping(value = "/taskdetailview", method = RequestMethod.GET)
+			public String showList(@RequestParam("title") String title,Model model, HttpServletRequest request) throws IOException {
+				System.out.println("\n showList taskdetailview title " +title);
+				
+				title =title.replace("%20", " ");
+				System.out.println("\n showList taskdetailview title " +title);
+				
+					AssignTaskDTO assignTaskDTO=assignTaskService.getAssigntDTObyTitle(title);
+					System.out.println("\n showList taskdetailview assignTaskDTO toString " +assignTaskDTO.toString());
+					
+					Hashtable<String, String> hashtable=assignTaskService.getHashUpdatedby();
+					ArrayList<UpdateAssignedCount> arrayList=new ArrayList<>();
+					if(hashtable !=null && hashtable.size()>0){
+						Enumeration e = hashtable.keys();
+					    while (e.hasMoreElements()) {
+					    	UpdateAssignedCount updateAssignedCount=new UpdateAssignedCount();
+					    String key = (String) e.nextElement();
+					      System.out.println(key + " : " + hashtable.get(key));
+					      updateAssignedCount.setUpdatedDates(key);
+					      updateAssignedCount.setAssignedTo(hashtable.get(key));
+					      arrayList.add(updateAssignedCount);
+					    }
+					    System.out.println(arrayList.size());
+						
+					}
+						   
+					
+					String str_shift = applicationProperties.getProperty(Constants.TYPES_ARRAY.shift.name());
+					String str_jobtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.jobtype.name());
+					String str_recordtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.recordtype.name());
+					String str_status = applicationProperties.getProperty(Constants.TYPES_ARRAY.status.name());
+					String str_priority = applicationProperties.getProperty(Constants.TYPES_ARRAY.priority.name());
+					String str_done_percentage = applicationProperties.getProperty(Constants.TYPES_ARRAY.done_percentage.name());
+					
+					List<BuDTO> listOfBuDTO = userService.getAllBus();
+					
+					// Adding data to list from RolesDTO
+					List<String> busList = new ArrayList<String>();
+					for (BuDTO bu : listOfBuDTO) {
+						busList.add(bu.getBu_name());
+					}
+					
+					List<UsersDTO> listOfUsersDTO = userService.getUsers();
+					System.out.println("\n showList taskdetailview listOfUsersDTO size " +listOfUsersDTO.size());
+					
+					// Adding data to list from RolesDTO
+					List<String> usersList = new ArrayList<String>();
+					for (UsersDTO user : listOfUsersDTO) {
+						usersList.add(user.getRealname());
+					}
+					
+					populateUsersListInJson(usersList);
+					
+					List<String> jobtype=Arrays.asList(str_jobtype.split(","));
+					List<String> recordtype=Arrays.asList(str_recordtype.split(","));
+					List<String> status=Arrays.asList(str_status.split(","));
+					List<String> shift=Arrays.asList(str_shift.split(","));
+					List<String> priority=Arrays.asList(str_priority.split(","));
+					List<String> done_percentage=Arrays.asList(str_done_percentage.split(","));
+					
+					AssignTaskDailylogDTO atdl = new AssignTaskDailylogDTO();
+					atdl.setAssignTaskDTO(assignTaskDTO);
+					
+					model.addAttribute("atdl", atdl);
+					model.addAttribute("jobtype", jobtype);
+					model.addAttribute("recordtype", recordtype);	
+					model.addAttribute("status", status);
+					model.addAttribute("shift", shift);
+					model.addAttribute("priority", priority);
+					model.addAttribute("done_percentage", done_percentage);
+					model.addAttribute("busList", busList);
+					model.addAttribute("usersList", usersList);
+
+				return "taskdetailview";
+			}
+		 
+
+			/**
+			 * 
+			 * Saving data to database
+			 * @param user
+			 * @param result
+			 * @param model
+			 * @return
+			 * @throws IOException 
+			 */
+			@RequestMapping(value = "/taskdetailview", method = RequestMethod.POST)
+			public String saveTaskdetailForm(@ModelAttribute("atdl") AssignTaskDailylogDTO atdldto, BindingResult result, ModelMap model) throws IOException {
+				boolean error=false;
+				
+//				validating
+				FormValidator formValidator = new FormValidator();
+				formValidator.validate(atdldto, result);
+				
+//				checking isExist
+//				boolean isexist=assignTaskService.isexist(atdldto.getAssignTaskDTO().getTitle());
+
+				if(result.hasErrors() ) {
+					String str_shift = applicationProperties.getProperty(Constants.TYPES_ARRAY.shift.name());
+					String str_jobtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.jobtype.name());
+					String str_recordtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.recordtype.name());
+					String str_status = applicationProperties.getProperty(Constants.TYPES_ARRAY.status.name());
+					String str_priority = applicationProperties.getProperty(Constants.TYPES_ARRAY.priority.name());
+					String str_done_percentage = applicationProperties.getProperty(Constants.TYPES_ARRAY.done_percentage.name());
+						
+					List<BuDTO> listOfBuDTO = userService.getAllBus();
+						
+					// Adding data to list from RolesDTO
+					List<String> busList = new ArrayList<String>();
+					for (BuDTO bu : listOfBuDTO) {
+						busList.add(bu.getBu_name());
+					}
+
+					// Adding data to list from UsersDTO
+					List<UsersDTO> listOfUsersDTO = userService.getUsers();
+						
+					List<String> usersList = new ArrayList<String>();
+					for (UsersDTO user : listOfUsersDTO) {
+						usersList.add(user.getRealname());
+					}
+//					populating list in json file for realname
+					populateUsersListInJson(usersList);
+						
+					List<String> jobtype=Arrays.asList(str_jobtype.split(","));
+					List<String> recordtype=Arrays.asList(str_recordtype.split(","));
+					List<String> status=Arrays.asList(str_status.split(","));
+					List<String> shift=Arrays.asList(str_shift.split(","));
+					List<String> priority=Arrays.asList(str_priority.split(","));
+					List<String> done_percentage=Arrays.asList(str_done_percentage.split(","));
+						
+					model.addAttribute("jobtype", jobtype);
+					model.addAttribute("recordtype", recordtype);	
+					model.addAttribute("status", status);
+					model.addAttribute("shift", shift);
+					model.addAttribute("priority", priority);
+					model.addAttribute("done_percentage", done_percentage);
+					model.addAttribute("busList", busList);
+					model.addAttribute("usersList", usersList);
+					
+//					if(isexist==true){
+//						error=isexist;
+//						model.addAttribute("message", "Title already Exist !!");
+//					}
+//					return "addtask";
+				} 
+				else{
+					try {
+						AssignTaskDTO assignTaskDTO=atdldto.getAssignTaskDTO();
+						DailyLogDTO dailyLogDTO=atdldto.getDailylogDTO();
+
+						dailyLogDTO.setAssign_task_title(assignTaskDTO.getTitle());
+						dailyLogDTO.setTarget_date(assignTaskDTO.getTarget_date());
+						dailyLogDTO.setDone_percentage(assignTaskDTO.getDone_percentage());
+						DailyLog dailyLog=ObjectMapper.mapToDailyLog(dailyLogDTO);
+						dailyLogService.addDailyLog(dailyLog);
+						
+					} catch (DataAccessException e) {
+						e.printStackTrace();
+						System.out.println("\n DataAccessException saveForm \n \n " +e.toString());
+						throw new CustomGenericException(applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.data_access_exception.name()));	
+					} catch (IOException e) {
+						e.printStackTrace();
+						System.out.println("\n IOException saveForm \n \n " +e.toString());
+						throw new CustomGenericException(applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.something_went_wrong.name()));	
+					}
+				}
+				return "taskdetailview";
+			}
+
 }

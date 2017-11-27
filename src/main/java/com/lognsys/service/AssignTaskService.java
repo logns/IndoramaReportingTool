@@ -1,9 +1,11 @@
 package com.lognsys.service;
 
 import java.io.IOException;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Properties;
 
+import org.exolab.castor.types.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.FileSystemResourceLoader;
@@ -51,6 +53,7 @@ public class AssignTaskService {
 	DailyLogDTO dailyLogDTO;
 	AssignTaskDTO assignTaskDTO;
 	List<AssignTaskDTO> listOfAssigntask;
+	Hashtable< String, String> hashUpdatedby= new Hashtable<String, String>();
 
 	/**
 	 * Add assignTaskDTO,dailyLogDTO to database..
@@ -85,6 +88,8 @@ public class AssignTaskService {
 			}
 		}
 		try {
+			hashUpdatedby.put(new Date().toString(),"Updated by"+ assignTaskDTO.getAssigned_to());
+			setHashUpdatedby(hashUpdatedby);
 //			reading assigntask
 			readAssignTask();
 		} catch (IOException io) {
@@ -93,7 +98,15 @@ public class AssignTaskService {
 		return assign_task_id;
 	}
 	
-//	checking isexist
+public Hashtable<String, String> getHashUpdatedby() {
+		return hashUpdatedby;
+	}
+
+	public void setHashUpdatedby(Hashtable<String, String> hashUpdatedby) {
+		this.hashUpdatedby = hashUpdatedby;
+	}
+
+	//	checking isexist
 	public boolean isexist(String title) {
 		return jdbcAssignTaskRepository.isexist(title);
 	}
@@ -233,4 +246,8 @@ public class AssignTaskService {
 		return isUpdated;
 	}
 
+	public AssignTaskDTO getAssigntDTObyTitle(String title){
+		AssignTaskDTO dto=jdbcAssignTaskRepository.findAssignTaskDTOTitlte(title);
+		return dto;
+	}
 }

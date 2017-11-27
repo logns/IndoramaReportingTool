@@ -59,5 +59,10 @@
 		<put-attribute name="body" value="/WEB-INF/pages/generic_error.jsp" />
 		<put-attribute name="footer" value="" />
 	</definition>
+		<definition name="taskdetailview" extends="base_layout">
+		<put-attribute name="title" value="Indorama: TASKDETAILVIEW " />
+		<put-attribute name="body" value="/WEB-INF/pages/taskdetailview.jsp" />
+		<put-attribute name="footer" value="" />
+	</definition>
 	
 </tiles-definitions>

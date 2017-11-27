@@ -108,7 +108,9 @@ public class ObjectMapper {
 	public static String convertToAnchorTagString(String title) {
 
 		System.out.println("convertToAnchorTagString ======= title ===============" + title + "\n\n\n");
-		String titles = "<a href=" + "http://localhost:8080/dailyloglist?title=" + title.replace(" ", "%20") + " >"
+//		String titles = "<a href=" + "http://localhost:8080/dailyloglist?title=" + title.replace(" ", "%20") + " >"
+//				+ title + "</a>";
+		String titles = "<a href=" + "http://localhost:8080/taskdetailview?title=" + title.replace(" ", "%20") + " >"
 				+ title + "</a>";
 
 		System.out.println("convertToAnchorTagString ======= titles ===============" + titles + "\n\n\n");

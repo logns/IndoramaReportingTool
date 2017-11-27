@@ -690,3 +690,14 @@ Responsive: Portrait tablets and up @media screen and (min-width: 768px) {
     border:  solid #e0e0e0;
     padding:10px 10px 10px 10px;
 }
+
+.container .box .top {
+    text-align: left;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.container .box .bottom {
+  padding: 0px;
+  display: none;
+}

@@ -686,4 +686,11 @@ $(document)
             	    $(this).css('margin-top', imgHeight);
             	    $(this).css('margin-left', imgWidth);
             	});
+              
+//              show hide 
+              $('.top').on('click', function() {
+            		$parent_box = $(this).closest('.box');
+            		$parent_box.siblings().find('.bottom').slideUp();
+            		$parent_box.find('.bottom').slideToggle(1000, 'swing');
+            	});
  }); //end of document jQuery

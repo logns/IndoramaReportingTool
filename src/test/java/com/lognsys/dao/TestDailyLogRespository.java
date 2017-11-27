@@ -82,7 +82,7 @@ public class TestDailyLogRespository {
 		 */
 	@Test
 	public void getDailyLogCount(){
-		int count= jdbcDailyLogRepository.getDailyLogCount();
+		int count= jdbcDailyLogRepository.getDailyLogCount("Assign Comments");
 		Assert.notNull(count, "Check list of count NOT NULL");
 	}	
 }
