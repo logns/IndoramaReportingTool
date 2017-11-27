@@ -23,14 +23,14 @@ public interface DailyLogRespository {
 	public List<DailyLogDTO> getAllDailyLogDTO();
 
 	/**
-	 * Get All dailyLogDTO
+	 * Get All dailyLogDTO by assign_task_title
 	 * 
 	 * @return List<DailyLogDTO>
 	 */
 	public List<DailyLogDTO> getDailyLogDTOByTitle(String assign_task_title);
 
 	/**
-	 * Get DailyLogDTO by Id
+	 * Get DailyLogDTO by Id and description
 	 * 
 	 * @param id
 	 * @return
@@ -42,11 +42,16 @@ public interface DailyLogRespository {
 	 * @param id
 	 */
 	public boolean deleteDailyLogDTOBy(Integer id);
+	
 
+	/**
+	 * Delete DailyLogDTO by assign_task_id
+	 * @param assign_task_id
+	 */
 	public boolean deleteDailyLog(Integer assign_task_id);
 
 	/**
-	 * Update DailyLogDTO information, enable/disable etc..
+	 * Update DailyLogDTO information etc..
 	 * 
 	 * @param boolean
 	 */
@@ -57,7 +62,7 @@ public interface DailyLogRespository {
 		 * 
 		 * @param total
 		 */
-	public int getDailyLogCount();
+	public int getDailyLogCount(String title);
 	  
 	
 }

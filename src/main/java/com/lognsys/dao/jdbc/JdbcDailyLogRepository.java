@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import com.lognsys.dao.DailyLogRespository;
 import com.lognsys.dao.UserRespository;
+import com.lognsys.dao.dto.AssignTaskDTO;
 import com.lognsys.dao.dto.DailyLogDTO;
 import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.dao.jdbc.resultset.DailyLogResultSetExtractor;
@@ -77,9 +78,9 @@ public class JdbcDailyLogRepository implements DailyLogRespository {
 		return false;
 	}
 	/**
-	 * 
-	 * @param dailylog_id
-	 * @param bu
+	 * add DailyLog_Bu
+	 * @param dailylog_id,bu_id
+	 * @param 
 	 */
 	public void addDailyLogAndBu(int dailylog_id, int bu_id) {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("dailylog_id", dailylog_id).addValue("bu_id", bu_id);
@@ -100,14 +101,20 @@ public class JdbcDailyLogRepository implements DailyLogRespository {
 	}
 
 	@Override
-	public int getDailyLogCount() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getDailyLogCount(String title) {
+		SqlParameterSource parameter = new MapSqlParameterSource("title", title);
+
+			List<DailyLogDTO> lists=namedParamJdbcTemplate.query(
+					sqlProperties.getProperty(Constants.DAILYLOG_QUERIES.select_dailylog_by_title.name()), parameter,
+					new DailyLogResultSetExtractor());
+
+		int count = lists.size();
+		if(count>0)
+			return count;
+		else
+			return 0;
 	}
 
-
-	
-	
 
 	@Override
 	public List<DailyLogDTO> getDailyLogDTOByTitle(String title) {

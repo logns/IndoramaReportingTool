@@ -36,7 +36,6 @@ import com.lognsys.dao.dto.BuDTO;
 import com.lognsys.dao.dto.DailyLogDTO;
 import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.exception.CustomGenericException;
-import com.lognsys.model.Users;
 import com.lognsys.service.AssignTaskService;
 import com.lognsys.service.UserService;
 import com.lognsys.util.CommonUtilities;
@@ -98,6 +97,7 @@ public class AssignTaskController {
 
 	}
 
+//	all kind of exception  is shown via this method
 	@ExceptionHandler(Exception.class)
 	public ModelAndView handleAllException(Exception ex) {
 		System.out.println("\n CustomGenericException handleAllException  ex \n \n " +ex.toString());
@@ -257,8 +257,7 @@ public class AssignTaskController {
 		}
 		return "assigntasklist";
 	}
-	 private void populateUsersListInJson(List<String> usersList)throws IOException  {
-				
+	 private void populateUsersListInJson(List<String> usersList)throws IOException  {				
 				ResourceLoader resourceLoader = new FileSystemResourceLoader();
 				Resource resource = resourceLoader
 						.getResource(applicationProperties.getProperty(Constants.JSON_FILES.realname_filename.name()));
@@ -275,7 +274,7 @@ public class AssignTaskController {
 	
 	}
 	 /**
-		 * 
+		 * manageTask handles deleting and editing via @RequestParam taskIds, taskAction
 		 * @param model
 		 * @param taskIds
 		 * @param taskAction
@@ -289,7 +288,6 @@ public class AssignTaskController {
 			case "delete":
 				JSONParser parser = new JSONParser();
 				try {
-
 					Object obj = parser.parse(taskIds);
 
 					JSONArray arr = (JSONArray) obj;
@@ -396,26 +394,19 @@ public class AssignTaskController {
 					e.printStackTrace();
 					System.out.println("\n IOException manageTask \n \n " +e.toString());
 					throw new CustomGenericException(applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.something_went_wrong.name()));	
-			
 				}
 			}
 			return "assigntasklist";
 		}
-
+// 		updating edit task details
 		@RequestMapping(value = { "/editassigndailylog" }, method = RequestMethod.POST)
 		public String editAssignDailyLog(@ModelAttribute("editassigndailylog") AssignTaskDailylogDTO assignTaskDailylogDTO,BindingResult result,Model model) throws IOException {
 			try {
-				System.out.println("\n \n editassigndailylog assignTaskDailylogDTO == "
-						+ assignTaskDailylogDTO.toString() + "\n \n");
 				assignTaskService.updateAssigntask(assignTaskDailylogDTO);
 				return "assigntasklist";
 			} catch (Exception e) {
 				System.out.println("\n Exception editAssignDailyLog \n \n " +e.toString());
-				
 				throw new CustomGenericException(applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.something_went_wrong.name()));	
-				
 			}
-						
 		}
-		
 }

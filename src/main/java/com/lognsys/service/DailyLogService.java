@@ -63,10 +63,7 @@ public class DailyLogService {
 	private ResourceLoader resourceLoader;
 
 	/**
-	 * Add dailylog to database.. Check if user already exists in db
-	 * 
-	 * TODO : Add rollbackFor is users exists TODO : Add exception for users and
-	 * roles and groups which has unique constraints
+	 * Add dailylog to database.. 
 	 * 
 	 * @return
 	 * @throws IOException
@@ -74,24 +71,25 @@ public class DailyLogService {
 	@Transactional(rollbackFor = IllegalArgumentException.class)
 	public int addDailyLog(DailyLog dailyLog) throws IOException {
 
-		// convert UserDTO -> User Object
+		// convert dailyLog -> dailyLogDTO Object
 		DailyLogDTO dailyLogDTO = ObjectMapper.mapToDailyLogDTO(dailyLog);
-		System.out.println("\n========================= dailyLogDTO- " + dailyLogDTO.toString());
-
+		
 		int dailylog_id = jdbcDailyLogRepository.addDailyLog(dailyLogDTO);
 		
+//		adding assigntask_dailylog table with  id of dailylog and assigntask
 		int assignDailyLog_id = jdbcAssignTaskRepository.addAssignTask_DailyLog(dailyLogDTO.getAssign_task_id(),
 				dailylog_id);
-		System.out.println("Rest addDailyLog  dailylog_id " + dailylog_id +" assignDailyLog_id " + assignDailyLog_id);
-
 		
 		if (dailylog_id > 0 && dailyLogDTO.getBu() != null && dailyLogDTO.getBu().length() > 0) {
 			int bu_id = jdbcBuRepository.findBuByName(dailyLogDTO.getBu());
 			if (bu_id > 0 && bu_id != 0) {
+
+//				adding DailyLogAndBu table with  id of dailylog and bu_id
 				jdbcDailyLogRepository.addDailyLogAndBu(dailylog_id, bu_id);
 			}
 		}
 		try {
+//			fetch DailyLog by title
 			fetchDailyLog(dailyLog.getAssign_task_title());
 		} catch (IOException io) {
 			System.out.println("Rest addDailyLog  readAssignTask - " + io.getMessage());
@@ -100,22 +98,22 @@ public class DailyLogService {
 		return dailylog_id;
 	}
 
-	public List<DailyLogDTO> refresDailyListReport() {
-		List<DailyLogDTO> lists = (jdbcDailyLogRepository.getAllDailyLogDTO());
-
-		ResourceLoader resourceLoader = new FileSystemResourceLoader();
-		Resource resource = resourceLoader
-				.getResource(applicationProperties.getProperty(Constants.JSON_FILES.dailylogs_filename.name()));
-		String list = CommonUtilities.convertToJSON(lists);
-
-		try {
-			WriteJSONToFile.getInstance().write(resource, list);
-			return lists;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return lists;
-	}
+//	public List<DailyLogDTO> refresDailyListReport() {
+//		List<DailyLogDTO> lists = (jdbcDailyLogRepository.getAllDailyLogDTO());
+//
+//		ResourceLoader resourceLoader = new FileSystemResourceLoader();
+//		Resource resource = resourceLoader
+//				.getResource(applicationProperties.getProperty(Constants.JSON_FILES.dailylogs_filename.name()));
+//		String list = CommonUtilities.convertToJSON(lists);
+//
+//		try {
+//			WriteJSONToFile.getInstance().write(resource, list);
+//			return lists;
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		return lists;
+//	}
 
 	public List<UsersDTO> getRealName() {
 
@@ -181,18 +179,13 @@ public class DailyLogService {
 	}
 
 	public List<DailyLogDTO> fetchDailyLog(String title) throws IOException {
-		System.out.println("Rest fetchDailyLog title " + title);
 
 		List<DailyLogDTO> lists = jdbcDailyLogRepository.getDailyLogDTOByTitle(title);
-		System.out.println("Rest fetchDailyLog lists.size() " + lists.size());
-
 		List<DailylogTable> dailylogTables = null;
-		System.out.println("Rest readAssignTask lists.size() " + lists.size());
 
 		if (lists != null && lists.size() > 0) {
 			dailylogTables = ObjectMapper.mapToDailyLogTable(lists);
 		}
-		System.out.println("Rest fetchDailyLog dailylogTables.size() " + dailylogTables.size());
 
 		ResourceLoader resourceLoader = new FileSystemResourceLoader();
 		Resource resource = resourceLoader
@@ -209,11 +202,13 @@ public class DailyLogService {
 		return lists;
 	}
 
+//	get Dailylog dto by  description and id
 	public DailyLogDTO getDailLogbyDescriptionAndId(String description, int id) {
 		DailyLogDTO dailyLogDTO = (jdbcDailyLogRepository.findDailyLogDTOByIdAndDescription(description, id));
 		return dailyLogDTO;
 	}
-
+	
+//	delete Dailylog by assigntaskid
 	public void deleteDailyLogs( int assign_task_id) {
 		jdbcDailyLogRepository.deleteDailyLog(assign_task_id);
 	}

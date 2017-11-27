@@ -75,13 +75,11 @@ public class DailyLogController {
 	DataSource conn;
 	/**
 	 * 
-	 * 
-	 * @param model
+	 * send dailylog object to page
+	 * @param description,id,assign_task_title
 	 * @param request
 	 * @return
 	 */
-
-	
 	@RequestMapping(value = "/adddailylog", method = RequestMethod.GET)
 	public String addDailyLogForm(@RequestParam("description")
 	String description,@RequestParam("id") int id,@RequestParam("assign_task_title")String assign_task_title,ModelMap model, HttpServletRequest request) {
@@ -89,15 +87,10 @@ public class DailyLogController {
 		description =description.replace("%20", " ");
 		assign_task_title =assign_task_title.replace("%20", " ");
 		
-		
 		DailyLogDTO dailyLogDTO=dailyLogService.getDailLogbyDescriptionAndId(description,id);
 		dailyLogDTO.setAssign_task_title(assign_task_title);
-		System.out.println("addDailyLogForm ======= dailyLogDTO after==============="+dailyLogDTO.toString()+"\n\n\n");
-		
 		
 		DailyLog dailylogs=ObjectMapper.mapToDailyLog(dailyLogDTO);
-		System.out.println("addDailyLogForm ======= dailylogs after==============="+dailylogs.toString()+"\n\n\n");
-		
 		
 		String str_shift = applicationProperties.getProperty(Constants.TYPES_ARRAY.shift.name());
 		String str_jobtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.jobtype.name());
@@ -108,7 +101,7 @@ public class DailyLogController {
 		
 		List<BuDTO> listOfBuDTO = userService.getAllBus();
 		
-		// Adding data to list from RolesDTO
+		// Adding data to list from BuDTO
 		List<String> busList = new ArrayList<String>();
 		for (BuDTO bu : listOfBuDTO) {
 			busList.add(bu.getBu_name());
@@ -163,7 +156,7 @@ public class DailyLogController {
 
 	/**
 	 * 
-	 * 
+	 * Saving  dailylog
 	 * @param user
 	 * @param result
 	 * @param model
@@ -190,10 +183,6 @@ public class DailyLogController {
 					String str_recordtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.recordtype.name());
 					String str_status = applicationProperties.getProperty(Constants.TYPES_ARRAY.status.name());
 
-					System.out.println("controller===== str_jobtype- " + str_jobtype.toString());
-					System.out.println("controller===== recordtype- " + str_recordtype.toString());
-					System.out.println("controller===== str_status- " + str_status.toString());
-
 					List<String> jobtype=Arrays.asList(str_jobtype.split(","));
 					List<String> recordtype=Arrays.asList(str_recordtype.split(","));
 					List<String> status=Arrays.asList(str_status.split(","));
@@ -205,8 +194,7 @@ public class DailyLogController {
 						usersList.add(user.getRealname());
 					}
 					populateUsersListInJson(usersList);
-					
-					
+										
 					List<BuDTO> listOfBuDTO = userService.getAllBus();
 
 					// Adding data to list from RolesDTO
@@ -229,8 +217,8 @@ public class DailyLogController {
 			{
 
 				AssignTaskDTO dto=jdbcAssignTaskRepository.findAssignTaskDTOTitlte(dailylogs.getAssign_task_title());
-				System.out.println("\n \n updateAssigntask dto == "+dto.toString()+"\n \n");
 				dailylogs.setAssign_task_id(dto.getId());
+				
 				int id =dailyLogService.addDailyLog(dailylogs);
 				dailylogs.setId(id);
 				
@@ -256,20 +244,7 @@ public class DailyLogController {
 			throw new CustomGenericException(applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.something_went_wrong.name()));	
 		}
 	}
-	/**
-	 * 
-	 * @param model
-	 * @param request
-	 * @return
-	 * @throws IOException
-	 */
-/*	@RequestMapping(value = "/dailyloglist", method = RequestMethod.GET)
-	public String dailylogslist(Model model, HttpServletRequest request) throws IOException {
-		System.out.println("dailylogslist - " );
-		dailyLogService.refresDailyListReport();
-	
-		return "dailyloglist";
-	}*/
+
 	 /**
      * Handle request to download an Excel document
      */
@@ -327,6 +302,13 @@ public class DailyLogController {
 		}
 */		return null;
     }
+	/**
+	 * showList of Dailylogs
+	 * @param title
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
     
 	@RequestMapping(value = "/dailyloglist", method = RequestMethod.GET)
 	public String showList(@RequestParam("title") String title,Model model, HttpServletRequest request) throws IOException {
