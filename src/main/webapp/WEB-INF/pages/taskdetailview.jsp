@@ -116,12 +116,14 @@
 						<div class="box">
 						<c:forEach items="${updatedbyDTOs}" var="updatedbyDTO" varStatus="loop">
 					
-					<div class="top" id="${updatedbyDTO.id}"><c:out value="${updatedbyDTO.id}"></c:out>
+					<div class="top" id="top_${updatedbyDTO.id}">
+					<c:out value="${updatedbyDTO.id}"></c:out>
+					<a data-id="top_${updatedbyDTO.id}" href="#">
 					<c:out value="${updatedbyDTO.updaterby_realname}"></c:out>
 					<c:out value="${updatedbyDTO.updated_time}"></c:out>
-					<a data-id="${updatedbyDTO.id}" href="#">Allocate</a>
+					</a>
 					</div>
-					<div class="bottom" id="${updatedbyDTO.id}">
+					<div class="bottom" id="bottom_${updatedbyDTO.id}">
 					
 					
 					

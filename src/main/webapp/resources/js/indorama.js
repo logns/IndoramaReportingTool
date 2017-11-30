@@ -692,11 +692,19 @@ $(document)
               $("[data-id]").click(function(){
             	  var id = $(this).data("id");
                   console.log("data --- id - " + id);
-                  
-            		$parent_box = $(this).closest('.box');
-            		$parent_box.siblings().find('.bottom').slideUp();
-            		$parent_box.find('.bottom').slideToggle(1000, 'swing');
-            	  alert(id);
+                  var fields = id.split('_');
+
+                  console.log("data --- fields - " + fields);
+                  var pre = fields[0];
+                  var postId = fields[1];
+
+                  console.log("data --- pre - " + pre);
+                  console.log("data --- postId - " + postId);
+                  var bottom_id = "bottom_"+postId;
+                  console.log("data --- bottom_id - " + bottom_id);
+                  $("#"+bottom_id).toggle();
+            	
+//            	  alert(id);
             	});
              /* $('.top').on('click', function() {
             		$parent_box = $(this).closest('.box');
