@@ -673,6 +673,7 @@ $(document)
                       event.preventDefault();
                   });
 //              GOING BACK  TO DASHBOARD
+              
               $('#taskcancel').click(
                       function(event) {
                           window.location.href = "http://localhost:8080/dashboard";
@@ -688,9 +689,30 @@ $(document)
             	});
               
 //              show hide 
-              $('.top').on('click', function() {
+              $("[data-id]").click(function(){
+            	  var id = $(this).data("id");
+                  console.log("data --- id - " + id);
+                  
             		$parent_box = $(this).closest('.box');
             		$parent_box.siblings().find('.bottom').slideUp();
             		$parent_box.find('.bottom').slideToggle(1000, 'swing');
+            	  alert(id);
             	});
+             /* $('.top').on('click', function() {
+            		$parent_box = $(this).closest('.box');
+            		$parent_box.siblings().find('.bottom').slideUp();
+            		$parent_box.find('.bottom').slideToggle(1000, 'swing');
+            	});*/
+              
+              
+              $('#newdailylog').click(
+                      function(event) {
+                          window.location.href = "http://localhost:8080/adddailylog";
+                          event.preventDefault();
+                      });
+           /*   $(document).ready(function(){
+            	    $(".btn").click(function(){
+            	        $("#toggle-example").collapse('toggle');
+            	    });
+            	});*/
  }); //end of document jQuery

@@ -36,6 +36,7 @@ import com.lognsys.dao.dto.AssignTaskDTO;
 import com.lognsys.dao.dto.AssignTaskDailylogDTO;
 import com.lognsys.dao.dto.BuDTO;
 import com.lognsys.dao.dto.DailyLogDTO;
+import com.lognsys.dao.dto.UpdatedbyDTO;
 import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.exception.CustomGenericException;
 import com.lognsys.model.DailyLog;
@@ -428,8 +429,15 @@ public class AssignTaskController {
 				System.out.println("\n showList taskdetailview title " +title);
 				
 					AssignTaskDTO assignTaskDTO=assignTaskService.getAssigntDTObyTitle(title);
+					List<UpdatedbyDTO> updatedbyDTOs=new ArrayList<UpdatedbyDTO>();
+					updatedbyDTOs.add(new UpdatedbyDTO(1, "Priyank Doshi", "1 min ago"));
+					updatedbyDTOs.add(new UpdatedbyDTO(2, "Pradeep", "1 day ago"));
+					updatedbyDTOs.add(new UpdatedbyDTO(3, "Monika Sharma", "1 min ago"));
+					
+					
 					System.out.println("\n showList taskdetailview assignTaskDTO toString " +assignTaskDTO.toString());
 					
+					//					FOR UPDATED BY TEXT
 					Hashtable<String, String> hashtable=assignTaskService.getHashUpdatedby();
 					ArrayList<UpdateAssignedCount> arrayList=new ArrayList<>();
 					if(hashtable !=null && hashtable.size()>0){
@@ -482,7 +490,7 @@ public class AssignTaskController {
 					
 					AssignTaskDailylogDTO atdl = new AssignTaskDailylogDTO();
 					atdl.setAssignTaskDTO(assignTaskDTO);
-					
+					atdl.setUpdatedbyDTO((ArrayList<UpdatedbyDTO>) updatedbyDTOs);
 					model.addAttribute("atdl", atdl);
 					model.addAttribute("jobtype", jobtype);
 					model.addAttribute("recordtype", recordtype);	
@@ -492,6 +500,7 @@ public class AssignTaskController {
 					model.addAttribute("done_percentage", done_percentage);
 					model.addAttribute("busList", busList);
 					model.addAttribute("usersList", usersList);
+					model.addAttribute("updatedbyDTOs", updatedbyDTOs);
 
 				return "taskdetailview";
 			}
@@ -509,6 +518,7 @@ public class AssignTaskController {
 			@RequestMapping(value = "/taskdetailview", method = RequestMethod.POST)
 			public String saveTaskdetailForm(@ModelAttribute("atdl") AssignTaskDailylogDTO atdldto, BindingResult result, ModelMap model) throws IOException {
 				boolean error=false;
+				System.out.println("\n saveTaskdetailForm atdldto.toString \n \n " +atdldto.toString());
 				
 //				validating
 				FormValidator formValidator = new FormValidator();

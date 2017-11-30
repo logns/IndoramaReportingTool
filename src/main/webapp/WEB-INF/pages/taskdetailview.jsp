@@ -1,4 +1,9 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ page language="java" contentType="text/html; charset=US-ASCII"
+    pageEncoding="US-ASCII"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <div style="overflow: scroll;">
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
@@ -92,10 +97,34 @@
 						</div>
 					</fieldset>
 					<br />
+					<%-- 
 					<div class="container col-sm-12">
+					<div class="box">
+					<div class="top"><c:forEach items="${updatedbyDTOs}" var="updatedbyDTO">
+					
+					<c:out value="${updatedbyDTO.id}"></c:out>
+					<c:out value="${updatedbyDTO.updaterby_realname}"></c:out>
+					<c:out value="${updatedbyDTO.updated_time}"></c:out>
+					</c:forEach>
+					</div>
+					</div>
+					
+					</div> --%>
+
+					<div class="container col-sm-12"  id="warehouseValue">
+					
 						<div class="box">
-							<div class="top">New DailyLog</div>
-							<div class="bottom">
+						<c:forEach items="${updatedbyDTOs}" var="updatedbyDTO" varStatus="loop">
+					
+					<div class="top" id="${updatedbyDTO.id}"><c:out value="${updatedbyDTO.id}"></c:out>
+					<c:out value="${updatedbyDTO.updaterby_realname}"></c:out>
+					<c:out value="${updatedbyDTO.updated_time}"></c:out>
+					<a data-id="${updatedbyDTO.id}" href="#">Allocate</a>
+					</div>
+					<div class="bottom" id="${updatedbyDTO.id}">
+					
+					
+					
 								<fieldset class="the-fieldset">
 									<legend class="the-legend">Daily Logs Details</legend>
 									<div class="col-sm-6 form-group">
@@ -182,7 +211,100 @@
 									</div>
 								</fieldset>
 							</div>
-						</div>
+					</c:forEach>
+					</div>
+							
+							<%-- <div class="bottom">
+					
+					
+					
+								<fieldset class="the-fieldset">
+									<legend class="the-legend">Daily Logs Details</legend>
+									<div class="col-sm-6 form-group">
+										<label>Shift</label>
+										<form:select path="dailylogDTO.shift"
+											class="form-control text ui-widget-content ui-corner-all">
+											<form:options id="shift" items="${shift}"></form:options>
+										</form:select>
+									</div>
+									<br />
+									<div class="col-sm-12 form-group">
+										<label>Machine</label>
+										<form:textarea id="machine"
+											placeholder="Enter Machine details Here.." rows="2"
+											class="form-control text ui-widget-content ui-corner-all"
+											path="dailylogDTO.machine" />
+									</div>
+									<div class="col-sm-12 form-group">
+										<label>Problem Description</label>
+										<form:textarea id="description"
+											placeholder="Enter Description details Here.." rows="2"
+											class="form-control text ui-widget-content ui-corner-all"
+											path="dailylogDTO.description" />
+									</div>
+									<div class="col-sm-6 form-group">
+										<label>Time From</label>
+										<div class="input-group bootstrap-timepicker timepicker">
+											<form:input id="timepicker1" type="text"
+												class="form-control input-small" path="dailylogDTO.timefrom" />
+											<span class="input-group-addon"><i
+												class="glyphicon glyphicon-time"></i></span>
+										</div>
+									</div>
+									<div class="col-sm-6 form-group">
+										<label>Time To</label>
+										<div class="input-group bootstrap-timepicker timepicker">
+											<form:input id="timepicker2" type="text"
+												class="form-control input-small" path="dailylogDTO.timeto" />
+											<span class="input-group-addon"><i
+												class="glyphicon glyphicon-time"></i></span>
+										</div>
+									</div>
+									<div class="col-sm-12 form-group">
+										<label>Spare Parts</label>
+										<form:textarea id="spare_parts"
+											placeholder="Enter Spare parts details Here.." rows="1"
+											class="form-control text ui-widget-content ui-corner-all"
+											path="dailylogDTO.spare_parts" />
+									</div>
+									<div class="col-sm-6 form-group">
+										<label>Attend By</label>
+										
+										<form:input path="dailylogDTO.attendby" id="attendby"
+											class="form-control text ui-widget-content ui-corner-all" />
+
+									</div>
+									<div class="col-sm-6 form-group">
+										<label>Job Type</label>
+										<form:select path="dailylogDTO.jobtype"
+											class="form-control text ui-widget-content ui-corner-all">
+											<form:options id="jobtype" items="${jobtype}"></form:options>
+										</form:select>
+									</div>
+									<div class="col-sm-6 form-group">
+										<label>Business Unit</label>
+										<form:select path="dailylogDTO.bu"
+											class="form-control text ui-widget-content ui-corner-all">
+											<form:options id="bu" items="${busList}"></form:options>
+										</form:select>
+									</div>
+									<div class="col-sm-6 form-group">
+										<label>Records Type</label>
+										<form:select path="dailylogDTO.recordtype"
+											class="form-control text ui-widget-content ui-corner-all">
+											<form:options id="recordtype" items="${recordtype}"></form:options>
+										</form:select>
+									</div>
+									<div class="col-sm-6 form-group">
+										<label>Status</label>
+										<form:select path="dailylogDTO.status"
+											class="form-control text ui-widget-content ui-corner-all">
+											<form:options id="status" items="${status}"></form:options>
+										</form:select>
+									</div>
+								</fieldset>
+							</div>
+	 --%>					
 					</div>
 					<form:button type="submit" class="btn btn-lg btn-info">Submit</form:button>
 				</div>

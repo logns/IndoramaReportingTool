@@ -1,5 +1,7 @@
 package com.lognsys.dao.dto;
 
+import java.util.ArrayList;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
@@ -11,6 +13,9 @@ public class AssignTaskDailylogDTO {
 
 	@DBRef
 	private DailyLogDTO dailylogDTO;
+	
+	@DBRef
+	private ArrayList<UpdatedbyDTO> updatedbyDTO;
 
 	@DBRef
 	private AssignTaskDTO assignTaskDTO;
@@ -20,11 +25,12 @@ public class AssignTaskDailylogDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public AssignTaskDailylogDTO(int id, DailyLogDTO dailylogDTO, AssignTaskDTO assignTaskDTO) {
+	public AssignTaskDailylogDTO(int id, DailyLogDTO dailylogDTO, AssignTaskDTO assignTaskDTO,ArrayList<UpdatedbyDTO> updatedbyDTO) {
 		super();
 		this.id = id;
 		this.dailylogDTO = dailylogDTO;
 		this.assignTaskDTO = assignTaskDTO;
+		this.updatedbyDTO = updatedbyDTO;
 	}
 
 	public int getId() {
@@ -49,6 +55,15 @@ public class AssignTaskDailylogDTO {
 
 	public void setAssignTaskDTO(AssignTaskDTO assignTaskDTO) {
 		this.assignTaskDTO = assignTaskDTO;
+	}
+
+	
+	public ArrayList<UpdatedbyDTO> getUpdatedbyDTO() {
+		return updatedbyDTO;
+	}
+
+	public void setUpdatedbyDTO(ArrayList<UpdatedbyDTO> updatedbyDTO) {
+		this.updatedbyDTO = updatedbyDTO;
 	}
 
 	@Override

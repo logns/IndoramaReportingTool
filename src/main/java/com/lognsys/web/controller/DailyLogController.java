@@ -81,10 +81,12 @@ public class DailyLogController {
 	 * @return
 	 */
 	@RequestMapping(value = "/adddailylog", method = RequestMethod.GET)
-	public String addDailyLogForm(@RequestParam("description")
-	String description,@RequestParam("id") int id,@RequestParam("assign_task_title")String assign_task_title,ModelMap model, HttpServletRequest request) {
+	public String addDailyLogForm(@RequestParam("title") String title,Model model, HttpServletRequest request) throws IOException {
+		
+//		System.out.println("\n addDailyLogForm  id \n \n " +id);
+		System.out.println("\n addDailyLogForm  title \n \n " +title);
 
-		description =description.replace("%20", " ");
+		/*description =description.replace("%20", " ");
 		assign_task_title =assign_task_title.replace("%20", " ");
 		
 		DailyLogDTO dailyLogDTO=dailyLogService.getDailLogbyDescriptionAndId(description,id);
@@ -132,7 +134,7 @@ public class DailyLogController {
 		model.addAttribute("done_percentage", done_percentage);
 		model.addAttribute("busList", busList);
 		model.addAttribute("usersList", usersList);
-	
+*/	
 		return "adddailylog";
 	}
 

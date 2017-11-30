@@ -60,6 +60,7 @@ com\lognsys\dao\jdbc\JdbcRolesRepository.class
 com\lognsys\dao\dto\DailyLogUserDTO.class
 com\lognsys\util\Constants$DAILYLOG_QUERIES.class
 com\lognsys\service\StorageService.class
+com\lognsys\dao\dto\UpdatedbyDTO.class
 com\lognsys\model\Roles.class
 com\lognsys\web\controller\BaseController.class
 com\lognsys\util\Constants$USER_QUERIES.class
