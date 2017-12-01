@@ -3,6 +3,7 @@ package com.lognsys.web.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.jsoup.Jsoup;
+import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.FileSystemResourceLoader;
@@ -422,17 +424,20 @@ public class AssignTaskController {
 		}
 		
 		 @RequestMapping(value = "/taskdetailview", method = RequestMethod.GET)
-			public String showList(@RequestParam("title") String title,Model model, HttpServletRequest request) throws IOException {
+			public String showList(@RequestParam("title") String title,@RequestParam("assign_task_id") int assign_task_id,Model model, HttpServletRequest request) throws IOException {
 				System.out.println("\n showList taskdetailview title " +title);
 				
 				title =title.replace("%20", " ");
 				System.out.println("\n showList taskdetailview title " +title);
 				
 					AssignTaskDTO assignTaskDTO=assignTaskService.getAssigntDTObyTitle(title);
+					
 					List<UpdatedbyDTO> updatedbyDTOs=new ArrayList<UpdatedbyDTO>();
-					updatedbyDTOs.add(new UpdatedbyDTO(1, "Priyank Doshi", "1 min ago"));
-					updatedbyDTOs.add(new UpdatedbyDTO(2, "Pradeep", "1 day ago"));
-					updatedbyDTOs.add(new UpdatedbyDTO(3, "Monika Sharma", "1 min ago"));
+
+					PrettyTime p = new PrettyTime();
+					System.out.println(p.format(new Date()));
+					String strDate=p.format(new Date());
+					updatedbyDTOs.add(new UpdatedbyDTO(assignTaskDTO.getId(), "Updated by"+assignTaskDTO.getAssigned_to(),strDate));
 					
 					
 					System.out.println("\n showList taskdetailview assignTaskDTO toString " +assignTaskDTO.toString());
@@ -491,6 +496,14 @@ public class AssignTaskController {
 					AssignTaskDailylogDTO atdl = new AssignTaskDailylogDTO();
 					atdl.setAssignTaskDTO(assignTaskDTO);
 					atdl.setUpdatedbyDTO((ArrayList<UpdatedbyDTO>) updatedbyDTOs);
+					System.out.println("\n showList taskdetailview assign_task_id toString  " +assign_task_id);
+					if(assign_task_id>0){
+						DailyLogDTO dailyLogDTO=dailyLogService.getDailLogbyAssigntaskId(assign_task_id);
+						System.out.println("\n showList taskdetailview DailyLogDTO toString  " +dailyLogDTO.toString());
+						if(dailyLogDTO!=null)
+						atdl.setDailylogDTO(dailyLogDTO);
+						
+					}
 					model.addAttribute("atdl", atdl);
 					model.addAttribute("jobtype", jobtype);
 					model.addAttribute("recordtype", recordtype);	
@@ -516,7 +529,7 @@ public class AssignTaskController {
 			 * @throws IOException 
 			 */
 			@RequestMapping(value = "/taskdetailview", method = RequestMethod.POST)
-			public String saveTaskdetailForm(@ModelAttribute("atdl") AssignTaskDailylogDTO atdldto, BindingResult result, ModelMap model) throws IOException {
+			public String manageTaskdetailForm(@RequestParam String taskAction,@ModelAttribute("atdl") AssignTaskDailylogDTO atdldto, BindingResult result, ModelMap model) throws IOException {
 				boolean error=false;
 				System.out.println("\n saveTaskdetailForm atdldto.toString \n \n " +atdldto.toString());
 				
@@ -568,12 +581,7 @@ public class AssignTaskController {
 					model.addAttribute("done_percentage", done_percentage);
 					model.addAttribute("busList", busList);
 					model.addAttribute("usersList", usersList);
-					
-//					if(isexist==true){
-//						error=isexist;
-//						model.addAttribute("message", "Title already Exist !!");
-//					}
-//					return "addtask";
+				
 				} 
 				else{
 					try {

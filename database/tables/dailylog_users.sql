@@ -8,11 +8,6 @@ CREATE TABLE IF NOT EXISTS `indorama_poly`.`dailylog_users` (
   PRIMARY KEY (`id`),
   INDEX `dailylog_id` (`dailylog_id` ASC),
   INDEX `users_id` (`users_id` ASC),
-  CONSTRAINT `dailylog_users_ibfk_1`
-    FOREIGN KEY (`dailylog_id`)
-    REFERENCES `indorama_poly`.`dailylog` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
   CONSTRAINT `dailylog_users_ibfk_2`
     FOREIGN KEY (`users_id`)
     REFERENCES `indorama_poly`.`users` (`id`)

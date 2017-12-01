@@ -134,8 +134,6 @@ $(document)
                     window.location.href = "http://localhost:8080/register";
                     event.preventDefault();
             				});
-
-
             // Userlist edit function
             $('#useredit').click(
                 function(event) {
@@ -702,8 +700,20 @@ $(document)
                   console.log("data --- postId - " + postId);
                   var bottom_id = "bottom_"+postId;
                   console.log("data --- bottom_id - " + bottom_id);
+                  var assign_task_id;
                   $("#"+bottom_id).toggle();
-            	
+                  $.ajax({
+                      url: "http://localhost:8080/taskdetailview",
+                      data: {
+                          assign_task_id: id
+                      },
+                      success: function (data) {
+                          console.log("response=assign_task_id =", assign_task_id);
+                          
+                          console.log("response= data =", data);
+                           
+                      }
+                  });
 //            	  alert(id);
             	});
              /* $('.top').on('click', function() {
@@ -712,15 +722,77 @@ $(document)
             		$parent_box.find('.bottom').slideToggle(1000, 'swing');
             	});*/
               
-              
+              $.fn.serializeObject = function()
+              {
+              var o = {};
+              var a = this.serializeArray();
+              $.each(a, function() {
+                  if (o[this.name] !== undefined) {
+                      if (!o[this.name].push) {
+                          o[this.name] = [o[this.name]];
+                      }
+                      o[this.name].push(this.value || '');
+                  } else {
+                      o[this.name] = this.value || '';
+                  }
+              });
+              return o;
+              };
+              $(document).ready(function() {
+            	  
+            	  //Stops the submit request
+            	  $("#taskform").submit(function(e) {
+            	    e.preventDefault();
+            	  });
+            	  
+              $('#taskupdate').click(
+                      function(event) {
+                          event.preventDefault();
+                          alert($(this));
+
+                          //get the form data and then serialize that
+                          var json = JSON.parse(JSON.stringify(jQuery('#taskform').serializeArray()));
+
+                          console.log(JSON.stringify(json));
+                        var data =json;
+                          
+                         console.log("DATA POSTED data before"+data);
+                          /*   
+                          
+                          $.ajax({
+                                      url: "http://localhost:8080/taskdetailview",
+                                      dataType: 'json',
+                                      type: 'POST',
+                                      contentType: 'application/json',
+                                      data: JSON.stringify(getFormData(data)),
+                                      success: function(data){
+                                          console.log("DATA POSTED SUCCESSFULLY"+data);
+                                      },
+                                      error: function( jqXhr, textStatus, errorThrown ){
+                                          console.log( errorThrown );
+                                      }
+                          });*/
+                      });
+
+              });
+            //utility function
+            function getFormData(data) {
+               var unindexed_array = data;
+               console.log("DATA POSTED data unindexed_array"+unindexed_array);
+               
+               var indexed_array = {};
+
+               $.map(unindexed_array, function(n, i) {
+                indexed_array[n['name']] = n['value'];
+               });
+               console.log("DATA POSTED  indexed_array  "+indexed_array);
+               
+               return indexed_array;
+            }
               $('#newdailylog').click(
                       function(event) {
                           window.location.href = "http://localhost:8080/adddailylog";
                           event.preventDefault();
                       });
-           /*   $(document).ready(function(){
-            	    $(".btn").click(function(){
-            	        $("#toggle-example").collapse('toggle');
-            	    });
-            	});*/
+           
  }); //end of document jQuery

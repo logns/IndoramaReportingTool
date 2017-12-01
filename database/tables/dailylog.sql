@@ -33,5 +33,6 @@ DEFAULT CHARACTER SET = utf8;
 ALTER TABLE `indorama_poly`.`dailylog` 
 CHANGE COLUMN `attendby` `attendby` VARCHAR(275) NOT NULL DEFAULT '' ;
 
+#adding composite unique key
 ALTER TABLE dailylog ADD UNIQUE dlat_id(id, assign_task_id);
 SHOW INDEXES FROM dailylog;

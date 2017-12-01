@@ -1,4 +1,4 @@
-insert into dailylog_users (users_id, dailylog_id) values(1,1);
+insert into dailylog_users (users_id, dailylog_id) values(1,2);
 insert into dailylog_users (users_id, dailylog_id) values(2,2);
 insert into dailylog_users (users_id, dailylog_id) values(3,3);
 insert into dailylog_users (users_id, dailylog_id) values(4,4);

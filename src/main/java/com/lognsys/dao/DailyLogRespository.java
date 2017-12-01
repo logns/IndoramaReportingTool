@@ -36,6 +36,7 @@ public interface DailyLogRespository {
 	 * @return
 	 */
 	public DailyLogDTO findDailyLogDTOByIdAndDescription(String description,Integer id);
+	public DailyLogDTO findDailyLogDTOByAssigntaskId(Integer assign_task_id);
 	
 	/**
 	 * Delete DailyLogDTO by id

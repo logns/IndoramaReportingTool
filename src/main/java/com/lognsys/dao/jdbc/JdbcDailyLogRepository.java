@@ -119,12 +119,6 @@ public class JdbcDailyLogRepository implements DailyLogRespository {
 	@Override
 	public List<DailyLogDTO> getDailyLogDTOByTitle(String title) {
 		SqlParameterSource parameter = new MapSqlParameterSource("title", title);
-
-	/*	List<DailyLogDTO>  dailyLogDTOs = namedParamJdbcTemplate.query(sqlProperties.getProperty(
-				Constants.DAILYLOG_QUERIES.select_dailylog_by_title.name()),
-				parameter,new BeanPropertyRowMapper<DailyLogDTO>(DailyLogDTO.class));
-		return dailyLogDTOs;*/
-
 		return namedParamJdbcTemplate.query(
 				sqlProperties.getProperty(Constants.DAILYLOG_QUERIES.select_dailylog_by_title.name()), parameter,
 				new DailyLogResultSetExtractor());
@@ -140,7 +134,6 @@ public class JdbcDailyLogRepository implements DailyLogRespository {
 		return namedParamJdbcTemplate.queryForObject(
 				sqlProperties.getProperty(Constants.DAILYLOG_QUERIES.select_description_and_id.name()), parameter,
 				new DailyLogByDescriptionAndIDRowMapper());
-
 	}
 
 
@@ -150,6 +143,17 @@ public class JdbcDailyLogRepository implements DailyLogRespository {
 		SqlParameterSource parameter = new MapSqlParameterSource().addValue("assign_task_id", assign_task_id);
 		return namedParamJdbcTemplate.update(sqlProperties.getProperty(Constants.DAILYLOG_QUERIES.delete_by_assign_task_id.name()),
 				parameter) == 1;
+	}
+
+
+
+	@Override
+	public DailyLogDTO findDailyLogDTOByAssigntaskId(Integer assign_task_id) {
+		SqlParameterSource parameter = new MapSqlParameterSource().addValue("assign_task_id", assign_task_id);
+		
+		return namedParamJdbcTemplate.queryForObject(
+				sqlProperties.getProperty(Constants.DAILYLOG_QUERIES.select_assigntask_id.name()), parameter,
+				new DailyLogByDescriptionAndIDRowMapper());
 	}
 
 	

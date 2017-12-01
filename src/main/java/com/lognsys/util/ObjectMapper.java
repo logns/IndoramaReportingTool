@@ -63,7 +63,7 @@ public class ObjectMapper {
 	public static List<AssignTaskTable> mapToAssignTaskTable(List<AssignTaskDTO> assignTaskTables) {
 		List<AssignTaskTable> list = new ArrayList<>();
 		for (AssignTaskDTO ubu : assignTaskTables) {
-			list.add(new AssignTaskTable(ubu.getId(), convertToAnchorTagString(ubu.getTitle()), ubu.getAssigned_to(),
+			list.add(new AssignTaskTable(ubu.getId(), convertToAnchorTagString(ubu.getTitle(),ubu.getId()), ubu.getAssigned_to(),
 					ubu.getPriority(), ubu.getTarget_date(), ubu.getDone_percentage()));
 		}
 		return list;
@@ -105,12 +105,11 @@ public class ObjectMapper {
 	}
 
 
-	public static String convertToAnchorTagString(String title) {
+	public static String convertToAnchorTagString(String title,int assign_task_id) {
 
-		System.out.println("convertToAnchorTagString ======= title ===============" + title + "\n\n\n");
 //		String titles = "<a href=" + "http://localhost:8080/dailyloglist?title=" + title.replace(" ", "%20") + " >"
 //				+ title + "</a>";
-		String titles = "<a href=" + "http://localhost:8080/taskdetailview?title=" + title.replace(" ", "%20") + " >"
+		String titles = "<a href=" + "http://localhost:8080/taskdetailview?title=" + title.replace(" ", "%20") +"&assign_task_id="+assign_task_id+ " >"
 				+ title + "</a>";
 
 		System.out.println("convertToAnchorTagString ======= titles ===============" + titles + "\n\n\n");

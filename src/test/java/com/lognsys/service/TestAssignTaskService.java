@@ -84,7 +84,7 @@ public class TestAssignTaskService {
 	public void addDailyLog(){
 
 		DailyLog dldto = new DailyLog();
-		dldto.setAssign_task_id(40);
+		dldto.setAssign_task_id(57);
 		dldto.setTarget_date("2018-09-09");
 		dldto.setShift("Morning");
 		dldto.setMachine("M1");
@@ -114,7 +114,7 @@ public class TestAssignTaskService {
 	@Test
 	public void removeAssignTask() throws IOException {
 	
-		int[] ids={1,2};
+		int[] ids={57,58};
 		assignTaskService.removeAssignTask(ids);
 	
 	}

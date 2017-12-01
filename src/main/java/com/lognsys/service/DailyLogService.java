@@ -207,7 +207,13 @@ public class DailyLogService {
 		DailyLogDTO dailyLogDTO = (jdbcDailyLogRepository.findDailyLogDTOByIdAndDescription(description, id));
 		return dailyLogDTO;
 	}
-	
+
+//	get Dailylog dto by  assigntask and assignby
+	public DailyLogDTO getDailLogbyAssigntaskId(int assign_task_id) {
+		
+		DailyLogDTO dailyLogDTO = (jdbcDailyLogRepository.findDailyLogDTOByAssigntaskId(assign_task_id));
+		return dailyLogDTO;
+	}
 //	delete Dailylog by assigntaskid
 	public void deleteDailyLogs( int assign_task_id) {
 		jdbcDailyLogRepository.deleteDailyLog(assign_task_id);

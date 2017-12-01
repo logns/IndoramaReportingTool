@@ -86,7 +86,7 @@ public class TestDailyLogService {
 	@Test
 	public void addDailyLog() throws IOException {
 		DailyLog dldto=new DailyLog();
-		dldto.setAssign_task_id(40);
+		dldto.setAssign_task_id(57);
 		dldto.setTarget_date("2018-09-09");
 		dldto.setShift("Morning");
 		dldto.setMachine("M1");
@@ -144,8 +144,8 @@ public class TestDailyLogService {
 
 	@Test
 	public void getDailLogbyDescriptionAndId() {
-		String description="sdsd";
-		int id=40;
+		String description="test";
+		int id=57;
 		DailyLogDTO dailyLogDTO = (jdbcDailyLogRepository.findDailyLogDTOByIdAndDescription(description, id));
 		Assert.notNull(dailyLogDTO, "Check list of dailyLogDTO NOT NULL");
 

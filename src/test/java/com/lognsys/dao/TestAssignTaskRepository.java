@@ -70,8 +70,8 @@ public class TestAssignTaskRepository {
 		int assignTask_id;
 		int dailylog_id;
 		
-		assignTask_id =40;
-		dailylog_id=40;
+		assignTask_id =57;
+		dailylog_id=79;
 		int assignDailyLog_id=jdbcAssignTaskRepository.addAssignTask_DailyLog(assignTask_id, dailylog_id);
 		Assert.notNull(assignTask_id, "Check list of assignTask_id NOT NULL");
 		Assert.notNull(dailylog_id, "Check list of dailylog_id NOT NULL");
@@ -99,7 +99,7 @@ public class TestAssignTaskRepository {
 	 */
 	@Test
 	public void findAssignTaskDTOId(){
-		AssignTaskDTO assignTaskDTO= jdbcAssignTaskRepository.findAssignTaskDTOId(40);
+		AssignTaskDTO assignTaskDTO= jdbcAssignTaskRepository.findAssignTaskDTOId(57);
 		Assert.notNull(assignTaskDTO, "Check list of assignTaskDTO NOT NULL");
 	}
 
@@ -121,7 +121,7 @@ public class TestAssignTaskRepository {
 	 */
 	@Test
 	public void deleteAssignTaskDTOBy(){
-		boolean isDelete = jdbcAssignTaskRepository.deleteAssignTaskDTOBy(40);
+		boolean isDelete = jdbcAssignTaskRepository.deleteAssignTaskDTOBy(57);
 		Assert.isTrue(isDelete, "Check list of deleteAssignTaskDTOBy ");
 	}
 
@@ -134,7 +134,7 @@ public class TestAssignTaskRepository {
 	public void updateAssignTaskDTO(){
 		AssignTaskDTO assignTaskDTO = new AssignTaskDTO();
 		assignTaskDTO.setTitle("Testing_five");
-		assignTaskDTO.setId(40);
+		assignTaskDTO.setId(57);
 		boolean isDelete = jdbcAssignTaskRepository.updateAssignTaskDTO(assignTaskDTO);
 
 		Assert.isTrue(isDelete, "Check list of deleteAssignTaskDTOBy ");

@@ -55,7 +55,8 @@ public class Constants {
 		insert_dailylog_users,
 		select_dailylogs_all,
 		select_description_and_id,
-		delete_by_assign_task_id
+		delete_by_assign_task_id,
+		select_assigntask_id
 	
 	}
 	public enum ASSIGN_TASK_QUERIES {
