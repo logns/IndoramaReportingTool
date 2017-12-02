@@ -691,7 +691,10 @@ $(document)
             	  var id = $(this).data("id");
                   console.log("data --- id - " + id);
                   var fields = id.split('_');
-
+                  
+                  var title = jQuery("textarea#title").val();
+                 
+                  
                   console.log("data --- fields - " + fields);
                   var pre = fields[0];
                   var postId = fields[1];
@@ -700,81 +703,77 @@ $(document)
                   console.log("data --- postId - " + postId);
                   var bottom_id = "bottom_"+postId;
                   console.log("data --- bottom_id - " + bottom_id);
-                  var assign_task_id;
+                
                   $("#"+bottom_id).toggle();
                   $.ajax({
                       url: "http://localhost:8080/taskdetailview",
                       data: {
-                          assign_task_id: id
+                          assign_task_id: postId,
+                          title:title
                       },
                       success: function (data) {
-                          console.log("response=assign_task_id =", assign_task_id);
-                          
-                          console.log("response= data =", data);
-                           
+                    	  console.log("response=data =", data);
+                          console.log("response=postId =", postId);
+                               console.log("response=title =", title);
                       }
                   });
 //            	  alert(id);
             	});
+              
+//              show hide 
+              $("[data-bid]").click(
+            	   function(event) {
+            	  var id =$(this).attr('id');
+                  console.log("data --- id - " + id);
+                  
+//            	  alert(id);
+            	
+                  //get the form data and then serialize that
+                  var json = JSON.parse(JSON.stringify(jQuery('#taskform').serializeObject()));
+
+                  console.log(JSON.stringify(json));
+                  var params = {
+                          "taskIds": JSON.stringify(json)
+                      }
+                  
+                  $.ajax({
+                              url: '/taskdetailview',
+                              dataType: 'json',
+                              type: 'POST',
+                              contentType: 'application/json; charset=utf-8',
+                              data: JSON.stringify(params),
+                              success: function(data){
+                                  console.log("DATA POSTED SUCCESSFULLY"+data);
+                              }
+                              
+                  });
+
+                  event.preventDefault();
+            	});
+              
+              
              /* $('.top').on('click', function() {
             		$parent_box = $(this).closest('.box');
             		$parent_box.siblings().find('.bottom').slideUp();
             		$parent_box.find('.bottom').slideToggle(1000, 'swing');
             	});*/
-              
               $.fn.serializeObject = function()
               {
-              var o = {};
-              var a = this.serializeArray();
-              $.each(a, function() {
-                  if (o[this.name] !== undefined) {
-                      if (!o[this.name].push) {
-                          o[this.name] = [o[this.name]];
+                  var o = {};
+                  var a = this.serializeArray();
+                  $.each(a, function() {
+                      if (o[this.name] !== undefined) {
+                          if (!o[this.name].push) {
+                              o[this.name] = [o[this.name]];
+                          }
+                          o[this.name].push(this.value || '');
+                      } else {
+                          o[this.name] = this.value || '';
                       }
-                      o[this.name].push(this.value || '');
-                  } else {
-                      o[this.name] = this.value || '';
-                  }
-              });
-              return o;
+                  });
+                  return o;
               };
-              $(document).ready(function() {
-            	  
-            	  //Stops the submit request
-            	  $("#taskform").submit(function(e) {
-            	    e.preventDefault();
-            	  });
-            	  
-              $('#taskupdate').click(
-                      function(event) {
-                          event.preventDefault();
-                          alert($(this));
-
-                          //get the form data and then serialize that
-                          var json = JSON.parse(JSON.stringify(jQuery('#taskform').serializeArray()));
-
-                          console.log(JSON.stringify(json));
-                        var data =json;
-                          
-                         console.log("DATA POSTED data before"+data);
-                          /*   
-                          
-                          $.ajax({
-                                      url: "http://localhost:8080/taskdetailview",
-                                      dataType: 'json',
-                                      type: 'POST',
-                                      contentType: 'application/json',
-                                      data: JSON.stringify(getFormData(data)),
-                                      success: function(data){
-                                          console.log("DATA POSTED SUCCESSFULLY"+data);
-                                      },
-                                      error: function( jqXhr, textStatus, errorThrown ){
-                                          console.log( errorThrown );
-                                      }
-                          });*/
-                      });
-
-              });
+              
             //utility function
             function getFormData(data) {
                var unindexed_array = data;

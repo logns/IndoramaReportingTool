@@ -29,9 +29,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.lognsys.dao.dto.AssignTaskDTO;
@@ -296,8 +298,10 @@ public class AssignTaskController {
 		 */
 		@RequestMapping(value = "/assigntasklist", method = RequestMethod.POST)
 		public String manageTask(Model model, @RequestParam(value = "taskIds", required = false) String taskIds,
-				@RequestParam String taskAction) throws IOException {
-			switch (taskAction) {
+				 @RequestParam String taskAction) throws IOException {
+			System.out.println("\n \n manageTask taskAction===== "+taskAction);
+			System.out.println("\n \n manageTask  taskIds===== "+ taskIds);
+						switch (taskAction) {
 			case "delete":
 				JSONParser parser = new JSONParser();
 				try {
@@ -422,189 +426,122 @@ public class AssignTaskController {
 				throw new CustomGenericException(applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.something_went_wrong.name()));	
 			}
 		}
-		
+		@RequestMapping(value = { "/taskdetailview" }, method = RequestMethod.POST)
+		public @ResponseBody String editAssignDailyLog(@RequestBody String taskIds, HttpServletRequest request) throws IOException {
+			try {
+				System.out.println("\n editAssignDailyLog taskdetailview taskIds ------------------------ " +taskIds.toString());
+			
+				/*assignTaskService.updateAssigntask(assignTaskDailylogDTO);*/
+				return "taskdetailview";
+			} catch (Exception e) {
+				System.out.println("\n Exception /taskdetailview \n \n " +e.toString());
+				throw new CustomGenericException(applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.something_went_wrong.name()));	
+			}
+		}
 		 @RequestMapping(value = "/taskdetailview", method = RequestMethod.GET)
-			public String showList(@RequestParam("title") String title,@RequestParam("assign_task_id") int assign_task_id,Model model, HttpServletRequest request) throws IOException {
-				System.out.println("\n showList taskdetailview title " +title);
+			public String showList(@RequestParam("title") String title,@RequestParam("assign_task_id") int assign_task_id,Model model, HttpServletRequest request,
+					@RequestParam(value = "taskIds", required = false) String taskIds) throws IOException {
+				try {
+					
+					System.out.println("\n showList taskdetailview assign_task_id ------------------------ " +assign_task_id);
+					System.out.println("\n showList taskdetailview taskIds ------------------------ " +taskIds);
+					
+					title =title.replace("%20", " ");
+					System.out.println("\n showList taskdetailview title " +title);
+					
+						AssignTaskDTO assignTaskDTO=assignTaskService.getAssigntDTObyTitle(title);
+						
+						List<UpdatedbyDTO> updatedbyDTOs=new ArrayList<UpdatedbyDTO>();
+
+						PrettyTime p = new PrettyTime();
+						System.out.println(p.format(new Date()));
+						String strDate=p.format(new Date());
+						updatedbyDTOs.add(new UpdatedbyDTO(assignTaskDTO.getId(), "Updated by"+assignTaskDTO.getAssigned_to(),strDate));
+						
+						
+						System.out.println("\n showList taskdetailview assignTaskDTO toString " +assignTaskDTO.toString());
+						
+						//					FOR UPDATED BY TEXT
+						Hashtable<String, String> hashtable=assignTaskService.getHashUpdatedby();
+						ArrayList<UpdateAssignedCount> arrayList=new ArrayList<>();
+						if(hashtable !=null && hashtable.size()>0){
+							Enumeration e = hashtable.keys();
+						    while (e.hasMoreElements()) {
+						    	UpdateAssignedCount updateAssignedCount=new UpdateAssignedCount();
+						    String key = (String) e.nextElement();
+						      System.out.println(key + " : " + hashtable.get(key));
+						      updateAssignedCount.setUpdatedDates(key);
+						      updateAssignedCount.setAssignedTo(hashtable.get(key));
+						      arrayList.add(updateAssignedCount);
+						    }
+						    System.out.println(arrayList.size());
+							
+						}
+							   
+						
+						String str_shift = applicationProperties.getProperty(Constants.TYPES_ARRAY.shift.name());
+						String str_jobtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.jobtype.name());
+						String str_recordtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.recordtype.name());
+						String str_status = applicationProperties.getProperty(Constants.TYPES_ARRAY.status.name());
+						String str_priority = applicationProperties.getProperty(Constants.TYPES_ARRAY.priority.name());
+						String str_done_percentage = applicationProperties.getProperty(Constants.TYPES_ARRAY.done_percentage.name());
+						
+						List<BuDTO> listOfBuDTO = userService.getAllBus();
+						
+						// Adding data to list from RolesDTO
+						List<String> busList = new ArrayList<String>();
+						for (BuDTO bu : listOfBuDTO) {
+							busList.add(bu.getBu_name());
+						}
+						
+						List<UsersDTO> listOfUsersDTO = userService.getUsers();
+						System.out.println("\n showList taskdetailview listOfUsersDTO size " +listOfUsersDTO.size());
+						
+						// Adding data to list from RolesDTO
+						List<String> usersList = new ArrayList<String>();
+						for (UsersDTO user : listOfUsersDTO) {
+							usersList.add(user.getRealname());
+						}
+						
+						populateUsersListInJson(usersList);
+						
+						List<String> jobtype=Arrays.asList(str_jobtype.split(","));
+						List<String> recordtype=Arrays.asList(str_recordtype.split(","));
+						List<String> status=Arrays.asList(str_status.split(","));
+						List<String> shift=Arrays.asList(str_shift.split(","));
+						List<String> priority=Arrays.asList(str_priority.split(","));
+						List<String> done_percentage=Arrays.asList(str_done_percentage.split(","));
+						
+						AssignTaskDailylogDTO atdl = new AssignTaskDailylogDTO();
+						atdl.setAssignTaskDTO(assignTaskDTO);
+						atdl.setUpdatedbyDTO((ArrayList<UpdatedbyDTO>) updatedbyDTOs);
+						System.out.println("\n showList taskdetailview assign_task_id mmmmmmmmmmmmmmmmmmmmmmmm " +assign_task_id);
+						System.out.println("\n showList taskdetailview assign_task_id after " +assign_task_id);
+						if(assign_task_id>0){
+							DailyLogDTO dailyLogDTO=dailyLogService.getDailLogbyAssigntaskId(assign_task_id);
+							System.out.println("\n showList taskdetailview DailyLogDTO toString  " +dailyLogDTO.toString());
+							if(dailyLogDTO!=null)
+							atdl.setDailylogDTO(dailyLogDTO);
+							
+						}
+						model.addAttribute("atdl", atdl);
+						model.addAttribute("jobtype", jobtype);
+						model.addAttribute("recordtype", recordtype);	
+						model.addAttribute("status", status);
+						model.addAttribute("shift", shift);
+						model.addAttribute("priority", priority);
+						model.addAttribute("done_percentage", done_percentage);
+						model.addAttribute("busList", busList);
+						model.addAttribute("usersList", usersList);
+						model.addAttribute("updatedbyDTOs", updatedbyDTOs);
+
+					return "taskdetailview";
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					System.out.println("\n Exception showList \n \n " +e.toString());
+					throw new CustomGenericException(applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.something_went_wrong.name()));	
 				
-				title =title.replace("%20", " ");
-				System.out.println("\n showList taskdetailview title " +title);
-				
-					AssignTaskDTO assignTaskDTO=assignTaskService.getAssigntDTObyTitle(title);
-					
-					List<UpdatedbyDTO> updatedbyDTOs=new ArrayList<UpdatedbyDTO>();
-
-					PrettyTime p = new PrettyTime();
-					System.out.println(p.format(new Date()));
-					String strDate=p.format(new Date());
-					updatedbyDTOs.add(new UpdatedbyDTO(assignTaskDTO.getId(), "Updated by"+assignTaskDTO.getAssigned_to(),strDate));
-					
-					
-					System.out.println("\n showList taskdetailview assignTaskDTO toString " +assignTaskDTO.toString());
-					
-					//					FOR UPDATED BY TEXT
-					Hashtable<String, String> hashtable=assignTaskService.getHashUpdatedby();
-					ArrayList<UpdateAssignedCount> arrayList=new ArrayList<>();
-					if(hashtable !=null && hashtable.size()>0){
-						Enumeration e = hashtable.keys();
-					    while (e.hasMoreElements()) {
-					    	UpdateAssignedCount updateAssignedCount=new UpdateAssignedCount();
-					    String key = (String) e.nextElement();
-					      System.out.println(key + " : " + hashtable.get(key));
-					      updateAssignedCount.setUpdatedDates(key);
-					      updateAssignedCount.setAssignedTo(hashtable.get(key));
-					      arrayList.add(updateAssignedCount);
-					    }
-					    System.out.println(arrayList.size());
-						
-					}
-						   
-					
-					String str_shift = applicationProperties.getProperty(Constants.TYPES_ARRAY.shift.name());
-					String str_jobtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.jobtype.name());
-					String str_recordtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.recordtype.name());
-					String str_status = applicationProperties.getProperty(Constants.TYPES_ARRAY.status.name());
-					String str_priority = applicationProperties.getProperty(Constants.TYPES_ARRAY.priority.name());
-					String str_done_percentage = applicationProperties.getProperty(Constants.TYPES_ARRAY.done_percentage.name());
-					
-					List<BuDTO> listOfBuDTO = userService.getAllBus();
-					
-					// Adding data to list from RolesDTO
-					List<String> busList = new ArrayList<String>();
-					for (BuDTO bu : listOfBuDTO) {
-						busList.add(bu.getBu_name());
-					}
-					
-					List<UsersDTO> listOfUsersDTO = userService.getUsers();
-					System.out.println("\n showList taskdetailview listOfUsersDTO size " +listOfUsersDTO.size());
-					
-					// Adding data to list from RolesDTO
-					List<String> usersList = new ArrayList<String>();
-					for (UsersDTO user : listOfUsersDTO) {
-						usersList.add(user.getRealname());
-					}
-					
-					populateUsersListInJson(usersList);
-					
-					List<String> jobtype=Arrays.asList(str_jobtype.split(","));
-					List<String> recordtype=Arrays.asList(str_recordtype.split(","));
-					List<String> status=Arrays.asList(str_status.split(","));
-					List<String> shift=Arrays.asList(str_shift.split(","));
-					List<String> priority=Arrays.asList(str_priority.split(","));
-					List<String> done_percentage=Arrays.asList(str_done_percentage.split(","));
-					
-					AssignTaskDailylogDTO atdl = new AssignTaskDailylogDTO();
-					atdl.setAssignTaskDTO(assignTaskDTO);
-					atdl.setUpdatedbyDTO((ArrayList<UpdatedbyDTO>) updatedbyDTOs);
-					System.out.println("\n showList taskdetailview assign_task_id toString  " +assign_task_id);
-					if(assign_task_id>0){
-						DailyLogDTO dailyLogDTO=dailyLogService.getDailLogbyAssigntaskId(assign_task_id);
-						System.out.println("\n showList taskdetailview DailyLogDTO toString  " +dailyLogDTO.toString());
-						if(dailyLogDTO!=null)
-						atdl.setDailylogDTO(dailyLogDTO);
-						
-					}
-					model.addAttribute("atdl", atdl);
-					model.addAttribute("jobtype", jobtype);
-					model.addAttribute("recordtype", recordtype);	
-					model.addAttribute("status", status);
-					model.addAttribute("shift", shift);
-					model.addAttribute("priority", priority);
-					model.addAttribute("done_percentage", done_percentage);
-					model.addAttribute("busList", busList);
-					model.addAttribute("usersList", usersList);
-					model.addAttribute("updatedbyDTOs", updatedbyDTOs);
-
-				return "taskdetailview";
-			}
-		 
-
-			/**
-			 * 
-			 * Saving data to database
-			 * @param user
-			 * @param result
-			 * @param model
-			 * @return
-			 * @throws IOException 
-			 */
-			@RequestMapping(value = "/taskdetailview", method = RequestMethod.POST)
-			public String manageTaskdetailForm(@RequestParam String taskAction,@ModelAttribute("atdl") AssignTaskDailylogDTO atdldto, BindingResult result, ModelMap model) throws IOException {
-				boolean error=false;
-				System.out.println("\n saveTaskdetailForm atdldto.toString \n \n " +atdldto.toString());
-				
-//				validating
-				FormValidator formValidator = new FormValidator();
-				formValidator.validate(atdldto, result);
-				
-//				checking isExist
-//				boolean isexist=assignTaskService.isexist(atdldto.getAssignTaskDTO().getTitle());
-
-				if(result.hasErrors() ) {
-					String str_shift = applicationProperties.getProperty(Constants.TYPES_ARRAY.shift.name());
-					String str_jobtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.jobtype.name());
-					String str_recordtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.recordtype.name());
-					String str_status = applicationProperties.getProperty(Constants.TYPES_ARRAY.status.name());
-					String str_priority = applicationProperties.getProperty(Constants.TYPES_ARRAY.priority.name());
-					String str_done_percentage = applicationProperties.getProperty(Constants.TYPES_ARRAY.done_percentage.name());
-						
-					List<BuDTO> listOfBuDTO = userService.getAllBus();
-						
-					// Adding data to list from RolesDTO
-					List<String> busList = new ArrayList<String>();
-					for (BuDTO bu : listOfBuDTO) {
-						busList.add(bu.getBu_name());
-					}
-
-					// Adding data to list from UsersDTO
-					List<UsersDTO> listOfUsersDTO = userService.getUsers();
-						
-					List<String> usersList = new ArrayList<String>();
-					for (UsersDTO user : listOfUsersDTO) {
-						usersList.add(user.getRealname());
-					}
-//					populating list in json file for realname
-					populateUsersListInJson(usersList);
-						
-					List<String> jobtype=Arrays.asList(str_jobtype.split(","));
-					List<String> recordtype=Arrays.asList(str_recordtype.split(","));
-					List<String> status=Arrays.asList(str_status.split(","));
-					List<String> shift=Arrays.asList(str_shift.split(","));
-					List<String> priority=Arrays.asList(str_priority.split(","));
-					List<String> done_percentage=Arrays.asList(str_done_percentage.split(","));
-						
-					model.addAttribute("jobtype", jobtype);
-					model.addAttribute("recordtype", recordtype);	
-					model.addAttribute("status", status);
-					model.addAttribute("shift", shift);
-					model.addAttribute("priority", priority);
-					model.addAttribute("done_percentage", done_percentage);
-					model.addAttribute("busList", busList);
-					model.addAttribute("usersList", usersList);
-				
-				} 
-				else{
-					try {
-						AssignTaskDTO assignTaskDTO=atdldto.getAssignTaskDTO();
-						DailyLogDTO dailyLogDTO=atdldto.getDailylogDTO();
-
-						dailyLogDTO.setAssign_task_title(assignTaskDTO.getTitle());
-						dailyLogDTO.setTarget_date(assignTaskDTO.getTarget_date());
-						dailyLogDTO.setDone_percentage(assignTaskDTO.getDone_percentage());
-						DailyLog dailyLog=ObjectMapper.mapToDailyLog(dailyLogDTO);
-						dailyLogService.addDailyLog(dailyLog);
-						
-					} catch (DataAccessException e) {
-						e.printStackTrace();
-						System.out.println("\n DataAccessException saveForm \n \n " +e.toString());
-						throw new CustomGenericException(applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.data_access_exception.name()));	
-					} catch (IOException e) {
-						e.printStackTrace();
-						System.out.println("\n IOException saveForm \n \n " +e.toString());
-						throw new CustomGenericException(applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.something_went_wrong.name()));	
-					}
 				}
-				return "taskdetailview";
 			}
-
 }

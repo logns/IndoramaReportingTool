@@ -115,8 +115,6 @@
 								</div>
 								<div class="bottom" id="bottom_${updatedbyDTO.id}">
 
-
-
 									<fieldset class="the-fieldset">
 										<legend class="the-legend">Daily Logs Details</legend>
 										<div class="col-sm-6 form-group">
@@ -203,7 +201,7 @@
 											</form:select>
 										</div>
 										<div class="col-sm-12 form-group">
-										<form:button  id="taskupdate" type="submit" class="btn btn-lg btn-info">Submit</form:button>
+									<form:button data-bid="taskupdate_${updatedbyDTO.id}" id="taskupdate_${updatedbyDTO.id}" type="submit" class="btn btn-lg btn-info">Submit</form:button>
 										</div>
 										
 									</fieldset>
