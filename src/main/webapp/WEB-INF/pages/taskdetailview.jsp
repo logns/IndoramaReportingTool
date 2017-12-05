@@ -103,19 +103,19 @@
 					<div class="container col-sm-12" id="warehouseValue">
 
 						<div class="box">
-							<c:forEach items="${updatedbyDTOs}" var="updatedbyDTO"
+							<c:forEach items="${updatedbyDTOs}" var="dailylogDTO"
 								varStatus="loop">
 
-								<div class="top" id="top_${updatedbyDTO.id}">
+								<div class="top" id="top_${dailylogDTO.id}">
 						
 							<input type="hidden" >
-								<c:out value="${updatedbyDTO.id}"></c:out></input>
-									<a data-id="top_${updatedbyDTO.id}" href="#"> <c:out
-											value="${updatedbyDTO.updaterby_realname}"></c:out> <c:out
-											value="${updatedbyDTO.updated_time}"></c:out>
+								<c:out value="${dailylogDTO.id}"></c:out></input>
+									<a data-id="top_${dailylogDTO.id}" href="#"> <c:out
+											value="${dailylogDTO.updaterby_realname}"></c:out> <c:out
+											value="${dailylogDTO.updated_time}"></c:out>
 									</a>
 								</div>
-								<div class="bottom" id="bottom_${updatedbyDTO.id}">
+								<div class="bottom" id="bottom_${dailylogDTO.id}">
 
 									<fieldset class="the-fieldset">
 									
@@ -207,7 +207,7 @@
 											</form:select>
 										</div>
 										<div class="col-sm-12 form-group">
-									<form:button data-bid="taskupdate_${updatedbyDTO.id}" id="taskupdate_${updatedbyDTO.id}" type="submit" class="btn btn-lg btn-info">Submit</form:button>
+									<form:button data-bid="taskupdate_${dailylogDTO.id}" id="taskupdate_${dailylogDTO.id}" type="submit" class="btn btn-lg btn-info">Submit</form:button>
 										</div>
 										
 									</fieldset>

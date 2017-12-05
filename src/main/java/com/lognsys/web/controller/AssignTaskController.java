@@ -476,7 +476,7 @@ public class AssignTaskController {
 						List<DailyLogDTO> list=dailyLogService.fetchDailyLog(title);
 						
 						List<UpdatedbyDTO> updatedbyDTOs=new ArrayList<UpdatedbyDTO>();
-						System.out.println("\n showList taskdetailview list.size() ------------------------ " +list.size());
+						List<DailyLogDTO> dailyLogDTOs=new ArrayList<DailyLogDTO>();
 						
 						
 						if(list!= null && list.size()>0){ 
@@ -484,21 +484,36 @@ public class AssignTaskController {
 								
 								DateTimeUtils dateTimeUtils=new DateTimeUtils(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()), list.get(i).getLast_edit());
 								String strDate=dateTimeUtils.printDifference();
-								System.out.println("\n showList taskdetailview strDate ------------------------ " +strDate);
 								updatedbyDTOs.add(new UpdatedbyDTO(list.get(i).getId(), "Updated by"+assignTaskDTO.getAssigned_to(),strDate.toString()));
 								
 							}
+								
+						}
+												
+						if(list!= null && list.size()>0){ 
+							for(int i=0;i<list.size();i++){
+								
+								DateTimeUtils dateTimeUtils=new DateTimeUtils(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()), list.get(i).getLast_edit());
+								String strDate=dateTimeUtils.printDifference();
+								DailyLogDTO dailylogDTO= list.get(i);
+								
+								dailylogDTO.setAssigned_to("Updated by"+assignTaskDTO.getAssigned_to());
+								
+								System.out.println("\n showList taskdetailview dailylogDTO ------------------------ " +dailylogDTO.toString());
+								dailyLogDTOs.add(dailylogDTO);
+							}
+							System.out.println("\n showList taskdetailview dailyLogDTOs size------------------------ " +dailyLogDTOs.size());
+							
 								
 						}
 						AssignTaskDailylogDTO atdl = new AssignTaskDailylogDTO();
 						
 						if(bottom_id!=null){
 
-							System.out.println("\n showList taskdetailview BOTTOM_ID bottom_id " +bottom_id);
 							String[] array=bottom_id.split("_");
 							int id=Integer.parseInt(array[1]);
 							System.out.println("\n showList taskdetailview BOTTOM_ID id " +id);
-							DailyLogDTO dailylogDTO =dailyLogService.getDailLogbyId(assign_task_id);
+							DailyLogDTO dailylogDTO =dailyLogService.getDailLogbyId(id);
 
 							System.out.println("\n showList taskdetailview BOTTOM_ID toString " +dailylogDTO.toString());
 							atdl.setDailylogDTO(dailylogDTO);

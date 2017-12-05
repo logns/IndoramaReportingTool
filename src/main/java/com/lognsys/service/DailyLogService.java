@@ -222,8 +222,6 @@ public class DailyLogService {
 		
 		DailyLogDTO dailyLogDTO = (jdbcDailyLogRepository.findDailyLogDTOById(id));
 		
-		System.out.println("\n DailyLogDTO getDailLogbyId dailyLogDTO toString aaaaaaaaaaaaa " +dailyLogDTO.toString());
-		
 		return dailyLogDTO;
 	}
 //	delete Dailylog by assigntaskid
