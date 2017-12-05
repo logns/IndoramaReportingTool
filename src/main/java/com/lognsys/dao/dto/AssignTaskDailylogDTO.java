@@ -17,6 +17,24 @@ public class AssignTaskDailylogDTO {
 	@DBRef
 	private ArrayList<UpdatedbyDTO> updatedbyDTO;
 
+	
+	/**
+	 * @return the updatedbyDTO
+	 */
+	public ArrayList<UpdatedbyDTO> getUpdatedbyDTO() {
+		return updatedbyDTO;
+	}
+
+	/**
+	 * @param updatedbyDTO the updatedbyDTO to set
+	 */
+	public void setUpdatedbyDTO(ArrayList<UpdatedbyDTO> updatedbyDTO) {
+		this.updatedbyDTO = updatedbyDTO;
+	}
+
+	@DBRef
+	private ArrayList<DailyLogDTO> dailylogDTOs;
+
 	@DBRef
 	private AssignTaskDTO assignTaskDTO;
 
@@ -25,12 +43,12 @@ public class AssignTaskDailylogDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public AssignTaskDailylogDTO(int id, DailyLogDTO dailylogDTO, AssignTaskDTO assignTaskDTO,ArrayList<UpdatedbyDTO> updatedbyDTO) {
+	public AssignTaskDailylogDTO(int id, DailyLogDTO dailylogDTO, AssignTaskDTO assignTaskDTO,ArrayList<DailyLogDTO> dailylogDTOs) {
 		super();
 		this.id = id;
 		this.dailylogDTO = dailylogDTO;
 		this.assignTaskDTO = assignTaskDTO;
-		this.updatedbyDTO = updatedbyDTO;
+		this.dailylogDTOs = dailylogDTOs;
 	}
 
 	public int getId() {
@@ -58,12 +76,12 @@ public class AssignTaskDailylogDTO {
 	}
 
 	
-	public ArrayList<UpdatedbyDTO> getUpdatedbyDTO() {
-		return updatedbyDTO;
+	public ArrayList<DailyLogDTO> getDailyLogDTOs() {
+		return dailylogDTOs;
 	}
 
-	public void setUpdatedbyDTO(ArrayList<UpdatedbyDTO> updatedbyDTO) {
-		this.updatedbyDTO = updatedbyDTO;
+	public void setDailyLogDTOs(ArrayList<DailyLogDTO> dailylogDTOs) {
+		this.dailylogDTOs = dailylogDTOs;
 	}
 
 	@Override

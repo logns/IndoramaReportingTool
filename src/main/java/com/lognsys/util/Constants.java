@@ -45,18 +45,19 @@ public class Constants {
 		select_id_bybu, select_usersbybu,
 		select_usersbu_all, select_bu_exists,
 		select_count_bu, delete_bu,select_bu_by_bu_name,
-		update_bu_byuser
+		update_bu_byuser,update_daily_bu
 
 	}
 
 	public enum DAILYLOG_QUERIES {
 		insert_dailylog,select_dailylog_by_title,
-		insert_dailylog_bu,
+		insert_dailylog_bu,update_dailylog,
 		insert_dailylog_users,
 		select_dailylogs_all,
 		select_description_and_id,
 		delete_by_assign_task_id,
-		select_assigntask_id
+		select_assigntask_id,
+		select_dailylog_bu_by_id
 	
 	}
 	public enum ASSIGN_TASK_QUERIES {
@@ -98,7 +99,7 @@ public class Constants {
 	}
 
 	public enum DAILYLOG_TABLE_FIELD_NAMES {
-		id, assigntask_id, assign_task_title, description, assigned_to, done_percentage,target_date,status,time
+		id, assigntask_id, assign_task_title, description, assigned_to, done_percentage,target_date,status,time,shift,machine,timefrom,timeto,spare_parts,attendby,jobtype,recordtype,last_edit
 	}
 
 	public enum BU_FIELDNAME {

@@ -24,8 +24,16 @@ public class DailyLogDTO {
 	private String assigned_to = "";
 	private String done_percentage = "";
 	private String bu = "";
-	private String time = "";
+	private String last_edit = "";
 
+
+	public String getLast_edit() {
+		return last_edit;
+	}
+
+	public void setLast_edit(String last_edit) {
+		this.last_edit = last_edit;
+	}
 
 	public DailyLogDTO() {
 		super();
@@ -36,40 +44,17 @@ public class DailyLogDTO {
 		return assigned_to;
 	}
 
-	public DailyLogDTO(int id, int assign_task_id,String assign_task_title, String description,
-			String assigned_to, String done_percentage,String target_date,String status,String time 
-			) {
-		super();
-		this.id = id;
-		this.assign_task_id = assign_task_id;
-		this.assign_task_title = assign_task_title;
-		this.description = description;
-		this.assigned_to = assigned_to;
-		this.done_percentage = done_percentage;
-		this.target_date = target_date;
-		this.status = status;
-		this.time = time;
-	}
-
-	public String getTime() {
-		return time;
-	}
-
-	public void setTime(String time) {
-		this.time = time;
-	}
 
 	public void setAssigned_to(String assigned_to) {
 		this.assigned_to = assigned_to;
 	}
 
-	public DailyLogDTO(int id,int assign_task_id, String assign_task_title, String target_date, String shift, String machine,
+	public DailyLogDTO(int id,int assign_task_id, String target_date, String shift, String machine,
 			String description, String timefrom, String timeto, String spare_parts, String attendby, String jobtype,
-			String recordtype, String status, String done_percentage) {
+			String recordtype, String status,String last_edit ,String done_percentage) {
 		super();
 		this.id = id;
 		this.assign_task_id = assign_task_id;
-		this.assign_task_title = assign_task_title;
 		this.target_date = target_date;
 		this.shift = shift;
 		this.machine = machine;
@@ -81,6 +66,7 @@ public class DailyLogDTO {
 		this.jobtype = jobtype;
 		this.recordtype = recordtype;
 		this.status = status;
+		this.last_edit = last_edit;
 		this.done_percentage = done_percentage;
 	}
 

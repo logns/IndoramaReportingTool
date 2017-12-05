@@ -20,8 +20,10 @@ import java.util.Hashtable;
 import java.util.List;
 
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import com.lognsys.dao.dto.AssignTaskDTO;
+import com.lognsys.dao.dto.AssignTaskDailylogDTO;
 import com.lognsys.dao.dto.DailyLogDTO;
 import com.lognsys.dao.dto.UsersBuDTO;
 import com.lognsys.dao.dto.UsersDTO;
@@ -75,15 +77,13 @@ public class ObjectMapper {
 			
 			list.add(new DailylogTable(ubu.getId(), ubu.getAssign_task_id(), ubu.getAssign_task_title(),
 					convertToAnchorTagDescription(ubu.getDescription(),ubu.getId(),ubu.getAssign_task_title()), ubu.getAssigned_to(), ubu.getTarget_date(),
-					ubu.getDone_percentage(), ubu.getStatus(),ubu.getTime(),ubu.getBu()));
+					ubu.getDone_percentage(), ubu.getStatus(),ubu.getLast_edit(),ubu.getBu()));
 		}
 		return list;
 	}
 
 	public static String convertToAnchorTagDescription(String description, int id,String assign_task_title) {
 
-		System.out.println("convertToAnchorTagDescription ======= description ===============" + description + "\n\n\n");
-		System.out.println("convertToAnchorTagDescription ======= assign_task_title ===============" + assign_task_title + "\n\n\n");
 		String descriptions=null;
 		if(assign_task_title!=null && description!=null){
 			if(description.contains(" ") || assign_task_title.contains(" ")) {
@@ -106,14 +106,9 @@ public class ObjectMapper {
 
 
 	public static String convertToAnchorTagString(String title,int assign_task_id) {
-
-//		String titles = "<a href=" + "http://localhost:8080/dailyloglist?title=" + title.replace(" ", "%20") + " >"
-//				+ title + "</a>";
-		String titles = "<a href=" + "http://localhost:8080/taskdetailview?title=" + title.replace(" ", "%20") +"&assign_task_id="+assign_task_id+ " >"
+	String titles = "<a href=" + "http://localhost:8080/taskdetailview?title=" + title.replace(" ", "%20") +"&assign_task_id="+assign_task_id+ " >"
 				+ title + "</a>";
-
-		System.out.println("convertToAnchorTagString ======= titles ===============" + titles + "\n\n\n");
-		return titles;
+	return titles;
 	}
 
 	/**
@@ -247,5 +242,6 @@ public class ObjectMapper {
 		}
 		return users;
 	}
+
 
 }

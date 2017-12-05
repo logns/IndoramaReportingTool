@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.exolab.castor.types.Date;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.FileSystemResourceLoader;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lognsys.dao.dto.AssignTaskDTO;
 import com.lognsys.dao.dto.AssignTaskDailylogDTO;
+import com.lognsys.dao.dto.DailyLogBuDTO;
 import com.lognsys.dao.dto.DailyLogDTO;
 import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.dao.jdbc.JdbcAssignTaskRepository;
@@ -197,7 +199,7 @@ public Hashtable<String, String> getHashUpdatedby() {
 	 * @param assignTaskDailylogDTO
 	 */
 	@Transactional
-	public boolean updateAssigntask(AssignTaskDailylogDTO assignTaskDailylogDTO) {
+	public boolean updateAssigntask(AssignTaskDailylogDTO assignTaskDailylogDTO,boolean isDailyLogUpdate) {
 		boolean isUpdated = false;
 		try {
 			
@@ -215,27 +217,46 @@ public Hashtable<String, String> getHashUpdatedby() {
 			dailyLogDTO.setAssign_task_id(assignTaskDTO.getId());
 			dailyLogDTO.setDone_percentage(assignTaskDTO.getDone_percentage());
 			dailyLogDTO.setTarget_date(assignTaskDTO.getTarget_date());
-			
-//			ADDINGNEW ASSIGNTASK
-			int dailylog_id = jdbcDailyLogRepository.addDailyLog(dailyLogDTO);
-			System.out.println("updateAssigntask addDailylog dailylog_id " + dailylog_id);
+			if(isDailyLogUpdate){
+//				UPDATE DAILYLOGDTO
+				isUpdated =jdbcDailyLogRepository.updateDailyLogDTO(dailyLogDTO);
+				System.out.println("updateDailyLogDTO isUpdated == "+isUpdated);
 
-			int assignDailyLog_id = jdbcAssignTaskRepository.addAssignTask_DailyLog(assignTaskDTO.getId(), dailylog_id);
-			System.out.println("updateAssigntask addDailylog assignDailyLog_id " + assignDailyLog_id);
+////				UPDATE data to dailylog_bu
+				if (dailyLogDTO.getId() > 0 && dailyLogDTO.getBu() != null && dailyLogDTO.getBu().length() > 0) {
+				
+					int bu_id = jdbcBuRepository.findBuByName(dailyLogDTO.getBu());
+					System.out.println("findBuByName bu_id == "+bu_id);
+	
+					DailyLogBuDTO buDTO=jdbcDailyLogRepository.findDailyLogDTOBuByDailyLogId(dailyLogDTO.getId());
+					buDTO.getBuDTO().setId(bu_id);
+					if (bu_id > 0 && bu_id != 0) {
+						isUpdated =jdbcDailyLogRepository.updateBuOfDailyLogBu(buDTO);
+						System.out.println("updateBuOfDailyLogBu isUpdated == "+isUpdated);
 
-//			adding data to dailylog_bu
-			if (dailylog_id > 0 && dailyLogDTO.getBu() != null && dailyLogDTO.getBu().length() > 0) {
-				int bu_id = jdbcBuRepository.findBuByName(dailyLogDTO.getBu());
-				if (bu_id > 0 && bu_id != 0) {
-					jdbcDailyLogRepository.addDailyLogAndBu(dailylog_id, bu_id);
-					System.out.println("updateAssigntask addDailylog addDailyLogAndBu ");
-
+					}
 				}
 			}
+			else{
+//				ADDINGNEW DAILYLOGDTO
+				int dailylog_id=jdbcDailyLogRepository.addDailyLog(dailyLogDTO);
+				System.out.println("updateAssigntask updateDailyLogDTO  " );
 
+				int assignDailyLog_id = jdbcAssignTaskRepository.addAssignTask_DailyLog(assignTaskDTO.getId(), dailylog_id);
+				System.out.println("updateAssigntask addDailylog assignDailyLog_id " + assignDailyLog_id);
+
+//				adding data to dailylog_bu
+				if (dailylog_id > 0 && dailyLogDTO.getBu() != null && dailyLogDTO.getBu().length() > 0) {
+					int bu_id = jdbcBuRepository.findBuByName(dailyLogDTO.getBu());
+					if (bu_id > 0 && bu_id != 0) {
+						jdbcDailyLogRepository.addDailyLogAndBu(dailylog_id, bu_id);
+						System.out.println("updateAssigntask addDailylog addDailyLogAndBu ");
+					}
+				}
+			}
 			readAssignTask();
-
-		} catch (DataAccessException dae) {
+		}
+		catch (DataAccessException dae) {
 		System.out.println("\n \n updateAssigntask DataAccessException == "+dae.toString()+"\n \n");
 
 			throw new IllegalStateException("Failed  update Task status - " + isUpdated);
@@ -250,4 +271,83 @@ public Hashtable<String, String> getHashUpdatedby() {
 		AssignTaskDTO dto=jdbcAssignTaskRepository.findAssignTaskDTOTitlte(title);
 		return dto;
 	}
+	public static  AssignTaskDailylogDTO parseJsonToAssigntaskDailyLogDTO(JSONObject jsonObject) {
+		AssignTaskDailylogDTO assignTaskDailylogDTO=new AssignTaskDailylogDTO();
+		
+		AssignTaskDTO assignTaskDTO=new AssignTaskDTO();
+		assignTaskDTO.setId(Integer.parseInt(jsonObject.get("assignTaskDTO.id").toString()));
+		System.out.println("\n "+assignTaskDTO.getId());
+		
+		assignTaskDTO.setTarget_date(jsonObject.get("assignTaskDTO.target_date").toString());
+		System.out.println("\n "+assignTaskDTO.getTarget_date());
+		
+		assignTaskDTO.setTitle(jsonObject.get("assignTaskDTO.title").toString());
+		System.out.println("\n "+assignTaskDTO.getTitle());
+		
+		assignTaskDTO.setDone_percentage(jsonObject.get("assignTaskDTO.done_percentage").toString());
+		System.out.println("\n "+assignTaskDTO.getDone_percentage());
+		
+		assignTaskDTO.setPriority(jsonObject.get("assignTaskDTO.priority").toString());
+		System.out.println("\n "+assignTaskDTO.getPriority());
+		
+		assignTaskDTO.setAssigned_to(jsonObject.get("assignTaskDTO.assigned_to").toString());
+		System.out.println("\n "+assignTaskDTO.getAssigned_to());
+		
+		
+		DailyLogDTO dailyLogDTO=new DailyLogDTO();
+		
+		dailyLogDTO.setId(Integer.parseInt(jsonObject.get("dailylogDTO.id").toString()));
+		System.out.println("\n"+dailyLogDTO.getId());
+		
+		dailyLogDTO.setAssign_task_id(assignTaskDTO.getId());
+		System.out.println("\n"+dailyLogDTO.getAssign_task_id());
+		
+		dailyLogDTO.setAssign_task_title(assignTaskDTO.getTitle().toString());
+		System.out.println("\n "+dailyLogDTO.getAssign_task_title());
+		
+		dailyLogDTO.setShift(jsonObject.get("dailylogDTO.shift").toString());
+		System.out.println("\n "+dailyLogDTO.getShift());
+		
+		dailyLogDTO.setBu(jsonObject.get("dailylogDTO.bu").toString());
+		System.out.println("\n "+dailyLogDTO.getBu());
+		
+		dailyLogDTO.setDone_percentage(assignTaskDTO.getDone_percentage().toString());
+		System.out.println("\n "+dailyLogDTO.getDone_percentage());
+		
+		dailyLogDTO.setSpare_parts(jsonObject.get("dailylogDTO.spare_parts").toString());
+		System.out.println("\n"+dailyLogDTO.getSpare_parts());
+		
+		dailyLogDTO.setTimefrom(jsonObject.get("dailylogDTO.timefrom").toString());
+		System.out.println("\n"+dailyLogDTO.getTimefrom());
+		
+		dailyLogDTO.setTimeto(jsonObject.get("dailylogDTO.timeto").toString());
+		System.out.println("\n"+dailyLogDTO.getTimeto());
+		
+		dailyLogDTO.setMachine(jsonObject.get("dailylogDTO.machine").toString());
+		System.out.println("\n"+dailyLogDTO.getMachine());
+		
+		dailyLogDTO.setDescription(jsonObject.get("dailylogDTO.description").toString());
+		System.out.println("\n"+dailyLogDTO.getDescription());
+		
+		dailyLogDTO.setAttendby(jsonObject.get("dailylogDTO.attendby").toString());
+		System.out.println("\n"+dailyLogDTO.getAttendby());
+		
+		dailyLogDTO.setJobtype(jsonObject.get("dailylogDTO.jobtype").toString());
+		System.out.println("\n"+dailyLogDTO.getJobtype());
+		
+		dailyLogDTO.setRecordtype(jsonObject.get("dailylogDTO.recordtype").toString());
+		System.out.println("\n"+dailyLogDTO.getRecordtype());
+		
+		dailyLogDTO.setStatus(jsonObject.get("dailylogDTO.status").toString());
+		System.out.println("\n"+dailyLogDTO.getStatus());
+		
+		dailyLogDTO.setTarget_date(assignTaskDTO.getTarget_date().toString());
+		System.out.println("\n "+dailyLogDTO.getTarget_date());
+		
+		assignTaskDailylogDTO.setAssignTaskDTO(assignTaskDTO);
+		assignTaskDailylogDTO.setDailylogDTO(dailyLogDTO);
+		
+		return assignTaskDailylogDTO;
+	}
+
 }

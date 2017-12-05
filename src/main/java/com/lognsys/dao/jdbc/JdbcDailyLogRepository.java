@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -18,9 +19,11 @@ import org.springframework.stereotype.Repository;
 import com.lognsys.dao.DailyLogRespository;
 import com.lognsys.dao.UserRespository;
 import com.lognsys.dao.dto.AssignTaskDTO;
+import com.lognsys.dao.dto.DailyLogBuDTO;
 import com.lognsys.dao.dto.DailyLogDTO;
 import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.dao.jdbc.resultset.DailyLogResultSetExtractor;
+import com.lognsys.dao.jdbc.rowmapper.DailyLogAndBuByIdRowMapper;
 import com.lognsys.dao.jdbc.rowmapper.DailyLogByDescriptionAndIDRowMapper;
 import com.lognsys.dao.jdbc.rowmapper.UserByUserIDRowMapper;
 import com.lognsys.util.Constants;
@@ -74,8 +77,12 @@ public class JdbcDailyLogRepository implements DailyLogRespository {
 
 	@Override
 	public boolean updateDailyLogDTO(DailyLogDTO dailyLogDTO) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean isUpdate = false;
+		BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(dailyLogDTO);
+		isUpdate = namedParamJdbcTemplate.update(sqlProperties.getProperty(Constants.DAILYLOG_QUERIES.update_dailylog.name()),
+				params) == 1;
+	
+		return isUpdate;
 	}
 	/**
 	 * add DailyLog_Bu
@@ -148,13 +155,32 @@ public class JdbcDailyLogRepository implements DailyLogRespository {
 
 
 	@Override
-	public DailyLogDTO findDailyLogDTOByAssigntaskId(Integer assign_task_id) {
-		SqlParameterSource parameter = new MapSqlParameterSource().addValue("assign_task_id", assign_task_id);
-		
-		return namedParamJdbcTemplate.queryForObject(
-				sqlProperties.getProperty(Constants.DAILYLOG_QUERIES.select_assigntask_id.name()), parameter,
-				new DailyLogByDescriptionAndIDRowMapper());
+	public DailyLogDTO findDailyLogDTOById(Integer id) {
+		SqlParameterSource parameter = new MapSqlParameterSource().addValue("id", id);
+	
+		DailyLogDTO dailyLogDTO = namedParamJdbcTemplate.queryForObject(
+				sqlProperties.getProperty(Constants.DAILYLOG_QUERIES.select_assigntask_id.name()),parameter,
+				new BeanPropertyRowMapper<DailyLogDTO>(DailyLogDTO.class));
+
+		return dailyLogDTO;
 	}
 
-	
+
+
+	@Override
+	public DailyLogBuDTO findDailyLogDTOBuByDailyLogId(Integer dailylog_id) {
+SqlParameterSource parameter = new MapSqlParameterSource().addValue("dailylog_id", dailylog_id);
+		
+		return namedParamJdbcTemplate.queryForObject(
+				sqlProperties.getProperty(Constants.DAILYLOG_QUERIES.select_dailylog_bu_by_id.name()), parameter,
+				new DailyLogAndBuByIdRowMapper());
+	}
+
+	public boolean updateBuOfDailyLogBu(DailyLogBuDTO dailyLogBuDTO) {
+		SqlParameterSource param = new MapSqlParameterSource().addValue("bu_id",dailyLogBuDTO.getBuDTO().getId()).addValue("dailylog_id",
+				dailyLogBuDTO.getDailylogDTO().getId()).addValue("id",dailyLogBuDTO.getId());
+		return namedParamJdbcTemplate.update(sqlProperties.getProperty(Constants.BU_QUERIES.update_daily_bu.name()),
+				param)==1;
+	}
+
 }

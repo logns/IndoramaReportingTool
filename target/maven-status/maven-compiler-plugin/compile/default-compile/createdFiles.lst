@@ -2,12 +2,14 @@ com\lognsys\dao\jdbc\JdbcDailyLogRepository.class
 com\lognsys\dao\dto\UsersBuDTO.class
 com\lognsys\dao\dto\DailyLogDTO.class
 com\lognsys\util\Constants$TYPES_ARRAY.class
+com\lognsys\util\DateTimeUtils.class
 com\lognsys\dao\jdbc\resultset\UserBuResultSetExtractor.class
 com\lognsys\loader\Ingest.class
 com\lognsys\model\UsersTable.class
 com\lognsys\model\AssignTask.class
 com\lognsys\util\Constants$GROUP_QUERIES.class
 com\lognsys\dao\dto\UserRolesDTO.class
+com\lognsys\dao\jdbc\rowmapper\DailyLogAndBuByIdRowMapper.class
 com\lognsys\loader\IngestXLSData.class
 com\lognsys\model\AssignTaskTable.class
 com\lognsys\model\Users.class

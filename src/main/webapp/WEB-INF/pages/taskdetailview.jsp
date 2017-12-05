@@ -33,7 +33,9 @@
 					<form:errors path="assignTaskDTO.priority" element="div" />
 					<form:errors path="assignTaskDTO.done_percentage" element="div" />
 					<form:errors path="assignTaskDTO.target_date" element="div" />
+					<form:errors path="assignTaskDTO.id" element="div" />
 
+					<form:errors path="dailylogDTO.id" element="div" />
 					<form:errors path="dailylogDTO.shift" element="div" />
 					<form:errors path="dailylogDTO.machine" element="div" />
 					<form:errors path="dailylogDTO.description" element="div" />
@@ -51,7 +53,9 @@
 					<fieldset class="the-fieldset">
 
 						<legend class="the-legend">Assign Task Details</legend>
-
+  					<form:input type="hidden"  path="assignTaskDTO.id" id="assignTaskDTO.id"
+									class="form-control text ui-widget-content ui-corner-all" />
+				
 						<div class="form-group">
 							<label>Task Title</label>
 							<form:textarea id="title" placeholder="Enter Task Title Here.."
@@ -103,11 +107,9 @@
 								varStatus="loop">
 
 								<div class="top" id="top_${updatedbyDTO.id}">
-									<%-- 
-					  <input type="hidden" id="categoryIndex+${category.index}" name="categoryIndex" value="${category.index}"/>
- 
- --%>
-									<c:out value="${updatedbyDTO.id}"></c:out>
+						
+							<input type="hidden" >
+								<c:out value="${updatedbyDTO.id}"></c:out></input>
 									<a data-id="top_${updatedbyDTO.id}" href="#"> <c:out
 											value="${updatedbyDTO.updaterby_realname}"></c:out> <c:out
 											value="${updatedbyDTO.updated_time}"></c:out>
@@ -116,7 +118,11 @@
 								<div class="bottom" id="bottom_${updatedbyDTO.id}">
 
 									<fieldset class="the-fieldset">
+									
 										<legend class="the-legend">Daily Logs Details</legend>
+										<form:input type="hidden"  path="dailylogDTO.id" id="dailylogDTO.id"
+									class="form-control text ui-widget-content ui-corner-all" />
+					
 										<div class="col-sm-6 form-group">
 											<label>Shift</label>
 											<form:select path="dailylogDTO.shift"

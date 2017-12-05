@@ -1,6 +1,7 @@
 package com.lognsys.web.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -11,12 +12,16 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.exolab.castor.types.DateTime;
+import org.jfree.chart.axis.DateTickUnit;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.jsoup.Jsoup;
 import org.ocpsoft.prettytime.PrettyTime;
+import org.ocpsoft.prettytime.TimeFormat;
+import org.ocpsoft.prettytime.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.FileSystemResourceLoader;
@@ -29,6 +34,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,6 +42,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.lognsys.dao.dto.AssignTaskDTO;
 import com.lognsys.dao.dto.AssignTaskDailylogDTO;
 import com.lognsys.dao.dto.BuDTO;
@@ -50,6 +58,7 @@ import com.lognsys.service.DailyLogService;
 import com.lognsys.service.UserService;
 import com.lognsys.util.CommonUtilities;
 import com.lognsys.util.Constants;
+import com.lognsys.util.DateTimeUtils;
 import com.lognsys.util.FormValidator;
 import com.lognsys.util.ObjectMapper;
 import com.lognsys.util.WriteJSONToFile;
@@ -419,7 +428,8 @@ public class AssignTaskController {
 		@RequestMapping(value = { "/editassigndailylog" }, method = RequestMethod.POST)
 		public String editAssignDailyLog(@ModelAttribute("editassigndailylog") AssignTaskDailylogDTO assignTaskDailylogDTO,BindingResult result,Model model) throws IOException {
 			try {
-				assignTaskService.updateAssigntask(assignTaskDailylogDTO);
+				boolean isDailyLogUpdate=false;
+				assignTaskService.updateAssigntask(assignTaskDailylogDTO,isDailyLogUpdate);
 				return "assigntasklist";
 			} catch (Exception e) {
 				System.out.println("\n Exception editAssignDailyLog \n \n " +e.toString());
@@ -429,9 +439,23 @@ public class AssignTaskController {
 		@RequestMapping(value = { "/taskdetailview" }, method = RequestMethod.POST)
 		public @ResponseBody String editAssignDailyLog(@RequestBody String taskIds, HttpServletRequest request) throws IOException {
 			try {
-				System.out.println("\n editAssignDailyLog taskdetailview taskIds ------------------------ " +taskIds.toString());
-			
-				/*assignTaskService.updateAssigntask(assignTaskDailylogDTO);*/
+				JSONParser parser = new JSONParser();
+				try {
+					Object obj = parser.parse(taskIds);
+					System.out.println("\n editAssignDailyLog taskdetailview obj ------------------------ " +obj.toString());
+					JSONObject jsonObject = (JSONObject)obj;
+					AssignTaskDailylogDTO assignTaskDailylogDTO=assignTaskService.parseJsonToAssigntaskDailyLogDTO(jsonObject);
+					System.out.println("\n editAssignDailyLog taskdetailview obj ------------------------ " +assignTaskDailylogDTO.getAssignTaskDTO().toString());
+					System.out.println("\n editAssignDailyLog taskdetailview obj ------------------------ " +assignTaskDailylogDTO.getDailylogDTO().toString());
+
+					boolean isDailyLogUpdate=true;
+					assignTaskService.updateAssigntask(assignTaskDailylogDTO,isDailyLogUpdate);
+					
+				}
+				catch (ParseException e) {
+					// TODO: handle exception
+				}
+				
 				return "taskdetailview";
 			} catch (Exception e) {
 				System.out.println("\n Exception /taskdetailview \n \n " +e.toString());
@@ -439,45 +463,46 @@ public class AssignTaskController {
 			}
 		}
 		 @RequestMapping(value = "/taskdetailview", method = RequestMethod.GET)
-			public String showList(@RequestParam("title") String title,@RequestParam("assign_task_id") int assign_task_id,Model model, HttpServletRequest request,
-					@RequestParam(value = "taskIds", required = false) String taskIds) throws IOException {
+			public String showList(@RequestParam("title") String title,@RequestParam("assign_task_id") int assign_task_id,
+					Model model, HttpServletRequest request,@RequestParam(value = "bottom_id", required = false) String bottom_id) throws IOException {
 				try {
 					
-					System.out.println("\n showList taskdetailview assign_task_id ------------------------ " +assign_task_id);
-					System.out.println("\n showList taskdetailview taskIds ------------------------ " +taskIds);
 					
 					title =title.replace("%20", " ");
 					System.out.println("\n showList taskdetailview title " +title);
 					
 						AssignTaskDTO assignTaskDTO=assignTaskService.getAssigntDTObyTitle(title);
+					
+						List<DailyLogDTO> list=dailyLogService.fetchDailyLog(title);
 						
 						List<UpdatedbyDTO> updatedbyDTOs=new ArrayList<UpdatedbyDTO>();
-
-						PrettyTime p = new PrettyTime();
-						System.out.println(p.format(new Date()));
-						String strDate=p.format(new Date());
-						updatedbyDTOs.add(new UpdatedbyDTO(assignTaskDTO.getId(), "Updated by"+assignTaskDTO.getAssigned_to(),strDate));
+						System.out.println("\n showList taskdetailview list.size() ------------------------ " +list.size());
 						
 						
-						System.out.println("\n showList taskdetailview assignTaskDTO toString " +assignTaskDTO.toString());
-						
-						//					FOR UPDATED BY TEXT
-						Hashtable<String, String> hashtable=assignTaskService.getHashUpdatedby();
-						ArrayList<UpdateAssignedCount> arrayList=new ArrayList<>();
-						if(hashtable !=null && hashtable.size()>0){
-							Enumeration e = hashtable.keys();
-						    while (e.hasMoreElements()) {
-						    	UpdateAssignedCount updateAssignedCount=new UpdateAssignedCount();
-						    String key = (String) e.nextElement();
-						      System.out.println(key + " : " + hashtable.get(key));
-						      updateAssignedCount.setUpdatedDates(key);
-						      updateAssignedCount.setAssignedTo(hashtable.get(key));
-						      arrayList.add(updateAssignedCount);
-						    }
-						    System.out.println(arrayList.size());
-							
+						if(list!= null && list.size()>0){ 
+							for(int i=0;i<list.size();i++){
+								
+								DateTimeUtils dateTimeUtils=new DateTimeUtils(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()), list.get(i).getLast_edit());
+								String strDate=dateTimeUtils.printDifference();
+								System.out.println("\n showList taskdetailview strDate ------------------------ " +strDate);
+								updatedbyDTOs.add(new UpdatedbyDTO(list.get(i).getId(), "Updated by"+assignTaskDTO.getAssigned_to(),strDate.toString()));
+								
+							}
+								
 						}
-							   
+						AssignTaskDailylogDTO atdl = new AssignTaskDailylogDTO();
+						
+						if(bottom_id!=null){
+
+							System.out.println("\n showList taskdetailview BOTTOM_ID bottom_id " +bottom_id);
+							String[] array=bottom_id.split("_");
+							int id=Integer.parseInt(array[1]);
+							System.out.println("\n showList taskdetailview BOTTOM_ID id " +id);
+							DailyLogDTO dailylogDTO =dailyLogService.getDailLogbyId(assign_task_id);
+
+							System.out.println("\n showList taskdetailview BOTTOM_ID toString " +dailylogDTO.toString());
+							atdl.setDailylogDTO(dailylogDTO);
+						}
 						
 						String str_shift = applicationProperties.getProperty(Constants.TYPES_ARRAY.shift.name());
 						String str_jobtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.jobtype.name());
@@ -512,18 +537,10 @@ public class AssignTaskController {
 						List<String> priority=Arrays.asList(str_priority.split(","));
 						List<String> done_percentage=Arrays.asList(str_done_percentage.split(","));
 						
-						AssignTaskDailylogDTO atdl = new AssignTaskDailylogDTO();
 						atdl.setAssignTaskDTO(assignTaskDTO);
 						atdl.setUpdatedbyDTO((ArrayList<UpdatedbyDTO>) updatedbyDTOs);
-						System.out.println("\n showList taskdetailview assign_task_id mmmmmmmmmmmmmmmmmmmmmmmm " +assign_task_id);
 						System.out.println("\n showList taskdetailview assign_task_id after " +assign_task_id);
-						if(assign_task_id>0){
-							DailyLogDTO dailyLogDTO=dailyLogService.getDailLogbyAssigntaskId(assign_task_id);
-							System.out.println("\n showList taskdetailview DailyLogDTO toString  " +dailyLogDTO.toString());
-							if(dailyLogDTO!=null)
-							atdl.setDailylogDTO(dailyLogDTO);
-							
-						}
+						
 						model.addAttribute("atdl", atdl);
 						model.addAttribute("jobtype", jobtype);
 						model.addAttribute("recordtype", recordtype);	

@@ -709,12 +709,13 @@ $(document)
                       url: "http://localhost:8080/taskdetailview",
                       data: {
                           assign_task_id: postId,
-                          title:title
+                          title:title,
+                          bottom_id:bottom_id
                       },
                       success: function (data) {
-                    	  console.log("response=data =", data);
+                   /* 	  console.log("response=data =", data);
                           console.log("response=postId =", postId);
-                               console.log("response=title =", title);
+                               console.log("response=title =", title);*/
                       }
                   });
 //            	  alert(id);
@@ -730,18 +731,12 @@ $(document)
             	
                   //get the form data and then serialize that
                   var json = JSON.parse(JSON.stringify(jQuery('#taskform').serializeObject()));
-
-                  console.log(JSON.stringify(json));
-                  var params = {
-                          "taskIds": JSON.stringify(json)
-                      }
-                  
                   $.ajax({
-                              url: '/taskdetailview',
-                              dataType: 'json',
+                              url: "/taskdetailview",
+                              dataType: "JSON",
                               type: 'POST',
-                              contentType: 'application/json; charset=utf-8',
-                              data: JSON.stringify(params),
+                              contentType: "application/json; charset=utf-8",
+                              data: JSON.stringify(json),
                               success: function(data){
                                   console.log("DATA POSTED SUCCESSFULLY"+data);
                               }
@@ -774,20 +769,6 @@ $(document)
                   return o;
               };
               
-            //utility function
-            function getFormData(data) {
-               var unindexed_array = data;
-               console.log("DATA POSTED data unindexed_array"+unindexed_array);
-               
-               var indexed_array = {};
-
-               $.map(unindexed_array, function(n, i) {
-                indexed_array[n['name']] = n['value'];
-               });
-               console.log("DATA POSTED  indexed_array  "+indexed_array);
-               
-               return indexed_array;
-            }
               $('#newdailylog').click(
                       function(event) {
                           window.location.href = "http://localhost:8080/adddailylog";

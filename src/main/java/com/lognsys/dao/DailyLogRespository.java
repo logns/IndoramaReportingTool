@@ -2,6 +2,7 @@ package com.lognsys.dao;
 
 import java.util.List;
 
+import com.lognsys.dao.dto.DailyLogBuDTO;
 import com.lognsys.dao.dto.DailyLogDTO;
 import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.model.DailyLog;
@@ -36,7 +37,8 @@ public interface DailyLogRespository {
 	 * @return
 	 */
 	public DailyLogDTO findDailyLogDTOByIdAndDescription(String description,Integer id);
-	public DailyLogDTO findDailyLogDTOByAssigntaskId(Integer assign_task_id);
+	public DailyLogDTO findDailyLogDTOById(Integer id);
+	public DailyLogBuDTO findDailyLogDTOBuByDailyLogId(Integer dailylog_id);
 	
 	/**
 	 * Delete DailyLogDTO by id
