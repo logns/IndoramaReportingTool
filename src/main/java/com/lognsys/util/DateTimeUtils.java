@@ -6,23 +6,25 @@ import java.util.Date;
 
 public class DateTimeUtils {
 	String currentdate,  databaseDate;
-	Date date1 ,date2;
-	  public DateTimeUtils(String currentdate, String databaseDate) {
+	
+	  public DateTimeUtils() {
 		super();
-		this.currentdate = currentdate;
-		this.databaseDate = databaseDate;
+		
 	}
 
 	//1 minute = 60 seconds
 	//1 hour = 60 x 60 = 3600
 	//1 day = 3600 x 24 = 86400
-	public String printDifference(){
-		 try {
+	public String printDifference(String databaseDate , String currentdate){
+		 Date date1 = null;
+		 Date date2 = null;
+		try {
+			
 			  SimpleDateFormat simpleDateFormat =
 		                new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
-			 date1 = simpleDateFormat.parse(this.currentdate );
-			 date2 = simpleDateFormat.parse(this.databaseDate );
+			 date1 = simpleDateFormat.parse(databaseDate );
+			 date2 = simpleDateFormat.parse(currentdate );
 
 		  } catch (ParseException e) {
 			e.printStackTrace();

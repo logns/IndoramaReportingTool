@@ -774,5 +774,12 @@ $(document)
                           window.location.href = "http://localhost:8080/adddailylog";
                           event.preventDefault();
                       });
-           
+              function getEachVaue(data)  
+              {                      
+                  for(var i=0; i<data.length; i++)  
+                  {  
+                       alert("Month : " + JSON.stringify(data[i]));  
+                       
+                  }  
+             }  
  }); //end of document jQuery

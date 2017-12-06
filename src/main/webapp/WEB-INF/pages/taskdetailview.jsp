@@ -103,16 +103,16 @@
 					<div class="container col-sm-12" id="warehouseValue">
 
 						<div class="box">
-							<c:forEach items="${updatedbyDTOs}" var="dailylogDTO"
-								varStatus="loop">
+							<c:forEach items="${atdl.dailyLogDTOs}" var="dailylogDTO"
+								varStatus="pStatus">
 
 								<div class="top" id="top_${dailylogDTO.id}">
 						
 							<input type="hidden" >
 								<c:out value="${dailylogDTO.id}"></c:out></input>
 									<a data-id="top_${dailylogDTO.id}" href="#"> <c:out
-											value="${dailylogDTO.updaterby_realname}"></c:out> <c:out
-											value="${dailylogDTO.updated_time}"></c:out>
+											value="${dailylogDTO.assigned_to}"></c:out> <c:out
+											value="${dailylogDTO.last_edit}"></c:out>
 									</a>
 								</div>
 								<div class="bottom" id="bottom_${dailylogDTO.id}">
@@ -125,7 +125,7 @@
 					
 										<div class="col-sm-6 form-group">
 											<label>Shift</label>
-											<form:select path="dailylogDTO.shift"
+											<form:select path="dailyLogDTOs[${pStatus.index}].shift"
 												class="form-control text ui-widget-content ui-corner-all">
 												<form:options id="shift" items="${shift}"></form:options>
 											</form:select>
@@ -136,21 +136,21 @@
 											<form:textarea id="machine"
 												placeholder="Enter Machine details Here.." rows="2"
 												class="form-control text ui-widget-content ui-corner-all"
-												path="dailylogDTO.machine" />
+												path="dailyLogDTOs[${pStatus.index}].machine" />
 										</div>
 										<div class="col-sm-12 form-group">
 											<label>Problem Description</label>
 											<form:textarea id="description"
 												placeholder="Enter Description details Here.." rows="2"
 												class="form-control text ui-widget-content ui-corner-all"
-												path="dailylogDTO.description" />
+												path="dailyLogDTOs[${pStatus.index}].description" />
 										</div>
 										<div class="col-sm-6 form-group">
 											<label>Time From</label>
 											<div class="input-group bootstrap-timepicker timepicker">
 												<form:input id="timepicker1" type="text"
 													class="form-control input-small"
-													path="dailylogDTO.timefrom" />
+													path="dailyLogDTOs[${pStatus.index}].timefrom" />
 												<span class="input-group-addon"><i
 													class="glyphicon glyphicon-time"></i></span>
 											</div>
@@ -159,7 +159,7 @@
 											<label>Time To</label>
 											<div class="input-group bootstrap-timepicker timepicker">
 												<form:input id="timepicker2" type="text"
-													class="form-control input-small" path="dailylogDTO.timeto" />
+													class="form-control input-small" path="dailyLogDTOs[${pStatus.index}].timeto" />
 												<span class="input-group-addon"><i
 													class="glyphicon glyphicon-time"></i></span>
 											</div>
@@ -169,45 +169,45 @@
 											<form:textarea id="spare_parts"
 												placeholder="Enter Spare parts details Here.." rows="1"
 												class="form-control text ui-widget-content ui-corner-all"
-												path="dailylogDTO.spare_parts" />
+												path="dailyLogDTOs[${pStatus.index}].spare_parts" />
 										</div>
 										<div class="col-sm-6 form-group">
 											<label>Attend By</label>
 
-											<form:input path="dailylogDTO.attendby" id="attendby"
+											<form:input path="dailyLogDTOs[${pStatus.index}].attendby" id="attendby"
 												class="form-control text ui-widget-content ui-corner-all" />
 
 										</div>
 										<div class="col-sm-6 form-group">
 											<label>Job Type</label>
-											<form:select path="dailylogDTO.jobtype"
+											<form:select path="dailyLogDTOs[${pStatus.index}].jobtype"
 												class="form-control text ui-widget-content ui-corner-all">
 												<form:options id="jobtype" items="${jobtype}"></form:options>
 											</form:select>
 										</div>
 										<div class="col-sm-6 form-group">
 											<label>Business Unit</label>
-											<form:select path="dailylogDTO.bu"
+											<form:select path="dailyLogDTOs[${pStatus.index}].bu"
 												class="form-control text ui-widget-content ui-corner-all">
 												<form:options id="bu" items="${busList}"></form:options>
 											</form:select>
 										</div>
 										<div class="col-sm-6 form-group">
 											<label>Records Type</label>
-											<form:select path="dailylogDTO.recordtype"
+											<form:select path="dailyLogDTOs[${pStatus.index}].recordtype"
 												class="form-control text ui-widget-content ui-corner-all">
 												<form:options id="recordtype" items="${recordtype}"></form:options>
 											</form:select>
 										</div>
 										<div class="col-sm-6 form-group">
 											<label>Status</label>
-											<form:select path="dailylogDTO.status"
+											<form:select path="dailyLogDTOs[${pStatus.index}].status"
 												class="form-control text ui-widget-content ui-corner-all">
 												<form:options id="status" items="${status}"></form:options>
 											</form:select>
 										</div>
 										<div class="col-sm-12 form-group">
-									<form:button data-bid="taskupdate_${dailylogDTO.id}" id="taskupdate_${dailylogDTO.id}" type="submit" class="btn btn-lg btn-info">Submit</form:button>
+									<form:button data-bid="taskupdate_${dailylogDTO.id}" id="taskupdate_${dailylogDTO.id}"  type="submit" class="btn btn-lg btn-info">Submit</form:button>
 										</div>
 										
 									</fieldset>

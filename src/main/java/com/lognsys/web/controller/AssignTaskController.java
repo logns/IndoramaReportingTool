@@ -475,30 +475,31 @@ public class AssignTaskController {
 					
 						List<DailyLogDTO> list=dailyLogService.fetchDailyLog(title);
 						
-						List<UpdatedbyDTO> updatedbyDTOs=new ArrayList<UpdatedbyDTO>();
+//						List<UpdatedbyDTO> updatedbyDTOs=new ArrayList<UpdatedbyDTO>();
 						List<DailyLogDTO> dailyLogDTOs=new ArrayList<DailyLogDTO>();
 						
 						
+//						if(list!= null && list.size()>0){ 
+//							for(int i=0;i<list.size();i++){
+//								
+//								DateTimeUtils dateTimeUtils=new DateTimeUtils();
+//								String strDate=dateTimeUtils.printDifference(list.get(i).getLast_edit(),new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
+//								updatedbyDTOs.add(new UpdatedbyDTO(list.get(i).getId(), "Updated by"+assignTaskDTO.getAssigned_to(),strDate.toString()));
+//								
+//							}
+//								
+//						}
+//												
 						if(list!= null && list.size()>0){ 
 							for(int i=0;i<list.size();i++){
 								
-								DateTimeUtils dateTimeUtils=new DateTimeUtils(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()), list.get(i).getLast_edit());
-								String strDate=dateTimeUtils.printDifference();
-								updatedbyDTOs.add(new UpdatedbyDTO(list.get(i).getId(), "Updated by"+assignTaskDTO.getAssigned_to(),strDate.toString()));
+								DateTimeUtils dateTimeUtils=new DateTimeUtils();
+								String strDate=dateTimeUtils.printDifference(list.get(i).getLast_edit(),new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
 								
-							}
-								
-						}
-												
-						if(list!= null && list.size()>0){ 
-							for(int i=0;i<list.size();i++){
-								
-								DateTimeUtils dateTimeUtils=new DateTimeUtils(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()), list.get(i).getLast_edit());
-								String strDate=dateTimeUtils.printDifference();
 								DailyLogDTO dailylogDTO= list.get(i);
 								
 								dailylogDTO.setAssigned_to("Updated by"+assignTaskDTO.getAssigned_to());
-								
+								dailylogDTO.setLast_edit(strDate);
 								System.out.println("\n showList taskdetailview dailylogDTO ------------------------ " +dailylogDTO.toString());
 								dailyLogDTOs.add(dailylogDTO);
 							}
@@ -509,14 +510,16 @@ public class AssignTaskController {
 						AssignTaskDailylogDTO atdl = new AssignTaskDailylogDTO();
 						
 						if(bottom_id!=null){
-
+							dailyLogDTOs=new ArrayList<DailyLogDTO>();
 							String[] array=bottom_id.split("_");
 							int id=Integer.parseInt(array[1]);
 							System.out.println("\n showList taskdetailview BOTTOM_ID id " +id);
 							DailyLogDTO dailylogDTO =dailyLogService.getDailLogbyId(id);
 
 							System.out.println("\n showList taskdetailview BOTTOM_ID toString " +dailylogDTO.toString());
-							atdl.setDailylogDTO(dailylogDTO);
+//							atdl.setDailylogDTO(dailylogDTO);
+							dailyLogDTOs.add(dailylogDTO);
+							System.out.println("\n showList taskdetailview BOTTOM_ID dailyLogDTOs size " +dailyLogDTOs.size());
 						}
 						
 						String str_shift = applicationProperties.getProperty(Constants.TYPES_ARRAY.shift.name());
@@ -553,9 +556,9 @@ public class AssignTaskController {
 						List<String> done_percentage=Arrays.asList(str_done_percentage.split(","));
 						
 						atdl.setAssignTaskDTO(assignTaskDTO);
-						atdl.setUpdatedbyDTO((ArrayList<UpdatedbyDTO>) updatedbyDTOs);
-						System.out.println("\n showList taskdetailview assign_task_id after " +assign_task_id);
-						
+//						atdl.setUpdatedbyDTO((ArrayList<UpdatedbyDTO>) updatedbyDTOs);
+//						System.out.println("\n showList taskdetailview assign_task_id after " +assign_task_id);
+						atdl.setDailyLogDTOs((ArrayList<DailyLogDTO>) dailyLogDTOs);
 						model.addAttribute("atdl", atdl);
 						model.addAttribute("jobtype", jobtype);
 						model.addAttribute("recordtype", recordtype);	
@@ -565,7 +568,8 @@ public class AssignTaskController {
 						model.addAttribute("done_percentage", done_percentage);
 						model.addAttribute("busList", busList);
 						model.addAttribute("usersList", usersList);
-						model.addAttribute("updatedbyDTOs", updatedbyDTOs);
+//						model.addAttribute("updatedbyDTOs", updatedbyDTOs);
+						model.addAttribute("dailyLogDTOs", dailyLogDTOs);
 
 					return "taskdetailview";
 				} catch (Exception e) {
