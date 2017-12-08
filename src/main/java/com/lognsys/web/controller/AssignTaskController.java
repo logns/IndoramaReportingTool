@@ -84,7 +84,7 @@ public class AssignTaskController {
 	@Qualifier("applicationProperties")
 	private Properties applicationProperties;
 	/**
-	 * 
+	 * SHOW ASSINGTASKLIST by reading the data
 	 * @param model
 	 * @param request
 	 * @return
@@ -93,7 +93,7 @@ public class AssignTaskController {
 	@RequestMapping(value = "/assigntasklist", method = RequestMethod.GET)
 	public String showAssignTasks(Model model, HttpServletRequest request) {
 		try {
-//			showing assingtasklist by reading the data
+			
 			assignTaskService.readAssignTask();
 		} catch (IOException e) {
 			System.out.println("\n IOException showAssignTasks assigntasklist \n \n " +e.toString());
@@ -135,7 +135,7 @@ public class AssignTaskController {
 
 	}
 	/**
-	 * 
+	 * Add ASSIGNTASKS
 	 * @param model
 	 * @param request
 	 * @return
@@ -192,7 +192,7 @@ public class AssignTaskController {
 	
 	/**
 	 * 
-	 * Saving data to database
+	 * SAVE data to database
 	 * @param user
 	 * @param result
 	 * @param model
@@ -267,6 +267,7 @@ public class AssignTaskController {
 				dailyLogDTO.setTarget_date(assignTaskDTO.getTarget_date());
 				dailyLogDTO.setDone_percentage(assignTaskDTO.getDone_percentage());
 				
+//				add  assigntask  and dailylog
 				assignTaskService.addAssignTask(assignTaskDTO, dailyLogDTO);
 				
 			} catch (DataAccessException e) {
@@ -298,7 +299,7 @@ public class AssignTaskController {
 	
 	}
 	 /**
-		 * manageTask handles deleting and editing via @RequestParam taskIds, taskAction
+		 * MANAGETASK handles DELETE and EDIT via @RequestParam taskIds, taskAction
 		 * @param model
 		 * @param taskIds
 		 * @param taskAction
@@ -308,9 +309,7 @@ public class AssignTaskController {
 		@RequestMapping(value = "/assigntasklist", method = RequestMethod.POST)
 		public String manageTask(Model model, @RequestParam(value = "taskIds", required = false) String taskIds,
 				 @RequestParam String taskAction) throws IOException {
-			System.out.println("\n \n manageTask taskAction===== "+taskAction);
-			System.out.println("\n \n manageTask  taskIds===== "+ taskIds);
-						switch (taskAction) {
+	switch (taskAction) {
 			case "delete":
 				JSONParser parser = new JSONParser();
 				try {
@@ -424,7 +423,17 @@ public class AssignTaskController {
 			}
 			return "assigntasklist";
 		}
-// 		updating edit task details
+		
+		 /**
+		 * UPDATE  task details 
+		 *  via @ModelAttribute editassigndailylog
+		 * @param model
+		 * @param taskIds
+		 * @param taskAction
+		 * @return
+	 * @throws IOException 
+		 */
+// 		updating 
 		@RequestMapping(value = { "/editassigndailylog" }, method = RequestMethod.POST)
 		public String editAssignDailyLog(@ModelAttribute("editassigndailylog") AssignTaskDailylogDTO assignTaskDailylogDTO,BindingResult result,Model model) throws IOException {
 			try {
@@ -436,60 +445,72 @@ public class AssignTaskController {
 				throw new CustomGenericException(applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.something_went_wrong.name()));	
 			}
 		}
+		
+
+		 /**
+		 * UPDATEASSIGNED_DAILYLOG   details 
+		 *  via /taskdetailview
+		 * @param jsonData
+		 * @return
+	 * @throws IOException 
+		 */
 		@RequestMapping(value = { "/taskdetailview" }, method = RequestMethod.POST)
-		public @ResponseBody String editAssignDailyLog(@RequestBody String taskIds, HttpServletRequest request) throws IOException {
+		public @ResponseBody String updateAssigned_DailyLog(@RequestBody String jsonData, HttpServletRequest request) throws IOException {
 			try {
 				JSONParser parser = new JSONParser();
 				try {
-					Object obj = parser.parse(taskIds);
-					System.out.println("\n editAssignDailyLog taskdetailview obj ------------------------ " +obj.toString());
+//					JSON parsing
+					Object obj = parser.parse(jsonData);
+					System.out.println("\n updateAssigned_DailyLog taskdetailview obj ------------------------ " +obj.toString());
+					
 					JSONObject jsonObject = (JSONObject)obj;
+					
+//					getting assigntask  and dailylog parsed data in ASSIGNTASKDAILYLOG_DTO
 					AssignTaskDailylogDTO assignTaskDailylogDTO=assignTaskService.parseJsonToAssigntaskDailyLogDTO(jsonObject);
-					System.out.println("\n editAssignDailyLog taskdetailview obj ------------------------ " +assignTaskDailylogDTO.getAssignTaskDTO().toString());
-					System.out.println("\n editAssignDailyLog taskdetailview obj ------------------------ " +assignTaskDailylogDTO.getDailylogDTO().toString());
+				
+					System.out.println("\n updateAssigned_DailyLog taskdetailview obj ------------------------ " +assignTaskDailylogDTO.getAssignTaskDTO().toString());
+					System.out.println("\n updateAssigned_DailyLog taskdetailview obj ------------------------ " +assignTaskDailylogDTO.getDailylogDTO().toString());
 
+//					This flag says when we update dailylog with assigntask  than set true else if we update assigntask  by editassigndailylog than  no daily log will  update
 					boolean isDailyLogUpdate=true;
 					assignTaskService.updateAssigntask(assignTaskDailylogDTO,isDailyLogUpdate);
 					
 				}
 				catch (ParseException e) {
-					// TODO: handle exception
+					System.out.println("\n updateAssigned_DailyLog taskdetailview ParseException ------------------------ " +e.toString());
 				}
-				
 				return "taskdetailview";
 			} catch (Exception e) {
 				System.out.println("\n Exception /taskdetailview \n \n " +e.toString());
 				throw new CustomGenericException(applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.something_went_wrong.name()));	
 			}
 		}
+
+		 /**
+		 * show Task with  dailylog when  clicked on assigntask  TITLE via assigntasklist form 
+		 *   @RequestParam("title") String title
+		 *   @RequestParam("assign_task_id") int assign_task_id
+		 *   @RequestParam(value = "bottom_id", required = false) String bottom_id will  give us the exact view or container  which  we open and close (toggle)
+		 * @param jsonData
+		 * @return
+	 * @throws IOException 
+		 */
 		 @RequestMapping(value = "/taskdetailview", method = RequestMethod.GET)
 			public String showList(@RequestParam("title") String title,@RequestParam("assign_task_id") int assign_task_id,
-					Model model, HttpServletRequest request,@RequestParam(value = "bottom_id", required = false) String bottom_id) throws IOException {
-				try {
-					
-					
+					Model model, HttpServletRequest request,
+					@RequestParam(value = "bottom_id", required = false) String bottom_id)
+					throws IOException {
+			 try {
 					title =title.replace("%20", " ");
-					System.out.println("\n showList taskdetailview title " +title);
-					
+//					extracting title of assigntask
 						AssignTaskDTO assignTaskDTO=assignTaskService.getAssigntDTObyTitle(title);
 					
+//						getting dailylog list at first
 						List<DailyLogDTO> list=dailyLogService.fetchDailyLog(title);
 						
-//						List<UpdatedbyDTO> updatedbyDTOs=new ArrayList<UpdatedbyDTO>();
+//						this list is when user click on list.item  this list populate item in it when user click  on submit
 						List<DailyLogDTO> dailyLogDTOs=new ArrayList<DailyLogDTO>();
-						
-						
-//						if(list!= null && list.size()>0){ 
-//							for(int i=0;i<list.size();i++){
-//								
-//								DateTimeUtils dateTimeUtils=new DateTimeUtils();
-//								String strDate=dateTimeUtils.printDifference(list.get(i).getLast_edit(),new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
-//								updatedbyDTOs.add(new UpdatedbyDTO(list.get(i).getId(), "Updated by"+assignTaskDTO.getAssigned_to(),strDate.toString()));
-//								
-//							}
-//								
-//						}
-//												
+											
 						if(list!= null && list.size()>0){ 
 							for(int i=0;i<list.size();i++){
 								
@@ -498,30 +519,36 @@ public class AssignTaskController {
 								
 								DailyLogDTO dailylogDTO= list.get(i);
 								
-								dailylogDTO.setAssigned_to("Updated by"+assignTaskDTO.getAssigned_to());
+								dailylogDTO.setAssigned_to("Updated by \t \t"+assignTaskDTO.getAssigned_to());
 								dailylogDTO.setLast_edit(strDate);
 								System.out.println("\n showList taskdetailview dailylogDTO ------------------------ " +dailylogDTO.toString());
 								dailyLogDTOs.add(dailylogDTO);
 							}
 							System.out.println("\n showList taskdetailview dailyLogDTOs size------------------------ " +dailyLogDTOs.size());
-							
-								
 						}
 						AssignTaskDailylogDTO atdl = new AssignTaskDailylogDTO();
 						
+//						this bottom_id will  get dailylog id append with  bottom keywork(eg. bottom_111 ) when  we slide the toggle
 						if(bottom_id!=null){
 							dailyLogDTOs=new ArrayList<DailyLogDTO>();
 							String[] array=bottom_id.split("_");
+							
+//							extacting the id
 							int id=Integer.parseInt(array[1]);
-							System.out.println("\n showList taskdetailview BOTTOM_ID id " +id);
-							DailyLogDTO dailylogDTO =dailyLogService.getDailLogbyId(id);
 
-							System.out.println("\n showList taskdetailview BOTTOM_ID toString " +dailylogDTO.toString());
-//							atdl.setDailylogDTO(dailylogDTO);
+//							getting dailylog by id from dailylogservice
+							DailyLogDTO dailylogDTO =dailyLogService.getDailLogbyId(id);
+							dailylogDTO.setAssign_task_title(assignTaskDTO.getTitle());
+							dailylogDTO.setAssigned_to(assignTaskDTO.getAssigned_to());
+						
+//							adding in arraylist
 							dailyLogDTOs.add(dailylogDTO);
 							System.out.println("\n showList taskdetailview BOTTOM_ID dailyLogDTOs size " +dailyLogDTOs.size());
+
+//							adding in modelattribute
+							atdl.setDailylogDTO(dailylogDTO);
 						}
-						
+
 						String str_shift = applicationProperties.getProperty(Constants.TYPES_ARRAY.shift.name());
 						String str_jobtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.jobtype.name());
 						String str_recordtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.recordtype.name());
@@ -538,7 +565,6 @@ public class AssignTaskController {
 						}
 						
 						List<UsersDTO> listOfUsersDTO = userService.getUsers();
-						System.out.println("\n showList taskdetailview listOfUsersDTO size " +listOfUsersDTO.size());
 						
 						// Adding data to list from RolesDTO
 						List<String> usersList = new ArrayList<String>();
@@ -556,8 +582,7 @@ public class AssignTaskController {
 						List<String> done_percentage=Arrays.asList(str_done_percentage.split(","));
 						
 						atdl.setAssignTaskDTO(assignTaskDTO);
-//						atdl.setUpdatedbyDTO((ArrayList<UpdatedbyDTO>) updatedbyDTOs);
-//						System.out.println("\n showList taskdetailview assign_task_id after " +assign_task_id);
+//						sending to jstl  form
 						atdl.setDailyLogDTOs((ArrayList<DailyLogDTO>) dailyLogDTOs);
 						model.addAttribute("atdl", atdl);
 						model.addAttribute("jobtype", jobtype);
@@ -568,7 +593,6 @@ public class AssignTaskController {
 						model.addAttribute("done_percentage", done_percentage);
 						model.addAttribute("busList", busList);
 						model.addAttribute("usersList", usersList);
-//						model.addAttribute("updatedbyDTOs", updatedbyDTOs);
 						model.addAttribute("dailyLogDTOs", dailyLogDTOs);
 
 					return "taskdetailview";

@@ -16,6 +16,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.gson.JsonObject;
 import com.lognsys.dao.dto.AssignTaskDTO;
 import com.lognsys.dao.dto.AssignTaskDailylogDTO;
 import com.lognsys.dao.dto.DailyLogBuDTO;
@@ -275,28 +276,35 @@ public Hashtable<String, String> getHashUpdatedby() {
 		AssignTaskDailylogDTO assignTaskDailylogDTO=new AssignTaskDailylogDTO();
 		
 		AssignTaskDTO assignTaskDTO=new AssignTaskDTO();
-		assignTaskDTO.setId(Integer.parseInt(jsonObject.get("assignTaskDTO.id").toString()));
+		int indexnumber=Integer.parseInt(jsonObject.get("indexnumber").toString());
+		System.out.println("\n tasks indexnumber : "+indexnumber);
+		
+		JSONObject tasks=(JSONObject) jsonObject.get("taskIds");
+		System.out.println("\n tasks : "+tasks);
+		
+		assignTaskDTO.setId(Integer.parseInt(tasks.get("assignTaskDTO.id").toString()));
 		System.out.println("\n "+assignTaskDTO.getId());
 		
-		assignTaskDTO.setTarget_date(jsonObject.get("assignTaskDTO.target_date").toString());
+		assignTaskDTO.setTarget_date(tasks.get("assignTaskDTO.target_date").toString());
 		System.out.println("\n "+assignTaskDTO.getTarget_date());
 		
-		assignTaskDTO.setTitle(jsonObject.get("assignTaskDTO.title").toString());
+		assignTaskDTO.setTitle(tasks.get("assignTaskDTO.title").toString());
 		System.out.println("\n "+assignTaskDTO.getTitle());
 		
-		assignTaskDTO.setDone_percentage(jsonObject.get("assignTaskDTO.done_percentage").toString());
+		assignTaskDTO.setDone_percentage(tasks.get("assignTaskDTO.done_percentage").toString());
 		System.out.println("\n "+assignTaskDTO.getDone_percentage());
 		
-		assignTaskDTO.setPriority(jsonObject.get("assignTaskDTO.priority").toString());
+		assignTaskDTO.setPriority(tasks.get("assignTaskDTO.priority").toString());
 		System.out.println("\n "+assignTaskDTO.getPriority());
 		
-		assignTaskDTO.setAssigned_to(jsonObject.get("assignTaskDTO.assigned_to").toString());
+		assignTaskDTO.setAssigned_to(tasks.get("assignTaskDTO.assigned_to").toString());
 		System.out.println("\n "+assignTaskDTO.getAssigned_to());
+		
 		
 		
 		DailyLogDTO dailyLogDTO=new DailyLogDTO();
 		
-		dailyLogDTO.setId(Integer.parseInt(jsonObject.get("dailylogDTO.id").toString()));
+		dailyLogDTO.setId(Integer.parseInt(tasks.get("dailyLogDTOs["+indexnumber+"].id").toString()));
 		System.out.println("\n"+dailyLogDTO.getId());
 		
 		dailyLogDTO.setAssign_task_id(assignTaskDTO.getId());
@@ -305,40 +313,40 @@ public Hashtable<String, String> getHashUpdatedby() {
 		dailyLogDTO.setAssign_task_title(assignTaskDTO.getTitle().toString());
 		System.out.println("\n "+dailyLogDTO.getAssign_task_title());
 		
-		dailyLogDTO.setShift(jsonObject.get("dailylogDTO.shift").toString());
+		dailyLogDTO.setShift(tasks.get("dailyLogDTOs["+indexnumber+"].shift").toString());
 		System.out.println("\n "+dailyLogDTO.getShift());
 		
-		dailyLogDTO.setBu(jsonObject.get("dailylogDTO.bu").toString());
+		dailyLogDTO.setBu(tasks.get("dailyLogDTOs["+indexnumber+"].bu").toString());
 		System.out.println("\n "+dailyLogDTO.getBu());
 		
 		dailyLogDTO.setDone_percentage(assignTaskDTO.getDone_percentage().toString());
 		System.out.println("\n "+dailyLogDTO.getDone_percentage());
 		
-		dailyLogDTO.setSpare_parts(jsonObject.get("dailylogDTO.spare_parts").toString());
+		dailyLogDTO.setSpare_parts(tasks.get("dailyLogDTOs["+indexnumber+"].spare_parts").toString());
 		System.out.println("\n"+dailyLogDTO.getSpare_parts());
 		
-		dailyLogDTO.setTimefrom(jsonObject.get("dailylogDTO.timefrom").toString());
+		dailyLogDTO.setTimefrom(tasks.get("dailyLogDTOs["+indexnumber+"].timefrom").toString());
 		System.out.println("\n"+dailyLogDTO.getTimefrom());
 		
-		dailyLogDTO.setTimeto(jsonObject.get("dailylogDTO.timeto").toString());
+		dailyLogDTO.setTimeto(tasks.get("dailyLogDTOs["+indexnumber+"].timeto").toString());
 		System.out.println("\n"+dailyLogDTO.getTimeto());
 		
-		dailyLogDTO.setMachine(jsonObject.get("dailylogDTO.machine").toString());
+		dailyLogDTO.setMachine(tasks.get("dailyLogDTOs["+indexnumber+"].machine").toString());
 		System.out.println("\n"+dailyLogDTO.getMachine());
 		
-		dailyLogDTO.setDescription(jsonObject.get("dailylogDTO.description").toString());
+		dailyLogDTO.setDescription(tasks.get("dailyLogDTOs["+indexnumber+"].description").toString());
 		System.out.println("\n"+dailyLogDTO.getDescription());
 		
-		dailyLogDTO.setAttendby(jsonObject.get("dailylogDTO.attendby").toString());
+		dailyLogDTO.setAttendby(tasks.get("dailyLogDTOs["+indexnumber+"].attendby").toString());
 		System.out.println("\n"+dailyLogDTO.getAttendby());
 		
-		dailyLogDTO.setJobtype(jsonObject.get("dailylogDTO.jobtype").toString());
+		dailyLogDTO.setJobtype(tasks.get("dailyLogDTOs["+indexnumber+"].jobtype").toString());
 		System.out.println("\n"+dailyLogDTO.getJobtype());
 		
-		dailyLogDTO.setRecordtype(jsonObject.get("dailylogDTO.recordtype").toString());
+		dailyLogDTO.setRecordtype(tasks.get("dailyLogDTOs["+indexnumber+"].recordtype").toString());
 		System.out.println("\n"+dailyLogDTO.getRecordtype());
 		
-		dailyLogDTO.setStatus(jsonObject.get("dailylogDTO.status").toString());
+		dailyLogDTO.setStatus(tasks.get("dailyLogDTOs["+indexnumber+"].status").toString());
 		System.out.println("\n"+dailyLogDTO.getStatus());
 		
 		dailyLogDTO.setTarget_date(assignTaskDTO.getTarget_date().toString());

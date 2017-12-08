@@ -700,4 +700,10 @@ Responsive: Portrait tablets and up @media screen and (min-width: 768px) {
 .container .box .bottom {
   padding: 0px;
   display: none;
+ 
 }
+.des{
+	
+  display: block;
+}
+

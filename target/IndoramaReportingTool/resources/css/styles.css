@@ -1,0 +1,709 @@
+@CHARSET "UTF-8";
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+}
+/** start header **/
+
+#site_header {
+    display: block;
+    background-color: transparent;
+    height: auto;
+    display: block;
+    position: relative;
+    overflow: hidden;
+}
+div.imgOuter {
+    float: left;
+    position: relative;
+    width: 33.3333%;
+    padding-bottom: 25%;
+    overflow:hidden;
+    clear:none;
+}
+
+div.imgInner {
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right: 0;
+    overflow:hidden;
+    text-align:center;
+    border:2px solid #444;
+    cursor:pointer;
+}
+div.imgInner>img {
+    display:block;
+    position:absolute;
+    top:50%;
+    left:50%;
+}
+#site_header center {
+    margin: 0;
+    padding: 0;
+    height: 100px;
+}
+/** end of header **/
+/** body **/
+
+#site_body {
+    padding: 0;
+    margin: 0;
+    position: auto;
+    height: auto;
+}
+/** end of body **/
+/** start of login start **/
+
+.login_main {
+    max-width: 320px;
+    margin: 20px auto;
+}
+/* .login-or {
+	position: relative;
+	font-size: 18px;
+	color: #aaa;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.span-or {
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: -2px;
+	margin-left: -25px;
+	background-color: #fff;
+	width: 50px;
+	text-align: center;
+}
+
+.hr-or {
+	background-color: #cdcdcd;
+	height: 1px;
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+} */
+
+.container_login {
+    height: 525px;
+    margin: auto;
+    padding: 50% auto;
+}
+.login_label_color {
+    color: #cdcdcd;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    line-height: 300%;
+}
+/** end of login**/
+/** start of footer **/
+
+#site_footer .container_footer {
+    margin: 0;
+    width: 100%;
+    background-color: #000;
+    opacity: 0.5;
+    height: 50px;
+    overflow: hidden;
+    width: 100%;
+}
+.social-icon {
+    list-style: none;
+    padding: 2px;
+    margin: 0;
+}
+.social-icon li {
+    display: inline-block;
+    text-align: center;
+}
+.social-icon a {
+    display: block;
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+.social-icon a {
+    background: rgba(255, 255, 255, 0.85);
+    /* social icon background color */
+    
+    color: #000;
+    /* social icon color */
+}
+.social-icon a:hover {
+    background: rgba(255, 255, 255, 0.25);
+    /* social icon hover background color */
+    
+    color: #fff;
+    /* social icon hover color */
+}
+.footer_text {
+    color: #FFF;
+    list-style: none;
+    height: inherit;
+    float: left;
+    margin-left: 42%;
+}
+/** end of footer **/
+/* /** Registration Form**/
+
+@import "font-awesome.min.css";
+@import "font-awesome-ie7.min.css";
+Space out content a bit body {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+Everything but the jumbotron gets side spacing for mobile first views .header,
+.marketing,
+.footer {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+Custom page header .header {
+    border-bottom: 1px solid #e5e5e5;
+}
+Make the masthead heading the same height as the navigation .header h3 {
+    padding-bottom: 19px;
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+}
+Custom page footer .footer {
+    padding-top: 19px;
+    color: #777;
+    border-top: 1px solid #e5e5e5;
+}
+Customize container @media ( min-width: 768px) {
+    .container {
+        max-width: 730px;
+    }
+}
+.container-narrow>hr {
+    margin: 30px 0;
+}
+Main marketing message and sign up button .jumbotron {
+    text-align: center;
+    border-bottom: 1px solid #e5e5e5;
+}
+.jumbotron .btn {
+    padding: 14px 24px;
+    font-size: 21px;
+}
+Supporting marketing content .marketing {
+    margin: 40px 0;
+}
+.marketing p+h4 {
+    margin-top: 28px;
+}
+Responsive: Portrait tablets and up @media screen and (min-width: 768px) {
+    Remove the padding we set earlier .header,
+    .marketing,
+    .footer {
+        padding-right: 0;
+        padding-left: 0;
+    }
+    Space out the masthead . header {
+        margin-bottom: 30px;
+    }
+    Remove the bottom border on the jumbotron for visual effect .jumbotron {
+        border-bottom: 0;
+    }
+}
+* /
+/** end of Registration Form **/
+/**Login Form Error css**/
+
+.error {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+.msg {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+/** User List form by monika**/
+
+.btn-group .btn {
+    transition: background-color .3s ease;
+}
+.panel-table .panel-body {
+    padding: 0;
+}
+.table>thead>tr>th {
+    border-bottom: none;
+}
+.panel-footer,
+.panel-table .panel-body .table-bordered {
+    border-style: none;
+    margin: 10;
+}
+.panel-table .panel-body .table-bordered>thead>tr>th:first-of-type {
+    text-align: center;
+    width: 50px;
+}
+.panel-table .panel-body .table-bordered>thead>tr>th.col-tools {
+    text-align: center;
+    width: 120px;
+}
+.panel-table .panel-body .table-bordered>thead>tr>th:last-of-type,
+.panel-table .panel-body .table-bordered>tbody>tr>td:last-of-type {
+    border-right: 0;
+}
+.panel-table .panel-body .table-bordered>thead>tr>th:first-of-type,
+.panel-table .panel-body .table-bordered>tbody>tr>td:first-of-type {
+    border-left: 0;
+}
+.panel-table .panel-body .table-bordered>tbody>tr:first-of-type>td {
+    border-bottom: 0;
+}
+.panel-table .panel-body .table-bordered>thead>tr:first-of-type>th {
+    border-top: 0;
+}
+.pagination>li>a,
+.pagination>li>span {
+    border-radius: 50% !important;
+    margin: 0 5px;
+}
+.pagination {
+    margin: 0;
+}
+/** form multiple bootstrap buttons **/
+
+.rbtnMargin {
+    margin-left: 5px;
+}
+/** Dialog Modal for userlist, dramalist  Overlay Background Color **/
+
+.ui-widget-overlay {
+    opacity: .50 !important;
+    /* Make sure to change both of these, as IE only sees the second one */
+    
+    filter: Alpha(Opacity 50) !important;
+    background-color: rgb(50, 50, 50) !important;
+    /* This will make it darker */
+}
+.ui-dialog .ui-state-error {
+    padding: .3em;
+}
+.validateTips {
+    border: 1px solid transparent;
+    padding: 0.3em;
+}
+.ui-draggable,
+.ui-droppable {
+    background-position: top;
+}
+/**for errors**/
+
+#errors ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.glyph {
+    fill: currentColor;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    width: 70%;
+    height: 70%;
+}
+.card_button_del {
+    display: inline-block !important;
+}
+.card_subgroup {
+    display: inline-block !important;
+}
+}
+}
+@CHARSET "UTF-8";
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+}
+/** start header **/
+
+#site_header {
+    display: block;
+    background-color: transparent;
+    height: auto;
+    display: block;
+    position: relative;
+    overflow: hidden;
+}
+#site_header center {
+    margin: 0;
+    padding: 0;
+    height: 100px;
+}
+/** end of header **/
+/** body **/
+
+#site_body {
+    padding: 0;
+    margin: 0;
+    position: auto;
+    height: auto;
+}
+/** end of body **/
+/** start of login start **/
+
+.login_main {
+    max-width: 320px;
+    margin: 20px auto;
+}
+/* .login-or {
+	position: relative;
+	font-size: 18px;
+	color: #aaa;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.span-or {
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: -2px;
+	margin-left: -25px;
+	background-color: #fff;
+	width: 50px;
+	text-align: center;
+}
+
+.hr-or {
+	background-color: #cdcdcd;
+	height: 1px;
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+} */
+
+.container_login {
+    height: 525px;
+    margin: auto;
+    padding: 50% auto;
+}
+.login_label_color {
+    color: #cdcdcd;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    line-height: 300%;
+}
+/** end of login**/
+/** start of footer **/
+
+#site_footer .container_footer {
+    margin: 0;
+    width: 100%;
+    background-color: #000;
+    opacity: 0.5;
+    height: 50px;
+    overflow: hidden;
+    width: 100%;
+}
+.social-icon {
+    list-style: none;
+    padding: 2px;
+    margin: 0;
+}
+.social-icon li {
+    display: inline-block;
+    text-align: center;
+}
+.social-icon a {
+    display: block;
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+.social-icon a {
+    background: rgba(255,
+    255,
+    255,
+    0.85);
+    /* social icon background color */
+    
+    color: #000;
+    /* social icon color */
+}
+.social-icon a:hover {
+    background: rgba(255,
+    255,
+    255,
+    0.25);
+    /* social icon hover background color */
+    
+    color: #fff;
+    /* social icon hover color */
+}
+.footer_text {
+    color: #FFF;
+    list-style: none;
+    height: inherit;
+    float: left;
+    margin-left: 42%;
+}
+/** end of footer **/
+/* /** Registration Form**/
+
+@import "font-awesome.min.css";
+@import "font-awesome-ie7.min.css";
+Space out content a bit body {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+Everything but the jumbotron gets side spacing for mobile first views .header,
+.marketing,
+.footer {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+Custom page header .header {
+    border-bottom: 1px solid #e5e5e5;
+}
+Make the masthead heading the same height as the navigation .header h3 {
+    padding-bottom: 19px;
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+}
+Custom page footer .footer {
+    padding-top: 19px;
+    color: #777;
+    border-top: 1px solid #e5e5e5;
+}
+Customize container @media ( min-width: 768px) {
+    .container {
+        max-width: 730px;
+    }
+}
+.container-narrow>hr {
+    margin: 30px 0;
+}
+Main marketing message and sign up button .jumbotron {
+    text-align: center;
+    border-bottom: 1px solid #e5e5e5;
+}
+.jumbotron .btn {
+    padding: 14px 24px;
+    font-size: 21px;
+}
+Supporting marketing content .marketing {
+    margin: 40px 0;
+}
+.marketing p+h4 {
+    margin-top: 28px;
+}
+Responsive: Portrait tablets and up @media screen and (min-width: 768px) {
+    Remove the padding we set earlier .header,
+    .marketing,
+    .footer {
+        padding-right: 0;
+        padding-left: 0;
+    }
+    Space out the masthead . header {
+        margin-bottom: 30px;
+    }
+    Remove the bottom border on the jumbotron for visual effect .jumbotron {
+        border-bottom: 0;
+    }
+}
+* /
+/** end of Registration Form **/
+/**Login Form Error css**/
+
+.error {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+.msg {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+/** User List form by monika**/
+
+.btn-group .btn {
+    transition: background-color .3s ease;
+}
+.panel-table .panel-body {
+    padding: 0;
+}
+.table>thead>tr>th {
+    border-bottom: none;
+}
+.panel-footer,
+.panel-table .panel-body .table-bordered {
+    border-style: none;
+    margin: 10;
+}
+.panel-table .panel-body .table-bordered>thead>tr>th:first-of-type {
+    text-align: center;
+    width: 50px;
+}
+.panel-table .panel-body .table-bordered>thead>tr>th.col-tools {
+    text-align: center;
+    width: 120px;
+}
+.panel-table .panel-body .table-bordered>thead>tr>th:last-of-type,
+.panel-table .panel-body .table-bordered>tbody>tr>td:last-of-type {
+    border-right: 0;
+}
+.panel-table .panel-body .table-bordered>thead>tr>th:first-of-type,
+.panel-table .panel-body .table-bordered>tbody>tr>td:first-of-type {
+    border-left: 0;
+}
+.panel-table .panel-body .table-bordered>tbody>tr:first-of-type>td {
+    border-bottom: 0;
+}
+.panel-table .panel-body .table-bordered>thead>tr:first-of-type>th {
+    border-top: 0;
+}
+.pagination>li>a,
+.pagination>li>span {
+    border-radius: 50% !important;
+    margin: 0 5px;
+}
+.pagination {
+    margin: 0;
+}
+/** form multiple bootstrap buttons **/
+
+.rbtnMargin {
+    margin-left: 5px;
+}
+/** Dialog Modal for userlist, dramalist  Overlay Background Color **/
+
+.ui-widget-overlay {
+    opacity: .50 !important;
+    /* Make sure to change both of these, as IE only sees the second one */
+    
+    filter: Alpha(Opacity 50) !important;
+    background-color: rgb(50,
+    50,
+    50) !important;
+    /* This will make it darker */
+}
+.ui-dialog .ui-state-error {
+    padding: .3em;
+}
+.validateTips {
+    border: 1px solid transparent;
+    padding: 0.3em;
+}
+.ui-draggable,
+.ui-droppable {
+    background-position: top;
+}
+/**for errors**/
+
+#errors ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.glyph {
+    fill: currentColor;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    width: 70%;
+    height: 70%;
+}
+.card_button_del {
+    display: inline-block !important;
+}
+.card_subgroup {
+    display: inline-block !important;
+}
+
+.line_break {
+	clear: both;
+	margin : 10px 0;
+}
+
+/* jquery ui dialog css*/
+.ui-dialog .ui-dialog-title {
+  text-align: center;
+  font-size: 110% !important;
+    color: #FFFFFF !important;
+}
+
+.ui-dialog > .ui-widget-header {background: #3399ff;}
+
+/*.ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-close {
+    display: none;
+}*/
+.the-legend {
+    border-style: none;
+    border-width:1;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 10px;
+    width: auto;
+    padding:10px 10px 10px 10px;
+    border: 1px solid #e0e0e0;
+}
+.the-fieldset {
+    border:  solid #e0e0e0;
+    padding:10px 10px 10px 10px;
+}
+
+.container .box .top {
+    text-align: left;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.container .box .bottom .des {
+  padding: 0px;
+  display: none;
+ 
+}
+.des{
+	
+  display: block;
+}
+

@@ -691,14 +691,17 @@ $(document)
             	  var id = $(this).data("id");
                   console.log("data --- id - " + id);
                   var fields = id.split('_');
-                  
-                  var title = jQuery("textarea#title").val();
-                 
+                var title = jQuery("textarea#title").val();
                   
                   console.log("data --- fields - " + fields);
                   var pre = fields[0];
                   var postId = fields[1];
 
+                  var desc= "desc_"+postId;
+                  console.log("data --- desc - " + desc);
+                  $("#desc").hide();
+                  document.getElementById(desc).style.display='none';
+                  
                   console.log("data --- pre - " + pre);
                   console.log("data --- postId - " + postId);
                   var bottom_id = "bottom_"+postId;
@@ -720,23 +723,38 @@ $(document)
                   });
 //            	  alert(id);
             	});
-              
-//              show hide 
+                     
+//              buttton  onclick
               $("[data-bid]").click(
             	   function(event) {
-            	  var id =$(this).attr('id');
-                  console.log("data --- id - " + id);
-                  
-//            	  alert(id);
-            	
-                  //get the form data and then serialize that
+            		   var id =$(this).attr('id');
+            		   var name =$(this).attr('name');
+                       console.log("DATA POSTED name ===="+name);        
+                       var fields = name.split('[');
+                       var fields1 = fields[0];
+                       var fields2 = fields[1];
+                       console.log("data --- fields1 - " + fields1);
+                       console.log("data --- fields2 - " + fields2);
+                        
+                       var value = fields2.split(']');
+                       var value1 = value[0];
+                       var value2 = value[1];
+                       console.log("data --- value1 - " + value1);
+                       console.log("data --- value2 - " + value2);
+                        
+                       //get the form data and then serialize that
                   var json = JSON.parse(JSON.stringify(jQuery('#taskform').serializeObject()));
+                  var params={
+                		  "taskIds":json,
+                  			"indexnumber" :value1
+                  }
+                  
                   $.ajax({
                               url: "/taskdetailview",
                               dataType: "JSON",
                               type: 'POST',
                               contentType: "application/json; charset=utf-8",
-                              data: JSON.stringify(json),
+                              data: JSON.stringify(params),
                               success: function(data){
                                   console.log("DATA POSTED SUCCESSFULLY"+data);
                               }
@@ -774,12 +792,6 @@ $(document)
                           window.location.href = "http://localhost:8080/adddailylog";
                           event.preventDefault();
                       });
-              function getEachVaue(data)  
-              {                      
-                  for(var i=0; i<data.length; i++)  
-                  {  
-                       alert("Month : " + JSON.stringify(data[i]));  
-                       
-                  }  
-             }  
+              
+            
  }); //end of document jQuery
