@@ -71,6 +71,7 @@ com\lognsys\web\controller\AssignTaskController.class
 com\lognsys\dao\jdbc\resultset\DailyLogResultSetExtractor.class
 com\lognsys\dao\AssignTaskRepository.class
 com\lognsys\dao\jdbc\JdbcAssignTaskRepository.class
+com\lognsys\service\MailService.class
 com\lognsys\exception\CustomGenericException.class
 com\lognsys\service\StorageProperties.class
 com\lognsys\dao\dto\AssignTaskDTO.class

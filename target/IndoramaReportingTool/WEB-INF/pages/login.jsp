@@ -34,7 +34,7 @@
 							id="inputUsernameEmail" name="username">
 					</div>
 					<div class="form-group">
-						<a class="pull-right" href="#">Forgot password?</a> <label
+						<a class="pull-right" href="${pageContext.request.contextPath}/forgotpassword">Forgot password?</a> <label
 							for="inputPassword" class="login_label_color">Password</label> <input
 							type="password" class="form-control" id="inputPassword"
 							name="password">

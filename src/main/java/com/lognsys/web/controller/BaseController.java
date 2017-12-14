@@ -35,6 +35,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.lognsys.dao.dto.BuDTO;
 import com.lognsys.dao.dto.RolesDTO;
 import com.lognsys.model.Users;
+import com.lognsys.service.MailService;
 import com.lognsys.service.UserService;
 import com.lognsys.util.FormValidator;
 
@@ -46,6 +47,8 @@ public class BaseController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	MailService mailservice;
 	/**
 	 * 
 	 * This method redirects to login page
@@ -80,6 +83,32 @@ public class BaseController {
 
 		return model;
 	}
+	@RequestMapping(value = "/forgotpassword", method = RequestMethod.GET)
+	public String showForgotPassword(Model model, HttpServletRequest request) {
+		Users email =new Users();
+		System.out.println("showForgotPassword --mailservice ");
+		
+		model.addAttribute("email", email);
+		return "forgotpassword";
+	}
+
+	@RequestMapping(value = "/forgotpassword", method = RequestMethod.POST)
+	public String forgotPassword(@ModelAttribute("email") Users email, BindingResult result, ModelMap model){
+		System.out.println("forgotPassword --email "+email.getUsername());
+		String emailid=email.getUsername();
+				System.out.println("forgotPassword --emailid "+emailid);
+		
+				mailservice.sendMail("from@gmail.com",
+				emailid,
+	    		   "Testing123",
+	    		   "Testing only \n\n Hello Spring Email Sender");
+
+		System.out.println("forgotPassword --mailservice "+mailservice);
+		
+
+		return "login";
+	}
+
 
 	/**
 	 * Returns to Dashboard page

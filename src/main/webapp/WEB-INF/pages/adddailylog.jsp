@@ -31,7 +31,8 @@
 					<form:errors path="bu" element="div" />
 					<form:errors path="jobtype" element="div" />
 					<form:errors path="recordtype" element="div" />
-					<form:errors path="status" element="div" />
+					<form:errors path="status" element="div" /><%-- 
+					<form:errors path="assign_task_id" element="div" /> --%>
 					<form:errors path="assign_task_title" element="div" />
 
 				</div>
@@ -39,6 +40,9 @@
 					<fieldset class="the-fieldset">
 						<legend class="the-legend">Daily Logs Details</legend>
 						<div class="col-sm-6 form-group">
+						<%-- <form:input type="hidden"  path="assign_task_id" id="assign_task_id"
+									class="form-control text ui-widget-content ui-corner-all" />
+				 --%>
 							<label>Targeted Date</label> <br />
 							<div class="input-group date form_datetime col-md-10" id="dates"
 								data-date-format="yyyy-mm-dd  hh:MM a" data-link-field="dates">

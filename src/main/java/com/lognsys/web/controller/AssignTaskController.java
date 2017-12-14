@@ -474,7 +474,11 @@ public class AssignTaskController {
 //					This flag says when we update dailylog with assigntask  than set true else if we update assigntask  by editassigndailylog than  no daily log will  update
 					boolean isDailyLogUpdate=true;
 					assignTaskService.updateAssigntask(assignTaskDailylogDTO,isDailyLogUpdate);
-					
+
+					if(assignTaskDailylogDTO.getDailylogDTO().getStatus().equalsIgnoreCase("closed") && assignTaskDailylogDTO.getDailylogDTO().getDone_percentage().equalsIgnoreCase("100%")){
+						
+						dailyLogService.deleteDailyLogs(assignTaskDailylogDTO.getDailylogDTO().getAssign_task_id());	
+					}
 				}
 				catch (ParseException e) {
 					System.out.println("\n updateAssigned_DailyLog taskdetailview ParseException ------------------------ " +e.toString());

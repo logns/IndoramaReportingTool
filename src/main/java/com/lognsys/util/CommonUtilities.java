@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import com.google.gson.Gson;
 
 public class CommonUtilities {
@@ -92,5 +95,18 @@ public class CommonUtilities {
 
 		return isValid;
 	}
+	/**
+	 * 
+	 * @param email
+	 * @return
+	 */
+	public static String bCryptPasswordEncoder(String password) {
+		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode(password);
 
+		System.out.println(hashedPassword);
+
+		return hashedPassword;
+	}
 }

@@ -65,4 +65,12 @@
 		<put-attribute name="footer" value="" />
 	</definition>
 	
+	<definition name="forgotpassword" extends="base_layout">
+		<put-attribute name="title" value="Indorama: FORGOT PASSWORD" />
+		<put-attribute name="body" value="/WEB-INF/pages/forgotpassword.jsp" />
+		<put-attribute name="header" value="" />
+		<put-attribute name="menu" value="" />
+		<put-attribute name="footer" value="" />
+	</definition>
+	
 </tiles-definitions>

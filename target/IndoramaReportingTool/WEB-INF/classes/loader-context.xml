@@ -11,8 +11,8 @@
 	<context:annotation-config></context:annotation-config>
 
 	<bean id="xlsResource" class="com.lognsys.loader.IngestXLSData">
-		<constructor-arg name="resource"
-			value="classpath:files/populate_database.xlsx" /> 
+		<!-- <constructor-arg name="resource"
+			value="classpath:files/populate_database.xlsx" />  -->
 	</bean>
 
 

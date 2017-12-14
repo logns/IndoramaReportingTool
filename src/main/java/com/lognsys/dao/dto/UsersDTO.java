@@ -17,6 +17,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class UsersDTO {
 	@Id
 	private int id;
+	private String password = "";
 	
 	private String realname = "";
 	
@@ -40,6 +41,20 @@ public class UsersDTO {
 
 	public UsersDTO() {
 		super();
+	}
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public UsersDTO(int id, String realname, String username, String phone, String address,

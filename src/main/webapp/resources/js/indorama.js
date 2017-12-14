@@ -697,13 +697,15 @@ $(document)
                   var pre = fields[0];
                   var postId = fields[1];
 
-                  var desc= "desc_"+postId;
+                  var desc= "#desc_"+postId;
                   console.log("data --- desc - " + desc);
-                  $("#desc").hide();
-                  document.getElementById(desc).style.display='none';
+                  if($(desc).css('display') == 'none'){ 
+                	   $(desc).show('slow'); 
+                	} else { 
+                	   $(desc).hide('slow'); 
+                	}
                   
-                  console.log("data --- pre - " + pre);
-                  console.log("data --- postId - " + postId);
+                  
                   var bottom_id = "bottom_"+postId;
                   console.log("data --- bottom_id - " + bottom_id);
                 
@@ -729,18 +731,12 @@ $(document)
             	   function(event) {
             		   var id =$(this).attr('id');
             		   var name =$(this).attr('name');
-                       console.log("DATA POSTED name ===="+name);        
                        var fields = name.split('[');
-                       var fields1 = fields[0];
                        var fields2 = fields[1];
-                       console.log("data --- fields1 - " + fields1);
-                       console.log("data --- fields2 - " + fields2);
                         
                        var value = fields2.split(']');
                        var value1 = value[0];
-                       var value2 = value[1];
                        console.log("data --- value1 - " + value1);
-                       console.log("data --- value2 - " + value2);
                         
                        //get the form data and then serialize that
                   var json = JSON.parse(JSON.stringify(jQuery('#taskform').serializeObject()));
@@ -789,9 +785,68 @@ $(document)
               
               $('#newdailylog').click(
                       function(event) {
-                          window.location.href = "http://localhost:8080/adddailylog";
+                    	  var assign_task_id =$('#assignTaskDTO_id').val();
+                    	  var assign_task_title =$('#title').val();
+
+                          console.log("DATA POSTED assign_task_title ===="+assign_task_title);         
+                          assign_task_title=assign_task_title.replace(" ","%20");
+                          console.log("DATA POSTED assign_task_title after  ===="+assign_task_title);         
+                                    
+//                         
+                         
+                          $.ajax({
+                              url: "http://localhost:8080/adddailylog",
+                              data: {
+                            	  assign_task_title: assign_task_title
+                              },
+                              success: function (data) {
+                            	  console.log("DATA POSTED data ===="+data);          
+                               window.location.href = "http://localhost:8080/adddailylog?assign_task_title="+assign_task_title;  
+                           /* 	  console.log("response=data =", data);
+                                  console.log("response=postId =", postId);
+                                       console.log("response=title =", title);*/
+                              }   
+                          });
                           event.preventDefault();
                       });
               
-            
+//  			CHECK FOR VALID PASSWORD	          
+              function onLoad(){
+            	  $("#password").keyup(checkpasswordmatch);
+            	  $("#confirmpassword").keyup(checkpasswordmatch);
+            	  $("#userdetails").submit(cansubmit);
+              }
+              function cansubmit(){
+            	  var password=$("#password").val();
+            	  var confirmpassword=$("#confirmpassword").val();
+            	 
+            	  if(password != confirmpassword){
+            		  alert("Passwords do not match");
+            	  return false;
+            	  }
+	            else{
+	            	return true;
+	            	 }
+              }
+              function checkpasswordmatch(){
+            	  var password=$("#password").val();
+            	  var confirmpassword=$("#confirmpassword").val();
+            	  if(password.length >3 || confirmpassword.length > 3){
+	            	  if(password == confirmpassword){
+	            		 $("#matchpassword").text("Passwords match");
+	            		 $("#matchpassword").addClass("valid");
+	            		 $("#matchpassword").removeClass("error");
+	 	              }
+	            	  else{
+	            			 $("#matchpassword").text("Passwords do not match");                     		  
+	                		 $("#matchpassword").addClass("error");
+	              			 $("#matchpassword").removeClass("valid");
+	           		                
+	            	  }
+            	  }
+              	  
+              }
+              $(document).ready(onLoad);
+              
+              
  }); //end of document jQuery

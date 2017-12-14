@@ -24,8 +24,7 @@
 	</bean>
 
 	<!-- Ensures that configuration properties are read from a property file -->
-	<context:property-placeholder location="classpath:database.properties"
-		order="1" ignore-unresolvable="true" />
+	<context:property-placeholder location="classpath:database.properties" order="1" ignore-unresolvable="true" />
 
 	<!-- adding all mysql queries in sql.properties -->
 	<util:properties id="sqlProperties" location="classpath:sql.properties" />

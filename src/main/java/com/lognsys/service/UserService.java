@@ -75,6 +75,11 @@ public class UserService {
 			throw new IllegalArgumentException("User already exists in database with username - " + username);
 		}
 		else{
+			if(usersDTO.getPassword()!=null){
+				usersDTO.setPassword(CommonUtilities.bCryptPasswordEncoder(usersDTO.getPassword()));
+				System.out.println("addUser users usersDTO.getPassword() "+usersDTO.getPassword());
+			}
+			System.out.println("addUser users usersDTO.toString() "+usersDTO.toString());
 
 			// adding user into db
 			int users_id = jdbcUserRepository.addUser(usersDTO);
@@ -108,13 +113,15 @@ public class UserService {
 	 */
 	public void refreshUserList() throws IOException {
 		List<UsersTable> users =null;
+		System.out.println("refreshUserList --jdbcBuRepository.getAllUsersAndBu().size() "+jdbcBuRepository.getAllUsersAndBu().size());
+		
 		if(jdbcBuRepository.getAllUsersAndBu()!=null && jdbcBuRepository.getAllUsersAndBu().size()>0)
 		{
 			users = ObjectMapper.mapToUserTable(jdbcBuRepository.getAllUsersAndBu());
 		}
 		ResourceLoader resourceLoader = new FileSystemResourceLoader();
 		Resource resource = resourceLoader
-				.getResource(applicationProperties.getProperty(Constants.JSON_FILES.realname_filename.name()));
+				.getResource(applicationProperties.getProperty(Constants.JSON_FILES.user_filename.name()));
 		String list = CommonUtilities.convertToJSON(users);
 
 		try {
@@ -239,12 +246,12 @@ public class UserService {
 	 */
 	public List<UsersDTO> getUsers() {
 
-		// Refresh list after deletion of user
+/*		// Refresh list after deletion of user
 		try {
 			refreshUserList();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 
 //		LOG.info("#getUsers - Get All Users from database");
 		List<UsersDTO> userList;

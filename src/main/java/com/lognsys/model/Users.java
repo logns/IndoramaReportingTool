@@ -17,6 +17,7 @@ import javax.persistence.Table;
 public class Users {
 
 	private int id;
+	private String password = "";
 
 	private String username = "";
 	private String realname = "";
@@ -80,6 +81,19 @@ public class Users {
 		this.bu = bu;
 	}
 
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public int getId() {
 		return id;
 	}

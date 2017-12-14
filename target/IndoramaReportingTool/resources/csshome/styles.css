@@ -62,7 +62,15 @@ p {
     background-color: #f2dede;
     border-color: #ebccd1; */
 }
-
+.valid {
+	padding: 15px;
+	margin-bottom: 0px;
+	border: 1px solid transparent;
+	border-radius: 2px;
+	color: green; /* 
+    background-color: #f2dede;
+    border-color: #ebccd1; */
+}
 a, a:hover, a:focus {
 	color: #30a5ff;
 }

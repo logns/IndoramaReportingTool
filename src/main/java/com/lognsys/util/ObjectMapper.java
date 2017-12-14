@@ -133,6 +133,7 @@ public class ObjectMapper {
 		uDTO.setCity(users.getCity());
 		uDTO.setState(users.getState());
 		uDTO.setZipcode(users.getZipcode());
+		uDTO.setPassword(users.getPassword());
 
 		return uDTO;
 

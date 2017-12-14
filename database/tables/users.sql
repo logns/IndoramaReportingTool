@@ -57,3 +57,9 @@ create index users_city_idx on users(city);
 create index users_address_idx on users(address);
 
 
+ALTER TABLE `indorama_poly`.`users` 
+ADD COLUMN `password` VARCHAR(80) NOT NULL AFTER `last_edit`;
+
+
+ALTER TABLE `indorama_poly`.`users` 
+ADD COLUMN `enabled` tinyint NOT NULL default 1  AFTER `password`;

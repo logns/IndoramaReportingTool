@@ -14,7 +14,7 @@
 			</div>
 		</div>
 		<div class="panel panel-default">
-			<form:form method="POST" action="register" modelAttribute="users">
+			<form:form method="POST" action="register" modelAttribute="users" id="userdetails" >
 				<div class="panel-body" cssClass="error">
 					<form:errors path="firstname" element="div" />
 					<form:errors path="lastname" element="div" />
@@ -25,6 +25,7 @@
 					<form:errors path="phone" element="div" />
 					<form:errors path="username" element="div" />
 					<form:errors path="birthdate" element="div" />
+					<form:errors path="password" element="div" />
 
 				</div>
 				<div class="col-sm-12 panel panel-default">
@@ -90,8 +91,25 @@
 									class="form-control text ui-widget-content ui-corner-all"
 									path="username" />
 								</div>
+								
 								</div>
-							
+							<div class="row">
+								<div class="col-sm-6 form-group">
+								<label>Password</label>
+								<form:input id="password" type="password"
+									placeholder="Enter password Here.."
+									class="form-control text ui-widget-content ui-corner-all"
+									path="password" />
+								</div>
+								<div class="col-sm-6 form-group">
+								<label>Confirm Password</label>
+								<input type="password"  id="confirmpassword"
+									placeholder="Enter confirm password Here.."
+									class="form-control text ui-widget-content ui-corner-all"
+									name="confirmpassword" />
+								</div>
+								</div>
+									<div class="row"><div id="matchpassword"></div></div>
 							<div class="form-group">
 								<label>Address</label>
 								<form:textarea id="address" placeholder="Enter Address Here.."

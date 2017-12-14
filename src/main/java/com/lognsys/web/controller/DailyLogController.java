@@ -81,60 +81,64 @@ public class DailyLogController {
 	 * @return
 	 */
 	@RequestMapping(value = "/adddailylog", method = RequestMethod.GET)
-	public String addDailyLogForm(@RequestParam("title") String title,Model model, HttpServletRequest request) throws IOException {
+	public String addDailyLogForm(@RequestParam("assign_task_title") String assign_task_title,Model model, HttpServletRequest request) throws IOException {
 		
 //		System.out.println("\n addDailyLogForm  id \n \n " +id);
-		System.out.println("\n addDailyLogForm  title \n \n " +title);
+		System.out.println("\n addDailyLogForm  assign_task_title \n \n " +assign_task_title);
 
-		/*description =description.replace("%20", " ");
 		assign_task_title =assign_task_title.replace("%20", " ");
+	
 		
-		DailyLogDTO dailyLogDTO=dailyLogService.getDailLogbyDescriptionAndId(description,id);
-		dailyLogDTO.setAssign_task_title(assign_task_title);
-		
-		DailyLog dailylogs=ObjectMapper.mapToDailyLog(dailyLogDTO);
-		
-		String str_shift = applicationProperties.getProperty(Constants.TYPES_ARRAY.shift.name());
-		String str_jobtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.jobtype.name());
-		String str_recordtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.recordtype.name());
-		String str_status = applicationProperties.getProperty(Constants.TYPES_ARRAY.status.name());
-		String str_priority = applicationProperties.getProperty(Constants.TYPES_ARRAY.priority.name());
-		String str_done_percentage = applicationProperties.getProperty(Constants.TYPES_ARRAY.done_percentage.name());
-		
-		List<BuDTO> listOfBuDTO = userService.getAllBus();
-		
-		// Adding data to list from BuDTO
-		List<String> busList = new ArrayList<String>();
-		for (BuDTO bu : listOfBuDTO) {
-			busList.add(bu.getBu_name());
-		}
-		
-		List<UsersDTO> listOfUsersDTO = userService.getUsers();
-		
-		// Adding data to list from RolesDTO
-		List<String> usersList = new ArrayList<String>();
-		for (UsersDTO user : listOfUsersDTO) {
-			usersList.add(user.getRealname());
-		}
-		populateUsersListInJson(usersList);
-		
-		List<String> jobtype=Arrays.asList(str_jobtype.split(","));
-		List<String> recordtype=Arrays.asList(str_recordtype.split(","));
-		List<String> status=Arrays.asList(str_status.split(","));
-		List<String> shift=Arrays.asList(str_shift.split(","));
-		List<String> priority=Arrays.asList(str_priority.split(","));
-		List<String> done_percentage=Arrays.asList(str_done_percentage.split(","));
+		try {
+			DailyLog dailylogs=new DailyLog();
+			dailylogs.setAssign_task_title(assign_task_title);
+			
+			String str_shift = applicationProperties.getProperty(Constants.TYPES_ARRAY.shift.name());
+			String str_jobtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.jobtype.name());
+			String str_recordtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.recordtype.name());
+			String str_status = applicationProperties.getProperty(Constants.TYPES_ARRAY.status.name());
+			String str_priority = applicationProperties.getProperty(Constants.TYPES_ARRAY.priority.name());
+			String str_done_percentage = applicationProperties.getProperty(Constants.TYPES_ARRAY.done_percentage.name());
+			
+			List<BuDTO> listOfBuDTO = userService.getAllBus();
+			
+			// Adding data to list from BuDTO
+			List<String> busList = new ArrayList<String>();
+			for (BuDTO bu : listOfBuDTO) {
+				busList.add(bu.getBu_name());
+			}
+			
+			List<UsersDTO> listOfUsersDTO = userService.getUsers();
+			
+			// Adding data to list from RolesDTO
+			List<String> usersList = new ArrayList<String>();
+			for (UsersDTO user : listOfUsersDTO) {
+				usersList.add(user.getRealname());
+			}
+			populateUsersListInJson(usersList);
+			
+			List<String> jobtype=Arrays.asList(str_jobtype.split(","));
+			List<String> recordtype=Arrays.asList(str_recordtype.split(","));
+			List<String> status=Arrays.asList(str_status.split(","));
+			List<String> shift=Arrays.asList(str_shift.split(","));
+			List<String> priority=Arrays.asList(str_priority.split(","));
+			List<String> done_percentage=Arrays.asList(str_done_percentage.split(","));
 
-		model.addAttribute("dailylogs", dailylogs);	
-		model.addAttribute("jobtype", jobtype);
-		model.addAttribute("recordtype", recordtype);	
-		model.addAttribute("status", status);
-		model.addAttribute("shift", shift);
-		model.addAttribute("priority", priority);
-		model.addAttribute("done_percentage", done_percentage);
-		model.addAttribute("busList", busList);
-		model.addAttribute("usersList", usersList);
-*/	
+			model.addAttribute("dailylogs", dailylogs);	
+			model.addAttribute("jobtype", jobtype);
+			model.addAttribute("recordtype", recordtype);	
+			model.addAttribute("status", status);
+			model.addAttribute("shift", shift);
+			model.addAttribute("priority", priority);
+			model.addAttribute("done_percentage", done_percentage);
+			model.addAttribute("busList", busList);
+			model.addAttribute("usersList", usersList);
+		} catch (Exception e) {
+			System.out.println("\n Exception addDailyLogForm \n \n " +e.toString());
+			
+			e.printStackTrace();
+		}
+	
 		return "adddailylog";
 	}
 
@@ -229,7 +233,7 @@ public class DailyLogController {
 				}
 			}
 
-			return "dailyloglist";
+			return "assigntasklist";
 		} catch (IndexOutOfBoundsException e) {
 		
 			System.out.println("\n IndexOutOfBoundsException saveForm \n \n " +e.toString());

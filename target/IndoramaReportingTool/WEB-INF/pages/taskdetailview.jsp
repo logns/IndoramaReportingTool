@@ -53,7 +53,7 @@
 					<fieldset class="the-fieldset">
 
 						<legend class="the-legend">Assign Task Details</legend>
-  					<form:input type="hidden"  path="assignTaskDTO.id" id="assignTaskDTO.id"
+  					<form:input type="hidden"  path="assignTaskDTO.id" id="assignTaskDTO_id"
 									class="form-control text ui-widget-content ui-corner-all" />
 				
 						<div class="form-group">
@@ -116,7 +116,7 @@
 											value="${dailylogDTO.last_edit}"></c:out>
 											<br>
 											   
-										<input type="text" class="desc" id="desc_${dailylogDTO.id}" value="<c:out value="${dailylogDTO.description}"></c:out>">
+										<input class="panel form-group" type="text" id="desc_${dailylogDTO.id}" value="<c:out value="${dailylogDTO.description}"></c:out>">
 											
 									</a>
 								</div>
@@ -221,7 +221,7 @@
 							</c:forEach>
 						</div>
 					</div>
-					<form:button id="taskadd" type="submit" class="btn btn-lg btn-info">Add DailyLog</form:button>
+					<form:button id="newdailylog" type="submit" class="btn btn-lg btn-info">Add DailyLog</form:button>
 				</div>
 			</form:form>
 		</div>
