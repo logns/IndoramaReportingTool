@@ -72,5 +72,12 @@
 		<put-attribute name="menu" value="" />
 		<put-attribute name="footer" value="" />
 	</definition>
+	<definition name="loggedout" extends="base_layout">
+		<put-attribute name="title" value="Indorama: Log Out" />
+		<put-attribute name="body" value="/WEB-INF/pages/loggedout.jsp" />
+		<put-attribute name="header" value="" />
+		<put-attribute name="menu" value="" />
+		<put-attribute name="footer" value="" />
+	</definition>
 	
 </tiles-definitions>

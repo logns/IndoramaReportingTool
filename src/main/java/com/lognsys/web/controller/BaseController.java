@@ -61,7 +61,18 @@ public class BaseController {
 	public String showLogin(Model model, HttpServletRequest request) {
 		return "login";
 	}
-
+	/**
+	 * 
+	 * This method redirects to loggedout  page
+	 * 
+	 * @param model
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/loggedout")
+	public String showLoggedout(Model model, HttpServletRequest request) {
+		return "loggedout";
+	}
 	/**
 	 * This method goes to login page if wrong credentials or empty credentials
 	 * else goes to Dahsbaord page

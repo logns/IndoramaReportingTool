@@ -5,6 +5,9 @@
 </center>
 
  --%>
+ 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+ 
 <div class="container">
 	<div class="row">
 		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -33,7 +36,7 @@
 								<li><a href="#"><svg class="glyph stroked gear">
 											<use xmlns:xlink="http://www.w3.org/1999/xlink"
 												xlink:href="#stroked-gear"></use></svg> Settings</a></li>
-								<li><a href="#"><svg class="glyph stroked cancel">
+								<li><a href="${pageContext.request.contextPath}/loggedout"><svg class="glyph stroked cancel">
 											<use xmlns:xlink="http://www.w3.org/1999/xlink"
 												xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
 							</ul></li>

@@ -9,6 +9,8 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,6 +30,9 @@ import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -93,7 +98,20 @@ public class AssignTaskController {
 	@RequestMapping(value = "/assigntasklist", method = RequestMethod.GET)
 	public String showAssignTasks(Model model, HttpServletRequest request) {
 		try {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+			Set<String> roles = authentication.getAuthorities().stream()
+			     .map(r -> r.getAuthority()).collect(Collectors.toSet());
+
+			for (String string : roles) {
+				System.out.println("\n  showAssignTasks string \n \n " +string.toString());
+						
+			}
 			
+				boolean hasUserRole = authentication.getAuthorities().stream()
+          .anyMatch(r -> r.getAuthority().equals("USER"));	
+				System.out.println("\n  showAssignTasks hasUserRole \n \n " +hasUserRole);
+					
 			assignTaskService.readAssignTask();
 		} catch (IOException e) {
 			System.out.println("\n IOException showAssignTasks assigntasklist \n \n " +e.toString());

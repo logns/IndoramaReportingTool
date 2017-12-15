@@ -16,9 +16,4 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
        	   </props>
 	</property>
 </bean>
-<!-- 
-<bean id="mailMail" class="com.lognsys.service.MailService">
-	<property name="mailSender" ref="mailSender" />
-</bean>  -->
-
 </beans>
