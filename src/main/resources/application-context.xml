@@ -28,7 +28,6 @@
 
 
 <context:property-placeholder location="classpath:application.properties" ignore-unresolvable="true" order="2"/>
-
 <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 
 </beans>

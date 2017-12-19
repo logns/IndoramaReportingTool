@@ -1,7 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"
 	isELIgnored="false"%>
-	<%@taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <div style="overflow: scroll;">
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
@@ -65,14 +64,12 @@
 
 						<div class="action_buttons">
 							<hr>
-							<sec:authorize access="hasRole('ADMIN')">
 							<button id="taskadd" type="submit"
 								class="btn btn-primary pull-right rbtnMargin">Add</button>
 							<button id="taskdelete" type="submit"
 								class="btn btn-danger pull-right rbtnMargin">Delete</button>
 							<button id="taskedit" type="submit"
 								class="btn btn-warning pull-right rbtnMargin">Edit</button>
-								</sec:authorize>
 							<button id="taskcancel" type="reset"
 								class="btn btn-default pull-right rbtnMargin">Cancel</button>
 						</div>

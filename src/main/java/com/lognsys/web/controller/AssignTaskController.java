@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.exolab.castor.types.DateTime;
 import org.jfree.chart.axis.DateTickUnit;
@@ -33,6 +34,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -58,8 +60,10 @@ import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.exception.CustomGenericException;
 import com.lognsys.model.DailyLog;
 import com.lognsys.model.UpdateAssignedCount;
+import com.lognsys.model.Users;
 import com.lognsys.service.AssignTaskService;
 import com.lognsys.service.DailyLogService;
+import com.lognsys.service.MailService;
 import com.lognsys.service.UserService;
 import com.lognsys.util.CommonUtilities;
 import com.lognsys.util.Constants;
@@ -83,7 +87,6 @@ public class AssignTaskController {
 	
 	List<UsersDTO> data=null;
 
-
 	// Injecting resource application.properties.
 	@Autowired
 	@Qualifier("applicationProperties")
@@ -98,20 +101,14 @@ public class AssignTaskController {
 	@RequestMapping(value = "/assigntasklist", method = RequestMethod.GET)
 	public String showAssignTasks(Model model, HttpServletRequest request) {
 		try {
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			boolean hasUserRole=false;
 
-			Set<String> roles = authentication.getAuthorities().stream()
-			     .map(r -> r.getAuthority()).collect(Collectors.toSet());
+	 User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+     String name = user.getUsername(); //get logged in username
 
-			for (String string : roles) {
-				System.out.println("\n  showAssignTasks string \n \n " +string.toString());
-						
-			}
-			
-				boolean hasUserRole = authentication.getAuthorities().stream()
-          .anyMatch(r -> r.getAuthority().equals("USER"));	
-				System.out.println("\n  showAssignTasks hasUserRole \n \n " +hasUserRole);
-					
+			 if (request.isUserInRole("ADMIN")) {
+				 hasUserRole=true;    // code here
+			    }
 			assignTaskService.readAssignTask();
 		} catch (IOException e) {
 			System.out.println("\n IOException showAssignTasks assigntasklist \n \n " +e.toString());
@@ -179,10 +176,11 @@ public class AssignTaskController {
 		
 		List<UsersDTO> listOfUsersDTO = userService.getUsers();
 		
-		// Adding data to list from UsersDTO
 		List<String> usersList = new ArrayList<String>();
+		List<String> usersListAssignto = new ArrayList<String>();
 		for (UsersDTO user : listOfUsersDTO) {
-			usersList.add(user.getRealname());
+			usersListAssignto.add(user.getRealname());
+			usersList.add(user.getUsername());
 		}
 //		populate userlist in realname.json for autocompleteview  
 		populateUsersListInJson(usersList);
@@ -204,6 +202,7 @@ public class AssignTaskController {
 		model.addAttribute("done_percentage", done_percentage);
 		model.addAttribute("busList", busList);
 		model.addAttribute("usersList", usersList);
+		model.addAttribute("usersListAssignto", usersListAssignto);
 		
 		return "addtask";
 	}	
@@ -218,8 +217,9 @@ public class AssignTaskController {
 	 * @throws IOException 
 	 */
 	@RequestMapping(value = "/addtask", method = RequestMethod.POST)
-	public String saveForm(@ModelAttribute("atdl") AssignTaskDailylogDTO atdldto, BindingResult result, ModelMap model) throws IOException {
+	public String saveForm(@Valid @ModelAttribute("atdl") AssignTaskDailylogDTO atdldto, BindingResult result, ModelMap model) throws IOException {
 		boolean error=false;
+
 		
 //		validating
 		FormValidator formValidator = new FormValidator();
@@ -248,9 +248,12 @@ public class AssignTaskController {
 			List<UsersDTO> listOfUsersDTO = userService.getUsers();
 				
 			List<String> usersList = new ArrayList<String>();
+			List<String> usersListAssignto = new ArrayList<String>();
 			for (UsersDTO user : listOfUsersDTO) {
-				usersList.add(user.getRealname());
+				usersListAssignto.add(user.getRealname());
+				usersList.add(user.getUsername());
 			}
+			
 //			populating list in json file for realname
 			populateUsersListInJson(usersList);
 				
@@ -268,6 +271,7 @@ public class AssignTaskController {
 			model.addAttribute("priority", priority);
 			model.addAttribute("done_percentage", done_percentage);
 			model.addAttribute("busList", busList);
+			model.addAttribute("usersListAssignto", usersListAssignto);						
 			model.addAttribute("usersList", usersList);
 			
 			if(isexist==true){
@@ -287,6 +291,7 @@ public class AssignTaskController {
 				
 //				add  assigntask  and dailylog
 				assignTaskService.addAssignTask(assignTaskDTO, dailyLogDTO);
+
 				
 			} catch (DataAccessException e) {
 				e.printStackTrace();
@@ -399,9 +404,12 @@ public class AssignTaskController {
 					
 					// Adding data to list from RolesDTO
 					List<String> usersList = new ArrayList<String>();
+					List<String> usersListAssignto = new ArrayList<String>();
 					for (UsersDTO user : listOfUsersDTO) {
-						usersList.add(user.getRealname());
+						usersListAssignto.add(user.getRealname());
+						usersList.add(user.getUsername());
 					}
+					
 					populateUsersListInJson(usersList);
 					
 					List<String> jobtype=Arrays.asList(str_jobtype.split(","));
@@ -422,8 +430,8 @@ public class AssignTaskController {
 					model.addAttribute("priority", priority);
 					model.addAttribute("done_percentage", done_percentage);
 					model.addAttribute("busList", busList);
-					model.addAttribute("usersList", usersList);
-
+					model.addAttribute("usersList", usersList);						
+					model.addAttribute("usersListAssignto", usersListAssignto);
 					return "addtask";
 				}catch (DataAccessException e) {
 					e.printStackTrace();
@@ -590,8 +598,10 @@ public class AssignTaskController {
 						
 						// Adding data to list from RolesDTO
 						List<String> usersList = new ArrayList<String>();
+						List<String> usersListAssignto = new ArrayList<String>();
 						for (UsersDTO user : listOfUsersDTO) {
-							usersList.add(user.getRealname());
+							usersListAssignto.add(user.getRealname());
+							usersList.add(user.getUsername());
 						}
 						
 						populateUsersListInJson(usersList);
@@ -614,7 +624,8 @@ public class AssignTaskController {
 						model.addAttribute("priority", priority);
 						model.addAttribute("done_percentage", done_percentage);
 						model.addAttribute("busList", busList);
-						model.addAttribute("usersList", usersList);
+						model.addAttribute("usersList", usersList);						
+						model.addAttribute("usersListAssignto", usersListAssignto);						
 						model.addAttribute("dailyLogDTOs", dailyLogDTOs);
 
 					return "taskdetailview";

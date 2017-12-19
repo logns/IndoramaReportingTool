@@ -1,5 +1,8 @@
 package com.lognsys.dao.jdbc;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Properties;
@@ -7,6 +10,8 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -215,5 +220,19 @@ public class JdbcUserRepository implements UserRespository {
 
 		return listUsers;
 		}
+
+	public void getUsernamebyRealname(String realname) throws DataAccessException {
+		System.out.println("\n getUsernamebyRealname realname "+realname);
+			SqlParameterSource param = new MapSqlParameterSource("realname", realname.toString());
+
+			List<String> listUsers = namedParamJdbcTemplate.query(
+					sqlProperties.getProperty(Constants.USER_QUERIES.select_username.name()),param,
+					new BeanPropertyRowMapper<String>(String.class));
+		System.out.println("\n getUsernamebyRealname listUsers.size() "+listUsers.size());
+		
+		for(int i=0;i<listUsers.size();i++){
+			System.out.println("\n getUsernamebyRealname listUsers.get(i).toString() "+listUsers.get(i).toString());
+		}
+	}
 
 }

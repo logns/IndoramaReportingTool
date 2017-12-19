@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `indorama_poly`.`assign_task` (
   `last_edit` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
+DEFAULT CHARACTER SET = utf8;
 
 ALTER TABLE `indorama_poly`.`assign_task` 
 ADD UNIQUE INDEX `assign_task_title_index` (`title` ASC);

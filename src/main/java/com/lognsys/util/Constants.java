@@ -9,7 +9,7 @@ public class Constants {
 	 * be added to USER_QUERIES enum
 	 */
 	public enum USER_QUERIES {
-		select_realname,insert_users, select_users, delete_users, select_users_exists, select_users_id, delete_users_email, update_users, select_users_username, update_users_device
+		select_username,select_realname,insert_users, select_users, delete_users, select_users_exists, select_users_id, delete_users_email, update_users, select_users_username, update_users_device
 	}
 
 	public enum ROLES_QUERIES {
@@ -17,7 +17,9 @@ public class Constants {
 	}
 
 
-
+	public enum MESSAGES_PROPERTIES {
+		addnewtask,removedtask,updatetask
+		}
 	/**
 	 * enum contains keys of queries defined in sql.properties.
 	 * 

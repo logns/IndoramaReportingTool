@@ -1,6 +1,7 @@
 package com.lognsys.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Properties;
@@ -9,10 +10,13 @@ import org.exolab.castor.types.Date;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.MessageSource;
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +29,7 @@ import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.dao.jdbc.JdbcAssignTaskRepository;
 import com.lognsys.dao.jdbc.JdbcBuRepository;
 import com.lognsys.dao.jdbc.JdbcDailyLogRepository;
+import com.lognsys.dao.jdbc.JdbcUserRepository;
 import com.lognsys.model.AssignTask;
 import com.lognsys.model.AssignTaskTable;
 import com.lognsys.model.DailyLog;
@@ -39,6 +44,9 @@ import com.lognsys.util.WriteJSONToFile;
 @Service("assigntaskService")
 public class AssignTaskService {
 
+
+	@Autowired
+	private JdbcUserRepository jdbcUserRepository;
 	@Autowired
 	private JdbcDailyLogRepository jdbcDailyLogRepository;
 
@@ -53,11 +61,22 @@ public class AssignTaskService {
 	@Qualifier("applicationProperties")
 	private Properties applicationProperties;
 
+
+	@Qualifier("messagesProperties")
+	private Properties messagesProperties;
+	
+	@Autowired
+	private MessageSource msg;
+
 	DailyLogDTO dailyLogDTO;
 	AssignTaskDTO assignTaskDTO;
 	List<AssignTaskDTO> listOfAssigntask;
-	Hashtable< String, String> hashUpdatedby= new Hashtable<String, String>();
+	
+	String message;
+	@Autowired
+	MailService mailService;
 
+	Authentication  authentication;
 	/**
 	 * Add assignTaskDTO,dailyLogDTO to database..
 	 *
@@ -82,6 +101,8 @@ public class AssignTaskService {
 //		adding both the tables id in assign_dailylog tables 
 		int assignDailyLog_id = jdbcAssignTaskRepository.addAssignTask_DailyLog(assign_task_id, dailylog_id);
 		
+		
+		
 //		adding data to dailylog_bu
 		if (dailylog_id > 0 && dailyLogDTO.getBu() != null && dailyLogDTO.getBu().length() > 0) {
 			int bu_id = jdbcBuRepository.findBuByName(dailyLogDTO.getBu());
@@ -91,22 +112,33 @@ public class AssignTaskService {
 			}
 		}
 		try {
-			hashUpdatedby.put(new Date().toString(),"Updated by"+ assignTaskDTO.getAssigned_to());
-			setHashUpdatedby(hashUpdatedby);
 //			reading assigntask
 			readAssignTask();
+			String message = msg.getMessage("addnewtask", null, null);
+			//String message = msg.getProperty(Constants.MESSAGES_PROPERTIES.removedtask.name());
+			System.out.println("MY MESSAGE - "+message);
+			processMail(dailyLogDTO,message);
 		} catch (IOException io) {
 			System.out.println("Rest addAssignTask  readAssignTask - " + io.getMessage());
 		}
 		return assign_task_id;
 	}
-	
-public Hashtable<String, String> getHashUpdatedby() {
-		return hashUpdatedby;
-	}
 
-	public void setHashUpdatedby(Hashtable<String, String> hashUpdatedby) {
-		this.hashUpdatedby = hashUpdatedby;
+	private void processMail(DailyLogDTO dailyLogDTO,String message) {
+
+		List<UsersDTO> listOfUsersDTO = jdbcUserRepository.getAllUsers();
+		if(listOfUsersDTO!=null && listOfUsersDTO.size()>0){
+
+			authentication = SecurityContextHolder.getContext().getAuthentication();
+				String username=authentication.getName().toString();
+				System.out.println("\n  readAssignTask username " +username);
+				System.out.println("\n  readAssignTask dailyLogDTO " +dailyLogDTO.toString());
+	
+				if(username!=null && dailyLogDTO!=null){
+				
+					mailService.processData(dailyLogDTO,username,message);
+				}
+		}
 	}
 
 	//	checking isexist
@@ -132,6 +164,8 @@ public Hashtable<String, String> getHashUpdatedby() {
 
 		try {
 			WriteJSONToFile.getInstance().write(resource, list);
+				
+			
 		} catch (IOException e) {
 			System.out.println("IOEXCEPTION --- e" + e);
 			e.printStackTrace();
@@ -181,6 +215,12 @@ public Hashtable<String, String> getHashUpdatedby() {
 				} else {
 					readAssignTask();
 				}
+
+				
+				String message = msg.getMessage("addnewtask", null, null);
+				//String message = msg.getProperty(Constants.MESSAGES_PROPERTIES.removedtask.name());
+				
+				processMail(dailyLogDTO,message);
 			} catch (DataAccessException dae) {
 				throw new IllegalStateException("Error : Failed to delete task!");
 			}
@@ -236,6 +276,9 @@ public Hashtable<String, String> getHashUpdatedby() {
 						System.out.println("updateBuOfDailyLogBu isUpdated == "+isUpdated);
 
 					}
+
+					String message = messagesProperties.getProperty(Constants.MESSAGES_PROPERTIES.updatetask.name());
+					processMail(dailyLogDTO,message);
 				}
 			}
 			else{

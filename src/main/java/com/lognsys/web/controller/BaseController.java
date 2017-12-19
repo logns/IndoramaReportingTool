@@ -71,7 +71,7 @@ public class BaseController {
 	 */
 	@RequestMapping("/loggedout")
 	public String showLoggedout(Model model, HttpServletRequest request) {
-		return "loggedout";
+		return "login";
 	}
 	/**
 	 * This method goes to login page if wrong credentials or empty credentials
@@ -332,12 +332,6 @@ public class BaseController {
 			for (BuDTO bu : listOfBuDTO) {
 				busList.add(bu.getBu_name());
 			}
-			// Adding data to list from RolesDTO
-			List<String> departmentsList = new ArrayList<String>();
-//			for (DepartmentsDTO deDto : listOfDepartmentsDTO) {
-//				departmentsList.add(deDto.getDepartment_name());
-//			}
-
 
 			//populate to JSP page
 			model.addAttribute("rolesList", rolesList);

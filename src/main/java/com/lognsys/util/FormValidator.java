@@ -226,7 +226,7 @@ public class FormValidator implements Validator {
 	
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dailylogDTO.attendby", "required.dailylogDTO.attendby", "Attendby is required.");
 
-		// input string conatains characters only
+	/*	// input string conatains characters only
 		if (!(dailylogDTO.getAttendby() != null && dailylogDTO.getAttendby().isEmpty())) {
 			pattern = Pattern.compile(MULTIPLE_STRING_PATTERN);
 			matcher = pattern.matcher((dailylogDTO.getAttendby()));
@@ -234,7 +234,7 @@ public class FormValidator implements Validator {
 			if (!matcher.matches()) {
 				errors.rejectValue("dailylogDTO.attendby", "dailylogDTO.attendby.containNonChar", "Enter a valid attendby");
 			}
-		}
+		}*/
 		
 	}
 

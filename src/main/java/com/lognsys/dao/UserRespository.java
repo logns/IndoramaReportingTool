@@ -12,6 +12,8 @@ public interface UserRespository {
 	 */
 	public int addUser(UsersDTO users);
 	
+
+//	public String getUsernamebyRealname(String realname);
 	
 	/**
 	 * Check if User exists by username

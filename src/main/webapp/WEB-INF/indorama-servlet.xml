@@ -15,8 +15,9 @@
 	<import resource="classpath:datasource-context.xml" />
 	<import resource="classpath:spring-mail.xml" />
 	
-	<import resource="classpath:spring-security.xml"></import><!-- 
-	<import resource="classpath:mongo-context.xml" /> -->
+	<!-- <import resource="classpath:messages-context.xml"></import>-->
+	 <import resource="classpath:spring-security.xml"></import>
+	 <!-- <import resource="classpath:mongo-context.xml" /> -->
     
     
 	<!-- **************************************************************** -->
@@ -30,6 +31,7 @@
 	
  <context:component-scan base-package="com.lognsys.util" />
  
+
    <bean id="viewResolver1" class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
         <property name="order" value="1"/>
         <property name="basename" value="views"/>
@@ -39,7 +41,6 @@
 	<mvc:default-servlet-handler />
 
 	<mvc:annotation-driven />
-
 	<!-- Configure Tiles -->
 	<bean id="tilesConfigurer"
 		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
