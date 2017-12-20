@@ -12,6 +12,8 @@ import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -107,7 +109,17 @@ public class TestAssignTaskService {
 //	reading assigntask
 	@Test
 	public void readAssignTask() throws IOException {
-	assignTaskService.readAssignTask();
+//		reading assigntask
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication.getPrincipal().toString().equalsIgnoreCase("ADMIN")) {
+		assignTaskService.readAssignTask(null);
+		}
+		else{
+			if(ObjectMapper.authorizedUserName()!=null){
+				assignTaskService.readAssignTask(ObjectMapper.authorizedUserName());
+			}
+		}
+		
 	}
 	
 //	removing assigntask by id

@@ -36,6 +36,13 @@ public interface AssignTaskRepository {
 	 * @return List<AssignTaskDTO>
 	 */
 	public List<AssignTaskDTO> getAllAssignTaskDTO();
+	
+	/**
+	 * Get All AssignTaskDTO
+	 * 
+	 * @return List<AssignTaskDTO>
+	 */
+	public List<AssignTaskDTO> getAllAssignTaskDTOByUsername(String username);
 
 	/**
 	 * Get AssignTaskDTO by Id

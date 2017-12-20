@@ -81,7 +81,7 @@
 		<!-- <security:csrf / -->
 		<!-- <security:csrf disabled="true" />
 		 -->
-		<security:csrf/>
+		<security:csrf disabled="true"/>
 		<security:logout logout-success-url="/loggedout" />
 		</security:http>
 

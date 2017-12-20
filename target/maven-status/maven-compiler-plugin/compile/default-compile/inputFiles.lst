@@ -31,6 +31,7 @@ C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\model\Bu.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\dao\jdbc\JdbcAssignTaskRepository.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\loader\Parser.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\model\DailyLog.java
+C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\web\controller\MyConsumer.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\exception\UserDataAccessException.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\util\WriteJSONToFile.java
 C:\Users\admin\git\IndoramaReportingTool\src\main\java\com\lognsys\dao\dto\RolesDTO.java

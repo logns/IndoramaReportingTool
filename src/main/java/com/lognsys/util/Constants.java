@@ -66,6 +66,7 @@ public class Constants {
 		insert_assign_task,
 		select_isexist_assigntask_title,
 		select_all_assigntask,
+		select_assigntask_by_username,
 		select_assigntask_by_id,
 		select_assigntask_by_title,
 		select_assigntask_getcount,

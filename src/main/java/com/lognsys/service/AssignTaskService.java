@@ -113,10 +113,23 @@ public class AssignTaskService {
 		}
 		try {
 //			reading assigntask
-			readAssignTask();
-			String message = msg.getMessage("addnewtask", null, null);
-			//String message = msg.getProperty(Constants.MESSAGES_PROPERTIES.removedtask.name());
-			System.out.println("MY MESSAGE - "+message);
+			authentication = SecurityContextHolder.getContext().getAuthentication();
+			System.out.println("addTask false user role - "+(authentication.getPrincipal().toString()));
+			
+			System.out.println("addTask true or false user role - "+(authentication.getPrincipal().toString().equalsIgnoreCase("ADMIN")));
+			System.out.println("addTask true or false user ObjectMapper.authorizedUserName()!=null - "+(ObjectMapper.authorizedUserName()!=null));
+			
+			if (authentication.getPrincipal().toString().equalsIgnoreCase("ADMIN")) {
+				readAssignTask(null);
+			}
+			else{
+				if(ObjectMapper.authorizedUserName()!=null){
+				readAssignTask(ObjectMapper.authorizedUserName());
+				}
+			}
+			
+			String message = msg.getMessage("addnewtask", new Object[] {assignTaskDTO.getAssigned_to(),ObjectMapper.authorizedUserName(), "http://www.mkyong.com",dailyLogDTO.getDescription()}, null);
+			
 			processMail(dailyLogDTO,message);
 		} catch (IOException io) {
 			System.out.println("Rest addAssignTask  readAssignTask - " + io.getMessage());
@@ -146,9 +159,17 @@ public class AssignTaskService {
 		return jdbcAssignTaskRepository.isexist(title);
 	}
 
-	public void readAssignTask() throws IOException {
-//		getting list of assigntask 
-		listOfAssigntask = jdbcAssignTaskRepository.getAllAssignTaskDTO();
+	public void readAssignTask(String username) throws IOException {
+		System.out.println("readAssignTask username - "+(username));
+		
+		if(username!=null){
+			listOfAssigntask = jdbcAssignTaskRepository.getAllAssignTaskDTOByUsername(username);
+		}
+		else{
+//				getting list of assigntask 
+			listOfAssigntask = jdbcAssignTaskRepository.getAllAssignTaskDTO();
+			
+		}
 
 		List<AssignTaskTable> assignTaskTables = null;
 		
@@ -183,7 +204,17 @@ public class AssignTaskService {
 				if (!isDelete) {
 					return 0;
 				} else {
-					readAssignTask();
+//					reading assigntask
+					authentication = SecurityContextHolder.getContext().getAuthentication();
+					if (authentication.getPrincipal().toString().equalsIgnoreCase("ADMIN")) {
+						readAssignTask(null);
+					}
+					else{
+						if(ObjectMapper.authorizedUserName()!=null){
+						readAssignTask(ObjectMapper.authorizedUserName());
+						}
+					}
+					
 				}
 			} catch (DataAccessException | IOException dae) {
 
@@ -213,11 +244,21 @@ public class AssignTaskService {
 				if (!isDelete) {
 					return 0;
 				} else {
-					readAssignTask();
+//					reading assigntask
+					authentication = SecurityContextHolder.getContext().getAuthentication();
+					if (authentication.getPrincipal().toString().equalsIgnoreCase("ADMIN")) {
+						readAssignTask(null);
+					}
+					else{
+						if(ObjectMapper.authorizedUserName()!=null){
+						readAssignTask(ObjectMapper.authorizedUserName());
+						}
+					}
+					
 				}
 
 				
-				String message = msg.getMessage("addnewtask", null, null);
+				String message = msg.getMessage("removedtask", new Object[]{authentication.getName().toString()}, null);
 				//String message = msg.getProperty(Constants.MESSAGES_PROPERTIES.removedtask.name());
 				
 				processMail(dailyLogDTO,message);
@@ -277,7 +318,7 @@ public class AssignTaskService {
 
 					}
 
-					String message = messagesProperties.getProperty(Constants.MESSAGES_PROPERTIES.updatetask.name());
+					String message = msg.getMessage("updatetask",new Object[] {assignTaskDTO.getAssigned_to(),ObjectMapper.authorizedUserName(), "http://www.mkyong.com",dailyLogDTO.getDescription()}, null);
 					processMail(dailyLogDTO,message);
 				}
 			}
@@ -298,7 +339,17 @@ public class AssignTaskService {
 					}
 				}
 			}
-			readAssignTask();
+//			reading assigntask
+			authentication = SecurityContextHolder.getContext().getAuthentication();
+			if (authentication.getPrincipal().toString().equalsIgnoreCase("ADMIN")) {
+				readAssignTask(null);
+			}
+			else{
+				if(ObjectMapper.authorizedUserName()!=null){
+				readAssignTask(ObjectMapper.authorizedUserName());
+				}
+			}
+			
 		}
 		catch (DataAccessException dae) {
 		System.out.println("\n \n updateAssigntask DataAccessException == "+dae.toString()+"\n \n");

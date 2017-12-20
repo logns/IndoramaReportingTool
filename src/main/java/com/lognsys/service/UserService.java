@@ -9,11 +9,13 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.MessageSource;
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,15 +37,23 @@ import com.lognsys.util.WriteJSONToFile;
 public class UserService {
 
 //	Logger LOG = Logger.getLogger(this.getClass());
-
+	@Autowired
+	MailService mailservice;
+	
 	@Autowired
 	private JdbcUserRepository jdbcUserRepository;
 //	@Autowired
 //	private JdbcDeviceRepository jdbcDeviceRepository;
 
 	@Autowired
+	private MessageSource msg;
+	@Autowired
 	private JdbcBuRepository jdbcBuRepository;
 	
+	@Autowired
+	MailService mailService;
+
+	Authentication  authentication;
 	
 	@Autowired
 	private JdbcRolesRepository jdbcRolesRepository;
@@ -95,7 +105,12 @@ public class UserService {
 			jdbcUserRepository.addUserAndRole(users_id, users.getRole());
 
 			try {
+				
 				refreshUserList();
+				String message = msg.getMessage("addnewuser", new Object[] {users.getRealname(),"http://www.mkyong.com"}, null);
+				String addAccout="New Account created";
+				processMail(users,message,addAccout);
+		
 			} catch (IOException io) {
 //				LOG.fatal("UserService#addUser refresUserList - " + io.getMessage());
 			}
@@ -103,7 +118,10 @@ public class UserService {
 	
 		}
 	}
+	private void processMail(Users users,String addAccout,String message) {
 
+		mailservice.sendMail("lognsystems@gmail.com", users.getUsername(), addAccout, message);
+	}
 	/**
 	 * This method synchronizes the users from the database and
 	 * loads it into Users.json file. 
@@ -481,4 +499,16 @@ public boolean exists(Users users) {
 		return jdbcUserRepository.isExists(users.getUsername());
 
 	}
+public void forgotPassword(Users users) {
+	String emailid=users.getUsername();
+	String forgotPassword="Forgot Password Details";
+	String message = msg.getMessage("forgotusername", new Object[] {emailid,"http://www.mkyong.com"}, null);
+	
+	processMail(users, forgotPassword, message);
+	System.out.println("forgotPassword --emailid "+emailid);
+
+	
+System.out.println("forgotPassword --mailservice "+mailservice);
+
+}
 }

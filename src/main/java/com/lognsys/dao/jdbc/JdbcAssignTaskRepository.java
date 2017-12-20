@@ -147,4 +147,14 @@ public class JdbcAssignTaskRepository  implements AssignTaskRepository{
 		return namedParamJdbcTemplate.update(sqlProperties.getProperty(Constants.ASSIGN_TASK_QUERIES.delete_assign_task_by_title.name()),
 				parameter) == 1;
 		}
+
+	@Override
+	public List<AssignTaskDTO> getAllAssignTaskDTOByUsername(String username) {
+		SqlParameterSource parameter = new MapSqlParameterSource("username", username);
+
+		List<AssignTaskDTO> lists = namedParamJdbcTemplate.query(
+				sqlProperties.getProperty(Constants.ASSIGN_TASK_QUERIES.select_assigntask_by_username.name()),parameter,
+				new BeanPropertyRowMapper<AssignTaskDTO>(AssignTaskDTO.class));
+		return lists;
+	}
 }

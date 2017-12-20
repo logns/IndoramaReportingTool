@@ -22,6 +22,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -33,11 +36,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.lognsys.dao.dto.BuDTO;
+import com.lognsys.dao.dto.DailyLogDTO;
 import com.lognsys.dao.dto.RolesDTO;
+import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.model.Users;
 import com.lognsys.service.MailService;
 import com.lognsys.service.UserService;
 import com.lognsys.util.FormValidator;
+import com.lognsys.util.ObjectMapper;
 
 @Controller
 public class BaseController {
@@ -46,9 +52,10 @@ public class BaseController {
 	
 	@Autowired
 	private UserService userService;
+	Authentication  authentication;
 
 	@Autowired
-	MailService mailservice;
+	private MessageSource msg;
 	/**
 	 * 
 	 * This method redirects to login page
@@ -106,16 +113,7 @@ public class BaseController {
 	@RequestMapping(value = "/forgotpassword", method = RequestMethod.POST)
 	public String forgotPassword(@ModelAttribute("email") Users email, BindingResult result, ModelMap model){
 		System.out.println("forgotPassword --email "+email.getUsername());
-		String emailid=email.getUsername();
-				System.out.println("forgotPassword --emailid "+emailid);
-		
-				mailservice.sendMail("from@gmail.com",
-				emailid,
-	    		   "Testing123",
-	    		   "Testing only \n\n Hello Spring Email Sender");
-
-		System.out.println("forgotPassword --mailservice "+mailservice);
-		
+		userService.forgotPassword(email);
 
 		return "login";
 	}
@@ -342,7 +340,16 @@ public class BaseController {
 		else
 		{
 		userService.addUser(user);
-		return "userlist";
+		authentication = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println("adduser  user role - "+(authentication.getPrincipal().toString()));
+		System.out.println("adduser  user ObjectMapper.authorizedUserName()!=null - "+(ObjectMapper.authorizedUserName()));
+		if(authentication.getPrincipal().toString()!=null && ObjectMapper.authorizedUserName()!=null){
+			return "userlist";
+		}
+		else{
+			return "login";
+		}
 		}
 	}
+
 }

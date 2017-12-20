@@ -46,8 +46,8 @@ public class MailService {
 			String[] too=dailyLogDTO.getAttendby().split(", ");
 			message.setFrom(from);
 			message.setTo(too);
-			message.setSubject(crudmessage+" : "+dailyLogDTO.getAssign_task_title());
-			message.setText(dailyLogDTO.getDescription());
+			message.setSubject("Task Details : "+dailyLogDTO.getAssign_task_title().substring(0, 15));
+			message.setText(crudmessage);
 			System.out.println("processData --message "+message);
 			
 			mailSender.send(message);

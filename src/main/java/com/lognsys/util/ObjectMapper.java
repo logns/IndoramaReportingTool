@@ -21,6 +21,8 @@ import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 
 import com.lognsys.dao.dto.AssignTaskDTO;
 import com.lognsys.dao.dto.AssignTaskDailylogDTO;
@@ -35,6 +37,12 @@ import com.lognsys.model.Users;
 import com.lognsys.model.UsersTable;
 
 public class ObjectMapper {
+	public static String authorizedUserName(){
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = user.getUsername(); // get logged in username
+		return username;
+	}
+	
 
 	public static AssignTaskDTO mapToAssignTaskDTO(AssignTask assignTask) {
 

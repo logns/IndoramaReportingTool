@@ -38,6 +38,7 @@ com\lognsys\dao\DailyLogRespository.class
 com\lognsys\dao\dto\AssignTaskDailylogDTO.class
 com\lognsys\util\Constants$ASSIGN_TASK_DAILYLOG_QUERIES.class
 com\lognsys\util\WriteJSONToFile.class
+com\lognsys\web\controller\MyConsumer.class
 com\lognsys\dao\jdbc\rowmapper\UserByUserIDRowMapper.class
 com\lognsys\util\Constants$DAILYLOG_TABLE_FIELD_NAMES.class
 com\lognsys\model\DailylogTable.class

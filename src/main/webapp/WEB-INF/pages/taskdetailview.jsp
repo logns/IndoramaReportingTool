@@ -66,7 +66,7 @@
 							<label>Assigned to</label>
 							<form:select path="assignTaskDTO.assigned_to"
 								class="form-control text ui-widget-content ui-corner-all">
-								<form:options id="assigned_to" items="${usersList}"></form:options>
+								<form:options id="assigned_to" items="${usersListAssignto}"></form:options>
 							</form:select>
 						</div>
 						<div class="col-sm-6 form-group">
