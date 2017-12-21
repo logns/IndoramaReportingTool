@@ -12,7 +12,7 @@
 				<c:if test="${not empty msg}">
 					<div class="msg">${msg}</div>
 				</c:if>
-				<form:form method="POST" action="password" modelAttribute="users">
+				<form:form method="POST" action="resetpassword" modelAttribute="users">
 
 					<div class="panel-body" cssClass="error">
 						<form:errors path="password" element="div" />

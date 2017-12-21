@@ -45,7 +45,7 @@ public class PasswordChangeRequestsController {
 	public String showResetPassword(@RequestParam("id") String hash_id,Model model, HttpServletRequest request) {
 		Users users =new Users();
 		System.out.println("resetpassword --mailservice ");
-		
+		model.addAttribute("id", hash_id);		
 		model.addAttribute("users", users);
 		return "resetpassword";
 	}

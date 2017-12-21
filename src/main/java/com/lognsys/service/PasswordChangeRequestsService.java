@@ -105,6 +105,7 @@ int count=0;
 		if(jdbcUserRepository.isExists(usersdetail.getUsername())){
 			count++;
 			if(jdbcPCRRepository.isExists(usersdetail.getId())){
+				
 				jdbcPCRRepository.updatePasswordChangeRequests(
 						new PasswordChangeRequestsDTO(
 								hashStringId,
