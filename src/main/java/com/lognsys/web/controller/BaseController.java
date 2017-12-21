@@ -101,23 +101,7 @@ public class BaseController {
 
 		return model;
 	}
-	@RequestMapping(value = "/forgotpassword", method = RequestMethod.GET)
-	public String showForgotPassword(Model model, HttpServletRequest request) {
-		Users email =new Users();
-		System.out.println("showForgotPassword --mailservice ");
-		
-		model.addAttribute("email", email);
-		return "forgotpassword";
-	}
-
-	@RequestMapping(value = "/forgotpassword", method = RequestMethod.POST)
-	public String forgotPassword(@ModelAttribute("email") Users email, BindingResult result, ModelMap model){
-		System.out.println("forgotPassword --email "+email.getUsername());
-		userService.forgotPassword(email);
-
-		return "login";
-	}
-
+	
 
 	/**
 	 * Returns to Dashboard page

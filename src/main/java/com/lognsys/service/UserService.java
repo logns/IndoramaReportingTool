@@ -42,8 +42,6 @@ public class UserService {
 	
 	@Autowired
 	private JdbcUserRepository jdbcUserRepository;
-//	@Autowired
-//	private JdbcDeviceRepository jdbcDeviceRepository;
 
 	@Autowired
 	private MessageSource msg;
@@ -499,16 +497,4 @@ public boolean exists(Users users) {
 		return jdbcUserRepository.isExists(users.getUsername());
 
 	}
-public void forgotPassword(Users users) {
-	String emailid=users.getUsername();
-	String forgotPassword="Forgot Password Details";
-	String message = msg.getMessage("forgotusername", new Object[] {emailid,"http://www.mkyong.com"}, null);
-	
-	processMail(users, forgotPassword, message);
-	System.out.println("forgotPassword --emailid "+emailid);
-
-	
-System.out.println("forgotPassword --mailservice "+mailservice);
-
-}
 }

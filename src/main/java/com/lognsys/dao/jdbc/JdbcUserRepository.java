@@ -22,6 +22,7 @@ import org.springframework.stereotype.Repository;
 import com.lognsys.dao.UserRespository;
 import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.dao.jdbc.rowmapper.UserByUserIDRowMapper;
+import com.lognsys.model.Users;
 import com.lognsys.util.Constants;
 
 @Repository("userRepository")
@@ -89,7 +90,15 @@ public class JdbcUserRepository implements UserRespository {
 	
 		return isUpdate;
 	}
+	public boolean updateUserPasswordById(Users users) throws DataAccessException {
 
+		boolean isUpdate = false;
+		BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(users);
+		isUpdate = namedParamJdbcTemplate.update(sqlProperties.getProperty(Constants.USER_QUERIES.update_users.name()),
+				params) == 1;
+	
+		return isUpdate;
+	}
 	/**
 	 * Returns Users object by id
 	 * 
@@ -228,11 +237,6 @@ public class JdbcUserRepository implements UserRespository {
 			List<String> listUsers = namedParamJdbcTemplate.query(
 					sqlProperties.getProperty(Constants.USER_QUERIES.select_username.name()),param,
 					new BeanPropertyRowMapper<String>(String.class));
-		System.out.println("\n getUsernamebyRealname listUsers.size() "+listUsers.size());
-		
-		for(int i=0;i<listUsers.size();i++){
-			System.out.println("\n getUsernamebyRealname listUsers.get(i).toString() "+listUsers.get(i).toString());
-		}
 	}
 
 }

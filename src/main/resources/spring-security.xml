@@ -36,7 +36,8 @@
 		<security:intercept-url pattern="/dashboard"
 			access="isAuthenticated()" />
 
-
+		<security:intercept-url access="permitAll"
+			pattern="/resetpassword" />
 		<security:intercept-url access="permitAll"
 			pattern="/loggedout" />
 		<security:intercept-url access="permitAll"
