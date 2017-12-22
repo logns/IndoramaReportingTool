@@ -90,7 +90,7 @@ public class JdbcPasswordChangeRequestsRepository implements PasswordChangeReque
 		SqlParameterSource parameter = new MapSqlParameterSource("hash_id", hash_id);
 
 		return namedParamJdbcTemplate.queryForObject(
-				sqlProperties.getProperty(Constants.PASSWORDCHANGEREQUESTS_QUERIES.selecr_pcr_users_id.name()), parameter,
+				sqlProperties.getProperty(Constants.PASSWORDCHANGEREQUESTS_QUERIES.select_pcr_hash_id.name()), parameter,
 				new PCRRowMapper());
 	}
 

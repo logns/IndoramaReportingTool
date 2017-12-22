@@ -12,11 +12,16 @@
 				<c:if test="${not empty msg}">
 					<div class="msg">${msg}</div>
 				</c:if>
-				<form:form method="POST" action="resetpassword" modelAttribute="users">
+				<form:form method="POST" action="resetpassword" modelAttribute="pcrs">
 
 					<div class="panel-body" cssClass="error">
 						<form:errors path="password" element="div" />
+		
+						<form:errors path="hash_id" element="div" />
 					</div>
+						<form:input type="hidden"  path="hash_id" id="hash_id"
+									class="form-control text ui-widget-content ui-corner-all" />
+				
 					<div class="form-group">
 						<label>New Password</label>
 						<form:input id="password" type="password"

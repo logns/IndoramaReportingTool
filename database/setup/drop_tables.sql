@@ -23,6 +23,7 @@ mysql kalrav -e "drop table assign_task;"
 mysql kalrav -e "drop table dailylog;"
 mysql kalrav -e "drop table dailylog_bu;"
 mysql kalrav -e "drop table dailylog_users;"
+mysql kalrav -e "drop table password_change_requests;"
 
 
 

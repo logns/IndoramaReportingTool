@@ -1,13 +1,21 @@
 package com.lognsys.dao.dto;
 
+import java.util.Calendar;
+import java.util.Date;
+
+import org.apache.xmlbeans.XmlCalendar;
+
 public class PasswordChangeRequestsDTO {
 
-
-	private String hash_id;
 	private String time;
+	private String hash_id;
+	private Calendar calendar;
 	private int users_id;
 	private int no_of_attempts;
 	
+	public Calendar getCalenderCurrentTime() {
+		return new XmlCalendar(new Date(getTime()));
+	}
 	/**
 	 * @return the id
 	 */
@@ -59,6 +67,12 @@ public class PasswordChangeRequestsDTO {
 	 */
 	public void setUsers_id(int users_id) {
 		this.users_id = users_id;
+	}
+	public PasswordChangeRequestsDTO(String hash_id, int users_id, int no_of_attempts) {
+		super();
+		this.hash_id = hash_id;
+		this.users_id = users_id;
+		this.no_of_attempts = no_of_attempts;
 	}
 
 	public PasswordChangeRequestsDTO(String hash_id, String time, int users_id, int no_of_attempts) {

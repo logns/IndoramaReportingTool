@@ -1,5 +1,6 @@
 package com.lognsys.service;
 
+import com.lognsys.model.PasswordChangeRequests;
 import com.lognsys.model.Users;
 
 import java.nio.charset.Charset;
@@ -89,12 +90,11 @@ int count=0;
 		
 	try {
 		Users usersdetail = ObjectMapper.mapToUsers(jdbcUserRepository.findUserByUsername(emailid));
-		Date date=new Date();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-	
-		System.out.println(dateFormat.format(date).toString());
+		Calendar calendar=Calendar.getInstance(); // current time
+    	
+		System.out.println(calendar.getTime().toString());
 		if(hashStringId!=null && usersdetail!=null){
-			savePaswordChangeRequest(hashStringId,String.valueOf(date.getTime()),usersdetail);
+			savePaswordChangeRequest(hashStringId,calendar.getTime().toString(),usersdetail);
 		}
 		} catch (EmptyResultDataAccessException e) {
 			throw new UserDataAccessException(
@@ -105,14 +105,25 @@ int count=0;
 		if(jdbcUserRepository.isExists(usersdetail.getUsername())){
 			count++;
 			if(jdbcPCRRepository.isExists(usersdetail.getId())){
+				PasswordChangeRequestsDTO passwordChangeRequestsDTO =jdbcPCRRepository.getPCRByUserId(usersdetail.getId());
+				if(passwordChangeRequestsDTO!=null &&passwordChangeRequestsDTO.getNo_of_attempts()>count){
+					jdbcPCRRepository.updatePasswordChangeRequests(
+							new PasswordChangeRequestsDTO(
+									hashStringId,passwordChangeRequestsDTO.getTime(),
+									usersdetail.getId(), 
+									passwordChangeRequestsDTO.getNo_of_attempts())
+							);	
+				}
+				else{
+					jdbcPCRRepository.updatePasswordChangeRequests(
+							new PasswordChangeRequestsDTO(
+									hashStringId,
+									currentTime,
+									usersdetail.getId(), 
+									count)
+							);
+				}
 				
-				jdbcPCRRepository.updatePasswordChangeRequests(
-						new PasswordChangeRequestsDTO(
-								hashStringId,
-								currentTime,
-								usersdetail.getId(), 
-								count)
-						);
 			}
 			else{
 				jdbcPCRRepository.addPCR(
@@ -164,14 +175,15 @@ int count=0;
 
 		mailservice.sendMail("lognsystems@gmail.com", users.getUsername(), addAccout, message);
 	}
-	public void UpdateAndRetriveUsersAndPCRRecords(Users users,String hash_id) {
+	public void UpdateAndRetriveUsersAndPCRRecords(PasswordChangeRequests pcrs,String hash_id) throws java.text.ParseException {
 		PasswordChangeRequestsDTO passwordChangeRequestsDTO =jdbcPCRRepository.findPCRByHash_id(hash_id);
-		System.out.println("UpdateAndRetriveUsersAndPCRRecords  passwordChangeRequestsDTO : " + passwordChangeRequestsDTO.toString());
-	    
 		if(passwordChangeRequestsDTO.getUsers_id()!=0 && passwordChangeRequestsDTO.getUsers_id()>0){
+			Users users =new Users();
 			users.setId(passwordChangeRequestsDTO.getUsers_id());
-			if(users.getPassword()!=null){
-				users.setPassword(CommonUtilities.bCryptPasswordEncoder(users.getPassword()));
+			if(pcrs.getPassword()!=null){
+				System.out.println("UpdateAndRetriveUsersAndPCRRecords  pcrs.getPassword() : " + pcrs.getPassword().toString());
+			    
+				users.setPassword(CommonUtilities.bCryptPasswordEncoder(pcrs.getPassword()));
 				System.out.println("UpdateAndRetriveUsersAndPCRRecords users users.getPassword() "+users.getPassword());
 			jdbcUserRepository.updateUserPasswordById(users);
 			}

@@ -22,5 +22,6 @@ mysql kalrav < ${PROJECT_DIR}/database/tables/assign_task.sql
 mysql kalrav < ${PROJECT_DIR}/database/tables/dailylog.sql 
 mysql kalrav < ${PROJECT_DIR}/database/tables/dailylog_bu.sql 
 mysql kalrav < ${PROJECT_DIR}/database/tables/dailylog_users.sql 
+mysql kalrav < ${PROJECT_DIR}/database/tables/password_change_requests.sql 
 
 

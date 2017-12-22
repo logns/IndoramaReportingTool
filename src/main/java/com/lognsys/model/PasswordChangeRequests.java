@@ -2,20 +2,37 @@ package com.lognsys.model;
 
 public class PasswordChangeRequests {
 
-	private String id;
+	private String hash_id;
 	private String time;
+
+	private String password;
+
 	private int users_id;
+
+	
 	/**
-	 * @return the id
+	 * @return the hash_id
 	 */
-	public String getId() {
-		return id;
+	public String getHash_id() {
+		return hash_id;
 	}
 	/**
-	 * @param id the id to set
+	 * @param hash_id the hash_id to set
 	 */
-	public void setId(String id) {
-		this.id = id;
+	public void setHash_id(String hash_id) {
+		this.hash_id = hash_id;
+	}
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	/**
 	 * @return the time
@@ -41,10 +58,12 @@ public class PasswordChangeRequests {
 	public void setUsers_id(int users_id) {
 		this.users_id = users_id;
 	}
-	public PasswordChangeRequests(String id, String time, int users_id) {
+	
+	public PasswordChangeRequests(String hash_id, String time, String password, int users_id) {
 		super();
-		this.id = id;
+		this.hash_id = hash_id;
 		this.time = time;
+		this.password = password;
 		this.users_id = users_id;
 	}
 	public PasswordChangeRequests() {
@@ -53,9 +72,13 @@ public class PasswordChangeRequests {
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return "PasswordChangeRequests [id=" + id + ", time=" + time + ", users_id=" + users_id + "]";
+		return "PasswordChangeRequests [hash_id=" + hash_id + ", time=" + time + ", password=" + password
+				+ ", users_id=" + users_id + "]";
 	}
 	
 }
