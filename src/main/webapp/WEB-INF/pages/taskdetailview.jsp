@@ -108,17 +108,20 @@
 
 								<div class="top" id="top_${dailylogDTO.id}">
 						
-							<input type="hidden" >
+						<%-- 	<input type="hidden" >
 							
 								<c:out value="${dailylogDTO.id}"></c:out></input>
-									<a  data-id="top_${dailylogDTO.id}" href="#"> <c:out
-											value="${dailylogDTO.assigned_to}"></c:out> <c:out
-											value="${dailylogDTO.last_edit}"></c:out>
+						 --%>
+						 		<a  data-id="top_${dailylogDTO.id}" href="#">
+						 		
+									<i id="close" hidden="true" class="fa fa-caret-down" style="font-size:24px"></i>	
+									<i id="open" class="fa fa-caret-right" style="font-size:24px"></i>
+									 <c:out value="${dailylogDTO.assigned_to}"></c:out>
+						 			  <c:out value="${dailylogDTO.last_edit}"></c:out>
 											<br>
-											   
+										</a>	
 										<input class="panel form-group" type="text" id="desc_${dailylogDTO.id}" value="<c:out value="${dailylogDTO.description}"></c:out>">
-											
-									</a>
+										
 								</div>
 								<div class="bottom" id="bottom_${dailylogDTO.id}">
 

@@ -63,7 +63,7 @@ public class PasswordChangeRequestsService {
 	
 	@Autowired
 	MailService mailService;
-int count=0;
+	int count=0;
 	Authentication  authentication;
 	String randomString;
 	String hashStringId;
@@ -77,24 +77,25 @@ int count=0;
 		String forgotPassword="Forgot Password Details";
 		randomString=givenUsingPlainJava_whenGeneratingRandomStringUnbounded_thenCorrect();
 		hashStringId=generateHashShakeyFromString(randomString);
-		System.out.println("forgotPassword --randomString "+randomString);
-		System.out.println("forgotPassword --hashStringId "+hashStringId);
 		
 		String message = msg.getMessage("forgotusername",
 				new Object[] {emailid,"http://localhost:8080/resetpassword?id="+randomString}, null);
 		processMail(users, forgotPassword, message);
 		
-		System.out.println("forgotPassword --emailid "+emailid);
-		System.out.println("forgotPassword --mailservice "+mailservice);
-	
 		
 	try {
 		Users usersdetail = ObjectMapper.mapToUsers(jdbcUserRepository.findUserByUsername(emailid));
-		Calendar calendar=Calendar.getInstance(); // current time
-    	
-		System.out.println(calendar.getTime().toString());
-		if(hashStringId!=null && usersdetail!=null){
-			savePaswordChangeRequest(hashStringId,calendar.getTime().toString(),usersdetail);
+		
+		Calendar cal = Calendar.getInstance();
+	     cal.setTime(new Date());
+	     System.out.println("sending mail --cal.getTime() "+cal.getTime());
+			
+	     if(hashStringId!=null && usersdetail!=null){
+	    	 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		     String currentdate =  sdf.format(cal.getTime()); 
+		     System.out.println("sending mail after formate  currentdate "+currentdate);
+				    
+	    	 savePaswordChangeRequest(hashStringId,currentdate.toString(),usersdetail);
 		}
 		} catch (EmptyResultDataAccessException e) {
 			throw new UserDataAccessException(
@@ -176,16 +177,46 @@ int count=0;
 		mailservice.sendMail("lognsystems@gmail.com", users.getUsername(), addAccout, message);
 	}
 	public void UpdateAndRetriveUsersAndPCRRecords(PasswordChangeRequests pcrs,String hash_id) throws java.text.ParseException {
+		System.out.println("\n\nUpdateAndRetriveUsersAndPCRRecords  pcrs.toString() : " + pcrs.toString());
+		
 		PasswordChangeRequestsDTO passwordChangeRequestsDTO =jdbcPCRRepository.findPCRByHash_id(hash_id);
+		System.out.println("\n\n\n\nUpdateAndRetriveUsersAndPCRRecords  passwordChangeRequestsDTO.toString() : " + passwordChangeRequestsDTO.toString());
+		
+		
 		if(passwordChangeRequestsDTO.getUsers_id()!=0 && passwordChangeRequestsDTO.getUsers_id()>0){
 			Users users =new Users();
+			
 			users.setId(passwordChangeRequestsDTO.getUsers_id());
+			
 			if(pcrs.getPassword()!=null){
-				System.out.println("UpdateAndRetriveUsersAndPCRRecords  pcrs.getPassword() : " + pcrs.getPassword().toString());
 			    
 				users.setPassword(CommonUtilities.bCryptPasswordEncoder(pcrs.getPassword()));
-				System.out.println("UpdateAndRetriveUsersAndPCRRecords users users.getPassword() "+users.getPassword());
-			jdbcUserRepository.updateUserPasswordById(users);
+			
+				System.out.println("\n\n\n\nUpdateAndRetriveUsersAndPCRRecords users users.getPassword() "+users.getPassword());
+			
+				jdbcUserRepository.updateUserPasswordById(users);
+			
+				if(passwordChangeRequestsDTO.getNo_of_attempts()>=3){
+				count=0;
+				jdbcPCRRepository.updatePasswordChangeRequests(
+						new PasswordChangeRequestsDTO(
+								passwordChangeRequestsDTO.getHash_id(),
+								passwordChangeRequestsDTO.getTime(),
+								 passwordChangeRequestsDTO.getUsers_id(), 
+								count)
+						);
+			}
+			else{
+				count++;
+				jdbcPCRRepository.updatePasswordChangeRequests(
+						new PasswordChangeRequestsDTO(
+								passwordChangeRequestsDTO.getHash_id(),
+								passwordChangeRequestsDTO.getTime(),
+								 passwordChangeRequestsDTO.getUsers_id(), 
+								count)
+						);
+				
+			}
 			}
 
 		}

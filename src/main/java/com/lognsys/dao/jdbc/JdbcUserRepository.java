@@ -94,7 +94,7 @@ public class JdbcUserRepository implements UserRespository {
 
 		boolean isUpdate = false;
 		BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(users);
-		isUpdate = namedParamJdbcTemplate.update(sqlProperties.getProperty(Constants.USER_QUERIES.update_users.name()),
+		isUpdate = namedParamJdbcTemplate.update(sqlProperties.getProperty(Constants.USER_QUERIES.update_users_password.name()),
 				params) == 1;
 	
 		return isUpdate;

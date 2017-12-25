@@ -326,8 +326,10 @@ public class BaseController {
 		userService.addUser(user);
 		authentication = SecurityContextHolder.getContext().getAuthentication();
 		System.out.println("adduser  user role - "+(authentication.getPrincipal().toString()));
-		System.out.println("adduser  user ObjectMapper.authorizedUserName()!=null - "+(ObjectMapper.authorizedUserName()));
-		if(authentication.getPrincipal().toString()!=null && ObjectMapper.authorizedUserName()!=null){
+		String usernamelogged=ObjectMapper.authorizedUserName();
+		System.out.println("adduser  user usernamelogged - "+(usernamelogged));
+		
+		if(authentication.getPrincipal().toString()!=null && usernamelogged!=null){
 			return "userlist";
 		}
 		else{

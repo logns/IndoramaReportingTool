@@ -21,11 +21,11 @@
 					</div>
 						<form:input type="hidden"  path="hash_id" id="hash_id"
 									class="form-control text ui-widget-content ui-corner-all" />
-				
+				<span id="password_strength"></span>
 					<div class="form-group">
 						<label>New Password</label>
-						<form:input id="password" type="password"
-							placeholder="Enter password Here.."
+						<form:input id="password" type="password" onkeyup="CheckPasswordStrength(this.value)"
+							placeholder="Enter password Here.." maxlength="15"  
 							class="form-control text ui-widget-content ui-corner-all"
 							path="password" />
 
@@ -39,7 +39,7 @@
 					<div class="row">
 						<div id="matchpassword"></div>
 					</div>
-					<button type="submit" class="btn btn btn-primary">Submit</button>
+					<button type="submit" class="btn btn btn-primary" id="resetbutton">Submit</button>
 
 				</form:form>
 			</div>

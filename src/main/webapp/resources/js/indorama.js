@@ -1,5 +1,8 @@
 /*
 
+
+
+ * 
  * INDORAMA.js
  * @author : 01/04/17 - PJD
  * @author : 19/11/17 - MS
@@ -701,8 +704,11 @@ $(document)
                   console.log("data --- desc - " + desc);
                   if($(desc).css('display') == 'none'){ 
                 	   $(desc).show('slow'); 
+                	   $('#open').hidden(false);
                 	} else { 
                 	   $(desc).hide('slow'); 
+                	   $('#open').hidden(true);
+                	   $('#close').hidden(false);
                 	}
                   
                   
@@ -710,6 +716,7 @@ $(document)
                   console.log("data --- bottom_id - " + bottom_id);
                 
                   $("#"+bottom_id).toggle();
+                  
                   $.ajax({
                       url: "http://localhost:8080/taskdetailview",
                       data: {
@@ -847,6 +854,68 @@ $(document)
               	  
               }
               $(document).ready(onLoad);
-              
+//              Use RegEx to Test Password Strength and alpha numeric characters
+              $(function () {
+                  $("#password").bind("keyup", function () {
+                      //TextBox left blank.
+                      if ($(this).val().length == 0) {
+                          $("#password_strength").html("");
+                          return;
+                      }
+                  //TextBox left blank.
+                  if (password.length == 0) {
+                      password_strength.innerHTML = "";
+                      return;
+                  }
+           
+                  //Regular Expressions.
+                  var regex = new Array();
+                  regex.push("[A-Z]"); //Uppercase Alphabet.
+                  regex.push("[a-z]"); //Lowercase Alphabet.
+                  regex.push("[0-9]"); //Digit.
+                  regex.push("[$@$!%*#?&]"); //Special Character.
+       
+                  var passed = 0;
+       
+                  //Validate for each Regular Expression.
+                  for (var i = 0; i < regex.length; i++) {
+                      if (new RegExp(regex[i]).test($(this).val())) {
+                          passed++;
+                      }
+                  }
+       
+       
+                  //Validate for length of Password.
+                  if (passed > 2 && $(this).val().length > 8) {
+                      passed++;
+                  }
+       
+                  //Display status.
+                  var color = "";
+                  var strength = "";
+                  switch (passed) {
+                      case 0:
+                      case 1:
+                          strength = "Weak";
+                          color = "red";
+                          break;
+                      case 2:
+                          strength = "Good";
+                          color = "darkorange";
+                          break;
+                      case 3:
+                      case 4:
+                          strength = "Strong";
+                          color = "green";
+                          break;
+                      case 5:
+                          strength = "Very Strong";
+                          color = "darkgreen";
+                          break;
+                  }
+                  $("#password_strength").html(strength);
+                  $("#password_strength").css("color", color);
+              });
+          });
               
  }); //end of document jQuery

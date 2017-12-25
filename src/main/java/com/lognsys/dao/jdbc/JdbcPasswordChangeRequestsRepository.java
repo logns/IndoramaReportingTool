@@ -77,6 +77,8 @@ public class JdbcPasswordChangeRequestsRepository implements PasswordChangeReque
 
 	@Override
 	public boolean updatePasswordChangeRequests(PasswordChangeRequestsDTO passwordChangeRequestsDTO) {
+		System.out.println("UpdateAndRetriveUsersAndPCRRecords users users.toString() "+passwordChangeRequestsDTO.toString());
+		
 		boolean isUpdate = false;
 		BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(passwordChangeRequestsDTO);
 		isUpdate = namedParamJdbcTemplate.update(sqlProperties.getProperty(Constants.PASSWORDCHANGEREQUESTS_QUERIES.update_pcr.name()),
