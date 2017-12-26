@@ -113,10 +113,11 @@
 
 									<a style="font-size: 24px" data-id="top_${dailylogDTO.id}"
 										href="#"> 
-										<img   id="up_${dailylogDTO.id}"
+										<img   id="down_${dailylogDTO.id}" style="cursor:pointer" class="imageOnOff"
 										src="https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Down_arrow_download_up_page_add_warning_thumbs_text_search.png" />
-										<img class="hidden" id="down_${dailylogDTO.id}"
+										<%-- <img class="hidden" id="down_${dailylogDTO.id}"
 										src="https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Up_arrow_vote_like_upload_thumbs_down_thumb_hand_edit.png" />
+										 --%>
 										<c:out value="${dailylogDTO.assigned_to}"></c:out> <c:out
 											value="${dailylogDTO.last_edit}"></c:out>
 

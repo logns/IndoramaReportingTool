@@ -746,13 +746,26 @@ $(document)
                   
                   var bottom_id = "bottom_"+postId;
                   console.log("data --- bottom_id - " + bottom_id);
-                
+                  var down_id = "down_"+postId;
+                  
                   $("#"+bottom_id).toggle();
                   
                   var $arrows = $(this).find("img");
-            	  
 
-            	 
+                  /*      if ($("#"+down_id).attr("src").toString().indexOf('https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Down_arrow_download_up_page_add_warning_thumbs_text_search.png') != -1) {
+
+                  this.src = this.src.replace("https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Down_arrow_download_up_page_add_warning_thumbs_text_search.png", "https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Up_arrow_vote_like_upload_thumbs_down_thumb_hand_edit.png");
+
+                  }
+
+                else {
+
+                  this.src = this.src.replace("https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Up_arrow_vote_like_upload_thumbs_down_thumb_hand_edit.png", "https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Down_arrow_download_up_page_add_warning_thumbs_text_search.png");
+
+                  }*/
+
+                  $("#"+down_id).attr('src', 'https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Up_arrow_vote_like_upload_thumbs_down_thumb_hand_edit.png');
+              
                   $.ajax({
                       url: "http://localhost:8080/taskdetailview",
                       data: {
