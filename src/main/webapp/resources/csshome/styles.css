@@ -1048,4 +1048,28 @@ h1.page-header {
 	-webkit-transform: rotate(180deg);
 	-moz-transform: rotate(180deg);
 	transform: rotate(180deg);
+
 } 
+
+.hidden{
+    display: none;
+}
+
+a {
+	color: #0254EB
+}
+a:visited {
+	color: #0254EB
+}
+a.morelink {
+	text-decoration:none;
+	outline: none;
+}
+.morecontent span {
+	display: none;
+}
+.comment {
+	
+	background-color: #f0f0f0;
+	margin: 10px;
+}

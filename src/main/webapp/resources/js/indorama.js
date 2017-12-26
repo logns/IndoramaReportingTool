@@ -688,11 +688,46 @@ $(document)
             	    $(this).css('margin-top', imgHeight);
             	    $(this).css('margin-left', imgWidth);
             	});
-              
+              $(document).ready(function() {
+            		var showChar = 50;
+            		var ellipsestext = "...";
+            		var moretext = "more";
+            		var lesstext = "less";
+            		$('.more').each(function() {
+            			var content = $(this).html();
+
+            			if(content.length > showChar) {
+
+            				var c = content.substr(0, showChar);
+            				var h = content.substr(showChar-1, content.length - showChar);
+
+            				var html = c + '<span class="moreellipses">' + ellipsestext+ '&nbsp;</span><span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
+
+            				$(this).html(html);
+            			}
+
+            		});
+
+            		$(".morelink").click(function(){
+            			if($(this).hasClass("less")) {
+            				$(this).removeClass("less");
+            				$(this).html(moretext);
+            			} else {
+            				$(this).addClass("less");
+            				$(this).html(lesstext);
+            			}
+            			$(this).parent().prev().toggle();
+            			$(this).prev().toggle();
+            			return false;
+            		});
+            	});
 //              show hide 
               $("[data-id]").click(function(){
+            	 
             	  var id = $(this).data("id");
-                  console.log("data --- id - " + id);
+
+            	  
+            	  console.log("data --- id - " + id);
                   var fields = id.split('_');
                 var title = jQuery("textarea#title").val();
                   
@@ -704,11 +739,8 @@ $(document)
                   console.log("data --- desc - " + desc);
                   if($(desc).css('display') == 'none'){ 
                 	   $(desc).show('slow'); 
-                	   $('#open').hidden(false);
                 	} else { 
                 	   $(desc).hide('slow'); 
-                	   $('#open').hidden(true);
-                	   $('#close').hidden(false);
                 	}
                   
                   
@@ -717,6 +749,10 @@ $(document)
                 
                   $("#"+bottom_id).toggle();
                   
+                  var $arrows = $(this).find("img");
+            	  
+
+            	 
                   $.ajax({
                       url: "http://localhost:8080/taskdetailview",
                       data: {
@@ -766,7 +802,6 @@ $(document)
 
                   event.preventDefault();
             	});
-              
               
              /* $('.top').on('click', function() {
             		$parent_box = $(this).closest('.box');
@@ -843,6 +878,8 @@ $(document)
 	            		 $("#matchpassword").text("Passwords match");
 	            		 $("#matchpassword").addClass("valid");
 	            		 $("#matchpassword").removeClass("error");
+	                     
+
 	 	              }
 	            	  else{
 	            			 $("#matchpassword").text("Passwords do not match");                     		  
@@ -857,7 +894,9 @@ $(document)
 //              Use RegEx to Test Password Strength and alpha numeric characters
               $(function () {
                   $("#password").bind("keyup", function () {
-                      //TextBox left blank.
+
+                     
+                	  //TextBox left blank.
                       if ($(this).val().length == 0) {
                           $("#password_strength").html("");
                           return;
@@ -874,7 +913,7 @@ $(document)
                   regex.push("[a-z]"); //Lowercase Alphabet.
                   regex.push("[0-9]"); //Digit.
                   regex.push("[$@$!%*#?&]"); //Special Character.
-       
+            
                   var passed = 0;
        
                   //Validate for each Regular Expression.
@@ -889,7 +928,7 @@ $(document)
                   if (passed > 2 && $(this).val().length > 8) {
                       passed++;
                   }
-       
+                  
                   //Display status.
                   var color = "";
                   var strength = "";
