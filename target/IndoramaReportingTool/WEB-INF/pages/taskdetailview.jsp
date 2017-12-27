@@ -109,22 +109,28 @@
 
 								<div class="top" id="top_${dailylogDTO.id}">
 
-									
+								
+
+
 
 									<a style="font-size: 24px" data-id="top_${dailylogDTO.id}"
-										href="#"> 
-										<img class="hidden"  id="up_${dailylogDTO.id}"
-										src="https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Down_arrow_download_up_page_add_warning_thumbs_text_search.png" />
-										<img id="down_${dailylogDTO.id}"
-										src="https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Up_arrow_vote_like_upload_thumbs_down_thumb_hand_edit.png" />
-										<c:out value="${dailylogDTO.assigned_to}"></c:out> <c:out
-											value="${dailylogDTO.last_edit}"></c:out>
-
-									</a><br> <input class="panel form-group" type="text"
-										id="desc_${dailylogDTO.id}"
-										value="<c:out value="${dailylogDTO.description}"></c:out>">
-
+										href="#">
+								<div id="close-panel" style="background-repeat: no-repeat; cursor:pointer; height:20px; width:20px;">
+								<i class="ion ion-ios7-close-empty"></i>
 								</div>
+										
+											<c:out value="${dailylogDTO.assigned_to}"></c:out>
+											<c:out value="${dailylogDTO.last_edit}"></c:out>
+									
+									</a><br> <a style="font-size: 14px; color: black;"
+										data-id="top_${dailylogDTO.id}" href="#">
+										<div class="panel form-group comment more"
+											id="desc_${dailylogDTO.id}">
+											<c:out value="${dailylogDTO.description}"></c:out>
+										</div>
+									</a>
+								</div>
+<div class="panel">
 								<div class="bottom" id="bottom_${dailylogDTO.id}">
 
 									<fieldset class="the-fieldset">
@@ -228,6 +234,8 @@
 
 									</fieldset>
 								</div>
+								</div>
+								
 							</c:forEach>
 						</div>
 					</div>

@@ -144,7 +144,8 @@ public class Constants {
 		
 		data_access_exception,data_access_exception_delete,data_access_exception_edit,
 		
-		something_went_wrong
+		something_went_wrong, data_access_exception_forgotpassword
+		
 		
 	}
 

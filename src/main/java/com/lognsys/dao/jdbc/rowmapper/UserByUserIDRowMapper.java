@@ -23,6 +23,7 @@ public class UserByUserIDRowMapper implements RowMapper<UsersDTO> {
 		useritem.setCity(rs.getString("city"));
 		useritem.setState(rs.getString("state"));
 		useritem.setZipcode(rs.getString("zipcode"));
+		useritem.setBirthdate(rs.getString("password"));
 		useritem.setBirthdate(rs.getString("birthdate"));
 		return useritem;
 	}

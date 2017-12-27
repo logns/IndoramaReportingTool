@@ -163,13 +163,15 @@ public class JdbcUserRepository implements UserRespository {
 	 */
 	@Override
 	public UsersDTO findUserByUsername(String username) throws DataAccessException {
-
+		System.out.println( "findUserByUsername username"+username);
+		
 		SqlParameterSource parameter = new MapSqlParameterSource("username", username);
 
 		UsersDTO usersDTO = namedParamJdbcTemplate.queryForObject(
 				sqlProperties.getProperty(Constants.USER_QUERIES.select_users_username.name()), parameter,
 				new UserByUserIDRowMapper());
-
+		System.out.println( "findUserByUsername usersDTO"+usersDTO.toString());
+		
 		return usersDTO;
 
 	}

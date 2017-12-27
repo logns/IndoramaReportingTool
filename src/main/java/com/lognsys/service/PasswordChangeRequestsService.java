@@ -84,6 +84,7 @@ public class PasswordChangeRequestsService {
 		
 		
 	try {
+		System.out.println( "forgotPassword emailid"+emailid);
 		Users usersdetail = ObjectMapper.mapToUsers(jdbcUserRepository.findUserByUsername(emailid));
 		
 		Calendar cal = Calendar.getInstance();
@@ -98,9 +99,11 @@ public class PasswordChangeRequestsService {
 	    	 savePaswordChangeRequest(hashStringId,currentdate.toString(),usersdetail);
 		}
 		} catch (EmptyResultDataAccessException e) {
-			throw new UserDataAccessException(
+			System.out.println("sending mail --EmptyResultDataAccessException "+e.toString());
+			
+			/*	throw new UserDataAccessException(
 				applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.exception_userempty.name()), e);
-		}
+		*/}
 	}
 	private void savePaswordChangeRequest(String hashStringId, String currentTime,Users usersdetail) {
 		if(jdbcUserRepository.isExists(usersdetail.getUsername())){
@@ -238,5 +241,9 @@ public class PasswordChangeRequestsService {
 		 	  
 	    System.out.println("generatedString == "+generatedString);
 	    return generatedString;
+	}
+	public boolean findUsernameIsExist(String username) {
+		return jdbcUserRepository.isExists(username);
+
 	}
 }

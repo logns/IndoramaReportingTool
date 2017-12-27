@@ -101,8 +101,7 @@
 									class="form-control text ui-widget-content ui-corner-all"
 									path="password" />
 								</div>
-								<span id="password_strength"></span>
-				
+					
 								<div class="col-sm-6 form-group">
 								<label>Confirm Password</label>
 								<input type="password"  id="confirmpassword" onkeyup="CheckPasswordStrength(this.value)"
@@ -111,7 +110,8 @@
 									name="confirmpassword" />
 								</div>
 								</div>
-									<div class="row"><div id="matchpassword"></div></div>
+								
+									<div class="row"><div id="matchpassword">			<span id="password_strength"></span></div></div>
 							<div class="form-group">
 								<label>Address</label>
 								<form:textarea id="address" placeholder="Enter Address Here.."

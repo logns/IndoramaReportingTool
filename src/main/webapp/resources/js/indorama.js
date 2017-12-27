@@ -721,11 +721,28 @@ $(document)
             			return false;
             		});
             	});
-//              show hide 
+              $(document).ready(function(){
+            	    $("[data-id]").click(function(){
+            	    	 $(this).addClass("fa fa-caret-down");	 
+                         	
+            	    });
+            	});
+             //              show hide 
               $("[data-id]").click(function(){
-            	 
-            	  var id = $(this).data("id");
+            	
 
+            	  
+            	          	  
+            	  var id = $(this).data("id");
+            	  if ($("[data-id]").hasClass("fa fa-caret-up")){
+            		  $("[data-id]").removeClass("fa fa-caret-up");	 
+            		  $("[data-id]").addClass("fa fa-caret-down");	 
+
+                	  console.log("data ---yes it exist - ");	    		
+       	    	}else{
+       	       	  console.log("data ---no  not it exist - ");	    		
+       	       $("[data-id]").addClass("fa fa-caret-up");	 
+               	}
             	  
             	  console.log("data --- id - " + id);
                   var fields = id.split('_');
@@ -749,9 +766,9 @@ $(document)
                   var down_id = "down_"+postId;
                   
                   $("#"+bottom_id).toggle();
-                  
+               
                   var $arrows = $(this).find("img");
-
+                  $(this).parent(".bottom").slideToggle().parent(".box").find(".fa fa-caret-up").removeClass("fa fa-caret-up");
                   /*      if ($("#"+down_id).attr("src").toString().indexOf('https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Down_arrow_download_up_page_add_warning_thumbs_text_search.png') != -1) {
 
                   this.src = this.src.replace("https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Down_arrow_download_up_page_add_warning_thumbs_text_search.png", "https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Up_arrow_vote_like_upload_thumbs_down_thumb_hand_edit.png");
@@ -781,7 +798,8 @@ $(document)
                   });
 //            	  alert(id);
             	});
-                     
+              $(this).parent(".bottom").slideToggle().parent(".box").find(".fa fa-caret-up").removeClass("fa fa-caret-up");
+                 
 //              buttton  onclick
               $("[data-bid]").click(
             	   function(event) {

@@ -33,7 +33,7 @@ public class FormValidator implements Validator {
 	String ZIPCODE_PATTERN = "[0-9]{6}";
 	String STRING_NUMERIC_PATTERN = "[a-z \\s A-Z] [0-9]";
 	String DOUBLE_PATTERN = "[0-9]+(\\.){0,1}[0-9]*";
-	String PASSWORD_PATTERN = "^([a-zA-Z+]+[0-9+]+[&@!#+]+)$";
+	String PASSWORD_PATTERN = "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40})";
 	private static final String TIME12HOURS_PATTERN =
             "(1[012]|[1-9]):[0-5][0-9](\\s)?(?i)(am|pm)";
 
@@ -94,7 +94,12 @@ public class FormValidator implements Validator {
 			validateSpareParts(assignTaskdailylogDTODTO.getDailylogDTO(), errors);
 			validateAttendby(assignTaskdailylogDTODTO.getDailylogDTO(), errors);
 		
-		}
+		}else if (target instanceof String) {	
+			System.out.println("\n Rest saveForm target \n \n " +target.toString());
+
+			validateEmailFP((String) target, errors);
+					
+			}
 		
 	}
 
@@ -298,7 +303,18 @@ public class FormValidator implements Validator {
 		
 	}
 
+	private void validateEmailFP(String email, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "required.username", "email is required.");
 
+		// email validation in spring
+		if (!(email != null && email.isEmpty())) {
+			pattern = Pattern.compile(EMAIL_PATTERN);
+			matcher = pattern.matcher(email);
+			if (!matcher.matches()) {
+				errors.rejectValue("username", "username.incorrect", "Enter a correct email");
+			}
+		}
+	}
 	/**
 	 * 
 	 * @param users

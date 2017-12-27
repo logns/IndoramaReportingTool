@@ -688,9 +688,44 @@ $(document)
             	    $(this).css('margin-top', imgHeight);
             	    $(this).css('margin-left', imgWidth);
             	});
-              var id = $(this).data(".hidden");
-              console.log("data --- id img - " + id);
-              
+              $(document).ready(function() {
+            		var showChar = 50;
+            		var ellipsestext = "...";
+            		var moretext = "more";
+            		var lesstext = "less";
+            		$('.more').each(function() {
+            			var content = $(this).html();
+
+            			if(content.length > showChar) {
+
+            				var c = content.substr(0, showChar);
+            				var h = content.substr(showChar-1, content.length - showChar);
+
+            				var html = c + '<span class="moreellipses">' + ellipsestext+ '&nbsp;</span><span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
+
+            				$(this).html(html);
+            			}
+
+            		});
+
+            		$(".morelink").click(function(){
+            			if($(this).hasClass("less")) {
+            				$(this).removeClass("less");
+            				$(this).html(moretext);
+            			} else {
+            				$(this).addClass("less");
+            				$(this).html(lesstext);
+            			}
+            			$(this).parent().prev().toggle();
+            			$(this).prev().toggle();
+            			return false;
+            		});
+            	});
+           
+              $('#close-panel').click(function() {
+                  $('.panel').slideToggle('slow');
+              $(this).toggleClass('transform');   
+           });
 //              show hide 
               $("[data-id]").click(function(){
             	 
@@ -716,29 +751,26 @@ $(document)
                   
                   var bottom_id = "bottom_"+postId;
                   console.log("data --- bottom_id - " + bottom_id);
-                
-//                  $("#"+bottom_id).toggle();
+                  var down_id = "down_"+postId;
+                  
+                  $("#"+bottom_id).toggle();
                   
                   var $arrows = $(this).find("img");
-            	  console.log("data --- $arrows - " + $arrows);
-            	  
-//            	  arrow
-            	  var up_= "#up_"+postId;
-            	  var down_= "#down_"+postId;
-            	 
-            	  
-            	  $("#"+bottom_id).slideToggle(function(){
-            	        $arrows.toggle();
-            	        console.log("data --- $arrows - " + $arrows);
-            	        if($(up_).css('display') == 'none'){ 
-                     	   $(up_).show('slow'); 
-                     	   $(down_).hide('slow'); 
-                     	} else { 
-                     	   $(up_).hide('slow'); 
-                     	   $(down_).show('slow'); 
-                     	}
-                       
-            	    });
+
+                  /*      if ($("#"+down_id).attr("src").toString().indexOf('https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Down_arrow_download_up_page_add_warning_thumbs_text_search.png') != -1) {
+
+                  this.src = this.src.replace("https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Down_arrow_download_up_page_add_warning_thumbs_text_search.png", "https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Up_arrow_vote_like_upload_thumbs_down_thumb_hand_edit.png");
+
+                  }
+
+                else {
+
+                  this.src = this.src.replace("https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Up_arrow_vote_like_upload_thumbs_down_thumb_hand_edit.png", "https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Down_arrow_download_up_page_add_warning_thumbs_text_search.png");
+
+                  }*/
+
+                  $("#"+down_id).attr('src', 'https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Up_arrow_vote_like_upload_thumbs_down_thumb_hand_edit.png');
+              
                   $.ajax({
                       url: "http://localhost:8080/taskdetailview",
                       data: {
