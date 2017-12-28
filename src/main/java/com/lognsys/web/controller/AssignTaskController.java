@@ -604,7 +604,7 @@ public class AssignTaskController {
 
 					DateTimeUtils dateTimeUtils = new DateTimeUtils();
 					String strDate = dateTimeUtils.printDifference(list.get(i).getLast_edit(),
-							new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
+							new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 
 					DailyLogDTO dailylogDTO = list.get(i);
 

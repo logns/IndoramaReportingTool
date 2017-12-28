@@ -12,7 +12,8 @@
 			<security:jdbc-user-service data-source-ref="dataSource"
 				users-by-username-query="select username, password, enabled FROM users WHERE username = ?"
 				authorities-by-username-query="select u.username, r.role from users u, roles r, users_roles ur  
-				where u.id = ur.users_id and r.id = ur.roles_id and u.username = ?" />
+				where u.id = ur.users_id and r.id = ur.roles_id and u.username = ?"
+				 />
 
 			<security:password-encoder hash="bcrypt"
 				ref="encoder" />
@@ -74,16 +75,20 @@
 
 		<security:form-login login-page="/login"
 			default-target-url="/login" always-use-default-target="true"
-			authentication-failure-url="/login?error" username-parameter="username"
+			authentication-failure-url="/login?error"
+			 username-parameter="username"
+			login-processing-url="/login"
 			password-parameter="password" />
-
+<security:remember-me
+token-validity-seconds="1209600"
+remember-me-parameter="remember-me"
+data-source-ref="dataSource"/>
 		
 		<!-- enable csrf protection -->
-		<!-- <security:csrf / -->
+		 <security:csrf />
 		<!-- <security:csrf disabled="true" />
 		 -->
-		<security:csrf disabled="true"/>
-		<security:logout logout-success-url="/loggedout" />
+		<security:logout logout-success-url="/loggedout" delete-cookies="JSESSIONID" />
 		</security:http>
 
 	<bean id="encoder"
