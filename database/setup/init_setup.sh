@@ -24,6 +24,8 @@ mysql indorama_poly < ${PROJECT_DIR}/database/tables/users.sql
 mysql indorama_poly < ${PROJECT_DIR}/database/tables/roles.sql 
 mysql indorama_poly < ${PROJECT_DIR}/database/tables/users_bu.sql 
 mysql indorama_poly < ${PROJECT_DIR}/database/tables/users_roles.sql
+mysql indorama_poly < ${PROJECT_DIR}/database/tables/password_change_requests.sql 
+
 
 
 #roles

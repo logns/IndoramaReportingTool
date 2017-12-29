@@ -33,6 +33,7 @@ public class FormValidator implements Validator {
 	String ZIPCODE_PATTERN = "[0-9]{6}";
 	String STRING_NUMERIC_PATTERN = "[a-z \\s A-Z] [0-9]";
 	String DOUBLE_PATTERN = "[0-9]+(\\.){0,1}[0-9]*";
+	String PASSWORD_PATTERN = "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40})";
 	private static final String TIME12HOURS_PATTERN =
             "(1[012]|[1-9]):[0-5][0-9](\\s)?(?i)(am|pm)";
 
@@ -69,6 +70,7 @@ public class FormValidator implements Validator {
 			validateZipcode(users, errors);
 			validatePhonenumber(users, errors);
 			validateEmail(users, errors);
+			validatePassword(users, errors);
 		}else if (target instanceof AssignTaskDailylogDTO) {	
 			System.out.println("\n Rest saveForm target \n \n " +target.toString());
 
@@ -92,8 +94,26 @@ public class FormValidator implements Validator {
 			validateSpareParts(assignTaskdailylogDTODTO.getDailylogDTO(), errors);
 			validateAttendby(assignTaskdailylogDTODTO.getDailylogDTO(), errors);
 		
-		}
+		}else if (target instanceof String) {	
+			System.out.println("\n Rest saveForm target \n \n " +target.toString());
+
+			validateEmailFP((String) target, errors);
+					
+			}
 		
+	}
+
+	private void validatePassword(Users users, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "required.password", "Password is required.");
+
+		// email validation in spring
+		if (!(users.getPassword() != null && users.getPassword().isEmpty())) {
+			pattern = Pattern.compile(PASSWORD_PATTERN);
+			matcher = pattern.matcher(users.getPassword());
+			if (!matcher.matches()) {
+				errors.rejectValue("password", "password.incorrect", "Password must contain atleast 1 special  character. \n 1 Upper and Lower case alphabet and \nnumbers");
+			}
+		}
 	}
 
 	private void validateBu(DailyLogDTO dailylogDTO, Errors errors) {
@@ -226,7 +246,7 @@ public class FormValidator implements Validator {
 	
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dailylogDTO.attendby", "required.dailylogDTO.attendby", "Attendby is required.");
 
-		// input string conatains characters only
+	/*	// input string conatains characters only
 		if (!(dailylogDTO.getAttendby() != null && dailylogDTO.getAttendby().isEmpty())) {
 			pattern = Pattern.compile(MULTIPLE_STRING_PATTERN);
 			matcher = pattern.matcher((dailylogDTO.getAttendby()));
@@ -234,7 +254,7 @@ public class FormValidator implements Validator {
 			if (!matcher.matches()) {
 				errors.rejectValue("dailylogDTO.attendby", "dailylogDTO.attendby.containNonChar", "Enter a valid attendby");
 			}
-		}
+		}*/
 		
 	}
 
@@ -283,7 +303,18 @@ public class FormValidator implements Validator {
 		
 	}
 
+	private void validateEmailFP(String email, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "required.username", "email is required.");
 
+		// email validation in spring
+		if (!(email != null && email.isEmpty())) {
+			pattern = Pattern.compile(EMAIL_PATTERN);
+			matcher = pattern.matcher(email);
+			if (!matcher.matches()) {
+				errors.rejectValue("username", "username.incorrect", "Enter a correct email");
+			}
+		}
+	}
 	/**
 	 * 
 	 * @param users

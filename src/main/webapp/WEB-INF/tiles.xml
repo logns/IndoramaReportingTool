@@ -79,5 +79,12 @@
 		<put-attribute name="menu" value="" />
 		<put-attribute name="footer" value="" />
 	</definition>
+	<definition name="resetpassword" extends="base_layout">
+		<put-attribute name="title" value="Indorama: RESET PASSWORD" />
+		<put-attribute name="body" value="/WEB-INF/pages/resetpassword.jsp" />
+		<put-attribute name="header" value="" />
+		<put-attribute name="menu" value="" />
+		<put-attribute name="footer" value="" />
+	</definition>
 	
 </tiles-definitions>

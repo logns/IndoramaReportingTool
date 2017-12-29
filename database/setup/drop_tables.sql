@@ -22,6 +22,7 @@ mysql indorama_poly -e "drop table assign_task;"
 mysql indorama_poly -e "drop table dailylog;"
 mysql indorama_poly -e "drop table dailylog_bu;"
 mysql indorama_poly -e "drop table dailylog_users;"
+mysql indorama_poly -e "drop table password_change_requests;"
 
 
 

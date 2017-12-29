@@ -16,15 +16,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.security.authentication.RememberMeAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,11 +39,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.lognsys.dao.dto.BuDTO;
+import com.lognsys.dao.dto.DailyLogDTO;
 import com.lognsys.dao.dto.RolesDTO;
+import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.model.Users;
 import com.lognsys.service.MailService;
 import com.lognsys.service.UserService;
 import com.lognsys.util.FormValidator;
+import com.lognsys.util.ObjectMapper;
 
 @Controller
 public class BaseController {
@@ -46,9 +55,10 @@ public class BaseController {
 	
 	@Autowired
 	private UserService userService;
+	Authentication  authentication;
 
 	@Autowired
-	MailService mailservice;
+	private MessageSource msg;
 	/**
 	 * 
 	 * This method redirects to login page
@@ -58,9 +68,24 @@ public class BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
-	public String showLogin(Model model, HttpServletRequest request) {
-		return "login";
+	public ModelAndView showLogin( HttpServletRequest request) {
+		ModelAndView model = new ModelAndView();
+
+		if (isRememberMeAuthenticated()) {
+			//send login for update
+			setRememberMeTargetUrlToSession(request);
+			model.addObject("loginUpdate", true);
+			model.setViewName("login");
+			
+		}
+		else{
+			model.setViewName("login");
+			
+		}
+		return model;
+
 	}
+
 	/**
 	 * 
 	 * This method redirects to loggedout  page
@@ -71,7 +96,7 @@ public class BaseController {
 	 */
 	@RequestMapping("/loggedout")
 	public String showLoggedout(Model model, HttpServletRequest request) {
-		return "loggedout";
+		return "login";
 	}
 	/**
 	 * This method goes to login page if wrong credentials or empty credentials
@@ -81,11 +106,18 @@ public class BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView login(@RequestParam(value = "error", required = false) String error) {
+	public ModelAndView login(@RequestParam(value = "error", required = false) String error,HttpServletRequest request) {
 
 		ModelAndView model = new ModelAndView();
 		if (error != null) {
 			model.addObject("error", "Invalid username or password!");
+			//login form for update, if login error, get the targetUrl from session again.
+			String targetUrl = getRememberMeTargetUrlFromSession(request);
+			System.out.println(targetUrl);
+			if(StringUtils.hasText(targetUrl)){
+				model.addObject("targetUrl", targetUrl);
+				model.addObject("loginUpdate", true);
+			}
 			model.setViewName("login");
 		} else {
 			model.setViewName("dashboard");
@@ -94,32 +126,7 @@ public class BaseController {
 
 		return model;
 	}
-	@RequestMapping(value = "/forgotpassword", method = RequestMethod.GET)
-	public String showForgotPassword(Model model, HttpServletRequest request) {
-		Users email =new Users();
-		System.out.println("showForgotPassword --mailservice ");
-		
-		model.addAttribute("email", email);
-		return "forgotpassword";
-	}
-
-	@RequestMapping(value = "/forgotpassword", method = RequestMethod.POST)
-	public String forgotPassword(@ModelAttribute("email") Users email, BindingResult result, ModelMap model){
-		System.out.println("forgotPassword --email "+email.getUsername());
-		String emailid=email.getUsername();
-				System.out.println("forgotPassword --emailid "+emailid);
-		
-				mailservice.sendMail("from@gmail.com",
-				emailid,
-	    		   "Testing123",
-	    		   "Testing only \n\n Hello Spring Email Sender");
-
-		System.out.println("forgotPassword --mailservice "+mailservice);
-		
-
-		return "login";
-	}
-
+	
 
 	/**
 	 * Returns to Dashboard page
@@ -332,12 +339,6 @@ public class BaseController {
 			for (BuDTO bu : listOfBuDTO) {
 				busList.add(bu.getBu_name());
 			}
-			// Adding data to list from RolesDTO
-			List<String> departmentsList = new ArrayList<String>();
-//			for (DepartmentsDTO deDto : listOfDepartmentsDTO) {
-//				departmentsList.add(deDto.getDepartment_name());
-//			}
-
 
 			//populate to JSP page
 			model.addAttribute("rolesList", rolesList);
@@ -348,7 +349,55 @@ public class BaseController {
 		else
 		{
 		userService.addUser(user);
-		return "userlist";
+		authentication = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println("adduser  user role - "+(authentication.getPrincipal().toString()));
+		String usernamelogged=ObjectMapper.authorizedUserName();
+		System.out.println("adduser  user usernamelogged - "+(usernamelogged));
+		
+		if(authentication.getPrincipal().toString()!=null && usernamelogged!=null){
+			return "userlist";
+		}
+		else{
+			return "login";
+		}
 		}
 	}
+	/**
+	 * Check if user is login by remember me cookie, refer
+	 * org.springframework.security.authentication.AuthenticationTrustResolverImpl
+	 */
+	private boolean isRememberMeAuthenticated() {
+
+		Authentication authentication =
+                    SecurityContextHolder.getContext().getAuthentication();
+		if (authentication == null) {
+			return false;
+		}
+
+		return RememberMeAuthenticationToken.class.isAssignableFrom(authentication.getClass());
+	}
+
+	/**
+	 * save targetURL in session
+	 */
+	private void setRememberMeTargetUrlToSession(HttpServletRequest request){
+		HttpSession session = request.getSession(false);
+		if(session!=null){
+			session.setAttribute("targetUrl", "/dashboard");
+		}
+	}
+
+	/**
+	 * get targetURL from session
+	 */
+	private String getRememberMeTargetUrlFromSession(HttpServletRequest request){
+		String targetUrl = "";
+		HttpSession session = request.getSession(false);
+		if(session!=null){
+			targetUrl = session.getAttribute("targetUrl")==null?""
+                             :session.getAttribute("targetUrl").toString();
+		}
+		return targetUrl;
+	}
+
 }

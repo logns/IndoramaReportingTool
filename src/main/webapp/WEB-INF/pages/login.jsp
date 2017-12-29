@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page session="true"%>
 <div class="container_login" onload='document.loginForm.username.focus();'>
 	<div class="row">
 		<div class="login_main">
@@ -11,22 +12,7 @@
 					<div class="msg">${msg}</div>
 				</c:if>
 
-				<!-- Removing google / facebook authentication -->
-				<%-- <div class="col-xs-6 col-sm-6 col-md-6">
-					<a class="btn btn-lg btn-primary btn-block dashboard"
-						href="${pageContext.request.contextPath}/dashboard">Facebook</a>
-				</div>
-				<div class="col-xs-6 col-sm-6 col-md-6">
-					<a class="btn btn-lg btn-info btn-block dashboard"
-						href="${pageContext.request.contextPath}/dashboard">Google</a>
-				</div>
-			</div>
-			<div class="login-or">
-				<hr class="hr-or">
-				<span class="span-or">or</span>
-			</div> --%>
-				<!-- End of Removing google / facebook authentication -->
-				<form name='loginForm' action="<c:url value='/login' />"
+				<form name='loginForm' action="<c:url value='/login?targetUrl=${targetUrl}' />"
 					method='POST'>
 					<div class="form-group">
 						<label for="inputUsernameEmail" class="login_label_color">Username
@@ -41,11 +27,14 @@
 					</div>
 					<input type="hidden" name="${_csrf.parameterName}"
 						value="${_csrf.token}" />
+					<c:if test="${empty loginUpdate}">
 					<div class="checkbox pull-right">
-						<label class="login_label_color"> <input type="checkbox">
+					
+						<label class="login_label_color"> <input type="checkbox" name="remember-me">
 							Remember me
 						</label>
 					</div>
+					</c:if>
 					<button type="submit" class="btn btn btn-primary">Log In</button>
 					<div class="form-group">
 						<p>
@@ -55,6 +44,7 @@
 						</p>
 
 					</div>
+					
 				</form>
 			</div>
 		</div>

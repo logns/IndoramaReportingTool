@@ -1,6 +1,7 @@
 package com.lognsys.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Properties;
@@ -9,10 +10,13 @@ import org.exolab.castor.types.Date;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.MessageSource;
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +29,7 @@ import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.dao.jdbc.JdbcAssignTaskRepository;
 import com.lognsys.dao.jdbc.JdbcBuRepository;
 import com.lognsys.dao.jdbc.JdbcDailyLogRepository;
+import com.lognsys.dao.jdbc.JdbcUserRepository;
 import com.lognsys.model.AssignTask;
 import com.lognsys.model.AssignTaskTable;
 import com.lognsys.model.DailyLog;
@@ -39,6 +44,9 @@ import com.lognsys.util.WriteJSONToFile;
 @Service("assigntaskService")
 public class AssignTaskService {
 
+
+	@Autowired
+	private JdbcUserRepository jdbcUserRepository;
 	@Autowired
 	private JdbcDailyLogRepository jdbcDailyLogRepository;
 
@@ -53,11 +61,22 @@ public class AssignTaskService {
 	@Qualifier("applicationProperties")
 	private Properties applicationProperties;
 
+
+	@Qualifier("messagesProperties")
+	private Properties messagesProperties;
+	
+	@Autowired
+	private MessageSource msg;
+
 	DailyLogDTO dailyLogDTO;
 	AssignTaskDTO assignTaskDTO;
 	List<AssignTaskDTO> listOfAssigntask;
-	Hashtable< String, String> hashUpdatedby= new Hashtable<String, String>();
+	
+	String message;
+	@Autowired
+	MailService mailService;
 
+	Authentication  authentication;
 	/**
 	 * Add assignTaskDTO,dailyLogDTO to database..
 	 *
@@ -82,6 +101,8 @@ public class AssignTaskService {
 //		adding both the tables id in assign_dailylog tables 
 		int assignDailyLog_id = jdbcAssignTaskRepository.addAssignTask_DailyLog(assign_task_id, dailylog_id);
 		
+		
+		
 //		adding data to dailylog_bu
 		if (dailylog_id > 0 && dailyLogDTO.getBu() != null && dailyLogDTO.getBu().length() > 0) {
 			int bu_id = jdbcBuRepository.findBuByName(dailyLogDTO.getBu());
@@ -91,22 +112,46 @@ public class AssignTaskService {
 			}
 		}
 		try {
-			hashUpdatedby.put(new Date().toString(),"Updated by"+ assignTaskDTO.getAssigned_to());
-			setHashUpdatedby(hashUpdatedby);
 //			reading assigntask
-			readAssignTask();
+			authentication = SecurityContextHolder.getContext().getAuthentication();
+			System.out.println("addTask false user role - "+(authentication.getPrincipal().toString()));
+			
+			System.out.println("addTask true or false user role - "+(authentication.getPrincipal().toString().equalsIgnoreCase("ADMIN")));
+			System.out.println("addTask true or false user ObjectMapper.authorizedUserName()!=null - "+(ObjectMapper.authorizedUserName()!=null));
+			
+			if (authentication.getPrincipal().toString().equalsIgnoreCase("ADMIN")) {
+				readAssignTask(null);
+			}
+			else{
+				if(ObjectMapper.authorizedUserName()!=null){
+				readAssignTask(ObjectMapper.authorizedUserName());
+				}
+			}
+			
+			String message = msg.getMessage("addnewtask", new Object[] {assignTaskDTO.getAssigned_to(),ObjectMapper.authorizedUserName(), "http://www.mkyong.com",dailyLogDTO.getDescription()}, null);
+			
+			processMail(dailyLogDTO,message);
 		} catch (IOException io) {
 			System.out.println("Rest addAssignTask  readAssignTask - " + io.getMessage());
 		}
 		return assign_task_id;
 	}
-	
-public Hashtable<String, String> getHashUpdatedby() {
-		return hashUpdatedby;
-	}
 
-	public void setHashUpdatedby(Hashtable<String, String> hashUpdatedby) {
-		this.hashUpdatedby = hashUpdatedby;
+	private void processMail(DailyLogDTO dailyLogDTO,String message) {
+
+		List<UsersDTO> listOfUsersDTO = jdbcUserRepository.getAllUsers();
+		if(listOfUsersDTO!=null && listOfUsersDTO.size()>0){
+
+			authentication = SecurityContextHolder.getContext().getAuthentication();
+				String username=authentication.getName().toString();
+				System.out.println("\n  readAssignTask username " +username);
+				System.out.println("\n  readAssignTask dailyLogDTO " +dailyLogDTO.toString());
+	
+				if(username!=null && dailyLogDTO!=null){
+				
+					mailService.processData(dailyLogDTO,username,message);
+				}
+		}
 	}
 
 	//	checking isexist
@@ -114,9 +159,17 @@ public Hashtable<String, String> getHashUpdatedby() {
 		return jdbcAssignTaskRepository.isexist(title);
 	}
 
-	public void readAssignTask() throws IOException {
-//		getting list of assigntask 
-		listOfAssigntask = jdbcAssignTaskRepository.getAllAssignTaskDTO();
+	public void readAssignTask(String username) throws IOException {
+		System.out.println("readAssignTask username - "+(username));
+		
+		if(username!=null){
+			listOfAssigntask = jdbcAssignTaskRepository.getAllAssignTaskDTOByUsername(username);
+		}
+		else{
+//				getting list of assigntask 
+			listOfAssigntask = jdbcAssignTaskRepository.getAllAssignTaskDTO();
+			
+		}
 
 		List<AssignTaskTable> assignTaskTables = null;
 		
@@ -132,6 +185,8 @@ public Hashtable<String, String> getHashUpdatedby() {
 
 		try {
 			WriteJSONToFile.getInstance().write(resource, list);
+				
+			
 		} catch (IOException e) {
 			System.out.println("IOEXCEPTION --- e" + e);
 			e.printStackTrace();
@@ -149,7 +204,17 @@ public Hashtable<String, String> getHashUpdatedby() {
 				if (!isDelete) {
 					return 0;
 				} else {
-					readAssignTask();
+//					reading assigntask
+					authentication = SecurityContextHolder.getContext().getAuthentication();
+					if (authentication.getPrincipal().toString().equalsIgnoreCase("ADMIN")) {
+						readAssignTask(null);
+					}
+					else{
+						if(ObjectMapper.authorizedUserName()!=null){
+						readAssignTask(ObjectMapper.authorizedUserName());
+						}
+					}
+					
 				}
 			} catch (DataAccessException | IOException dae) {
 
@@ -179,8 +244,24 @@ public Hashtable<String, String> getHashUpdatedby() {
 				if (!isDelete) {
 					return 0;
 				} else {
-					readAssignTask();
+//					reading assigntask
+					authentication = SecurityContextHolder.getContext().getAuthentication();
+					if (authentication.getPrincipal().toString().equalsIgnoreCase("ADMIN")) {
+						readAssignTask(null);
+					}
+					else{
+						if(ObjectMapper.authorizedUserName()!=null){
+						readAssignTask(ObjectMapper.authorizedUserName());
+						}
+					}
+					
 				}
+
+				
+				String message = msg.getMessage("removedtask", new Object[]{authentication.getName().toString()}, null);
+				//String message = msg.getProperty(Constants.MESSAGES_PROPERTIES.removedtask.name());
+				
+				processMail(dailyLogDTO,message);
 			} catch (DataAccessException dae) {
 				throw new IllegalStateException("Error : Failed to delete task!");
 			}
@@ -236,6 +317,9 @@ public Hashtable<String, String> getHashUpdatedby() {
 						System.out.println("updateBuOfDailyLogBu isUpdated == "+isUpdated);
 
 					}
+
+					String message = msg.getMessage("updatetask",new Object[] {assignTaskDTO.getAssigned_to(),ObjectMapper.authorizedUserName(), "http://www.mkyong.com",dailyLogDTO.getDescription()}, null);
+					processMail(dailyLogDTO,message);
 				}
 			}
 			else{
@@ -255,7 +339,17 @@ public Hashtable<String, String> getHashUpdatedby() {
 					}
 				}
 			}
-			readAssignTask();
+//			reading assigntask
+			authentication = SecurityContextHolder.getContext().getAuthentication();
+			if (authentication.getPrincipal().toString().equalsIgnoreCase("ADMIN")) {
+				readAssignTask(null);
+			}
+			else{
+				if(ObjectMapper.authorizedUserName()!=null){
+				readAssignTask(ObjectMapper.authorizedUserName());
+				}
+			}
+			
 		}
 		catch (DataAccessException dae) {
 		System.out.println("\n \n updateAssigntask DataAccessException == "+dae.toString()+"\n \n");

@@ -53,9 +53,10 @@
 					<fieldset class="the-fieldset">
 
 						<legend class="the-legend">Assign Task Details</legend>
-  					<form:input type="hidden"  path="assignTaskDTO.id" id="assignTaskDTO_id"
-									class="form-control text ui-widget-content ui-corner-all" />
-				
+						<form:input type="hidden" path="assignTaskDTO.id"
+							id="assignTaskDTO_id"
+							class="form-control text ui-widget-content ui-corner-all" />
+
 						<div class="form-group">
 							<label>Task Title</label>
 							<form:textarea id="title" placeholder="Enter Task Title Here.."
@@ -66,7 +67,7 @@
 							<label>Assigned to</label>
 							<form:select path="assignTaskDTO.assigned_to"
 								class="form-control text ui-widget-content ui-corner-all">
-								<form:options id="assigned_to" items="${usersList}"></form:options>
+								<form:options id="assigned_to" items="${usersListAssignto}"></form:options>
 							</form:select>
 						</div>
 						<div class="col-sm-6 form-group">
@@ -107,27 +108,32 @@
 								varStatus="pStatus">
 
 								<div class="top" id="top_${dailylogDTO.id}">
-						
-							<input type="hidden" >
-							
-								<c:out value="${dailylogDTO.id}"></c:out></input>
-									<a  data-id="top_${dailylogDTO.id}" href="#"> <c:out
-											value="${dailylogDTO.assigned_to}"></c:out> <c:out
+
+									
+
+									<a style="font-size: 24px; cursor: pointer " class="fa fa-caret-down" data-id="top_${dailylogDTO.id}"
+										href="#">
+										
+										<c:out value="${dailylogDTO.assigned_to}"></c:out> <c:out
 											value="${dailylogDTO.last_edit}"></c:out>
-											<br>
-											   
-										<input class="panel form-group" type="text" id="desc_${dailylogDTO.id}" value="<c:out value="${dailylogDTO.description}"></c:out>">
-											
+
+									</a><br>
+									<a style="font-size: 14px ; color: black;" data-id="top_${dailylogDTO.id}"
+										href="#"> 
+									 <div class="panel form-group comment more" id="desc_${dailylogDTO.id}">
+										<c:out value="${dailylogDTO.description}"></c:out>
+										</div> 
 									</a>
 								</div>
 								<div class="bottom" id="bottom_${dailylogDTO.id}">
 
 									<fieldset class="the-fieldset">
-									
+
 										<legend class="the-legend">Daily Logs Details</legend>
-										<form:input type="hidden"  path="dailyLogDTOs[${pStatus.index}].id" id="dailylogDTO.id"
-									class="form-control text ui-widget-content ui-corner-all" />
-					
+										<form:input type="hidden"
+											path="dailyLogDTOs[${pStatus.index}].id" id="dailylogDTO.id"
+											class="form-control text ui-widget-content ui-corner-all" />
+
 										<div class="col-sm-6 form-group">
 											<label>Shift</label>
 											<form:select path="dailyLogDTOs[${pStatus.index}].shift"
@@ -164,7 +170,8 @@
 											<label>Time To</label>
 											<div class="input-group bootstrap-timepicker timepicker">
 												<form:input id="timepicker2" type="text"
-													class="form-control input-small" path="dailyLogDTOs[${pStatus.index}].timeto" />
+													class="form-control input-small"
+													path="dailyLogDTOs[${pStatus.index}].timeto" />
 												<span class="input-group-addon"><i
 													class="glyphicon glyphicon-time"></i></span>
 											</div>
@@ -179,7 +186,8 @@
 										<div class="col-sm-6 form-group">
 											<label>Attend By</label>
 
-											<form:input path="dailyLogDTOs[${pStatus.index}].attendby" id="attendby"
+											<form:input path="dailyLogDTOs[${pStatus.index}].attendby"
+												id="attendby"
 												class="form-control text ui-widget-content ui-corner-all" />
 
 										</div>
@@ -212,16 +220,19 @@
 											</form:select>
 										</div>
 										<div class="col-sm-12 form-group">
-									<form:button data-bid="taskupdate_${dailylogDTO.id}" id="taskupdate_${dailylogDTO.id}"
-									name="dailyLogDTOs[${pStatus.index}].id"  type="submit" class="btn btn-lg btn-info">Submit</form:button>
+											<form:button data-bid="taskupdate_${dailylogDTO.id}"
+												id="taskupdate_${dailylogDTO.id}"
+												name="dailyLogDTOs[${pStatus.index}].id" type="submit"
+												class="btn btn-lg btn-info">Submit</form:button>
 										</div>
-										
+
 									</fieldset>
 								</div>
 							</c:forEach>
 						</div>
 					</div>
-					<form:button id="newdailylog" type="submit" class="btn btn-lg btn-info">Add DailyLog</form:button>
+					<form:button id="newdailylog" type="submit"
+						class="btn btn-lg btn-info">Add DailyLog</form:button>
 				</div>
 			</form:form>
 		</div>

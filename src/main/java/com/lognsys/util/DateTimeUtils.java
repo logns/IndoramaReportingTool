@@ -21,7 +21,7 @@ public class DateTimeUtils {
 		try {
 			
 			  SimpleDateFormat simpleDateFormat =
-		                new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 			 date1 = simpleDateFormat.parse(databaseDate );
 			 date2 = simpleDateFormat.parse(currentdate );

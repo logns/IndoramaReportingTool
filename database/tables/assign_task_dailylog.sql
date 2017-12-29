@@ -1,3 +1,4 @@
+drop table assign_task_dailylog;
 CREATE TABLE IF NOT EXISTS `indorama_poly`.`assign_task_dailylog` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `assign_task_id` INT(11) NOT NULL,

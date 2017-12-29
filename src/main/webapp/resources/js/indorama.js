@@ -1,5 +1,8 @@
 /*
 
+
+
+ * 
  * INDORAMA.js
  * @author : 01/04/17 - PJD
  * @author : 19/11/17 - MS
@@ -685,11 +688,63 @@ $(document)
             	    $(this).css('margin-top', imgHeight);
             	    $(this).css('margin-left', imgWidth);
             	});
-              
-//              show hide 
+              $(document).ready(function() {
+            		var showChar = 50;
+            		var ellipsestext = "...";
+            		var moretext = "more";
+            		var lesstext = "less";
+            		$('.more').each(function() {
+            			var content = $(this).html();
+
+            			if(content.length > showChar) {
+
+            				var c = content.substr(0, showChar);
+            				var h = content.substr(showChar-1, content.length - showChar);
+
+            				var html = c + '<span class="moreellipses">' + ellipsestext+ '&nbsp;</span><span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
+
+            				$(this).html(html);
+            			}
+
+            		});
+
+            		$(".morelink").click(function(){
+            			if($(this).hasClass("less")) {
+            				$(this).removeClass("less");
+            				$(this).html(moretext);
+            			} else {
+            				$(this).addClass("less");
+            				$(this).html(lesstext);
+            			}
+            			$(this).parent().prev().toggle();
+            			$(this).prev().toggle();
+            			return false;
+            		});
+            	});
+              $(document).ready(function(){
+            	    $("[data-id]").click(function(){
+            	    	 $(this).addClass("fa fa-caret-down");	 
+                         	
+            	    });
+            	});
+             //              show hide 
               $("[data-id]").click(function(){
+            	
+
+            	  
+            	          	  
             	  var id = $(this).data("id");
-                  console.log("data --- id - " + id);
+            	  if ($("[data-id]").hasClass("fa fa-caret-up")){
+            		  $("[data-id]").removeClass("fa fa-caret-up");	 
+            		  $("[data-id]").addClass("fa fa-caret-down");	 
+
+                	  console.log("data ---yes it exist - ");	    		
+       	    	}else{
+       	       	  console.log("data ---no  not it exist - ");	    		
+       	       $("[data-id]").addClass("fa fa-caret-up");	 
+               	}
+            	  
+            	  console.log("data --- id - " + id);
                   var fields = id.split('_');
                 var title = jQuery("textarea#title").val();
                   
@@ -708,8 +763,26 @@ $(document)
                   
                   var bottom_id = "bottom_"+postId;
                   console.log("data --- bottom_id - " + bottom_id);
-                
+                  var down_id = "down_"+postId;
+                  
                   $("#"+bottom_id).toggle();
+               
+                  var $arrows = $(this).find("img");
+                  $(this).parent(".bottom").slideToggle().parent(".box").find(".fa fa-caret-up").removeClass("fa fa-caret-up");
+                  /*      if ($("#"+down_id).attr("src").toString().indexOf('https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Down_arrow_download_up_page_add_warning_thumbs_text_search.png') != -1) {
+
+                  this.src = this.src.replace("https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Down_arrow_download_up_page_add_warning_thumbs_text_search.png", "https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Up_arrow_vote_like_upload_thumbs_down_thumb_hand_edit.png");
+
+                  }
+
+                else {
+
+                  this.src = this.src.replace("https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Up_arrow_vote_like_upload_thumbs_down_thumb_hand_edit.png", "https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Down_arrow_download_up_page_add_warning_thumbs_text_search.png");
+
+                  }*/
+
+                  $("#"+down_id).attr('src', 'https://cdn1.iconfinder.com/data/icons/basic-toolbar-icons/20/Up_arrow_vote_like_upload_thumbs_down_thumb_hand_edit.png');
+              
                   $.ajax({
                       url: "http://localhost:8080/taskdetailview",
                       data: {
@@ -725,7 +798,8 @@ $(document)
                   });
 //            	  alert(id);
             	});
-                     
+              $(this).parent(".bottom").slideToggle().parent(".box").find(".fa fa-caret-up").removeClass("fa fa-caret-up");
+                 
 //              buttton  onclick
               $("[data-bid]").click(
             	   function(event) {
@@ -759,7 +833,6 @@ $(document)
 
                   event.preventDefault();
             	});
-              
               
              /* $('.top').on('click', function() {
             		$parent_box = $(this).closest('.box');
@@ -836,6 +909,8 @@ $(document)
 	            		 $("#matchpassword").text("Passwords match");
 	            		 $("#matchpassword").addClass("valid");
 	            		 $("#matchpassword").removeClass("error");
+	                     
+
 	 	              }
 	            	  else{
 	            			 $("#matchpassword").text("Passwords do not match");                     		  
@@ -847,6 +922,70 @@ $(document)
               	  
               }
               $(document).ready(onLoad);
-              
+//              Use RegEx to Test Password Strength and alpha numeric characters
+              $(function () {
+                  $("#password").bind("keyup", function () {
+
+                     
+                	  //TextBox left blank.
+                      if ($(this).val().length == 0) {
+                          $("#password_strength").html("");
+                          return;
+                      }
+                  //TextBox left blank.
+                  if (password.length == 0) {
+                      password_strength.innerHTML = "";
+                      return;
+                  }
+           
+                  //Regular Expressions.
+                  var regex = new Array();
+                  regex.push("[A-Z]"); //Uppercase Alphabet.
+                  regex.push("[a-z]"); //Lowercase Alphabet.
+                  regex.push("[0-9]"); //Digit.
+                  regex.push("[$@$!%*#?&]"); //Special Character.
+            
+                  var passed = 0;
+       
+                  //Validate for each Regular Expression.
+                  for (var i = 0; i < regex.length; i++) {
+                      if (new RegExp(regex[i]).test($(this).val())) {
+                          passed++;
+                      }
+                  }
+       
+       
+                  //Validate for length of Password.
+                  if (passed > 2 && $(this).val().length > 8) {
+                      passed++;
+                  }
+                  
+                  //Display status.
+                  var color = "";
+                  var strength = "";
+                  switch (passed) {
+                      case 0:
+                      case 1:
+                          strength = "Weak";
+                          color = "red";
+                          break;
+                      case 2:
+                          strength = "Good";
+                          color = "darkorange";
+                          break;
+                      case 3:
+                      case 4:
+                          strength = "Strong";
+                          color = "green";
+                          break;
+                      case 5:
+                          strength = "Very Strong";
+                          color = "darkgreen";
+                          break;
+                  }
+                  $("#password_strength").html(strength);
+                  $("#password_strength").css("color", color);
+              });
+          });
               
  }); //end of document jQuery

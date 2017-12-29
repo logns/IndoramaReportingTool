@@ -85,6 +85,8 @@
  <!-- glyph icons from https://glyphs.co/docs/getting-started/installation  -->
 <script type="text/javascript" src="https://kit.glyphs.co/3ko27b.js"></script>
 
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 </head>
 

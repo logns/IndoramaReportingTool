@@ -1,5 +1,8 @@
 package com.lognsys.dao.jdbc;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Properties;
@@ -7,6 +10,8 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -17,6 +22,7 @@ import org.springframework.stereotype.Repository;
 import com.lognsys.dao.UserRespository;
 import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.dao.jdbc.rowmapper.UserByUserIDRowMapper;
+import com.lognsys.model.Users;
 import com.lognsys.util.Constants;
 
 @Repository("userRepository")
@@ -84,7 +90,15 @@ public class JdbcUserRepository implements UserRespository {
 	
 		return isUpdate;
 	}
+	public boolean updateUserPasswordById(Users users) throws DataAccessException {
 
+		boolean isUpdate = false;
+		BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(users);
+		isUpdate = namedParamJdbcTemplate.update(sqlProperties.getProperty(Constants.USER_QUERIES.update_users_password.name()),
+				params) == 1;
+	
+		return isUpdate;
+	}
 	/**
 	 * Returns Users object by id
 	 * 
@@ -149,13 +163,15 @@ public class JdbcUserRepository implements UserRespository {
 	 */
 	@Override
 	public UsersDTO findUserByUsername(String username) throws DataAccessException {
-
+		System.out.println( "findUserByUsername username"+username);
+		
 		SqlParameterSource parameter = new MapSqlParameterSource("username", username);
 
 		UsersDTO usersDTO = namedParamJdbcTemplate.queryForObject(
 				sqlProperties.getProperty(Constants.USER_QUERIES.select_users_username.name()), parameter,
 				new UserByUserIDRowMapper());
-
+		System.out.println( "findUserByUsername usersDTO"+usersDTO.toString());
+		
 		return usersDTO;
 
 	}
@@ -215,5 +231,14 @@ public class JdbcUserRepository implements UserRespository {
 
 		return listUsers;
 		}
+
+	public void getUsernamebyRealname(String realname) throws DataAccessException {
+		System.out.println("\n getUsernamebyRealname realname "+realname);
+			SqlParameterSource param = new MapSqlParameterSource("realname", realname.toString());
+
+			List<String> listUsers = namedParamJdbcTemplate.query(
+					sqlProperties.getProperty(Constants.USER_QUERIES.select_username.name()),param,
+					new BeanPropertyRowMapper<String>(String.class));
+	}
 
 }
