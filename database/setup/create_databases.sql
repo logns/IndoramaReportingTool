@@ -14,5 +14,5 @@ create user 'indorama_polydba'@'localhost' identified by 'indorama_poly-dba999de
 create user 'indorama_polyw'@'localhost' identified by 'indorama_poly-rw8dev';
 
 grant all on indorama_poly.* to 'indorama_polydba'@'localhost';
-grant SELECT, INSERT, DELETE, UPDATE on indorama_poly.* to 'indorama_polydba'@'localhost';
+grant SELECT, INSERT, DELETE, UPDATE on indorama_poly.* to 'indorama_polyw'@'localhost';
 
