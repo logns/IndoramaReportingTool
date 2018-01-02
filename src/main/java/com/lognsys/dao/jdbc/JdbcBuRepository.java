@@ -64,10 +64,11 @@ public class JdbcBuRepository implements BuRepository {
 
 	@Override
 	public boolean updateBuOfUser(String userName, String bu_name) {
-		SqlParameterSource param = new MapSqlParameterSource().addValue("username", userName).addValue("bu_name",
-				bu_name);
-		return namedParamJdbcTemplate.update(sqlProperties.getProperty(Constants.BU_QUERIES.update_bu_byuser.name()),
-				param)==1;
+		return false;
+		//		SqlParameterSource param = new MapSqlParameterSource().addValue("username", userName).addValue("bu_name",
+//				bu_name);
+//		return namedParamJdbcTemplate.update(sqlProperties.getProperty(Constants.BU_QUERIES.update_bu_byuser.name()),
+//				param)==1;
 	}
 
 	@Override

@@ -70,7 +70,7 @@ public class BaseController {
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public ModelAndView showLogin( HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
-
+		System.out.println("\nisRememberMeAuthenticated()"+isRememberMeAuthenticated());
 		if (isRememberMeAuthenticated()) {
 			//send login for update
 			setRememberMeTargetUrlToSession(request);
@@ -120,6 +120,8 @@ public class BaseController {
 			}
 			model.setViewName("login");
 		} else {
+			System.out.println("\n login success +model "+model);
+			
 			model.setViewName("dashboard");
 			return model;
 		}
@@ -243,16 +245,9 @@ public class BaseController {
 				for (BuDTO bu : listOfBuDTO) {
 					busList.add(bu.getBu_name());
 				}
-				// Adding data to list from RolesDTO
-				List<String> departmentsList = new ArrayList<String>();
-//				for (DepartmentsDTO deDto : listOfDepartmentsDTO) {
-//					departmentsList.add(deDto.getDepartment_name());
-//				}
-
 
 				model.addAttribute("users", users);
 				model.addAttribute("rolesList", rolesList);
-				model.addAttribute("departmentsList", departmentsList);
 				model.addAttribute("busList", busList);
 
 				return "register";
@@ -368,12 +363,13 @@ public class BaseController {
 	 */
 	private boolean isRememberMeAuthenticated() {
 
-		Authentication authentication =
-                    SecurityContextHolder.getContext().getAuthentication();
+		Authentication authentication =SecurityContextHolder.getContext().getAuthentication();
+		System.out.println("isRememberMeAuthenticated authentication"+authentication);
 		if (authentication == null) {
 			return false;
 		}
-
+		System.out.println("isRememberMeAuthenticated RememberMeAuthenticationToken.class.isAssignableFrom(authentication.getClass() ==="+RememberMeAuthenticationToken.class.isAssignableFrom(authentication.getClass()));
+		
 		return RememberMeAuthenticationToken.class.isAssignableFrom(authentication.getClass());
 	}
 
@@ -382,6 +378,8 @@ public class BaseController {
 	 */
 	private void setRememberMeTargetUrlToSession(HttpServletRequest request){
 		HttpSession session = request.getSession(false);
+		System.out.println("\nsetRememberMeTargetUrlToSession()"+session);
+		
 		if(session!=null){
 			session.setAttribute("targetUrl", "/dashboard");
 		}

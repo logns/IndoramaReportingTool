@@ -39,10 +39,11 @@
 
 		<security:intercept-url access="permitAll"
 			pattern="/resetpassword" />
-		<security:intercept-url access="permitAll"
+		<security:intercept-url access="isAuthenticated()"
 			pattern="/loggedout" />
-		<security:intercept-url access="permitAll"
+		<security:intercept-url access="isAuthenticated()"
 			pattern="/login" />
+		
 
 		<security:intercept-url access="permitAll"
 			pattern="/generic_error" />
@@ -64,8 +65,7 @@
 
 		<security:intercept-url pattern="/user_listitems" />
 
-		<security:intercept-url access="permitAll"
-			pattern="/dashboard" />
+		
 
 		<security:intercept-url access="permitAll"
 			pattern="/useredit" />
@@ -73,21 +73,26 @@
 		<security:intercept-url access="permitAll"
 			pattern="/userlist" />
 
+		<security:intercept-url access="permitAll"
+			pattern="/viewreports" />
+
 		<security:form-login login-page="/login"
-			default-target-url="/login" always-use-default-target="true"
+			default-target-url="/login" 
+			always-use-default-target="true"
 			authentication-failure-url="/login?error"
 			 username-parameter="username"
 			login-processing-url="/login"
-			password-parameter="password" />
+			password-parameter="password"
+			authentication-success-handler-ref="savedRequestAwareAuthenticationSuccessHandler" />
 <security:remember-me
 token-validity-seconds="1209600"
 remember-me-parameter="remember-me"
 data-source-ref="dataSource"/>
 		
 		<!-- enable csrf protection -->
-		 <security:csrf />
-		<!-- <security:csrf disabled="true" />
-		 -->
+		<!--  <security:csrf /> -->
+		 <security:csrf disabled="true" />
+		
 		<security:logout logout-success-url="/loggedout" delete-cookies="JSESSIONID" />
 		</security:http>
 

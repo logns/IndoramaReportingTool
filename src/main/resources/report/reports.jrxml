@@ -136,10 +136,10 @@ from dailylog
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="250" splitType="Stretch">
+		<band height="200" splitType="Stretch">
 			<property name="local_mesure_unitheight" value="pixel"/>
 			<componentElement>
-				<reportElement x="-19" y="0" width="849" height="200" uuid="50d6c914-cf70-488b-a7fb-a4d0e3e1b600">
+				<reportElement x="-19" y="0" width="839" height="200" uuid="50d6c914-cf70-488b-a7fb-a4d0e3e1b600">
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
 					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
@@ -148,57 +148,60 @@ from dailylog
 					<datasetRun subDataset="tableDataset" uuid="99783674-7a11-43ad-a4e8-0ae7ec795f55">
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:columnGroup width="850" uuid="593cbf4d-7ff7-4c7b-89fc-2928e5c84340">
+					<jr:columnGroup width="845" uuid="593cbf4d-7ff7-4c7b-89fc-2928e5c84340">
 						<jr:groupHeader groupName="last_edit">
-							<jr:cell style="Table_CH" height="25"/>
+							<jr:cell style="Table_CH" height="25">
+								<textField>
+									<reportElement x="0" y="0" width="585" height="25" uuid="69302753-8880-4cf0-8cb2-5f3c161dd89a"/>
+									<textFieldExpression><![CDATA[$F{last_edit}]]></textFieldExpression>
+								</textField>
+							</jr:cell>
 						</jr:groupHeader>
-						<jr:column width="60" uuid="9e9a1260-3a18-4371-afdd-c88ae70eea89">
+						<jr:column width="50" uuid="9e9a1260-3a18-4371-afdd-c88ae70eea89">
 							<jr:tableHeader style="Table_TH" height="30"/>
 							<jr:tableFooter style="Table_TH" height="30"/>
 							<jr:columnHeader style="Table_CH" height="30">
 								<staticText>
-									<reportElement key="" style="SubTitle" x="0" y="0" width="60" height="30" forecolor="#FFFFFF" uuid="daf52008-429b-4904-9232-28fe7c6e1cb2"/>
+									<reportElement key="" style="SubTitle" x="0" y="0" width="50" height="30" forecolor="#FFFFFF" uuid="daf52008-429b-4904-9232-28fe7c6e1cb2"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified">
-										<font fontName="Times New Roman" size="14" isBold="true"/>
+									<textElement>
+										<font fontName="Arial" size="18" isBold="false"/>
 									</textElement>
-									<text><![CDATA[Date]]></text>
+									<text><![CDATA[last_edit]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter style="Table_CH" height="30"/>
 							<jr:detailCell style="Table_TD" height="30">
 								<textField>
-									<reportElement style="Detail" x="0" y="0" width="60" height="30" uuid="0cefa669-b2fd-4786-9ffb-149421eeeef7"/>
+									<reportElement style="Detail" x="0" y="0" width="50" height="30" uuid="0cefa669-b2fd-4786-9ffb-149421eeeef7"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified" verticalAlignment="Middle">
-										<font fontName="Times New Roman" size="14"/>
+									<textElement>
+										<font fontName="Arial" size="14"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{last_edit}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="110" uuid="6a9cc9e3-c5e1-4dfe-89b6-570f679ed93f">
-							<jr:tableHeader style="Table_TH" height="30">
-								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
-							</jr:tableHeader>
+						<jr:column width="120" uuid="6a9cc9e3-c5e1-4dfe-89b6-570f679ed93f">
+							<jr:tableHeader style="Table_TH" height="30"/>
 							<jr:tableFooter style="Table_TH" height="30"/>
 							<jr:columnHeader style="Table_CH" height="30">
 								<staticText>
-									<reportElement key="" style="SubTitle" x="0" y="0" width="110" height="30" forecolor="#FFFFFF" uuid="ed8604f9-e70b-433b-8023-bb74db0e1e07"/>
+									<reportElement key="" style="SubTitle" x="0" y="0" width="120" height="30" forecolor="#FFFFFF" uuid="ed8604f9-e70b-433b-8023-bb74db0e1e07"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified">
-										<font fontName="Times New Roman" size="14" isBold="true"/>
+									<textElement>
+										<font fontName="Arial" size="18" isBold="false"/>
 									</textElement>
-									<text><![CDATA[Title]]></text>
+									<text><![CDATA[title]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter style="Table_CH" height="30"/>
 							<jr:detailCell style="Table_TD" height="30">
 								<textField>
-									<reportElement style="Detail" x="0" y="0" width="110" height="30" uuid="35039e85-a92d-42b5-834d-7ff84bfb568e"/>
+									<reportElement style="Detail" x="0" y="0" width="120" height="30" uuid="35039e85-a92d-42b5-834d-7ff84bfb568e"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified" verticalAlignment="Middle">
-										<font fontName="Times New Roman" size="14"/>
+									<textElement>
+										<font fontName="Arial" size="14"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
 								</textField>
@@ -211,10 +214,10 @@ from dailylog
 								<staticText>
 									<reportElement key="" style="SubTitle" x="0" y="0" width="50" height="30" forecolor="#FFFFFF" uuid="bfb23f83-07e8-48a0-9cf1-38f0c203e757"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified">
-										<font fontName="Times New Roman" size="14" isBold="true"/>
+									<textElement>
+										<font fontName="Arial" size="18" isBold="false"/>
 									</textElement>
-									<text><![CDATA[Plants]]></text>
+									<text><![CDATA[bu_name]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter style="Table_CH" height="30"/>
@@ -222,159 +225,158 @@ from dailylog
 								<textField>
 									<reportElement style="Detail" x="0" y="0" width="50" height="30" uuid="187e70dd-1dc6-4139-a33b-10a24d539643"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified">
-										<font fontName="Times New Roman" size="14"/>
+									<textElement>
+										<font fontName="Arial" size="14"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{bu_name}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="40" uuid="8b04c3ec-6a7b-43d2-8b17-7e172ea30576">
+						<jr:column width="50" uuid="8b04c3ec-6a7b-43d2-8b17-7e172ea30576">
 							<jr:tableHeader style="Table_TH" height="30"/>
 							<jr:tableFooter style="Table_TH" height="30"/>
 							<jr:columnHeader style="Table_CH" height="30">
 								<staticText>
-									<reportElement key="" style="SubTitle" x="0" y="0" width="40" height="30" forecolor="#FFFFFF" uuid="7b3e32e8-a1c8-4460-b9e8-020870e38d67"/>
+									<reportElement key="" style="SubTitle" x="0" y="0" width="50" height="30" forecolor="#FFFFFF" uuid="7b3e32e8-a1c8-4460-b9e8-020870e38d67"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified">
-										<font fontName="Times New Roman" size="14" isBold="true"/>
+									<textElement>
+										<font fontName="Arial" size="18" isBold="false"/>
 									</textElement>
-									<text><![CDATA[Shift]]></text>
+									<text><![CDATA[shift]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter style="Table_CH" height="30"/>
 							<jr:detailCell style="Table_TD" height="30">
 								<textField>
-									<reportElement style="Detail" x="0" y="0" width="40" height="30" uuid="80bae9f0-2dae-48e9-b564-24a2ca57fa07"/>
+									<reportElement style="Detail" x="0" y="0" width="50" height="30" uuid="80bae9f0-2dae-48e9-b564-24a2ca57fa07"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified" verticalAlignment="Middle">
-										<font fontName="Times New Roman" size="14"/>
+									<textElement>
+										<font fontName="Arial" size="14"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{shift}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="60" uuid="be83aa79-efed-46e4-afee-89e964855be4">
+						<jr:column width="70" uuid="be83aa79-efed-46e4-afee-89e964855be4">
 							<jr:tableHeader style="Table_TH" height="30"/>
 							<jr:tableFooter style="Table_TH" height="30"/>
 							<jr:columnHeader style="Table_CH" height="30">
 								<staticText>
-									<reportElement key="" style="SubTitle" x="0" y="0" width="60" height="30" forecolor="#FFFFFF" uuid="8111f8af-fdf2-48b2-9d35-688a57429561"/>
+									<reportElement key="" style="SubTitle" x="0" y="0" width="70" height="30" forecolor="#FFFFFF" uuid="8111f8af-fdf2-48b2-9d35-688a57429561"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified">
-										<font fontName="Times New Roman" size="14" isBold="true"/>
+									<textElement>
+										<font fontName="Arial" size="18" isBold="false"/>
 									</textElement>
-									<text><![CDATA[Machine]]></text>
+									<text><![CDATA[machine]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter style="Table_CH" height="30"/>
 							<jr:detailCell style="Table_TD" height="30">
 								<textField>
-									<reportElement style="Detail" x="0" y="0" width="60" height="30" uuid="2994b9e9-c198-4a4a-b614-f5d7cd37e981"/>
+									<reportElement style="Detail" x="0" y="0" width="70" height="30" uuid="2994b9e9-c198-4a4a-b614-f5d7cd37e981"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified" verticalAlignment="Middle">
-										<font fontName="Times New Roman" size="14"/>
+									<textElement>
+										<font fontName="Arial" size="14"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{machine}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="90" uuid="535e1c3d-032a-4e46-b81e-27e34b3bbd1c">
+						<jr:column width="100" uuid="535e1c3d-032a-4e46-b81e-27e34b3bbd1c">
 							<jr:tableHeader style="Table_TH" height="30"/>
 							<jr:tableFooter style="Table_TH" height="30"/>
 							<jr:columnHeader style="Table_CH" height="30">
 								<staticText>
-									<reportElement key="" style="SubTitle" x="0" y="0" width="90" height="30" forecolor="#FFFFFF" uuid="1c9b135d-d8be-4912-9f5b-4ec9003b2a43"/>
+									<reportElement key="" style="SubTitle" x="0" y="0" width="100" height="30" forecolor="#FFFFFF" uuid="1c9b135d-d8be-4912-9f5b-4ec9003b2a43"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified">
-										<font fontName="Times New Roman" size="14" isBold="true"/>
+									<textElement>
+										<font fontName="Arial" size="18" isBold="false"/>
 									</textElement>
-									<text><![CDATA[Description]]></text>
+									<text><![CDATA[description]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter style="Table_CH" height="30"/>
 							<jr:detailCell style="Table_TD" height="30">
 								<textField>
-									<reportElement style="Detail" x="0" y="0" width="90" height="30" uuid="f28228cd-e4e5-4bcc-abc1-6fa9bf53a8f6"/>
+									<reportElement style="Detail" x="0" y="0" width="100" height="30" uuid="f28228cd-e4e5-4bcc-abc1-6fa9bf53a8f6"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified" verticalAlignment="Middle">
-										<font fontName="Times New Roman" size="14"/>
+									<textElement>
+										<font fontName="Arial" size="14"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="70" uuid="d69377fb-2d93-4cef-97ad-c1bdaf7ebe0f">
+						<jr:column width="50" uuid="d69377fb-2d93-4cef-97ad-c1bdaf7ebe0f">
 							<jr:tableHeader style="Table_TH" height="30"/>
 							<jr:tableFooter style="Table_TH" height="30"/>
 							<jr:columnHeader style="Table_CH" height="30">
 								<staticText>
-									<reportElement key="" style="SubTitle" x="0" y="0" width="70" height="30" forecolor="#FFFFFF" uuid="ef6dfac9-dd6e-41cc-85d0-7b579cef9193"/>
+									<reportElement key="" style="SubTitle" x="0" y="0" width="50" height="30" forecolor="#FFFFFF" uuid="ef6dfac9-dd6e-41cc-85d0-7b579cef9193"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified">
-										<font fontName="Times New Roman" size="14" isBold="true"/>
+									<textElement>
+										<font fontName="Arial" size="18" isBold="false"/>
 									</textElement>
-									<text><![CDATA[TimeFrom]]></text>
+									<text><![CDATA[timefrom]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter style="Table_CH" height="30"/>
 							<jr:detailCell style="Table_TD" height="30">
 								<textField>
-									<reportElement style="Detail" x="0" y="0" width="70" height="30" uuid="73dc1a5a-a49b-4dfc-94f1-267d6b35f69b"/>
+									<reportElement style="Detail" x="0" y="0" width="50" height="30" uuid="73dc1a5a-a49b-4dfc-94f1-267d6b35f69b"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified" verticalAlignment="Middle">
-										<font fontName="Times New Roman" size="14"/>
+									<textElement>
+										<font fontName="Arial" size="14"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{timefrom}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="50" uuid="ac3c7b5e-bf2c-4566-baca-354ce6fad21b">
+						<jr:column width="40" uuid="ac3c7b5e-bf2c-4566-baca-354ce6fad21b">
 							<jr:tableHeader style="Table_TH" height="30"/>
 							<jr:tableFooter style="Table_TH" height="30"/>
 							<jr:columnHeader style="Table_CH" height="30">
-								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 								<staticText>
-									<reportElement key="" style="SubTitle" x="0" y="0" width="50" height="30" forecolor="#FFFFFF" uuid="9f19fe6a-49ee-439f-a100-ac5242bb9695"/>
+									<reportElement key="" style="SubTitle" x="0" y="0" width="40" height="30" forecolor="#FFFFFF" uuid="9f19fe6a-49ee-439f-a100-ac5242bb9695"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified" verticalAlignment="Top">
-										<font fontName="Times New Roman" size="14" isBold="true"/>
+									<textElement>
+										<font fontName="Arial" size="18" isBold="false"/>
 									</textElement>
-									<text><![CDATA[TimeTo]]></text>
+									<text><![CDATA[timeto]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter style="Table_CH" height="30"/>
 							<jr:detailCell style="Table_TD" height="30">
 								<textField>
-									<reportElement style="Detail" x="0" y="0" width="50" height="30" uuid="bc5eb8b2-3db4-4042-b0b8-995893116056"/>
+									<reportElement style="Detail" x="0" y="0" width="40" height="30" uuid="bc5eb8b2-3db4-4042-b0b8-995893116056"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified" verticalAlignment="Middle">
-										<font fontName="Times New Roman" size="14"/>
+									<textElement>
+										<font fontName="Arial" size="14"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{timeto}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="50" uuid="c13973ea-dd46-4d21-b1e9-c30f96b729bb">
+						<jr:column width="60" uuid="c13973ea-dd46-4d21-b1e9-c30f96b729bb">
 							<jr:tableHeader style="Table_TH" height="30"/>
 							<jr:tableFooter style="Table_TH" height="30"/>
 							<jr:columnHeader style="Table_CH" height="30">
 								<staticText>
-									<reportElement key="" style="SubTitle" x="0" y="0" width="50" height="30" forecolor="#FFFFFF" uuid="6d2d8116-27fd-4208-b211-37e482006b25"/>
+									<reportElement key="" style="SubTitle" x="0" y="0" width="60" height="30" forecolor="#FFFFFF" uuid="6d2d8116-27fd-4208-b211-37e482006b25"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified">
-										<font fontName="Times New Roman" size="14" isBold="true"/>
+									<textElement>
+										<font fontName="Arial" size="18" isBold="false"/>
 									</textElement>
-									<text><![CDATA[Spares]]></text>
+									<text><![CDATA[spare_parts]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter style="Table_CH" height="30"/>
 							<jr:detailCell style="Table_TD" height="30">
 								<textField>
-									<reportElement style="Detail" x="0" y="0" width="50" height="30" uuid="eaf39ec0-7d04-4743-a3ba-1c05243c84b1"/>
+									<reportElement style="Detail" x="0" y="0" width="60" height="30" uuid="eaf39ec0-7d04-4743-a3ba-1c05243c84b1"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified" verticalAlignment="Middle">
-										<font fontName="Times New Roman" size="14"/>
+									<textElement>
+										<font fontName="Arial" size="14"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{spare_parts}]]></textFieldExpression>
 								</textField>
@@ -387,10 +389,10 @@ from dailylog
 								<staticText>
 									<reportElement key="" style="SubTitle" x="0" y="0" width="60" height="30" forecolor="#FFFFFF" uuid="9f18d08d-6949-4f58-830e-bc7a5a8336e0"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified">
-										<font fontName="Times New Roman" size="14" isBold="true"/>
+									<textElement>
+										<font fontName="Arial" size="18" isBold="false"/>
 									</textElement>
-									<text><![CDATA[Attendby]]></text>
+									<text><![CDATA[attendby]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter style="Table_CH" height="30"/>
@@ -398,83 +400,83 @@ from dailylog
 								<textField>
 									<reportElement style="Detail" x="0" y="0" width="60" height="30" uuid="144b0dff-7172-445f-bdc9-de70ca8cd6d3"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified" verticalAlignment="Middle">
-										<font fontName="Times New Roman" size="14"/>
+									<textElement>
+										<font fontName="Arial" size="14"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{attendby}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="70" uuid="47250f63-4199-4d78-ab4a-2d19393ca3ec">
+						<jr:column width="68" uuid="47250f63-4199-4d78-ab4a-2d19393ca3ec">
 							<jr:tableHeader style="Table_TH" height="30"/>
 							<jr:tableFooter style="Table_TH" height="30"/>
 							<jr:columnHeader style="Table_CH" height="30">
 								<staticText>
-									<reportElement key="" style="SubTitle" x="0" y="0" width="70" height="30" forecolor="#FFFFFF" uuid="d118e52e-ceed-4a9b-b252-7be47a801b82"/>
+									<reportElement key="" style="SubTitle" x="0" y="0" width="68" height="30" forecolor="#FFFFFF" uuid="d118e52e-ceed-4a9b-b252-7be47a801b82"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified">
-										<font fontName="Times New Roman" size="14" isBold="true"/>
+									<textElement>
+										<font fontName="Arial" size="18" isBold="false"/>
 									</textElement>
-									<text><![CDATA[Jobtype]]></text>
+									<text><![CDATA[jobtype]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter style="Table_CH" height="30"/>
 							<jr:detailCell style="Table_TD" height="30">
 								<textField>
-									<reportElement style="Detail" x="0" y="0" width="70" height="30" uuid="e217de57-7719-48e6-a2bc-4459600d731d"/>
+									<reportElement style="Detail" x="0" y="0" width="68" height="30" uuid="e217de57-7719-48e6-a2bc-4459600d731d"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified" verticalAlignment="Middle">
-										<font fontName="Times New Roman" size="14"/>
+									<textElement>
+										<font fontName="Arial" size="14"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{jobtype}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="80" uuid="8b5815bd-4846-46d9-b484-f37ccbade300">
+						<jr:column width="72" uuid="8b5815bd-4846-46d9-b484-f37ccbade300">
 							<jr:tableHeader style="Table_TH" height="30"/>
 							<jr:tableFooter style="Table_TH" height="30"/>
 							<jr:columnHeader style="Table_CH" height="30">
 								<staticText>
-									<reportElement key="" style="SubTitle" x="0" y="0" width="80" height="30" forecolor="#FFFFFF" uuid="59546033-de3b-4fb0-9f0d-70e36bf482de"/>
+									<reportElement key="" style="SubTitle" x="0" y="0" width="72" height="30" forecolor="#FFFFFF" uuid="59546033-de3b-4fb0-9f0d-70e36bf482de"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified">
-										<font fontName="Times New Roman" size="14" isBold="true"/>
+									<textElement>
+										<font fontName="Arial" size="18" isBold="false"/>
 									</textElement>
-									<text><![CDATA[Recordtype]]></text>
+									<text><![CDATA[recordtype]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter style="Table_CH" height="30"/>
 							<jr:detailCell style="Table_TD" height="30">
 								<textField>
-									<reportElement style="Detail" x="0" y="0" width="80" height="30" uuid="09ad6e63-bd35-480c-b33e-c3d483f462ec"/>
+									<reportElement style="Detail" x="0" y="0" width="72" height="30" uuid="09ad6e63-bd35-480c-b33e-c3d483f462ec"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified" verticalAlignment="Middle">
-										<font fontName="Times New Roman" size="14"/>
+									<textElement>
+										<font fontName="Arial" size="14"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{recordtype}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="60" uuid="30b1460c-abdc-4dd5-8b80-d4cd7bcadc7e">
+						<jr:column width="55" uuid="30b1460c-abdc-4dd5-8b80-d4cd7bcadc7e">
 							<jr:tableHeader style="Table_TH" height="30"/>
 							<jr:tableFooter style="Table_TH" height="30"/>
 							<jr:columnHeader style="Table_CH" height="30">
 								<staticText>
-									<reportElement key="" style="SubTitle" x="0" y="0" width="60" height="30" forecolor="#FFFFFF" uuid="7dac21f0-622d-4492-8c07-e6a7dddcac58"/>
+									<reportElement key="" style="SubTitle" x="0" y="0" width="55" height="30" forecolor="#FFFFFF" uuid="7dac21f0-622d-4492-8c07-e6a7dddcac58"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified">
-										<font fontName="Times New Roman" size="14" isBold="true"/>
+									<textElement>
+										<font fontName="Arial" size="18" isBold="false"/>
 									</textElement>
-									<text><![CDATA[Status]]></text>
+									<text><![CDATA[status]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:columnFooter style="Table_CH" height="30"/>
 							<jr:detailCell style="Table_TD" height="30">
 								<textField>
-									<reportElement style="Detail" x="0" y="0" width="60" height="30" uuid="f49885dd-a46e-45c6-a261-4cd392ac4583"/>
+									<reportElement style="Detail" x="0" y="0" width="55" height="30" uuid="f49885dd-a46e-45c6-a261-4cd392ac4583"/>
 									<box leftPadding="2"/>
-									<textElement textAlignment="Justified" verticalAlignment="Middle">
-										<font fontName="Times New Roman" size="14"/>
+									<textElement>
+										<font fontName="Arial" size="14"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
 								</textField>

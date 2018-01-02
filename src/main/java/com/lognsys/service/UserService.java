@@ -131,10 +131,10 @@ public class UserService {
 		List<UsersTable> users =null;
 		System.out.println("refreshUserList --jdbcBuRepository.getAllUsersAndBu().size() "+jdbcBuRepository.getAllUsersAndBu().size());
 		
-		if(jdbcBuRepository.getAllUsersAndBu()!=null && jdbcBuRepository.getAllUsersAndBu().size()>0)
+/*		if(jdbcBuRepository.getAllUsersAndBu()!=null && jdbcBuRepository.getAllUsersAndBu().size()>0)
 		{
 			users = ObjectMapper.mapToUserTable(jdbcBuRepository.getAllUsersAndBu());
-		}
+		}*/
 		ResourceLoader resourceLoader = new FileSystemResourceLoader();
 		Resource resource = resourceLoader
 				.getResource(applicationProperties.getProperty(Constants.JSON_FILES.user_filename.name()));
@@ -226,17 +226,6 @@ public class UserService {
 			isUpdated = jdbcUserRepository.updateUser(u);
 			System.out.println("update updateUser isUpdated == "+isUpdated);
 			
-//			System.out.println("update updateUser users.getUsername() == "+users.getUsername()+" users.getDepartments() = "+users.getDepartments());
-			
-//			isUpdated = jdbcDepartmentRepository.updateDepartmentOfUser(users.getUsername(), users.getDepartments());
-			
-			System.out.println("update updateDepartmentOfUser isUpdated == "+isUpdated);
-			
-			System.out.println("update updateUser users.getUsername() == "+users.getUsername()+" users.getBu() = "+users.getBu());
-			
-			isUpdated = jdbcBuRepository.updateBuOfUser(users.getUsername(), users.getBu());
-			System.out.println("update updateBuOfUser isUpdated == "+isUpdated);
-			
 			System.out.println("update updateUser users.getUsername() == "+users.getUsername()+" users.getRole() = "+users.getRole());
 			
 			isUpdated = jdbcRolesRepository.updateRoleOfUser(users.getUsername(), users.getRole());
@@ -245,8 +234,9 @@ public class UserService {
 			refreshUserList();
 
 		} catch (DataAccessException dae) {
+			System.out.println("Exception dae ==="+dae.toString());
 //			LOG.error(dae.getMessage());
-			throw new IllegalStateException("Failed user update : status - " + isUpdated);
+//			throw new IllegalStateException("Failed user update : status - " + isUpdated);
 		} catch (IOException e) {
 			throw new IllegalStateException(e);
 		}
@@ -402,13 +392,6 @@ public class UserService {
 			users.setRole(Constants.DEFAULT_ROLE.GUEST.toString());
 		}
 
-//		// //get Group information
-//		String groupName = jdbcGroupRepository.findGroupBy(users.getId());
-//		if (groupName != null) {
-//			users.setGroup(groupName);
-//		} else {
-//			users.setRole(Constants.DEFAULT_GROUP.NONE.toString());
-//		}
 
 		return users;
 

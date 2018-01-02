@@ -256,12 +256,12 @@ public class DailyLogController {
      */
     @RequestMapping(value = "/downloadExcel", method = RequestMethod.GET)
     public ModelAndView downloadExcel() {
-    /*	List<DailyLogDTO> lists=  dailyLogService.refresDailyListReport();
+    	List<DailyLogDTO> lists=  dailyLogService.refresDailyListReport();
 	    // return a view which will be resolved by an excel view resolver
     	for(int i=0;i<lists.size();i++){
     		System.out.println("Values  is "+lists.get(i).toString());
     	}
-    */    return null;//new ModelAndView("excelView", "lists", lists);
+        return new ModelAndView("excelView", "lists", lists);
     } /**
      * Handle request to download an Excel document
      */
@@ -273,24 +273,24 @@ public class DailyLogController {
 		String reportFileName = "reports_landscape";
 		String reportPdf = "pdf";
 		Connection c = conn.getConnection();
-		/*List<DailyLogDTO> lists=  dailyLogService.refresDailyListReport();
+		List<DailyLogDTO> lists=  dailyLogService.refresDailyListReport();
 		if(lists== null || lists.size()==0){
 			 model.addAttribute("error", "Reports are Not available ");
-			return "dailylogslist";
+			return "viewreports";
 		}
 		HashMap<String, Object> hmParams = new HashMap<String, Object>();
 		
 		for(int i=0;i<lists.size();i++){
 		DailyLogDTO dailylogsdyto=lists.get(i);
 		
-//		hmParams.put("dates", dailylogsdyto.getDates());
+		hmParams.put("target_date", dailylogsdyto.getTarget_date());
 		hmParams.put("shift", dailylogsdyto.getShift());
-//		hmParams.put("bu", dailylogsdyto.getbu_name());
+		hmParams.put("bu", dailylogsdyto.getBu());
 		hmParams.put("machine",dailylogsdyto.getMachine());
 		hmParams.put("description",dailylogsdyto.getDescription());
 		hmParams.put("timefrom",dailylogsdyto.getTimefrom());
 		hmParams.put("timeto",dailylogsdyto.getTimeto());
-//		hmParams.put("spareparts",dailylogsdyto.getSpareparts());
+		hmParams.put("spare_parts",dailylogsdyto.getSpare_parts());
 		hmParams.put("attendby",dailylogsdyto.getAttendby());
 		hmParams.put("jobtype",dailylogsdyto.getJobtype());
 		hmParams.put("recordtype",dailylogsdyto.getRecordtype());
@@ -306,7 +306,7 @@ public class DailyLogController {
 			 dailyLogService.generateReportPDF(response, hmParams, jasperReport, c); // For
 			
 		}
-*/		return null;
+		 return null;
     }
 	/**
 	 * showList of Dailylogs
@@ -316,6 +316,11 @@ public class DailyLogController {
 	 * @throws IOException
 	 */
     
+ 	@RequestMapping(value = "/viewreports", method = RequestMethod.GET)
+ 	public String showReportView(Model model, HttpServletRequest request) throws IOException {
+ 		
+ 		return "viewreports";
+ 	} 
 	@RequestMapping(value = "/dailyloglist", method = RequestMethod.GET)
 	public String showList(@RequestParam("title") String title,Model model, HttpServletRequest request) throws IOException {
 		
