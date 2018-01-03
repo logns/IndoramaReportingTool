@@ -1,4 +1,4 @@
-#!/bin/sh
+#/bin/bash
 #
 # @author :  ms - 13/09/17
 # This script initialises all the tables in indorama_poly databases 
@@ -24,7 +24,7 @@ mysql indorama_poly < ${PROJECT_DIR}/database/tables/users.sql
 mysql indorama_poly < ${PROJECT_DIR}/database/tables/roles.sql 
 mysql indorama_poly < ${PROJECT_DIR}/database/tables/users_bu.sql 
 mysql indorama_poly < ${PROJECT_DIR}/database/tables/users_roles.sql
-mysql indorama_poly < ${PROJECT_DIR}/database/tables/password_change_requests.sql 
+#mysql indorama_poly < ${PROJECT_DIR}/database/tables/password_change_requests.sql 
 
 
 
@@ -34,4 +34,4 @@ mysql indorama_poly < ${PROJECT_DIR}/database/tables/assign_task.sql
 mysql indorama_poly < ${PROJECT_DIR}/database/tables/dailylog.sql 
 mysql indorama_poly < ${PROJECT_DIR}/database/tables/dailylog_bu.sql
 mysql indorama_poly < ${PROJECT_DIR}/database/tables/dailylog_users.sql 
-mysql indorama_poly < ${PROJECT_DIR}/database/tables/persistence_logins.sql
+#mysql indorama_poly < ${PROJECT_DIR}/database/tables/persistence_logins.sql

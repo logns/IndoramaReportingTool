@@ -64,6 +64,7 @@
 
 						<div class="action_buttons">
 							<hr>
+							
 							<button id="taskadd" type="submit"
 								class="btn btn-primary pull-right rbtnMargin">Add</button>
 							<button id="taskdelete" type="submit"
