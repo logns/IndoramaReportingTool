@@ -49,7 +49,8 @@ public class DailyLogDTO {
 		this.assigned_to = assigned_to;
 	}
 
-	public DailyLogDTO(int id,int assign_task_id, String target_date, String shift, String machine,
+
+	public DailyLogDTO(int id,  String target_date, String shift, String machine,
 			String description, String timefrom, String timeto, String spare_parts, String attendby, String jobtype,
 			String recordtype, String status,String last_edit ,String done_percentage) {
 		super();
@@ -69,8 +70,26 @@ public class DailyLogDTO {
 		this.last_edit = last_edit;
 		this.done_percentage = done_percentage;
 	}
-
 	
+
+	public DailyLogDTO(int id, String last_edit, String shift, String machine, String description, String timefrom,
+			String timeto, String spare_parts, String attendby, String jobtype, String recordtype, String status,
+			String done_percentage) {
+
+		this.id = id;
+		this.last_edit = last_edit;
+		this.shift = shift;
+		this.machine = machine;
+		this.description = description;
+		this.timefrom = timefrom;
+		this.timeto = timeto;
+		this.spare_parts = spare_parts;
+		this.attendby = attendby;
+		this.jobtype = jobtype;
+		this.recordtype = recordtype;
+		this.status = status;
+		this.done_percentage = done_percentage;
+	}
 
 	public int getAssign_task_id() {
 		return assign_task_id;

@@ -33,6 +33,14 @@
 
 		<security:intercept-url access="permitAll"
 			pattern="/resetpassword" />
+<<<<<<< HEAD
+=======
+		<security:intercept-url access="isAuthenticated()"
+			pattern="/loggedout" />
+		<security:intercept-url access="isAuthenticated()"
+			pattern="/login" />
+		
+>>>>>>> f64334a6698a4f9553598eedbab58a5b569fe56a
 
 		<security:intercept-url access="permitAll"
 			pattern="/forgotpassword" />
@@ -68,19 +76,48 @@
 			/> <security:logout logout-success-url="/loggedout" delete-cookies="JSESSIONID" 
 			/> -->
 
+<<<<<<< HEAD
 		<security:form-login login-page="/login"
 			always-use-default-target="true" default-target-url="/dashboard"
 			authentication-failure-url="/login?error=true" />
+=======
+		
+>>>>>>> f64334a6698a4f9553598eedbab58a5b569fe56a
 
 		<security:logout logout-success-url="/login" />
 
 
+<<<<<<< HEAD
 		<!-- <security:remember-me token-validity-seconds="1209600" remember-me-parameter="remember-me" 
 			data-source-ref="dataSource" /> -->
 		<!-- enable csrf protection -->
 		<!-- <security:csrf /> -->
 		<security:csrf disabled="true" />
 	</security:http>
+=======
+		<security:intercept-url access="permitAll"
+			pattern="/viewreports" />
+
+		<security:form-login login-page="/login"
+			default-target-url="/login" 
+			always-use-default-target="true"
+			authentication-failure-url="/login?error"
+			 username-parameter="username"
+			login-processing-url="/login"
+			password-parameter="password"
+			authentication-success-handler-ref="savedRequestAwareAuthenticationSuccessHandler" />
+<security:remember-me
+token-validity-seconds="1209600"
+remember-me-parameter="remember-me"
+data-source-ref="dataSource"/>
+		
+		<!-- enable csrf protection -->
+		<!--  <security:csrf /> -->
+		 <security:csrf disabled="true" />
+		
+		<security:logout logout-success-url="/loggedout" delete-cookies="JSESSIONID" />
+		</security:http>
+>>>>>>> f64334a6698a4f9553598eedbab58a5b569fe56a
 
 	<bean id="encoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">

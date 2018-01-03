@@ -65,7 +65,8 @@ public class Constants {
 		select_description_and_id,
 		delete_by_assign_task_id,
 		select_assigntask_id,
-		select_dailylog_bu_by_id
+		select_dailylog_bu_by_id,
+		select_daily_assign_title_by_task_id
 	
 	}
 	public enum ASSIGN_TASK_QUERIES {
@@ -108,9 +109,11 @@ public class Constants {
 	}
 
 	public enum DAILYLOG_TABLE_FIELD_NAMES {
-		id, assigntask_id, assign_task_title, description, assigned_to, done_percentage,target_date,status,time,shift,machine,timefrom,timeto,spare_parts,attendby,jobtype,recordtype,last_edit
+		id, assign_task_id, assign_task_title, description, assigned_to, done_percentage,target_date,status,time,shift,machine,timefrom,timeto,spare_parts,attendby,jobtype,recordtype,last_edit,bu
 	}
-
+	public enum ASSIGNTASK_TABLE_FIELD_NAMES {
+		id, title
+	}
 	public enum BU_FIELDNAME {
 		buId, bu_name
 	}
@@ -149,8 +152,8 @@ public class Constants {
 		
 	}
 
-	public enum DEFAULT_GROUP {
-		NONE
+	public enum DEFAULT_BU {
+		MS1
 	}
 
 	public enum DEFAULT_ROLE {

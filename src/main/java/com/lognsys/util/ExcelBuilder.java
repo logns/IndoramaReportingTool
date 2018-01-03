@@ -47,52 +47,57 @@ public class ExcelBuilder extends AbstractExcelView {
          
         header.createCell(0).setCellValue("Dates");
         header.getCell(0).setCellStyle(style);
-         
-        header.createCell(1).setCellValue("Shift");
+
+        
+        header.createCell(1).setCellValue("Title");
         header.getCell(1).setCellStyle(style);
-         
+        
         header.createCell(2).setCellValue("Plants");
         header.getCell(2).setCellStyle(style);
-          
-        header.createCell(3).setCellValue("Machine");
-        header.getCell(3).setCellStyle(style);
         
-        header.createCell(4).setCellValue("Description");
+        header.createCell(3).setCellValue("Shift");
+        header.getCell(3).setCellStyle(style);
+         
+        header.createCell(4).setCellValue("Machine");
         header.getCell(4).setCellStyle(style);
         
-        header.createCell(5).setCellValue("Time From");
+        header.createCell(5).setCellValue("Description");
         header.getCell(5).setCellStyle(style);
         
-        header.createCell(6).setCellValue("Time To");
+        header.createCell(6).setCellValue("Time From");
         header.getCell(6).setCellStyle(style);
         
-        header.createCell(7).setCellValue("Spare Parts");
+        header.createCell(7).setCellValue("Time To");
         header.getCell(7).setCellStyle(style);
         
-        header.createCell(8).setCellValue("Attend By");
+        header.createCell(8).setCellValue("Spare Parts");
         header.getCell(8).setCellStyle(style);
-
-        header.createCell(9).setCellValue("Job type");
-        header.getCell(9).setCellStyle(style);
         
-        header.createCell(10).setCellValue("Record type");
+        header.createCell(9).setCellValue("Attend By");
+        header.getCell(9).setCellStyle(style);
+
+        header.createCell(10).setCellValue("Job type");
         header.getCell(10).setCellStyle(style);
         
-        header.createCell(11).setCellValue("Follow Up Status");
+        header.createCell(11).setCellValue("Record type");
         header.getCell(11).setCellStyle(style);
+        
+        header.createCell(12).setCellValue("Status");
+        header.getCell(12).setCellStyle(style);
         // create data rows
         int rowCount = 1;
          
         for (DailyLogDTO dailyLogDTO : lists) {
             HSSFRow aRow = sheet.createRow(rowCount++);
-//            aRow.createCell(0).setCellValue(dailyLogDTO.getDates());
-            aRow.createCell(1).setCellValue(dailyLogDTO.getShift());
-//            aRow.createCell(2).setCellValue(dailyLogDTO.getbu_name());
+            aRow.createCell(0).setCellValue(dailyLogDTO.getLast_edit());
+            aRow.createCell(1).setCellValue(dailyLogDTO.getAssign_task_title());
+            aRow.createCell(2).setCellValue(dailyLogDTO.getBu());
+            aRow.createCell(3).setCellValue(dailyLogDTO.getShift());
             aRow.createCell(4).setCellValue(dailyLogDTO.getMachine());
             aRow.createCell(5).setCellValue(dailyLogDTO.getDescription());
             aRow.createCell(6).setCellValue(dailyLogDTO.getTimefrom());
             aRow.createCell(7).setCellValue(dailyLogDTO.getTimeto());
-//            aRow.createCell(8).setCellValue(dailyLogDTO.getSpareparts());
+            aRow.createCell(8).setCellValue(dailyLogDTO.getSpare_parts());
             aRow.createCell(9).setCellValue(dailyLogDTO.getAttendby());
             aRow.createCell(10).setCellValue(dailyLogDTO.getJobtype());
             aRow.createCell(11).setCellValue(dailyLogDTO.getRecordtype());

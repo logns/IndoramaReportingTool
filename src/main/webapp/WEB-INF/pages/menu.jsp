@@ -21,15 +21,25 @@
 			<li><a href="${pageContext.request.contextPath}/assigntasklist">
 					<svg class="glyph stroked video">
 			<use xmlns:xlink="http://www.w3.org/1999/xlink"
+<<<<<<< HEAD
 							xlink:href="#stroked-video"></use></svg> Assign Task List
 			</a></li>
 		</security:authorize>
 		<%-- 	<li><a href="${pageContext.request.contextPath}/dailylogslist"> <svg
+=======
+						xlink:href="#stroked-video"></use></svg> Assign Task List
+		</a></li>
+	 	<li><a href="${pageContext.request.contextPath}/viewreports"> <svg
+>>>>>>> f64334a6698a4f9553598eedbab58a5b569fe56a
 					class="glyph stroked video">
 			<use xmlns:xlink="http://www.w3.org/1999/xlink"
 						xlink:href="#stroked-video"></use></svg> View Report
 		</a></li>
+<<<<<<< HEAD
 	 --%>
+=======
+	 	
+>>>>>>> f64334a6698a4f9553598eedbab58a5b569fe56a
 		<li><a href="${pageContext.request.contextPath}/userlist"> <svg
 					class="glyph stroked gear">
 			<use xmlns:xlink="http://www.w3.org/1999/xlink"

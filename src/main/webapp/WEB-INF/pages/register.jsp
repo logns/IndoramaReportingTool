@@ -52,14 +52,7 @@
 								</div>
 							</div>
 								<div class="row">
-								<div class="col-sm-6 form-group">
-									<label>Plants</label>
-								<form:select path="bu" class="form-control text ui-widget-content ui-corner-all">
-									<option value="NONE">--- Select ---</option>
-									<form:options items="${busList}"></form:options>
-								</form:select>
-								</div>
-							<div class="row">
+								<div class="row">
 								<div class="col-sm-6 form-group">
 								<label>Roles</label>
 								<form:select path="role" class="form-control text ui-widget-content ui-corner-all">
@@ -69,12 +62,20 @@
 								</div>
 								<div class="col-sm-6 form-group">
 								<label>DOB</label>
-								<form:input id="birthdate" type="text"
-									name="birthdate"
-									placeholder="Enter DOB Here.."
-									class="form-control text ui-widget-content ui-corner-all"
-									path="birthdate" />
+									<div class="input-group date form_datetime col-md-10" id="dates"
+								data-date-format="yyyy-mm-dd  hh:MM a" data-link-field="dates">
+								<form:input id="dates" type="text"
+									path="birthdate"
+									placeholer="Select DOB...." class="form-control"
+									value="" />
+								<span class="input-group-addon"><span
+									class="glyphicon glyphicon-remove"></span></span> <span
+									class="input-group-addon"><span
+									class="glyphicon glyphicon-th"></span></span>
+							</div>
+						
 								</div>
+								
 							</div>
 							<div class="row">
 								<div class="col-sm-6 form-group">

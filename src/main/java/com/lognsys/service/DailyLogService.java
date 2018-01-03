@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
@@ -19,6 +22,8 @@ import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +33,7 @@ import com.lognsys.dao.jdbc.JdbcAssignTaskRepository;
 import com.lognsys.dao.jdbc.JdbcBuRepository;
 import com.lognsys.dao.jdbc.JdbcDailyLogRepository;
 import com.lognsys.dao.jdbc.JdbcUserRepository;
+import com.lognsys.exception.CustomGenericException;
 import com.lognsys.model.DailyLog;
 import com.lognsys.model.DailylogTable;
 import com.lognsys.util.CommonUtilities;
@@ -98,22 +104,38 @@ public class DailyLogService {
 		return dailylog_id;
 	}
 
-//	public List<DailyLogDTO> refresDailyListReport() {
-//		List<DailyLogDTO> lists = (jdbcDailyLogRepository.getAllDailyLogDTO());
-//
-//		ResourceLoader resourceLoader = new FileSystemResourceLoader();
-//		Resource resource = resourceLoader
-//				.getResource(applicationProperties.getProperty(Constants.JSON_FILES.dailylogs_filename.name()));
-//		String list = CommonUtilities.convertToJSON(lists);
-//
-//		try {
-//			WriteJSONToFile.getInstance().write(resource, list);
-//			return lists;
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		return lists;
-//	}
+	public List<DailyLogDTO> refresDailyListReport() {
+		List<DailyLogDTO> lists = (jdbcDailyLogRepository.getAllDailyLogDTO());
+	/*	Collection<DailyLogDTO> arraylistsDDTO=lists;
+	System.out.println(arraylistsDDTO.size());
+	//traversing using Iterator
+	List<DailyLogDTO> dtos =new ArrayList<>();
+	Iterator<? extends DailyLogDTO> it = arraylistsDDTO.iterator();
+		while(it.hasNext()){
+				DailyLogDTO i = it.next();
+				System.out.println("Iterator getAssign_task_id::"+i.getAssign_task_id());
+				String title =jdbcDailyLogRepository.getDailyLogTitleByAssigntaskId(i.getAssign_task_id());
+				
+				System.out.println("Iterator title:"+title);
+				i.setAssign_task_title(title);	
+				System.out.println("Iterator getAssign_task_title::"+i.getAssign_task_title());
+				dtos.add(i);
+		} 
+*/		System.out.println("Iterator dtos lists ::"+lists.size());
+		
+		ResourceLoader resourceLoader = new FileSystemResourceLoader();
+		Resource resource = resourceLoader
+				.getResource(applicationProperties.getProperty(Constants.JSON_FILES.dailylogs_filename.name()));
+		String list = CommonUtilities.convertToJSON(lists);
+
+		try {
+			WriteJSONToFile.getInstance().write(resource, list);
+			return lists;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return lists;
+	}
 
 	public List<UsersDTO> getRealName() {
 
