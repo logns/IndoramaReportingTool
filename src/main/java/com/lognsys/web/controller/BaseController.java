@@ -65,27 +65,8 @@ public class BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
-<<<<<<< HEAD
 	public String showLogin(HttpServletRequest request) {
 		return "redirect:/login";
-=======
-	public ModelAndView showLogin( HttpServletRequest request) {
-		ModelAndView model = new ModelAndView();
-		System.out.println("\nisRememberMeAuthenticated()"+isRememberMeAuthenticated());
-		if (isRememberMeAuthenticated()) {
-			//send login for update
-			setRememberMeTargetUrlToSession(request);
-			model.addObject("loginUpdate", true);
-			model.setViewName("login");
-			
-		}
-		else{
-			model.setViewName("login");
-			
-		}
-		return model;
-
->>>>>>> f64334a6698a4f9553598eedbab58a5b569fe56a
 	}
 
 	/**
@@ -127,15 +108,7 @@ public class BaseController {
 			// // model.addObject("loginUpdate", true);
 			//
 			model.setViewName("login");
-<<<<<<< HEAD
 
-=======
-		} else {
-			System.out.println("\n login success +model "+model);
-			
-			model.setViewName("dashboard");
-			return model;
->>>>>>> f64334a6698a4f9553598eedbab58a5b569fe56a
 		}
 
 		return model;
@@ -264,17 +237,15 @@ public class BaseController {
 				for (BuDTO bu : listOfBuDTO) {
 					busList.add(bu.getBu_name());
 				}
-<<<<<<< HEAD
 				// Adding data to list from RolesDTO
 				List<String> departmentsList = new ArrayList<String>();
 				// for (DepartmentsDTO deDto : listOfDepartmentsDTO) {
 				// departmentsList.add(deDto.getDepartment_name());
 				// }
-=======
->>>>>>> f64334a6698a4f9553598eedbab58a5b569fe56a
 
 				model.addAttribute("users", users);
 				model.addAttribute("rolesList", rolesList);
+				model.addAttribute("departmentsList", departmentsList);
 				model.addAttribute("busList", busList);
 
 				return "register";
@@ -368,7 +339,6 @@ public class BaseController {
 			model.addAttribute("busList", busList);
 			return "register";
 
-<<<<<<< HEAD
 		} else {
 			userService.addUser(user);
 			authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -381,50 +351,6 @@ public class BaseController {
 			} else {
 				return "login";
 			}
-=======
-		} 
-		else
-		{
-		userService.addUser(user);
-		authentication = SecurityContextHolder.getContext().getAuthentication();
-		System.out.println("adduser  user role - "+(authentication.getPrincipal().toString()));
-		String usernamelogged=ObjectMapper.authorizedUserName();
-		System.out.println("adduser  user usernamelogged - "+(usernamelogged));
-		
-		if(authentication.getPrincipal().toString()!=null && usernamelogged!=null){
-			return "userlist";
-		}
-		else{
-			return "login";
-		}
-		}
-	}
-	/**
-	 * Check if user is login by remember me cookie, refer
-	 * org.springframework.security.authentication.AuthenticationTrustResolverImpl
-	 */
-	private boolean isRememberMeAuthenticated() {
-
-		Authentication authentication =SecurityContextHolder.getContext().getAuthentication();
-		System.out.println("isRememberMeAuthenticated authentication"+authentication);
-		if (authentication == null) {
-			return false;
-		}
-		System.out.println("isRememberMeAuthenticated RememberMeAuthenticationToken.class.isAssignableFrom(authentication.getClass() ==="+RememberMeAuthenticationToken.class.isAssignableFrom(authentication.getClass()));
-		
-		return RememberMeAuthenticationToken.class.isAssignableFrom(authentication.getClass());
-	}
-
-	/**
-	 * save targetURL in session
-	 */
-	private void setRememberMeTargetUrlToSession(HttpServletRequest request){
-		HttpSession session = request.getSession(false);
-		System.out.println("\nsetRememberMeTargetUrlToSession()"+session);
-		
-		if(session!=null){
-			session.setAttribute("targetUrl", "/dashboard");
->>>>>>> f64334a6698a4f9553598eedbab58a5b569fe56a
 		}
 	}
 

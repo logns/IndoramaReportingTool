@@ -7,99 +7,104 @@
 
 
 
+
 	<security:authentication-manager>
 		<security:authentication-provider>
-			<security:jdbc-user-service data-source-ref="dataSource"
+			<security:jdbc-user-service
+				data-source-ref="dataSource"
 				users-by-username-query="select username, password, enabled FROM users WHERE username = ?"
 				authorities-by-username-query="select u.username, r.role from users u, roles r, users_roles ur  
-				where u.id = ur.users_id and r.id = ur.roles_id and u.username = ?"
-				 />
+				where u.id = ur.users_id and r.id = ur.roles_id and u.username = ?" />
 
 			<security:password-encoder hash="bcrypt"
 				ref="encoder" />
-			<!-- <security:password-encoder hash="sha" ref="passwordEncoder"> </security:password-encoder> -->
 		</security:authentication-provider>
 
 	</security:authentication-manager>
 
+	<security:global-method-security
+		secured-annotations="enabled" />
 
 	<!-- Security configuration ordering from least secured to most secured -->
 	<security:http auto-config="true" use-expressions="true">
 
-
-
 		<security:intercept-url access="permitAll"
 			pattern="/static/**" requires-channel="any" />
+
 		<security:intercept-url access="permitAll"
 			pattern="/" requires-channel="any" />
+
+		<security:intercept-url access="permitAll"
+			pattern="/resetpassword" />
+
+		<security:intercept-url access="permitAll"
+			pattern="/forgotpassword" />
+
+		<security:intercept-url access="permitAll"
+			pattern="/login" />
+
+
+		<security:intercept-url access="isAuthenticated()"
+			pattern="/loggedout" />
+
+
+		<security:intercept-url access="permitAll"
+			pattern="/generic_error" />
+
 
 		<!-- intercept url and it will be redirected to login -->
 		<security:intercept-url pattern="/dashboard"
 			access="isAuthenticated()" />
 
-		<security:intercept-url access="permitAll"
-			pattern="/resetpassword" />
-		<security:intercept-url access="isAuthenticated()"
-			pattern="/loggedout" />
-		<security:intercept-url access="isAuthenticated()"
-			pattern="/login" />
-		
+		<security:intercept-url access="hasRole('USER')" pattern="/taskdetailview" />
 
-		<security:intercept-url access="permitAll"
-			pattern="/generic_error" />
-
-		<security:intercept-url access="permitAll"
-			pattern="/taskdetailview" />
-
-		<security:intercept-url access="permitAll"
+		<security:intercept-url access="hasAnyRole('USER','ADMIN')"
 			pattern="/adddailylog" />
-		<security:intercept-url access="permitAll"
+
+		<security:intercept-url access="hasAnyRole('ADMIN','USER')"
 			pattern="/dailyloglist" />
-		<security:intercept-url access="permitAll"
-			pattern="/forgotpassword" />
 
-		<security:intercept-url access="permitAll"
+		<security:intercept-url access="hasRole('ADMIN')"
 			pattern="/addtask" />
-		<security:intercept-url 
-			pattern="/assigntasklist" access="permitAll"/>
 
-		<security:intercept-url pattern="/user_listitems" />
+		<security:intercept-url pattern="/assigntasklist"
+			access="hasRole('ADMIN')" />
 
-		
+		<security:intercept-url pattern="/user_listitems"
+			access="hasRole('ADMIN')" />
 
-		<security:intercept-url access="permitAll"
+		<security:intercept-url access="hasRole('ADMIN')"
 			pattern="/useredit" />
 
-		<security:intercept-url access="permitAll"
+		<security:intercept-url access="hasRole('ADMIN')"
 			pattern="/userlist" />
 
-		<security:intercept-url access="permitAll"
-			pattern="/viewreports" />
 
 		<security:form-login login-page="/login"
-			default-target-url="/login" 
-			always-use-default-target="true"
-			authentication-failure-url="/login?error"
-			 username-parameter="username"
-			login-processing-url="/login"
-			password-parameter="password"
-			authentication-success-handler-ref="savedRequestAwareAuthenticationSuccessHandler" />
-<security:remember-me
-token-validity-seconds="1209600"
-remember-me-parameter="remember-me"
-data-source-ref="dataSource"/>
-		
+			always-use-default-target="true" default-target-url="/dashboard"
+			authentication-failure-url="/login?error=true" />
+		<security:logout logout-success-url="/login"
+			delete-cookies="JSESSIONID" />
+
+
+		<security:intercept-url access="hasAnyRole('ADMIN','USER')"
+			pattern="/viewreports" />
+
+
 		<!-- enable csrf protection -->
-		<!--  <security:csrf /> -->
-		 <security:csrf disabled="true" />
-		
-		<security:logout logout-success-url="/loggedout" delete-cookies="JSESSIONID" />
-		</security:http>
+		<!-- <security:csrf /> -->
+		<security:csrf disabled="true" />
+
+
+	</security:http>
 
 	<bean id="encoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
 		<constructor-arg name="strength" value="11" />
 	</bean>
+
+
+
 	<!-- <security:authentication-manager> <security:authentication-provider> 
 		<security:user-service> <security:user name="test" password="test" authorities="ROLE_USER" 
 		/> </security:user-service> </security:authentication-provider> </security:authentication-manager> -->
