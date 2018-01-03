@@ -56,19 +56,19 @@
 		<security:intercept-url pattern="/dashboard"
 			access="isAuthenticated()" />
 
-		<security:intercept-url access="hasRole('USER')" pattern="/taskdetailview" />
+		<security:intercept-url access="hasAuthority('USER')" pattern="/taskdetailview" />
 
-		<security:intercept-url access="hasAnyRole('USER','ADMIN')"
+		<security:intercept-url access="hasAnyAuthority('USER','ADMIN')"
 			pattern="/adddailylog" />
 
-		<security:intercept-url access="hasAnyRole('ADMIN','USER')"
+		<security:intercept-url access="hasAnyAuthority('ADMIN','USER')"
 			pattern="/dailyloglist" />
 
 		<security:intercept-url access="hasRole('ADMIN')"
 			pattern="/addtask" />
 
 		<security:intercept-url pattern="/assigntasklist"
-			access="hasRole('ADMIN')" />
+			access="hasAuthority('ADMIN')" />
 
 		<security:intercept-url pattern="/user_listitems"
 			access="hasRole('ADMIN')" />
