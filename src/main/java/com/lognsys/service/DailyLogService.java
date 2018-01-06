@@ -201,8 +201,14 @@ public class DailyLogService {
 	}
 
 	public List<DailyLogDTO> fetchDailyLog(String title) throws IOException {
-
+		System.out.println("\n fetchDailyLog DailyLogDTO title.toString ------------------------ "
+				+ title.toString());
+		
 		List<DailyLogDTO> lists = jdbcDailyLogRepository.getDailyLogDTOByTitle(title);
+		System.out.println("\n fetchDailyLog DailyLogDTO lists.size() ------------------------ "
+				+ lists.size());
+		
+		
 		List<DailylogTable> dailylogTables = null;
 
 		if (lists != null && lists.size() > 0) {

@@ -1,4 +1,6 @@
-CREATE TABLE persistent_login(
+
+drop table if exists persistent_logins;
+CREATE TABLE persistent_logins(
     username varchar(64) not null,
     series varchar(64) not null,
     token varchar(64) not null,

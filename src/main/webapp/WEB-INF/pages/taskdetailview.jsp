@@ -34,6 +34,7 @@
 					<form:errors path="assignTaskDTO.done_percentage" element="div" />
 					<form:errors path="assignTaskDTO.target_date" element="div" />
 					<form:errors path="assignTaskDTO.id" element="div" />
+						<form:errors path="assignTaskDTO.created_by" element="div" />
 
 					<form:errors path="dailylogDTO.id" element="div" />
 					<form:errors path="dailylogDTO.shift" element="div" />
@@ -47,6 +48,7 @@
 					<form:errors path="dailylogDTO.recordtype" element="div" />
 					<form:errors path="dailylogDTO.bu" element="div" />
 					<form:errors path="dailylogDTO.status" element="div" />
+					
 				</div>
 				<div id="register_user" class="col-sm-12 panel panel-default">
 
@@ -57,7 +59,7 @@
 							id="assignTaskDTO_id"
 							class="form-control text ui-widget-content ui-corner-all" />
 
-						<div class="form-group">
+						<div class="col-sm-12 form-group">
 							<label>Task Title</label>
 							<form:textarea id="title" placeholder="Enter Task Title Here.."
 								rows="1" path="assignTaskDTO.title"
@@ -69,6 +71,13 @@
 								class="form-control text ui-widget-content ui-corner-all">
 								<form:options id="assigned_to" items="${usersListAssignto}"></form:options>
 							</form:select>
+						</div>
+											<div class="col-sm-6 form-group">
+							<label>Created By</label>
+							<form:input id="assign_by"
+								placeholder="Enter your name Here.." 
+								class="form-control text ui-widget-content ui-corner-all"
+								path="assignTaskDTO.created_by" />
 						</div>
 						<div class="col-sm-6 form-group">
 							<label>Priority</label>
@@ -183,6 +192,7 @@
 												class="form-control text ui-widget-content ui-corner-all"
 												path="dailyLogDTOs[${pStatus.index}].spare_parts" />
 										</div>
+								
 										<div class="col-sm-6 form-group">
 											<label>Attend By</label>
 

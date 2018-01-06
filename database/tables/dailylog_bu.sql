@@ -1,8 +1,8 @@
-drop table dailylog_bu;
+drop table if exists dailylog_bu;
 
 CREATE TABLE IF NOT EXISTS `indorama_poly`.`dailylog_bu` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `bu_id` INT(11) NOT NULL,
+  `bu_id` INT(11) NOT NULL DEFAULT '-1',
   `dailylog_id` INT(11)  NOT NULL DEFAULT '-1',
   `last_edit` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -16,30 +16,11 @@ CREATE TABLE IF NOT EXISTS `indorama_poly`.`dailylog_bu` (
   CONSTRAINT `dailog_bu_bu_idfk_1`
     FOREIGN KEY (`bu_id`)
     REFERENCES `indorama_poly`.`bu` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    UNIQUE INDEX `dailylog_id_UNIQUE` (`dailylog_id` ASC)
+
+    
+    )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
-ALTER TABLE `indorama_poly`.`dailylog_bu` 
-ADD UNIQUE INDEX `dailylog_id_UNIQUE` (`dailylog_id` ASC);
-
-ALTER TABLE `indorama_poly`.`dailylog_bu` 
-DROP FOREIGN KEY `dailog_bu_bu_idfk_1`;
-ALTER TABLE `indorama_poly`.`dailylog_bu` 
-CHANGE COLUMN `bu_id` `bu_id` INT(11) NOT NULL DEFAULT '-1' ;
-ALTER TABLE `indorama_poly`.`dailylog_bu` 
-ADD CONSTRAINT `dailog_bu_bu_idfk_1`
-  FOREIGN KEY (`bu_id`)
-  REFERENCES `indorama_poly`.`bu` (`id`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION;
-
-ALTER TABLE `indorama_poly`.`dailylog_bu` 
-DROP FOREIGN KEY `dailog_bu_bu_idfk_1`;
-ALTER TABLE `indorama_poly`.`dailylog_bu` 
-ADD CONSTRAINT `dailog_bu_bu_idfk_1`
-  FOREIGN KEY (`bu_id`)
-  REFERENCES `indorama_poly`.`bu` (`id`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;

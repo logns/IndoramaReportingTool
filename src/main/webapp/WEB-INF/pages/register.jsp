@@ -94,7 +94,7 @@
 								</div>
 								
 								</div>
-							<div class="row">
+							<div id="divPassword" class="row">
 								<div class="col-sm-6 form-group">
 								<label>Password</label>
 								<form:input id="password" type="password"

@@ -20,6 +20,7 @@ public class AssignTaskRowMapper implements RowMapper<AssignTaskDTO> {
 		assignTaskDTO.setPriority(rs.getString("priority"));
 		assignTaskDTO.setTarget_date(rs.getString("target_date"));
 		assignTaskDTO.setDone_percentage(rs.getString("done_percentage"));
+		assignTaskDTO.setCreated_by(rs.getString("created_by"));
 		return assignTaskDTO;
 	}
 }

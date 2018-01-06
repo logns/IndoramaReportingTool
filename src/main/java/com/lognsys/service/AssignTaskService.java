@@ -97,7 +97,10 @@ public class AssignTaskService {
 
 //		adding dailylog
 		int dailylog_id = jdbcDailyLogRepository.addDailyLog(dailyLogDTO);
-	
+		
+//		DAILYLOG_USERS_QUERIES
+	    jdbcDailyLogRepository.addDailylogUsers(ObjectMapper.authorizedUserName(),dailylog_id);
+			
 //		adding both the tables id in assign_dailylog tables 
 		int assignDailyLog_id = jdbcAssignTaskRepository.addAssignTask_DailyLog(assign_task_id, dailylog_id);
 		
@@ -116,9 +119,6 @@ public class AssignTaskService {
 			authentication = SecurityContextHolder.getContext().getAuthentication();
 			System.out.println("addTask false user role - "+(authentication.getPrincipal().toString()));
 			
-			System.out.println("addTask true or false user role - "+(authentication.getPrincipal().toString().equalsIgnoreCase("ADMIN")));
-			System.out.println("addTask true or false user ObjectMapper.authorizedUserName()!=null - "+(ObjectMapper.authorizedUserName()!=null));
-			
 			if (authentication.getPrincipal().toString().equalsIgnoreCase("ADMIN")) {
 				readAssignTask(null);
 			}
@@ -129,7 +129,7 @@ public class AssignTaskService {
 			}
 			
 			String message = msg.getMessage("addnewtask", new Object[] {assignTaskDTO.getAssigned_to(),ObjectMapper.authorizedUserName(), "http://www.mkyong.com",dailyLogDTO.getDescription()}, null);
-			
+//			processing mail 
 			processMail(dailyLogDTO,message);
 		} catch (IOException io) {
 			System.out.println("Rest addAssignTask  readAssignTask - " + io.getMessage());
@@ -144,8 +144,8 @@ public class AssignTaskService {
 
 			authentication = SecurityContextHolder.getContext().getAuthentication();
 				String username=authentication.getName().toString();
-				System.out.println("\n  readAssignTask username " +username);
-				System.out.println("\n  readAssignTask dailyLogDTO " +dailyLogDTO.toString());
+				System.out.println("\n  processMail username " +username);
+				System.out.println("\n  processMail dailyLogDTO " +dailyLogDTO.toString());
 	
 				if(username!=null && dailyLogDTO!=null){
 				
@@ -188,7 +188,7 @@ public class AssignTaskService {
 				
 			
 		} catch (IOException e) {
-			System.out.println("IOEXCEPTION --- e" + e);
+			System.out.println("readAssignTask IOEXCEPTION --- e" + e);
 			e.printStackTrace();
 		}
 	}
@@ -364,6 +364,9 @@ public class AssignTaskService {
 
 	public AssignTaskDTO getAssigntDTObyTitle(String title){
 		AssignTaskDTO dto=jdbcAssignTaskRepository.findAssignTaskDTOTitlte(title);
+		System.out.println("\n getAssigntDTObyTitle  dto ------------------------ "
+				+ dto.toString());
+
 		return dto;
 	}
 	public static  AssignTaskDailylogDTO parseJsonToAssigntaskDailyLogDTO(JSONObject jsonObject) {
@@ -451,5 +454,41 @@ public class AssignTaskService {
 		
 		return assignTaskDailylogDTO;
 	}
+	
+	public void displayDashboardAssignTask(String username) throws IOException {
+		System.out.println("\n displayDashboardAssignTask username --- " + username);
+		
+		if(username!=null){
+			listOfAssigntask = jdbcAssignTaskRepository.getDashboardAssignTask(username);
+		}else{
+			listOfAssigntask = jdbcAssignTaskRepository.getAllDashboardAssignTaskDTO();
+		}
+		
+		List<AssignTaskTable> assignTaskTables = null;
+		
+		// adding the list of assigntask into  assigntasktable to  show in UI
+		if (listOfAssigntask != null && listOfAssigntask.size() > 0) {
+			assignTaskTables = ObjectMapper.mapToAssignTaskTable(listOfAssigntask);
+			System.out.println("displayDashboardAssignTask listOfAssigntask size--- " + listOfAssigntask.size());
+			
+		
+		System.out.println("displayDashboardAssignTask assignTaskTables size--- " + assignTaskTables.size());
+		
+		ResourceLoader resourceLoader = new FileSystemResourceLoader();
+		Resource resource = resourceLoader
+				.getResource(applicationProperties.getProperty(Constants.JSON_FILES.dashboard_filename.name()));
+		String list = CommonUtilities.convertToJSON(assignTaskTables);
+
+			try {
+				WriteJSONToFile.getInstance().write(resource, list);
+					
+				
+			} catch (IOException e) {
+				System.out.println("displayDashboardAssignTask IOEXCEPTION --- e" + e);
+				e.printStackTrace();
+			}
+		}
+	}
+	
 
 }

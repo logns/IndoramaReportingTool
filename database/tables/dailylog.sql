@@ -1,4 +1,4 @@
-drop table dailylog;
+drop table if exists dailylog;
 
 CREATE TABLE IF NOT EXISTS `indorama_poly`.`dailylog` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `indorama_poly`.`dailylog` (
   `timefrom` VARCHAR(20) NOT NULL,
   `timeto` VARCHAR(20) NOT NULL,
   `spare_parts` VARCHAR(64) NOT NULL DEFAULT '',
-  `attendby` VARCHAR(64) NOT NULL DEFAULT '',
+  `attendby` VARCHAR(275) NOT NULL DEFAULT '',
   `jobtype` VARCHAR(64) NOT NULL DEFAULT '',
   `recordtype` VARCHAR(64) NOT NULL DEFAULT '',
   `status` VARCHAR(64) NOT NULL DEFAULT '',
@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS `indorama_poly`.`dailylog` (
   INDEX `dailylog_jobtype` (`jobtype` ASC),
   INDEX `dailylog_status` (`status` ASC),
   INDEX `dailylog_attendby` (`attendby` ASC),
+  UNIQUE dlat_id(id, assign_task_id),
   CONSTRAINT `fk_assigntask_id`
   FOREIGN KEY (`assign_task_id`)
   REFERENCES `indorama_poly`.`assign_task` (`id`)
@@ -29,10 +30,3 @@ CREATE TABLE IF NOT EXISTS `indorama_poly`.`dailylog` (
 )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
-ALTER TABLE `indorama_poly`.`dailylog` 
-CHANGE COLUMN `attendby` `attendby` VARCHAR(275) NOT NULL DEFAULT '' ;
-
-#adding composite unique key
-ALTER TABLE dailylog ADD UNIQUE dlat_id(id, assign_task_id);
-SHOW INDEXES FROM dailylog;

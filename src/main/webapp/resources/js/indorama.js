@@ -162,12 +162,13 @@ $(document)
 
                                 //clear previous added html elements
                                 $('#editform').empty();
-
+                              
                                 //append html subelements
                                 $(regUserElements).appendTo("#editform");
                                 
                                 //mark username field as read-only
                                 $("#username").prop("readonly", true);
+                                $('#divPassword').remove();
 
                                 dialog = $("#dialog-form").dialog({
                                     autoOpen: false,

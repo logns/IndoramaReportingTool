@@ -92,12 +92,6 @@ public class UserService {
 			// adding user into db
 			int users_id = jdbcUserRepository.addUser(usersDTO);
 			System.out.println("addUser users users_id "+users_id);
-
-			// adding user into department
-//			jdbcUserRepository.addUserAndDepartment(users_id, users.getDepartments());
-//			
-			// adding user into bu
-			jdbcUserRepository.addUserAndBu(users_id, users.getBu());
 		
 	        //Adding user to corresponding role
 			jdbcUserRepository.addUserAndRole(users_id, users.getRole());
@@ -105,7 +99,7 @@ public class UserService {
 			try {
 				
 				refreshUserList();
-				String message = msg.getMessage("addnewuser", new Object[] {users.getRealname(),"http://www.mkyong.com"}, null);
+				String message = msg.getMessage("addnewuser", new Object[] {users.getRealname(),"http://localhost:8080"}, null);
 				String addAccout="New Account created";
 				processMail(users,message,addAccout);
 		
@@ -129,12 +123,11 @@ public class UserService {
 	 */
 	public void refreshUserList() throws IOException {
 		List<UsersTable> users =null;
-		System.out.println("refreshUserList --jdbcBuRepository.getAllUsersAndBu().size() "+jdbcBuRepository.getAllUsersAndBu().size());
 		
-/*		if(jdbcBuRepository.getAllUsersAndBu()!=null && jdbcBuRepository.getAllUsersAndBu().size()>0)
+		if(jdbcUserRepository.getAllUsers()!=null && jdbcUserRepository.getAllUsers().size()>0)
 		{
-			users = ObjectMapper.mapToUserTable(jdbcBuRepository.getAllUsersAndBu());
-		}*/
+			users = ObjectMapper.mapToUserTable(jdbcUserRepository.getAllUsers());
+		}
 		ResourceLoader resourceLoader = new FileSystemResourceLoader();
 		Resource resource = resourceLoader
 				.getResource(applicationProperties.getProperty(Constants.JSON_FILES.user_filename.name()));

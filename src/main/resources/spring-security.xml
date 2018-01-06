@@ -52,11 +52,14 @@
 			pattern="/generic_error" />
 
 
+		<security:intercept-url access="hasAnyAuthority('ADMIN','USER')"
+			pattern="/setting" />
+
 		<!-- intercept url and it will be redirected to login -->
 		<security:intercept-url pattern="/dashboard"
 			access="isAuthenticated()" />
 
-		<security:intercept-url access="hasAuthority('USER')" pattern="/taskdetailview" />
+		<security:intercept-url access="hasAnyAuthority('USER','ADMIN')" pattern="/taskdetailview" />
 
 		<security:intercept-url access="hasAnyAuthority('USER','ADMIN')"
 			pattern="/adddailylog" />
@@ -64,7 +67,7 @@
 		<security:intercept-url access="hasAnyAuthority('ADMIN','USER')"
 			pattern="/dailyloglist" />
 
-		<security:intercept-url access="hasRole('ADMIN')"
+		<security:intercept-url access="hasAuthority('ADMIN')"
 			pattern="/addtask" />
 
 		<security:intercept-url pattern="/assigntasklist"
@@ -76,7 +79,7 @@
 		<security:intercept-url access="hasRole('ADMIN')"
 			pattern="/useredit" />
 
-		<security:intercept-url access="hasRole('ADMIN')"
+		<security:intercept-url access="hasAuthority('ADMIN')"
 			pattern="/userlist" />
 
 
@@ -87,7 +90,7 @@
 			delete-cookies="JSESSIONID" />
 
 
-		<security:intercept-url access="hasAnyRole('ADMIN','USER')"
+		<security:intercept-url access="hasAnyAuthority('ADMIN','USER')"
 			pattern="/viewreports" />
 
 

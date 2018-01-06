@@ -59,11 +59,9 @@ import com.lognsys.dao.dto.AssignTaskDTO;
 import com.lognsys.dao.dto.AssignTaskDailylogDTO;
 import com.lognsys.dao.dto.BuDTO;
 import com.lognsys.dao.dto.DailyLogDTO;
-import com.lognsys.dao.dto.UpdatedbyDTO;
 import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.exception.CustomGenericException;
 import com.lognsys.model.DailyLog;
-import com.lognsys.model.UpdateAssignedCount;
 import com.lognsys.model.Users;
 import com.lognsys.service.AssignTaskService;
 import com.lognsys.service.DailyLogService;
@@ -95,7 +93,56 @@ public class AssignTaskController {
 	@Autowired
 	@Qualifier("applicationProperties")
 	private Properties applicationProperties;
+	boolean hasUserRole = false;
+	
+	/**
+	 * Returns to Dashboard page
+	 * 
+	 * @param Model
+	 * @param HttpServeltRequest
+	 * @return
+	 */
+	@RequestMapping(value = "/dashboard")
+	public String showDashboard(Model model, HttpServletRequest request) {
+		try {
+			
+		authentication = SecurityContextHolder.getContext().getAuthentication();
 
+		Set<String> roles = authentication.getAuthorities().stream().map(r -> r.getAuthority())
+				.collect(Collectors.toSet());
+		authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		String usernamelogged = ObjectMapper.authorizedUserName();
+		
+		System.out.println("dashboard  user usernamelogged - " + (usernamelogged));
+		System.out.println("dashboard ROLE - " + roles.toString());
+		if (roles.toString().equalsIgnoreCase("ADMIN")) {
+			hasUserRole = true; // code here
+				assignTaskService.displayDashboardAssignTask(null);
+		}
+		else{
+			if(usernamelogged!=null){
+				System.out.println("\n\n dashboard  user usernamelogged not null- " + (usernamelogged));
+				System.out.println("\n\n dashboard ROLE - not null " + roles.toString());
+
+					assignTaskService.displayDashboardAssignTask(usernamelogged);
+			}
+		}
+	} catch (IOException e) {
+		System.out.println("\n IOException showDashboard assigntasklist \n \n " + e.toString());
+		throw new CustomGenericException(
+				applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.something_went_wrong.name()));
+	} catch (Exception e) {
+		System.out.println("\n Exception showDashboard assigntasklist \n \n " + e.toString());
+		// customgenericException class for the exception to be viewed in
+		// web page
+		throw new CustomGenericException(
+				applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.something_went_wrong.name()));
+	}
+		
+		return "dashboard";
+	}
+	
 	/**
 	 * SHOW ASSINGTASKLIST by reading the data
 	 * 
@@ -107,8 +154,6 @@ public class AssignTaskController {
 	@RequestMapping(value = "/assigntasklist", method = RequestMethod.GET)
 	public String showAssignTasks(Model model, HttpServletRequest request) {
 		try {
-			boolean hasUserRole = false;
-			authentication = SecurityContextHolder.getContext().getAuthentication();
 			authentication = SecurityContextHolder.getContext().getAuthentication();
 			Collection<? extends GrantedAuthority> array=authentication.getAuthorities();
 		System.out.println(array.size());
@@ -116,7 +161,9 @@ public class AssignTaskController {
 		Iterator<? extends GrantedAuthority> it = array.iterator();
 		while(it.hasNext()){
 			GrantedAuthority i = it.next();
-			System.out.println("Iterator Value::"+i.getAuthority());
+			System.out.println("showAssignTasks Iterator Value::"+i.getAuthority());
+			System.out.println("showAssignTasks Iterator ObjectMapper.authorizedUserName()::"+(ObjectMapper.authorizedUserName()));
+			
 			if (i.getAuthority().toString().equalsIgnoreCase("ADMIN")) {
 				hasUserRole = true; // code here
 				assignTaskService.readAssignTask(null);
@@ -180,7 +227,7 @@ public class AssignTaskController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/addtask", method = RequestMethod.GET)
-	public String AddAssignTasks(Model model, HttpServletRequest request) throws IOException {
+	public String showAddAssignTasks(Model model, HttpServletRequest request) throws IOException {
 
 		String str_shift = applicationProperties.getProperty(Constants.TYPES_ARRAY.shift.name());
 		String str_jobtype = applicationProperties.getProperty(Constants.TYPES_ARRAY.jobtype.name());
@@ -315,6 +362,7 @@ public class AssignTaskController {
 
 				// add assigntask and dailylog
 				assignTaskService.addAssignTask(assignTaskDTO, dailyLogDTO);
+				return "assigntasklist";
 
 			} catch (DataAccessException e) {
 				e.printStackTrace();
@@ -328,7 +376,6 @@ public class AssignTaskController {
 						applicationProperties.getProperty(Constants.EXCEPTIONS_MSG.something_went_wrong.name()));
 			}
 		}
-		return "assigntasklist";
 	}
 
 	private void populateUsersListInJson(List<String> usersList) throws IOException {
@@ -589,11 +636,16 @@ public class AssignTaskController {
 			@RequestParam(value = "bottom_id", required = false) String bottom_id) throws IOException {
 		try {
 			title = title.replace("%20", " ");
+			System.out.println("\n taskdetailview title ------------------------ "
+					+ title.toString());
+
 			// extracting title of assigntask
 			AssignTaskDTO assignTaskDTO = assignTaskService.getAssigntDTObyTitle(title);
 
 			// getting dailylog list at first
 			List<DailyLogDTO> list = dailyLogService.fetchDailyLog(title);
+			System.out.println("\n taskdetailview DailyLogDTO list.size() ------------------------ "
+					+ list.size());
 
 			// this list is when user click on list.item this list populate item
 			// in it when user click on submit

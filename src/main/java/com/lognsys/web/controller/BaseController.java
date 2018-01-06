@@ -92,10 +92,11 @@ public class BaseController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
 			HttpServletRequest request) {
-
+		System.out.println("request "+request);
+		System.out.println("error "+error);
+		
 		ModelAndView model = new ModelAndView();
 
-		model.setViewName("login");
 		if (error != null) {
 
 			model.addObject("error", "Invalid username or password!");
@@ -109,29 +110,14 @@ public class BaseController {
 			//
 			model.setViewName("login");
 
-		}
+		} else {
+			System.out.println("error  else part "+error);
+			}
 
 		return model;
 	}
 
-	/**
-	 * Returns to Dashboard page
-	 * 
-	 * @param Model
-	 * @param HttpServeltRequest
-	 * @return
-	 */
-	@RequestMapping(value = "/dashboard")
-	public String dashboard(Model model, HttpServletRequest request) {
 
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-		Set<String> roles = authentication.getAuthorities().stream().map(r -> r.getAuthority())
-				.collect(Collectors.toSet());
-
-		System.out.println("ROLE - " + roles.toString());
-		return "dashboard";
-	}
 
 	/**
 	 * 
@@ -315,7 +301,7 @@ public class BaseController {
 
 		FormValidator formValidator = new FormValidator();
 		formValidator.validate(user, result);
-
+		formValidator.validate(user.getUsername(), result);
 		if (result.hasErrors()) {
 			System.out.println("Adding Errors - " + user.toString());
 			// CALL database to get roles & groups
@@ -340,17 +326,11 @@ public class BaseController {
 			return "register";
 
 		} else {
-			userService.addUser(user);
 			authentication = SecurityContextHolder.getContext().getAuthentication();
-			System.out.println("adduser  user role - " + (authentication.getPrincipal().toString()));
-			String usernamelogged = ObjectMapper.authorizedUserName();
-			System.out.println("adduser  user usernamelogged - " + (usernamelogged));
-
-			if (authentication.getPrincipal().toString() != null && usernamelogged != null) {
-				return "userlist";
-			} else {
-				return "login";
-			}
+			System.out.println("adduser before  user role - " + (authentication.getPrincipal().toString()));
+			
+			userService.addUser(user);
+			return "login";
 		}
 	}
 

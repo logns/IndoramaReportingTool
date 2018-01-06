@@ -21,8 +21,10 @@ public class Constants {
 	public enum ROLES_QUERIES {
 		insert_users_roles, insert_users_roleid, select_roles_all, select_role_byuserid, update_roles_byuser
 	}
-
-
+	public enum DAILYLOG_USERS_QUERIES {
+		insert_dailylog_users
+	}
+	
 	public enum MESSAGES_PROPERTIES {
 		addnewtask,removedtask,updatetask
 		}
@@ -73,6 +75,7 @@ public class Constants {
 		insert_assign_task,
 		select_isexist_assigntask_title,
 		select_all_assigntask,
+		select_assigntask_by_dashboard_username,
 		select_assigntask_by_username,
 		select_assigntask_by_id,
 		select_assigntask_by_title,
@@ -92,7 +95,7 @@ public class Constants {
 	 * Note: All the files should be specified in application.properties.
 	 */
 	public enum JSON_FILES {
-		user_filename, dailylogs_filename, adverts_filename, booking_filename, notification_filename, assigntask_filename,realname_filename
+		user_filename, dailylogs_filename, adverts_filename, booking_filename, notification_filename,dashboard_filename ,assigntask_filename,realname_filename
 	}
 
 	/**
@@ -109,7 +112,7 @@ public class Constants {
 	}
 
 	public enum DAILYLOG_TABLE_FIELD_NAMES {
-		id, assign_task_id, assign_task_title, description, assigned_to, done_percentage,target_date,status,time,shift,machine,timefrom,timeto,spare_parts,attendby,jobtype,recordtype,last_edit,bu
+		id, assign_task_id, assign_task_title, description, assigned_to,assign_by, done_percentage,target_date,status,time,shift,machine,timefrom,timeto,spare_parts,attendby,jobtype,recordtype,last_edit,bu
 	}
 	public enum ASSIGNTASK_TABLE_FIELD_NAMES {
 		id, title

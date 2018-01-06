@@ -46,6 +46,7 @@ CREATE TABLE users
 
 	last_edit timestamp not null default current_timestamp on update current_timestamp,
 	
+    password VARCHAR(80) NOT NULL,
 	UNIQUE(username, phone)
 
 ) ENGINE = InnoDB default CHARSET=utf8;
@@ -55,7 +56,3 @@ create index users_realname_idx on users(realname(16));
 create index users_birthdate_idx on users(birthdate);
 create index users_city_idx on users(city);
 create index users_address_idx on users(address);
-
-
-ALTER TABLE `indorama_poly`.`users` 
-ADD COLUMN `password` VARCHAR(80) NOT NULL AFTER `last_edit`;

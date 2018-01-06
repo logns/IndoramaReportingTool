@@ -30,7 +30,7 @@
 						xlink:href="#stroked-video"></use></svg> View Report
 		</a></li>
 
-		<li><a href="${pageContext.request.contextPath}/userlist"> <svg
+		<li><a href="${pageContext.request.contextPath}/setting"> <svg
 					class="glyph stroked gear">
 			<use xmlns:xlink="http://www.w3.org/1999/xlink"
 						xlink:href="#stroked-gear"></use></svg> Settings

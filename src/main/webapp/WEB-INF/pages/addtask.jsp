@@ -27,7 +27,8 @@
 					<form:errors path="assignTaskDTO.priority" element="div" />
 					<form:errors path="assignTaskDTO.done_percentage" element="div" />
 					<form:errors path="assignTaskDTO.target_date" element="div" />
-
+					<form:errors path="assignTaskDTO.created_by" element="div" />
+					
 					<form:errors path="dailylogDTO.shift" element="div" />
 					<form:errors path="dailylogDTO.machine" element="div" />
 					<form:errors path="dailylogDTO.description" element="div" />
@@ -60,6 +61,14 @@
 								<form:options id="assigned_to" items="${usersListAssignto}"></form:options>
 							</form:select>
 						</div>
+					<div class="col-sm-6 form-group">
+							<label>Created By</label>
+							<form:input id="created_by"
+								placeholder="Enter your name Here.." 
+								class="form-control text ui-widget-content ui-corner-all"
+								path="assignTaskDTO.created_by" />
+						</div>
+		
 						<div class="col-sm-6 form-group">
 							<label>Priority</label>
 							<form:select path="assignTaskDTO.priority"

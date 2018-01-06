@@ -125,6 +125,9 @@ public class JdbcDailyLogRepository implements DailyLogRespository {
 
 	@Override
 	public List<DailyLogDTO> getDailyLogDTOByTitle(String title) {
+		System.out.println("\n getDailyLogDTOByTitle DailyLogDTO title.toString ------------------------ "
+				+ title.toString());
+	
 		SqlParameterSource parameter = new MapSqlParameterSource("title", title);
 		return namedParamJdbcTemplate.query(
 				sqlProperties.getProperty(Constants.DAILYLOG_QUERIES.select_dailylog_by_title.name()), parameter,
@@ -193,6 +196,15 @@ SqlParameterSource parameter = new MapSqlParameterSource().addValue("dailylog_id
 				sqlProperties.getProperty(Constants.DAILYLOG_QUERIES.select_daily_assign_title_by_task_id.name()), parameter,
 				String.class);
 	
+	}
+
+
+
+	public void addDailylogUsers(String username, int dailylog_id) {
+		SqlParameterSource param = new MapSqlParameterSource().addValue("username", username).addValue("dailylog_id", dailylog_id);
+		namedParamJdbcTemplate.update(sqlProperties.getProperty(Constants.DAILYLOG_USERS_QUERIES.insert_dailylog_users.name()),
+				param);
+		
 	}
 
 }

@@ -157,4 +157,23 @@ public class JdbcAssignTaskRepository  implements AssignTaskRepository{
 				new BeanPropertyRowMapper<AssignTaskDTO>(AssignTaskDTO.class));
 		return lists;
 	}
+	
+
+	public List<AssignTaskDTO> getDashboardAssignTask(String username) {
+		SqlParameterSource parameter = new MapSqlParameterSource("username", username);
+
+		List<AssignTaskDTO> lists = namedParamJdbcTemplate.query(
+				sqlProperties.getProperty(Constants.ASSIGN_TASK_QUERIES.select_assigntask_by_dashboard_username.name()),parameter,
+				new BeanPropertyRowMapper<AssignTaskDTO>(AssignTaskDTO.class));
+		System.out.println("\n dashboard getDashboardAssignTask lists --- " + lists);
+		
+		return lists;
+	}
+
+	public List<AssignTaskDTO> getAllDashboardAssignTaskDTO() {
+		List<AssignTaskDTO> lists = namedParamJdbcTemplate.query(
+				sqlProperties.getProperty(Constants.ASSIGN_TASK_QUERIES.select_all_assigntask.name()),
+				new BeanPropertyRowMapper<AssignTaskDTO>(AssignTaskDTO.class));
+		return lists;
+	}
 }

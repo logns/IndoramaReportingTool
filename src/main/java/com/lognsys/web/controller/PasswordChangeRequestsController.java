@@ -1,6 +1,5 @@
 package com.lognsys.web.controller;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -28,13 +27,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.lognsys.dao.dto.PasswordChangeRequestsDTO;
 import com.lognsys.dao.jdbc.JdbcPasswordChangeRequestsRepository;
+import com.lognsys.dao.jdbc.JdbcUserRepository;
 import com.lognsys.exception.CustomGenericException;
 import com.lognsys.model.PasswordChangeRequests;
+import com.lognsys.model.ResetOldPassword;
 import com.lognsys.model.Users;
 import com.lognsys.service.PasswordChangeRequestsService;
 import com.lognsys.service.UserService;
+import com.lognsys.util.CommonUtilities;
 import com.lognsys.util.Constants;
 import com.lognsys.util.FormValidator;
+import com.lognsys.util.ObjectMapper;
 
 @Controller
 public class PasswordChangeRequestsController {
@@ -47,21 +50,131 @@ public class PasswordChangeRequestsController {
 	private JdbcPasswordChangeRequestsRepository jdbcPCRRepository;
 
 	@Autowired
+	private JdbcUserRepository jdbcUserRepository;
+
+	@Autowired
 	private PasswordChangeRequestsService passwordChangeRequestsService;
+	/**
+	 * show setting page to update password
+	 * 
+	 * @param Model :users
+	 * @param HttpServeltRequest
+	 * @return
+	 */
+	@RequestMapping(value = "/setting", method = RequestMethod.GET)
+	public String showSetting(Model model, HttpServletRequest request) {
+		ResetOldPassword setting =new ResetOldPassword();
+		
+		setting.setUsername(ObjectMapper.authorizedUserName().toString());
+		
+		System.out.println("showSetting -- getUsername============== " + setting.getUsername());
 
-	@RequestMapping(value = "/forgotpassword", method = RequestMethod.GET)
-	public String showForgotPassword(Model model, HttpServletRequest request) {
-		Users email = new Users();
+		model.addAttribute("setting", setting);
+		return "setting";
+	}
+	/**
+	 * Returns to dashboard  page and update password
+	 * 
+	 * @param Model :users
+	 * @param HttpServeltRequest
+	 * @return
+	 */
+	@RequestMapping(value = "/setting", method = RequestMethod.POST)
+	public ModelAndView settingPassword(@ModelAttribute("setting") ResetOldPassword setting, BindingResult result, ModelAndView model) {
+		try {
+			model = new ModelAndView();
+			System.out.println("\n \n settingPassword -- toString============== " + setting.toString());
 
-		model.addAttribute("email", email);
-		return "forgotpassword";
+			if (setting.getOldpassword() == null || setting.getOldpassword().trim().isEmpty() || setting.getNewpassword() == null || setting.getNewpassword().trim().isEmpty()) {
+				model.addObject("error", "Incorrect format of password");
+				model.setViewName("setting");
+				return model;
+			} else {
+
+				Pattern p = Pattern.compile("((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40})");
+				Matcher m = p.matcher(setting.getNewpassword());
+				// boolean b = m.matches();
+				boolean b = m.find();
+				System.out.println("settingPassword -- POST b  ============== " + b);
+				
+				if (b == true) {
+					System.out.println("\n \n settingPassword -- setting.getUsername()============== " + setting.getUsername());
+
+					Users users=jdbcUserRepository.getUserByUserName(setting.getUsername());
+					System.out.println("\n \n settingPassword -- users.toString============== " + users.toString());
+
+					
+					Users userspass=new Users();
+					userspass.setPassword(CommonUtilities.bCryptPasswordEncoder(setting.getOldpassword()));
+					System.out.println("\n \n settingPassword --password match============== " + (users.getPassword().equalsIgnoreCase(userspass.getPassword())));
+
+//							IN DB								IN FORM OLDPASSWORD				
+					if(users.getPassword().equalsIgnoreCase(userspass.getPassword())){
+
+						users.setPassword(CommonUtilities.bCryptPasswordEncoder(setting.getNewpassword()));
+						System.out.println("\n \n settingPassword --users password ============== " + ((users.getPassword())));
+
+						jdbcUserRepository.updateUserPasswordById(users);		
+						System.out.println("\n \n settingPassword --users password  updated ============== " );
+
+						model.setViewName("dashboard");
+					}
+					else{
+						model.addObject("error","Old Password does not match");
+						model.setViewName("setting");	
+						System.out.println("\n \n settingPassword --users password  error ============== " );
+
+					}
+					
+				} else {
+					System.out.println("\n \n settingPassword --users password  error for cases ============== " );
+
+					model.addObject("error",
+							"Password must contain atleast 1 special  character. \n 1 Upper and Lower case alphabet and \nnumbers");
+					model.setViewName("setting");
+					return model;
+				}
+				model.setViewName("dashboard");
+				return model;
+			}
+
+		} catch (EmptyResultDataAccessException e) {
+
+			System.out.println("\n \n settingPassword --users password  EmptyResultDataAccessException============== "+e );
+
+			throw new CustomGenericException(applicationProperties
+					.getProperty(Constants.EXCEPTIONS_MSG.data_access_exception_forgotpassword.name()));
+
+		}
+
 	}
 
+
+	/**
+	 * Returns to forgotpassword page
+	 * 
+	 * @param Model :users
+	 * @param HttpServeltRequest
+	 * @return
+	 */
+	@RequestMapping(value = "/forgotpassword", method = RequestMethod.GET)
+	public String showForgotPassword(Model model, HttpServletRequest request) {
+		Users users = new Users();
+
+		model.addAttribute("email", users);
+		return "forgotpassword";
+	}
+	
+	/**
+	 * Returns to login  page and send resetlink to  email id
+	 * 
+	 * @param Model :users
+	 * @param HttpServeltRequest
+	 * @return
+	 */
 	@RequestMapping(value = "/forgotpassword", method = RequestMethod.POST)
 	public String forgotPassword(@ModelAttribute("email") Users users, BindingResult result, ModelMap model) {
 		try {
-
-			System.out.println("forgotPassword --users " + users.getUsername());
 
 			FormValidator formValidator = new FormValidator();
 			formValidator.validate(users.getUsername(), result);

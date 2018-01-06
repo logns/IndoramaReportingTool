@@ -13,24 +13,6 @@ public class AssignTaskDailylogDTO {
 
 	@DBRef
 	private DailyLogDTO dailylogDTO;
-	
-	@DBRef
-	private ArrayList<UpdatedbyDTO> updatedbyDTO;
-
-	
-	/**
-	 * @return the updatedbyDTO
-	 */
-	public ArrayList<UpdatedbyDTO> getUpdatedbyDTO() {
-		return updatedbyDTO;
-	}
-
-	/**
-	 * @param updatedbyDTO the updatedbyDTO to set
-	 */
-	public void setUpdatedbyDTO(ArrayList<UpdatedbyDTO> updatedbyDTO) {
-		this.updatedbyDTO = updatedbyDTO;
-	}
 
 	@DBRef
 	private ArrayList<DailyLogDTO> dailylogDTOs;

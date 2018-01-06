@@ -7,6 +7,8 @@ public class AssignTaskTable {
 	private String priority = "";
 	private String target_date = "";
 	private String done_percentage = "";
+	private String created_by = "";
+	private String status = "";
 	public AssignTaskTable() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -20,6 +22,40 @@ public class AssignTaskTable {
 		this.priority = priority;
 		this.target_date = target_date;
 		this.done_percentage = done_percentage;
+	}
+	public AssignTaskTable(int id, String title, String created_by,String target_date,
+			String status) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.created_by = created_by;
+		this.target_date = target_date;
+		this.status = status;
+	}
+	
+	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	/**
+	 * @return the created_by
+	 */
+	public String getCreated_by() {
+		return created_by;
+	}
+	/**
+	 * @param created_by the created_by to set
+	 */
+	public void setCreated_by(String created_by) {
+		this.created_by = created_by;
 	}
 	public int getId() {
 		return id;

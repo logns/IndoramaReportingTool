@@ -26,7 +26,6 @@ public class DailyLogDTO {
 	private String bu = "";
 	private String last_edit = "";
 
-
 	public String getLast_edit() {
 		return last_edit;
 	}
@@ -55,7 +54,6 @@ public class DailyLogDTO {
 			String recordtype, String status,String last_edit ,String done_percentage) {
 		super();
 		this.id = id;
-		this.assign_task_id = assign_task_id;
 		this.target_date = target_date;
 		this.shift = shift;
 		this.machine = machine;
@@ -99,17 +97,18 @@ public class DailyLogDTO {
 		this.assign_task_id = assign_task_id;
 	}
 
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "DailyLogDTO [id=" + id + ", assign_task_id=" + assign_task_id + ", assign_task_title="
-				+ assign_task_title + ", target_date=" + target_date + ", shift=" + shift + ", machine=" + machine
-				+ ", description=" + description + ", timefrom=" + timefrom + ", timeto=" + timeto + ", spare_parts="
-				+ spare_parts + ", attendby=" + attendby + ", jobtype=" + jobtype + ", recordtype=" + recordtype
-				+ ", status=" + status + ", assigned_to=" + assigned_to + ", done_percentage=" + done_percentage
-				+ ", bu=" + bu + ", last_edit=" + last_edit + "]";
+		return "DailyLogDTO [id=" + id +  ", assign_task_id=" + assign_task_id
+				+ ", assign_task_title=" + assign_task_title + ", target_date=" + target_date + ", shift=" + shift
+				+ ", machine=" + machine + ", description=" + description + ", timefrom=" + timefrom + ", timeto="
+				+ timeto + ", spare_parts=" + spare_parts + ", attendby=" + attendby + ", jobtype=" + jobtype
+				+ ", recordtype=" + recordtype + ", status=" + status + ", assigned_to=" + assigned_to
+				+ ", done_percentage=" + done_percentage + ", bu=" + bu + ", last_edit=" + last_edit + "]";
 	}
 
 	public String getBu() {

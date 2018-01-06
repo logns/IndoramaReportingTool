@@ -74,12 +74,19 @@ public class PasswordChangeRequestsService {
 	
 	public void forgotPassword(Users users) {
 		String emailid=users.getUsername();
+		
 		String forgotPassword="Forgot Password Details";
+		
+//		Generating random string
 		randomString=givenUsingPlainJava_whenGeneratingRandomStringUnbounded_thenCorrect();
+		
+//		Generating the hash key from  random
 		hashStringId=generateHashShakeyFromString(randomString);
 		
 		String message = msg.getMessage("forgotusername",
 				new Object[] {emailid,"http://localhost:8080/resetpassword?id="+randomString}, null);
+		
+//		Calling processMail
 		processMail(users, forgotPassword, message);
 		
 		
@@ -89,16 +96,18 @@ public class PasswordChangeRequestsService {
 		
 		Calendar cal = Calendar.getInstance();
 	     cal.setTime(new Date());
-	     System.out.println("sending mail --cal.getTime() "+cal.getTime());
 			
 	     if(hashStringId!=null && usersdetail!=null){
+	
 	    	 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		     String currentdate =  sdf.format(cal.getTime()); 
+		     
 		     System.out.println("sending mail after formate  currentdate "+currentdate);
-				    
+			
+//		     Saving password change request db
 	    	 savePaswordChangeRequest(hashStringId,currentdate.toString(),usersdetail);
 		}
-		} catch (EmptyResultDataAccessException e) {
+	} catch (EmptyResultDataAccessException e) {
 			System.out.println("sending mail --EmptyResultDataAccessException "+e.toString());
 			
 			/*	throw new UserDataAccessException(
@@ -106,11 +115,17 @@ public class PasswordChangeRequestsService {
 		*/}
 	}
 	private void savePaswordChangeRequest(String hashStringId, String currentTime,Users usersdetail) {
+	
 		if(jdbcUserRepository.isExists(usersdetail.getUsername())){
+//			count logic for no_of_attempts 
 			count++;
 			if(jdbcPCRRepository.isExists(usersdetail.getId())){
+		
 				PasswordChangeRequestsDTO passwordChangeRequestsDTO =jdbcPCRRepository.getPCRByUserId(usersdetail.getId());
-				if(passwordChangeRequestsDTO!=null &&passwordChangeRequestsDTO.getNo_of_attempts()>count){
+				
+				if(passwordChangeRequestsDTO!=null &&
+						passwordChangeRequestsDTO.getNo_of_attempts()>count)
+				{
 					jdbcPCRRepository.updatePasswordChangeRequests(
 							new PasswordChangeRequestsDTO(
 									hashStringId,passwordChangeRequestsDTO.getTime(),

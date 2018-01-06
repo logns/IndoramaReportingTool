@@ -24,6 +24,7 @@ import org.json.simple.JSONObject;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.lognsys.dao.dto.AssignTaskDTO;
 import com.lognsys.dao.dto.AssignTaskDailylogDTO;
@@ -40,10 +41,8 @@ import com.lognsys.model.UsersTable;
 public class ObjectMapper {
 	public static String authorizedUserName(){
 		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-		String username = loggedInUser.getName();
-//		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		String username = user.getUsername().toString(); // get logged in username
-		return username;
+		UserDetails ud = (UserDetails) ((Authentication)loggedInUser).getPrincipal();
+		return  ud.getUsername();
 	}
 	
 
@@ -64,20 +63,43 @@ public class ObjectMapper {
 	 * @param groups
 	 * @return
 	 */
-	public static List<UsersTable> mapToUserTable(List<UsersBuDTO> userbudto) {
+	public static List<UsersTable> mapToUserTable(List<UsersDTO> userbudto) {
 		List<UsersTable> list = new ArrayList<>();
-		for (UsersBuDTO ubu : userbudto) {
-			list.add(new UsersTable(ubu.getUser().getId(), ubu.getUser().getRealname(), ubu.getUser().getUsername(),
-					ubu.getBuDTO().getBu_name(), ubu.getUser().isEnabled()));
+		for (UsersDTO ubu : userbudto) {
+			list.add(new UsersTable(ubu.getId(), ubu.getRealname(), ubu.getUsername(),
+					 ubu.isEnabled()));
 		}
 		return list;
 	}
 
 	public static List<AssignTaskTable> mapToAssignTaskTable(List<AssignTaskDTO> assignTaskTables) {
 		List<AssignTaskTable> list = new ArrayList<>();
-		for (AssignTaskDTO ubu : assignTaskTables) {
-			list.add(new AssignTaskTable(ubu.getId(), convertToAnchorTagString(ubu.getTitle(),ubu.getId()), ubu.getAssigned_to(),
-					ubu.getPriority(), ubu.getTarget_date(), ubu.getDone_percentage()));
+		for (AssignTaskDTO atdto : assignTaskTables) {
+			AssignTaskTable at=new AssignTaskTable();
+			
+			at.setId(atdto.getId());
+			if(atdto.getTitle()!=null){
+				at.setTitle(convertToAnchorTagString(atdto.getTitle(),atdto.getId()));
+			}
+			if(atdto.getCreated_by()!=null){
+				at.setCreated_by(atdto.getCreated_by());
+			}
+			if(atdto.getStatus()!=null){
+				at.setStatus(atdto.getStatus());
+			}
+			if(atdto.getPriority()!=null){
+				at.setPriority(atdto.getPriority());
+			}
+			if(atdto.getTarget_date()!=null){
+				at.setTarget_date(atdto.getTarget_date());
+			}
+			if(atdto.getDone_percentage()!=null){
+				at.setDone_percentage(atdto.getDone_percentage());
+			}
+			if(atdto.getAssigned_to()!=null){
+				at.setAssigned_to(atdto.getAssigned_to());
+			}
+			list.add(at);
 		}
 		return list;
 	}

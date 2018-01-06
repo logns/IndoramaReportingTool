@@ -1,4 +1,4 @@
-drop table assign_task_dailylog;
+drop table if exists  assign_task_dailylog;
 CREATE TABLE IF NOT EXISTS `indorama_poly`.`assign_task_dailylog` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `assign_task_id` INT(11) NOT NULL,
@@ -15,16 +15,7 @@ CREATE TABLE IF NOT EXISTS `indorama_poly`.`assign_task_dailylog` (
   CONSTRAINT `assign_task_id_fk`
     FOREIGN KEY (`assign_task_id`)
     REFERENCES `indorama_poly`.`assign_task` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
-ALTER TABLE `indorama_poly`.`assign_task_dailylog` 
-DROP FOREIGN KEY `assign_task_id_fk`;
-ALTER TABLE `indorama_poly`.`assign_task_dailylog` 
-ADD CONSTRAINT `assign_task_id_fk`
-  FOREIGN KEY (`assign_task_id`)
-  REFERENCES `indorama_poly`.`assign_task` (`id`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;

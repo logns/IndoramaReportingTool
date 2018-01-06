@@ -34,7 +34,7 @@
 					<form:errors path="status" element="div" /><%-- 
 					<form:errors path="assign_task_id" element="div" /> --%>
 					<form:errors path="assign_task_title" element="div" />
-
+					
 				</div>
 				<div class="col-sm-12 panel panel-default">
 					<fieldset class="the-fieldset">

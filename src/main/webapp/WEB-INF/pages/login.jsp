@@ -12,7 +12,7 @@
 					<div class="msg">${msg}</div>
 				</c:if>
 
-				<form name='loginForm' action="<c:url value='/login?targetUrl=${targetUrl}' />"
+				<form name='loginForm' action="<c:url value='/login' />"
 					method='POST'>
 					<div class="form-group">
 						<label for="inputUsernameEmail" class="login_label_color">Username

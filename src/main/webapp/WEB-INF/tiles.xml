@@ -92,4 +92,10 @@
 		<put-attribute name="footer" value="" />
 	</definition>
 	
+	<definition name="setting" extends="base_layout">
+		<put-attribute name="title" value="Indorama: SETTING" />
+		<put-attribute name="body" value="/WEB-INF/pages/setting.jsp" />
+		<put-attribute name="footer" value="" />
+	</definition>
+	
 </tiles-definitions>

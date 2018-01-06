@@ -37,12 +37,11 @@ public class UsersTable {
 		this.status = status;
 	}
 
-	public UsersTable(int id, String name, String email, String bu_name, boolean enabled) {
+	public UsersTable(int id, String name, String email, boolean enabled) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
-		this.bu_name = bu_name;
 		setStatus(enabled);
 		this.status = getStatus();
 	}
