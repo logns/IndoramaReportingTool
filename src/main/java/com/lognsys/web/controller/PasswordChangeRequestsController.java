@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.lognsys.dao.dto.PasswordChangeRequestsDTO;
+import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.dao.jdbc.JdbcPasswordChangeRequestsRepository;
 import com.lognsys.dao.jdbc.JdbcUserRepository;
 import com.lognsys.exception.CustomGenericException;
@@ -96,34 +97,35 @@ public class PasswordChangeRequestsController {
 				// boolean b = m.matches();
 				boolean b = m.find();
 				System.out.println("settingPassword -- POST b  ============== " + b);
+				UsersDTO userspass=new UsersDTO();
 				
 				if (b == true) {
-					System.out.println("\n \n settingPassword -- setting.getUsername()============== " + setting.getUsername());
-
-					Users users=jdbcUserRepository.getUserByUserName(setting.getUsername());
-					System.out.println("\n \n settingPassword -- users.toString============== " + users.toString());
-
 					
-					Users userspass=new Users();
+					
 					userspass.setPassword(CommonUtilities.bCryptPasswordEncoder(setting.getOldpassword()));
-					System.out.println("\n \n settingPassword --password match============== " + (users.getPassword().equalsIgnoreCase(userspass.getPassword())));
-
-//							IN DB								IN FORM OLDPASSWORD				
-					if(users.getPassword().equalsIgnoreCase(userspass.getPassword())){
-
-						users.setPassword(CommonUtilities.bCryptPasswordEncoder(setting.getNewpassword()));
-						System.out.println("\n \n settingPassword --users password ============== " + ((users.getPassword())));
-
-						jdbcUserRepository.updateUserPasswordById(users);		
-						System.out.println("\n \n settingPassword --users password  updated ============== " );
-
+					System.out.println("settingPassword -- POST b  userspass ============== " + userspass.getPassword());
+					System.out.println("settingPassword -- POST b  getUsername ============== " + setting.getUsername());
+						
+					if(jdbcUserRepository.isExistsPassword(setting.getUsername(), userspass.getPassword())){
+						System.out.println("Yes same");
+						userspass =jdbcUserRepository.findUserByUsername(setting.getUsername());
+						
+						Users user=new Users();
+						user.setUsername(setting.getUsername());
+						user.setId(userspass.getId());
+						user.setPassword(CommonUtilities.bCryptPasswordEncoder(setting.getNewpassword()));
+						jdbcUserRepository.updateUserPasswordById(user);		
+			
 						model.setViewName("dashboard");
+						return model;
 					}
 					else{
+						System.out.println("No not same");
 						model.addObject("error","Old Password does not match");
 						model.setViewName("setting");	
 						System.out.println("\n \n settingPassword --users password  error ============== " );
-
+						return model;
+							
 					}
 					
 				} else {
@@ -134,8 +136,6 @@ public class PasswordChangeRequestsController {
 					model.setViewName("setting");
 					return model;
 				}
-				model.setViewName("dashboard");
-				return model;
 			}
 
 		} catch (EmptyResultDataAccessException e) {

@@ -167,16 +167,38 @@ public class UsersDTO {
 		return username;
 	}
 
+	public UsersDTO(int id, String password, String realname, String username, String phone, String birthdate,
+			boolean enabled, boolean notification, String address, String city, String state, String zipcode) {
+		super();
+		this.id = id;
+		this.password = password;
+		this.realname = realname;
+		this.username = username;
+		this.phone = phone;
+		this.birthdate = birthdate;
+		this.enabled = enabled;
+		this.notification = notification;
+		this.address = address;
+		this.city = city;
+		this.state = state;
+		this.zipcode = zipcode;
+	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return "UsersDTO [id=" + id + ", realname=" + realname + ", username=" + username + ", phone=" + phone
-				+ ", birthdate=" + birthdate + ", enabled=" + enabled + ", notification=" + notification + ", address="
-				+ address + ", city=" + city + ", state=" + state + ", zipcode=" + zipcode + "]";
+		return "UsersDTO [id=" + id + ", password=" + password + ", realname=" + realname + ", username=" + username
+				+ ", phone=" + phone + ", birthdate=" + birthdate + ", enabled=" + enabled + ", notification="
+				+ notification + ", address=" + address + ", city=" + city + ", state=" + state + ", zipcode=" + zipcode
+				+ "]";
 	}
 
+	
 
 }

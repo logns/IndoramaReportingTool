@@ -11,7 +11,7 @@ public class Constants {
 	public enum USER_QUERIES {
 		select_username,select_realname,insert_users, select_users, delete_users, 
 		select_users_exists, select_users_id, delete_users_email, update_users,
-		select_users_username, update_users_device,update_users_password
+		select_users_username, update_users_device,update_users_password,select_password_exist
 	}
 	public enum PASSWORDCHANGEREQUESTS_QUERIES {
 		insert_passwordchangerequests, select_pcr_exists, update_pcr,selecr_pcr_users_id, select_all_pcr, select_pcr_hash_id

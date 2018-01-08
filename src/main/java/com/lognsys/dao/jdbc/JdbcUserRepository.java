@@ -74,7 +74,12 @@ public class JdbcUserRepository implements UserRespository {
 		return namedParamJdbcTemplate.queryForObject(
 				sqlProperties.getProperty(Constants.USER_QUERIES.select_users_exists.name()), param, Integer.class) > 0;
 	}
-
+	public boolean isExistsPassword(String username,String password) throws DataAccessException {
+		SqlParameterSource param = new MapSqlParameterSource().addValue("username", username).addValue("password", password);
+		
+		return namedParamJdbcTemplate.queryForObject(
+				sqlProperties.getProperty(Constants.USER_QUERIES.select_password_exist.name()), param, Integer.class) > 0;
+	}
 	/**
 	 * update users table in the database. 
 	 *  
@@ -163,28 +168,12 @@ public class JdbcUserRepository implements UserRespository {
 	 */
 	@Override
 	public UsersDTO findUserByUsername(String username) throws DataAccessException {
-		System.out.println( "findUserByUsername username"+username);
 		
 		SqlParameterSource parameter = new MapSqlParameterSource("username", username);
 
 		UsersDTO usersDTO = namedParamJdbcTemplate.queryForObject(
 				sqlProperties.getProperty(Constants.USER_QUERIES.select_users_username.name()), parameter,
 				new UserByUserIDRowMapper());
-		System.out.println( "findUserByUsername usersDTO"+usersDTO.toString());
-		
-		return usersDTO;
-
-	}
-	
-	public Users getUserByUserName(String username) throws DataAccessException {
-		System.out.println( "findUserByUsername username"+username);
-		
-		SqlParameterSource parameter = new MapSqlParameterSource("username", username);
-
-		Users usersDTO = (Users) namedParamJdbcTemplate.queryForObject(
-				sqlProperties.getProperty(Constants.USER_QUERIES.select_users_username.name()), parameter,
-				Users.class);
-		System.out.println( "findUserByUsername usersDTO"+usersDTO.toString());
 		
 		return usersDTO;
 
