@@ -6,46 +6,31 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
-import org.exolab.castor.types.DateTime;
-import org.jfree.chart.axis.DateTickUnit;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.jsoup.Jsoup;
-import org.ocpsoft.prettytime.PrettyTime;
-import org.ocpsoft.prettytime.TimeFormat;
-import org.ocpsoft.prettytime.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.dao.DataAccessException;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -53,19 +38,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.lognsys.dao.dto.AssignTaskDTO;
 import com.lognsys.dao.dto.AssignTaskDailylogDTO;
 import com.lognsys.dao.dto.BuDTO;
 import com.lognsys.dao.dto.DailyLogDTO;
 import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.exception.CustomGenericException;
+<<<<<<< Updated upstream
 import com.lognsys.model.DailyLog;
 import com.lognsys.model.Users;
+=======
+>>>>>>> Stashed changes
 import com.lognsys.service.AssignTaskService;
 import com.lognsys.service.DailyLogService;
-import com.lognsys.service.MailService;
 import com.lognsys.service.UserService;
 import com.lognsys.util.CommonUtilities;
 import com.lognsys.util.Constants;
@@ -190,7 +175,7 @@ public class AssignTaskController {
 		return "assigntasklist";
 	}
 
-	// @ExceptionHandler to decide which “view” should be returned back if
+	// @ExceptionHandler to decide which ï¿½viewï¿½ should be returned back if
 	// certain exception is raised
 	@ExceptionHandler(CustomGenericException.class)
 	public ModelAndView handleCustomException(CustomGenericException ex) {

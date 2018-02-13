@@ -1,4 +1,4 @@
-DROP TABLE `indorama_poly`.`password_change_requests`;
+DROP TABLE IF EXISTS `indorama_poly`.`password_change_requests`;
 CREATE TABLE `indorama_poly`.`password_change_requests` (
   `hash_id` VARCHAR(100) NOT NULL,
   `time` VARCHAR(45) NOT NULL,
