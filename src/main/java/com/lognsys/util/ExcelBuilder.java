@@ -17,10 +17,10 @@ import org.springframework.web.servlet.view.document.AbstractExcelView;
 
 import com.lognsys.dao.dto.DailyLogDTO;
 /**
- * This class builds an Excel spreadsheet document using Apache POI library.
- * @author www.codejava.net
- *
- */
+* This class builds an Excel spreadsheet document using Apache POI library.
+* @author www.codejava.net
+*
+*/
 public class ExcelBuilder extends AbstractExcelView {
 	@Override
 	protected void buildExcelDocument(Map<String, Object> model, HSSFWorkbook workbook, HttpServletRequest request,

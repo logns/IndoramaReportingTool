@@ -9,6 +9,9 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.json.simple.JSONArray;
@@ -44,11 +47,6 @@ import com.lognsys.dao.dto.BuDTO;
 import com.lognsys.dao.dto.DailyLogDTO;
 import com.lognsys.dao.dto.UsersDTO;
 import com.lognsys.exception.CustomGenericException;
-<<<<<<< Updated upstream
-import com.lognsys.model.DailyLog;
-import com.lognsys.model.Users;
-=======
->>>>>>> Stashed changes
 import com.lognsys.service.AssignTaskService;
 import com.lognsys.service.DailyLogService;
 import com.lognsys.service.UserService;
@@ -58,6 +56,7 @@ import com.lognsys.util.DateTimeUtils;
 import com.lognsys.util.FormValidator;
 import com.lognsys.util.ObjectMapper;
 import com.lognsys.util.WriteJSONToFile;
+
 
 @Controller
 public class AssignTaskController {
